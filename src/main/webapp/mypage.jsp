@@ -3,8 +3,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<!--   ---------CDN 모음 ------------------------------------------  -->
+<!-- jquery  -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -16,6 +21,9 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
 	rel="stylesheet">
+
+<!--   ---------CDN 모음 끝------------------------------------------  -->
+
 <style>
 @font-face {
 	font-family: 'NanumbarunpenR';
@@ -29,6 +37,7 @@
 
 body {
 	font-family: 'NanumbarunpenR';
+	margin: 0px;
 }
 
 nav {
@@ -39,8 +48,36 @@ nav {
 #logo {
 	width: 50px;
 }
+
+div {
+	border: 1px solid black;
+	box-sizing: border-box;
+}
+
+#wrapper {
+	width: 100%;
+}
+
+#content {
+	height: 100vh;
+}
+
+nav {
+	background-color: #1B0946;
+	font-size: large;
+}
+
+#logo {
+	width: 50px;
+}
+
+#header {
+	height: 150px;
+}
 </style>
+<title>페이지 기본 틀2-게시판 형태용</title>
 </head>
+
 <body>
 	<nav class="mb-1 navbar navbar-expand-lg navbar-dark"> <a
 		class="navbar-brand" href="#"><img id="logo" alt=""
@@ -85,6 +122,31 @@ nav {
 	</div>
 	</nav>
 
+	<div id="wrapper" class="container-fluid">
+		<div class="row z-depth-1-half" id="header">
+			<div class="col"></div>
+			<div class="col"></div>
+			<div class="col">
+				<div class="row h-50">
+					<div class="col">1</div>
+					<div class="col">2</div>
+					<div class="col">3</div>
+					<div class="col">4</div>
+				</div>
+				<div class="row h-50">
+					<div class="col">1</div>
+					<div class="col">2</div>
+					<div class="col">3</div>
+					<div class="col">4</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-md-12" id="content">내용1-메인</div>
+		</div>
+
+	</div>
 </body>
 <!-- JQuery -->
 <script type="text/javascript"
@@ -98,7 +160,4 @@ nav {
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	crossorigin="anonymous"></script>
 </html>
