@@ -17,8 +17,13 @@ public class MemberDAOImpl implements IMemberDAO{
 	
 	@Override
 	public List<MemberDTO> loginExist(MemberDTO dto) {
+<<<<<<< HEAD
 		
 		return template.selectList("Members.selectData",dto);
+=======
+		System.out.println("pw" + dto.getPw());
+		return template.selectList("selectData",dto);
+>>>>>>> 형섭스
 	}
 
 	@Override
