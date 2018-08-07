@@ -26,9 +26,4 @@ public class MemberController {
 		mav.setViewName("loginProc.jsp");
 		return mav;
 	}
-	
-	
-
-
-
 }
