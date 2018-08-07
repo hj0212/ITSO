@@ -37,12 +37,12 @@
 			</a></li>
             <li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
         </ul>
-        <form class="form-inline my-1">
+        <!-- <form class="form-inline my-1">
             <div class="md-form form-sm my-0">
                 <input class="form-control form-control-sm mr-sm-2 mb-0" type="text" placeholder="Search" aria-label="Search">
             </div>
             <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
-        </form>
+        </form> -->
         <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
 					class="far fa-bell"></i>알림

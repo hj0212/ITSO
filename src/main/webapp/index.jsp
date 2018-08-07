@@ -21,7 +21,7 @@
 <body>
 	<%@include file="navi.jsp" %>
 	
-
+	
 </body>
 
 <!-- Bootstrap tooltips -->
