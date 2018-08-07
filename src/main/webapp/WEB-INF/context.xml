@@ -9,37 +9,37 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<!-- 리소스 경로 설정 -->
-	<mvc:resources mapping="/fonts/**" location="/resources/fonts/" />
-	<mvc:resources mapping="/images/**" location="/resources/images/" />
-	<mvc:resources mapping="/resources/**" location="/resources/" />
-
 	<context:component-scan base-package="kh.spring" />
 
+	<!-- 리소스 경로 설정 -->
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+
+
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@59.10.249.73:1521:XE"/>
-		<property name="username" value="kh"/>
-		<property name="password" value="kh"/>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@59.10.249.73:1521:XE" />
+		<property name="username" value="itso" />
+		<property name="password" value="itso" />
 	</bean>
-	
+
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	<tx:annotation-driven />
-	<aop:aspectj-autoproxy/>
-	
+	<aop:aspectj-autoproxy />
+
 	<!-- mybatis -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="mapperLocations" value="classpath:/mapper/**/*mapper.xml"/>
-		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
-	</bean> 
-	
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:/mapper/**/*mapper.xml" />
+		<property name="configLocation" value="classpath:/mybatis-config.xml" />
+	</bean>
+
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSession"/>
+		<constructor-arg index="0" ref="sqlSession" />
 	</bean>
 
 
