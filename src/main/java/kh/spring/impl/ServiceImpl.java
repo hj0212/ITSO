@@ -40,4 +40,10 @@ public class ServiceImpl implements IMemberService {
 		return 0;
 	}
 
+	@Override
+	public List<MemberDTO> emailExist(String email) {
+		// TODO Auto-generated method stub
+		return this.dao.emailExist(email);
+	}
+
 }

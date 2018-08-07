@@ -6,6 +6,10 @@
 	select * from users where email=#{email} and pw=#{pw}
 	</select>
 	<insert id="insertData" parameterType="dto">
-	 insert into users values(users_seq.nextval,#{email},#{pw},#{name},#{age})
+	 insert into users values(users_seq.nextval,#{email},#{pw},#{name}, , ,home,sysdate,n,1.jpg,n, ,#{age})
 	</insert>
+	
+	<select id="emailExist" resultType="dto">
+	select * from users where email=#{email}
+	</select>
 </mapper>
