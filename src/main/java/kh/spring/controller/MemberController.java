@@ -17,7 +17,7 @@ public class MemberController {
 	
 	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO dto) {
-		
+		System.out.println(dto.getEmail()+":"+dto.getPw());
 		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = service.loginExist(dto);
 		mav.addObject("result",result);
