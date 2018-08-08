@@ -139,7 +139,7 @@ aside {
 	<div id="card-group">
 		<div class="sidebar"></div>
 
-		<div class="row gb" style="margin: 10xp auto;">
+		<div class="row gb" style="margin: 0xp auto;">
 			<!-- Grid column -->
 			<div class="col-lg-4 col-md-12">
 				<!--Card-->

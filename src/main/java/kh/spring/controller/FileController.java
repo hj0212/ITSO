@@ -33,18 +33,17 @@ public class FileController {
 				}
 			}
 			
-			MemberDTO dto = (MemberDTO)session.getAttribute("user");
-			dto.setPhoto(sfileName);
-
-			try {
-				uploadfile.transferTo(file);
-				int result = service.updateUserData(dto);
-				String resultmsg = result>0?"성공":"실패";
-				System.out.println(resultmsg);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			MemberDTO dto = (MemberDTO)session.getAttribute("user");
+//			dto.setPhoto(sfileName);
+//			try {
+//				uploadfile.transferTo(file);
+//				int result = service.updateUserData(dto);
+//				String resultmsg = result>0?"성공":"실패";
+//				System.out.println(resultmsg);
+//				
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 		}
 		
 		return "redirect:myinfo.go";

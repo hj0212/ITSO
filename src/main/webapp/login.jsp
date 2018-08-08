@@ -305,7 +305,7 @@ $(document).ready(function () {
 					<div class="row sign" style="width: 100%">
 						<div class="md-form " style="width: 100%">
 							<i class="fa fa-asterisk prefix" style="color: white"></i> <input
-								type="text" id="Age" class="form-control " name="age"
+								type="text" id="Age" class="form-control" name="age"
 								style="color: white"> <label for="Age"
 								data-error="wrong" data-success="right" style="color: white">
 								Age</label>
