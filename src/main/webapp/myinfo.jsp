@@ -41,6 +41,7 @@ body {
 
 #imagearea img {
 	width: 200px;
+	height: 200px;
 }
 </style>
 
@@ -74,7 +75,7 @@ body {
 					<form action="editProfileImg" method="post"
 						enctype="multipart/form-data" id="profileImageForm">
 						<img id="profileImage"
-							src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg"
+							src="/upload/${sessionScope.user.photo}"
 							class="img-fluid z-depth-1 rounded-circle mb-1"
 							alt="Responsive image"> <br>
 						<button id="imgbtn" for="img_file" type="button"
@@ -87,7 +88,7 @@ body {
 					<input type="text" id="inputMDEx" class="form-control"
 						value="test@test.com" readonly> <label for="inputMDEx">email</label>
 				</div>
-				<form action="editProfileInfo" method="post" id="profileInfoForm">
+				
 					<div class="md-form">
 						<input type="text" id="inputMDEx" class="form-control"> <label
 							for="inputMDEx" placeholder="비밀번호를 입력하세요">비밀번호</label>

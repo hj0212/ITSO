@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Members">
+<mapper namespace="Member">
 	<select id="selectData" resultType="dto">
-	select * from users where email=#{email} and pw=#{pw}
+		select * from users where email=#{email} and pw=#{pw}
 	</select>
 	<insert id="insertData" parameterType="dto">
-	 insert into users values(users_seq.nextval,#{email},#{pw},#{name},NULL,NULL,home,sysdate,n,1.jpg,n,NULL,#{age})
+		insert into users values(users_seq.nextval,#{email},#{pw},#{name},NULL,NULL,home,sysdate,n,1.jpg,n,NULL,#{age})
 	</insert>
 	<update id="updateData" parameterType="dto">
-	 update users set pw=#{pw}, name=#{name}, photo=#{photo}, state=#{state}, age=#{age} where seq=#{seq}
+		update users set pw=#{pw}, name=#{name}, photo=#{photo}, state=#{state}, age=#{age} where seq=#{seq}
+	</update>
+	<update id="updateImage" parameterType="dto">
+		update users set photo=#{photo} where seq=#{seq}
 	</update>
 	<select id="emailExist" resultType="dto">
-	select * from users where email=#{email}
+		select * from users where email=#{email}
 	</select>
 </mapper>
