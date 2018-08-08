@@ -10,7 +10,7 @@ import kh.spring.interfaces.IMemberDAO;
 import kh.spring.interfaces.IMemberService;
 
 @Service
-public class ServiceImpl implements IMemberService {
+public class MemberServiceImpl implements IMemberService {
 
 	@Autowired
 	private IMemberDAO dao;
@@ -38,6 +38,12 @@ public class ServiceImpl implements IMemberService {
 	public int deleteUserData(MemberDTO dto) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<MemberDTO> emailExist(String email) {
+		// TODO Auto-generated method stub
+		return this.dao.emailExist(email);
 	}
 
 }
