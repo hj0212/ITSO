@@ -37,31 +37,4 @@ public class MemberController {
 		mav.setViewName("loginProc.jsp");
 		return mav;
 	}
-	@RequestMapping("/loginMain.do")
-	public String loginMain() {
-		return "redirect:login.jsp";
-	}
-	
-	@RequestMapping("/loginProc.do")
-	public ModelAndView loginProc(HttpSession session) {
-		
-		ModelAndView mav = new ModelAndView();
-		String email =(String)session.getAttribute("sessionEmail");
-		mav.addObject("email",email);
-		mav.setViewName("main.jsp");
-		return mav;
-	}
-	@RequestMapping("/signin.do")
-	public ModelAndView SigninProc(MemberDTO dto) {
-		ModelAndView mav = new ModelAndView();
-		int result = service.insertUserData(dto);
-		mav.addObject("result", result);
-		mav.setViewName("signinProc.jsp");
-		return mav;
-	}
-	
-	
-
-
-
 }
