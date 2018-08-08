@@ -268,6 +268,7 @@
                         <button type="button" class="btn " id="signup" name="signup">Sign UP</button>
                         <button class="btn sign" id="cancel" type="button">Cancel</button>
                     </div>
+
                     <!--password 찾기-->
                     <div class="row forgot-password-row">
                         <span class="blue-text text-lighten-1 waves-effect"> <a

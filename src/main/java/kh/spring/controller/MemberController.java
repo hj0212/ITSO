@@ -20,7 +20,7 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = service.loginExist(dto);
-		mav.addObject("result",result);
+		mav.addObject("result", result);
 	
 		System.out.println(result);
 		mav.setViewName("loginProc.jsp");
