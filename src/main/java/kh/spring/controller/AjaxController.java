@@ -38,9 +38,7 @@ public class AjaxController {
 			}else {
 				System.out.println("실패");
 				msg= "fa fa-close prefix";
-				
 			}
-			
 		
 		try {
 			URLEncoder.encode(msg,"UTF-8");
@@ -49,9 +47,5 @@ public class AjaxController {
 			e.printStackTrace();
 		}
 		return msg;
-		
-		
 	}
-	
-
 }
