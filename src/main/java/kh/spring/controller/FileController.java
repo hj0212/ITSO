@@ -38,7 +38,9 @@ public class FileController {
 
 			try {
 				uploadfile.transferTo(file);
-				service.updateUserData(dto);
+				int result = service.updateUserData(dto);
+				String resultmsg = result>0?"성공":"실패";
+				System.out.println(resultmsg);
 				
 			} catch (Exception e) {
 				e.printStackTrace();

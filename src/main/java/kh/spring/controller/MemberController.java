@@ -35,6 +35,7 @@ public class MemberController {
 		mav.setViewName("loginProc.jsp");
 		return mav;
 	}
+	
 	@RequestMapping("/login.go")
 	public String loginMain() {
 		return "redirect:login.jsp";
@@ -44,8 +45,6 @@ public class MemberController {
 	public ModelAndView loginProc(HttpSession session) {
 		
 		ModelAndView mav = new ModelAndView();
-		String email =(String)session.getAttribute("sessionEmail");
-		mav.addObject("email",email);
 		mav.setViewName("main.jsp");
 		return mav;
 	}
