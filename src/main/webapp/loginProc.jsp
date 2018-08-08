@@ -9,5 +9,8 @@
 </head>
 <body>
  멍
+<script>
+ 	location.href="index.jsp";
+ </script>
 </body>
 </html>

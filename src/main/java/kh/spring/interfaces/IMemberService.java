@@ -9,6 +9,4 @@ public interface IMemberService {
   public int insertUserData(MemberDTO dto);
   public int updateUserData(MemberDTO dto);
   public int deleteUserData(MemberDTO dto);
-  
-  
 }

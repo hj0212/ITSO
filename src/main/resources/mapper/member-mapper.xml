@@ -8,4 +8,8 @@
 	<insert id="insertData" parameterType="dto">
 	 insert into users values(users_seq.nextval,#{email},#{pw},#{name},#{age})
 	</insert>
+	<update id="updateData" parameterType="dto">
+	 update users set pw=#{pw}, name=#{name}, photo=#{photo}, state=#{state}, age=#{age} where seq=#{seq}
+	</update>
+	
 </mapper>

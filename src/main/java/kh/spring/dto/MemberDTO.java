@@ -13,11 +13,12 @@ public class MemberDTO {
 	private String photo;
 	private String withdrawal;
 	private String state;
+	private int age;
 	
 	public MemberDTO() {}
 
 	public MemberDTO(int seq, String email, String pw, String name, String g_email, String g_name, String part,
-			String create_Date, String block, String photo, String withdrawal, String state) {
+			String create_Date, String block, String photo, String withdrawal, String state, int age) {
 		super();
 		this.seq = seq;
 		this.email = email;
@@ -128,4 +129,13 @@ public class MemberDTO {
 	public void setState(String state) {
 		this.state = state;
 	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
 }

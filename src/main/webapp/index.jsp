@@ -17,11 +17,18 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
 	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#mypagebtn").click(function() {
+			location.href="mypage.go";
+		})
+	})
+</script>
 </head>
 <body>
 	<%@include file="navi.jsp" %>
 	
-	
+	<button id="mypagebtn" type="button" class="btn btn-primary">Primary</button>
 </body>
 
 <!-- Bootstrap tooltips -->

@@ -45,16 +45,15 @@ body {
 </style>
 
 <script>
-
 	$(document).ready(function() {
-	
+
 		/* $("#profileImage").attr('src',"/WEB_06_18/file/${file_name}"); */
 		$("#imgbtn").click(function() {
 			$("#img_file").trigger("click");
 			$("#img_file").on('change', function() {
 				console.log($("input[type=file]").val());
 				$("#profileImageForm").submit();
-			})			
+			})
 		});
 	});
 </script>
@@ -91,20 +90,27 @@ body {
 				<form action="editProfileInfo" method="post" id="profileInfoForm">
 					<div class="md-form">
 						<input type="text" id="inputMDEx" class="form-control"> <label
-							for="inputMDEx">pw</label>
+							for="inputMDEx" placeholder="비밀번호를 입력하세요">비밀번호</label>
 					</div>
 					<div class="md-form">
 						<input type="text" id="inputMDEx" class="form-control"> <label
-							for="inputMDEx">name</label>
+							for="inputMDEx" value="${sessionScope.user.name }">이름</label>
+					</div>
+					<div class="md-form">
+						<textarea type="text" id="form7" class="md-textarea form-control"
+							rows="3">${sessionScope.user.state }</textarea>
+						<label for="form7">상태메시지</label>
 					</div>
 					<div class="md-form">
 						<input type="text" id="inputMDEx" class="form-control"> <label
-							for="inputMDEx">age</label>
+							for="inputMDEx" value="${sessionScope.user.age }">나이</label>
 					</div>
 				</form>
 				<!-- Button -->
-				<a href="#" class="btn btn-indigo">Button</a>
-
+				<div id="btnarea text-center">
+					<button class="btn btn-indigo">수정</button>
+					<button class="btn btn-blue-grey">취소</button>
+				</div>
 			</div>
 
 		</div>
