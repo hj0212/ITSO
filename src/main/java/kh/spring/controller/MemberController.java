@@ -1,39 +1,37 @@
 package kh.spring.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.MemberDTO2;
 import kh.spring.interfaces.IMemberService;
 
 @Controller
-
 public class MemberController {
 	@Autowired
 	private IMemberService service;
 	
 	@RequestMapping("/login.do")
-	public ModelAndView login(MemberDTO dto,HttpSession session) {
-		System.out.println(dto.getEmail()+":"+dto.getPw());
-		ModelAndView mav = new ModelAndView();
-		List<MemberDTO> result = service.loginExist(dto);
-		
-		if(result.size()>0) {
-			session.setMaxInactiveInterval(60*60);
-			MemberDTO user = result.get(0);
-			session.setAttribute("user", user);
-			System.out.println(dto.getEmail());
-		}
-		mav.addObject("result",result.size());
-		mav.setViewName("loginProc.jsp");
-		return mav;
+	public ModelAndView login(MemberDTO2 dto) {
+//		System.out.println(dto.getEmail()+":"+dto.getPw());
+//		ModelAndView mav = new ModelAndView();
+//		List<MemberDTO> result = service.loginExist(dto);
+//		
+//		if(result.size()>0) {
+//			session.setMaxInactiveInterval(60*60);
+//			MemberDTO user = result.get(0);
+//			session.setAttribute("user", user);
+//			System.out.println(dto.getEmail());
+//		}
+//		mav.addObject("result",result.size());
+//		mav.setViewName("loginProc.jsp");
+//		return mav;
+		return null;
 	}
 	
 	@RequestMapping("/login.go")

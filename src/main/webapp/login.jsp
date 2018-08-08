@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>It So</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
@@ -131,7 +132,6 @@ body, html {
 	border: 2px solid #feff19;
 }
 </style>
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
 $(document).ready(function () {
     $(".sign").hide();
@@ -358,9 +358,6 @@ $(document).ready(function () {
 		</div>
 	</div>
 </body>
-<!-- JQuery -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
