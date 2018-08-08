@@ -11,24 +11,15 @@
 
 	<context:component-scan base-package="kh.spring" />
 
-
-
-
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
-
-
-
-
-
-
+	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@59.10.249.73:1521:XE" />
 		<property name="username" value="itso" />
 		<property name="password" value="itso" />
 	</bean>
-
 
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

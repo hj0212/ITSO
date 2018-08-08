@@ -313,8 +313,6 @@ $(document).ready(function () {
 					</div>
 					<!--gender-->
 
-
-
 					<!--button group-->
 					<div id="login-bt-group" style="text-align: center;">
 						<button type="button" class="btn aqua-gradient" id="login"
