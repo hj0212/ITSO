@@ -183,6 +183,8 @@ a#MOVE_TOP_BTN {
 
 <body>
 
+<%@include file="navi.jsp" %>
+
 	<div class="firstContainer col-md-8">
 
 		<!-- 메인인트로시작 -->
