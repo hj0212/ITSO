@@ -20,22 +20,22 @@ public class MemberController {
 	private IMemberService service;
 	
 	@RequestMapping("/login.do")
-	
 	public ModelAndView login(MemberDTO dto,HttpSession session) {
 		System.out.println(dto.getEmail()+":"+dto.getPw());
 		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = service.loginExist(dto);
-		MemberDTO user = result.get(0);
+		
 		if(result.size()>0) {
 			session.setMaxInactiveInterval(60*60);
-			session.setAttribute("sessionEmail", dto.getEmail());
+			MemberDTO user = result.get(0);
+			session.setAttribute("user", user);
 			System.out.println(dto.getEmail());
 		}
 		mav.addObject("result",result.size());
 		mav.setViewName("loginProc.jsp");
 		return mav;
 	}
-	@RequestMapping("/loginMain.do")
+	@RequestMapping("/login.go")
 	public String loginMain() {
 		return "redirect:login.jsp";
 	}
@@ -57,9 +57,13 @@ public class MemberController {
 		mav.setViewName("signinProc.jsp");
 		return mav;
 	}
+	@RequestMapping("/mypage.go")
+	public String goMypage() {
+		return "redirect:mypage.jsp";
+	}
 	
-	
-
-
-
+	@RequestMapping("/myinfo.go")
+	public String goMyinfo() {
+		return "redirect:myinfo.jsp";
+	}
 }

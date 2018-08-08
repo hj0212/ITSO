@@ -56,7 +56,7 @@
 					<i class="fa fa-user"></i>
 			</a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="mypage.go">마이페이지</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
         </ul>
@@ -80,7 +80,6 @@
             <li class="nav-item"><a class="nav-link" href="#">스타일링</a></li>
             <li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
         </ul>
-
     </div>
 </nav>
 
