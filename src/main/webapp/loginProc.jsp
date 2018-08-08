@@ -8,9 +8,18 @@
 <title>Insert title here</title>
 </head>
 <body>
- 멍
-<script>
- 	location.href="index.jsp";
- </script>
+  <c:choose>
+   <c:when test="${result>0}">
+    <script>
+     location.href="loginProc.do";
+    </script>
+   </c:when>
+   <c:otherwise>
+   <script>
+    alert("로그인에 실패하였습니다");
+    location.href="loginMain.do";
+   </script>
+   </c:otherwise>
+  </c:choose>
 </body>
 </html>

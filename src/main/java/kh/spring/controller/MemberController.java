@@ -6,32 +6,60 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.MemberDTO;
 import kh.spring.interfaces.IMemberService;
 
 @Controller
+
 public class MemberController {
 	@Autowired
 	private IMemberService service;
 	
 	@RequestMapping("/login.do")
-	public String login(MemberDTO dto, HttpSession session) {
-		System.out.println("여기");
+	
+	public ModelAndView login(MemberDTO dto,HttpSession session) {
+		System.out.println(dto.getEmail()+":"+dto.getPw());
+		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = service.loginExist(dto);
 		MemberDTO user = result.get(0);
-		session.setAttribute("user", user);
-		return "loginProc.jsp";
+		if(result.size()>0) {
+			session.setMaxInactiveInterval(60*60);
+			session.setAttribute("sessionEmail", dto.getEmail());
+			System.out.println(dto.getEmail());
+		}
+		mav.addObject("result",result.size());
+		mav.setViewName("loginProc.jsp");
+		return mav;
+	}
+	@RequestMapping("/loginMain.do")
+	public String loginMain() {
+		return "redirect:login.jsp";
 	}
 	
-	@RequestMapping("/mypage.go")
-	public String goMypage() {
-		return "redirect:mypage.jsp";
+	@RequestMapping("/loginProc.do")
+	public ModelAndView loginProc(HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
+		String email =(String)session.getAttribute("sessionEmail");
+		mav.addObject("email",email);
+		mav.setViewName("main.jsp");
+		return mav;
+	}
+	@RequestMapping("/signin.do")
+	public ModelAndView SigninProc(MemberDTO dto) {
+		ModelAndView mav = new ModelAndView();
+		int result = service.insertUserData(dto);
+		mav.addObject("result", result);
+		mav.setViewName("signinProc.jsp");
+		return mav;
 	}
 	
-	@RequestMapping("/myinfo.go")
-	public String goMyinfo() {
-		return "redirect:myinfo.jsp";
-	}
+	
+
+
+
 }
