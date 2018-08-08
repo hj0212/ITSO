@@ -143,7 +143,7 @@
         <!-- 프로필 정보 영역 -->
         <div class="row z-depth-1 mb-3" id="profile">
             <div id="imgarea" class="mr-2">
-                <img src="resources/images/background.jpg" alt="" class="profileimg">
+                <img src="/upload/${sessionScope.user.photo}" alt="" class="profileimg">
             </div>
             <div id="infoarea" class="col">
                 <p class="h4-responsive mb-0 nanumB">${sessionScope.user.name }</p>
