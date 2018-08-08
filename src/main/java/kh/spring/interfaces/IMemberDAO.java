@@ -9,4 +9,5 @@ public interface IMemberDAO {
 	  public int insertUserData(MemberDTO dto);
 	  public int updateUserData(MemberDTO dto);
 	  public int deleteUserData(MemberDTO dto);
+	  public List<MemberDTO> emailExist(String email);
 }
