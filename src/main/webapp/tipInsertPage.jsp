@@ -51,12 +51,15 @@
 
 <body>
 
-	<input class=form-control type="text" id="tip_title" value="test1">
-	<input class=form-control type="number" id="tip_writer" value=0>
-	<input class=form-control type="text" id="category" value="피트니스">
-	<input class=form-control type="number" id="tip_viewcount"
-		value=0>
-	
+	<input class=form-control type="text" id="tip_title" value="test1"
+		name="tip_title">
+	<input class=form-control type="number" id="tip_writer" value=0
+		name="tip_writer">
+	<input class=form-control type="text" id="category" value="피트니스"
+		name="category">
+	<input class=form-control type="number" id="tip_viewcount" value=0
+		name="tip_viewcount">
+
 
 	<textarea name="editorTA" id="editorTA"></textarea>
 	<div id=btns class="container mt-3">
@@ -94,35 +97,28 @@
 				CKEDITOR.instances.editorTA.updateElement();
 
 				console.log(document.getElementById("editorTA").value);
-
-				//$("#preview").html(data);
-
-				
-				
 				
 			});
 
 			// let data = document.getElementById('editor').value;		
 			document.getElementById("writeBtn").onclick = function() {
 
-				console.log(document.getElementById("tip_title").value);
-				console.log(document.getElementById("editorTA").value);
-				console.log(document.getElementById("tip_title").value);
-				console.log(document.getElementById("tip_viewcount").value);
-				console.log(document.getElementById("category").value);
+				var data = JSON.stringify({tip_title : document.getElementById("tip_title").value,
+					tip_contents : document.getElementById("editorTA").value,
+					tip_writer: document.getElementById("tip_writer").value,
+					tip_viewcount : document.getElementById("tip_viewcount").value,
+					category : document.getElementById("category").value
+				});
 				
+				console.log(data);				
 				
 				$.ajax({
 					url : "tipInsertProc.tip",
 					type : "post",
-					data : {
-// 						"tip_title" : document.getElementById("tip_title").value,
-						"tip_contents" : document.getElementById("editorTA").value,
-// 		        		"tip_writer": document.getElementById("tip_title").value,
-// 						"tip_viewcount" : document.getElementById("tip_viewcount").value,
-// 						"category" : document.getElementById("category").value
-					
-					},
+					data : data ,
+					dataType : "json",
+					contentType:"application/json;charset=UTF-8",
+					async: true,
 					success : function(response) {
 						if (response != null) {
 							alert("test");

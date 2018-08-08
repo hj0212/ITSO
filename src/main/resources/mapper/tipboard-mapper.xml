@@ -4,10 +4,19 @@
 
 <mapper namespace="TipBoard">
 
+<resultMap type="TipDTO" id="TipDTOResultMap">
+
+<result property="tip_title" column="tip_title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+<result property="tip_contents" column="tip_contents" jdbcType="CLOB" javaType="java.lang.String" />
+<result property="tip_writer" column="tip_writer" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+<!-- <result property="tip_date" column="tip_date" jdbcType="DATE" javaType="java.util.Date"/> -->
+<result property="tip_viewcount" column="tip_viewcount" jdbcType="VARCHAR" javaType="java.lang.String"/>
+<result property="category" column="category" jdbcType="VARCHAR" javaType="java.lang.String"/>
+</resultMap>
+
+
 <insert id="insertData" parameterType="TipDTO">
-insert into TIP values(TIP_SEQ.NEXTVAL,#{tip_title},#{tip_contents},#{tip_writer},sysdate,#{tip_viewcount},#{category});
-
+insert into TIP values(TIP_SEQ.NEXTVAL,#{tip_title},#{tip_contents},#{tip_writer},sysdate,#{tip_viewcount},#{category})
 </insert>
-
 
 </mapper>

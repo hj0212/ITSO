@@ -11,6 +11,15 @@ public class TipDTO {
 	String tip_viewcount;
 	String category;
 	
+	
+	
+	
+	@Override
+	public String toString() {
+		return "TipDTO [tip_seq=" + tip_seq + ", tip_title=" + tip_title + ", tip_contents=" + tip_contents
+				+ ", tip_writer=" + tip_writer + ", tip_date=" + tip_date + ", tip_viewcount=" + tip_viewcount
+				+ ", category=" + category + "]";
+	}
 	public int getTip_seq() {
 		return tip_seq;
 	}
