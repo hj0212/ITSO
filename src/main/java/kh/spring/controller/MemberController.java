@@ -3,6 +3,7 @@ package kh.spring.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,5 +66,13 @@ public class MemberController {
 	@RequestMapping("/myinfo.go")
 	public String goMyinfo() {
 		return "redirect:myinfo.jsp";
+	}
+	
+	@RequestMapping("editProfile.do")
+	public String updateProfile(MemberDTO dto) {
+		int result = service.updateUserData(dto);
+		String resultmsg = result>0?"성공":"실패";
+		System.out.println(resultmsg);
+		return "redirect:mypage.go";
 	}
 }

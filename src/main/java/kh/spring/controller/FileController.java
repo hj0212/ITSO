@@ -22,7 +22,7 @@ public class FileController {
 	private IFileService service;
 
 	
-	@RequestMapping("/editProfileImg")
+	@RequestMapping("/editProfileImg.do")
 	public String editProfileImg(@RequestParam("file") MultipartFile uploadfile, HttpSession session, HttpServletRequest request) {
 		System.out.println("여기 : " + uploadfile);
 		String path = request.getSession().getServletContext().getRealPath("/")+"upload";
@@ -50,8 +50,9 @@ public class FileController {
 				FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
 				fos.write(data);
 				fos.close();
-				
+				System.out.println("마지막");
 				int result = service.editProfileImage(dto);
+				System.out.println("result" + result);
 				String resultmsg = result>0?"성공":"실패";
 				System.out.println(resultmsg);
 			} catch (IOException e1) {
