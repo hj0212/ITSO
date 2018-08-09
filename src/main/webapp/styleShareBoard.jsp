@@ -22,7 +22,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
 rel="stylesheet">
 
  <style>
-        
             #wrapper {
                 min-height: 100%;
                 width: 980px;
