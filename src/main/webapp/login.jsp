@@ -247,6 +247,113 @@ $(document).ready(function () {
 </script>
 </head>
 <body>
+<<<<<<< HEAD
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+
+    <!--back ground-->
+    <div class="bg view overlay">
+        <!--  <div class="">-->
+
+        <div id="warpper" class="mask rgba-black-strong">
+            <div id="logo-div" style="text-align: center;"><img src="resources/images/logo_white.png" alt="" style="width:25%"></div>
+            <form id="userform"  method="post">
+                <div id="login-div" class="col-lg-3">
+                    <!-- Material input -->
+                    <!--email-->
+                    <div class="row" style="width: 100%">
+                        <div class="md-form " style="width: 100%">
+                            <i class="fa fa-envelope prefix" style="color: white"></i>
+                            <input type="email" id="inputIconEx1" class="form-control" name="email" style="color: white">
+                            <label for="inputIconEx1" style="color: white">E-mail address</label>
+
+                        </div>
+                    </div>
+                    <!--password-->
+                    <div class="row" style="width: 100%">
+                        <div class="md-form " style="width: 100%">
+                            <i class="fa fa-lock prefix" style="color: white"></i>
+                            <input type="password" id="inputValidationEx2" class="form-control validate" name="pw" style="color: white">
+                            <label for="inputValidationEx2" data-error="wrong" data-success="right" style="color: white"> password</label>
+
+                        </div>
+                    </div>
+                    <!--name-->
+                    <div class="row sign" style="width: 100%">
+                        <div class="md-form " style="width: 100%">
+                            <i class="fa fa-user-circle prefix" style="color: white"></i>
+                            <input type="text" id="name" class="form-control " name="name" style="color: white">
+                            <label for="name" data-error="wrong" data-success="right" style="color: white"> UserName</label>
+
+                        </div>
+                    </div>
+                    <!--age-->
+                    <div class="row sign" style="width: 100%">
+                        <div class="md-form " style="width: 100%">
+                            <i class="fa fa-asterisk prefix" style="color: white"></i>
+                            <input type="text" id="Age" class="form-control " name="age" style="color: white">
+                            <label for="Age" data-error="wrong" data-success="right" style="color: white"> Age</label>
+                        </div>
+                    </div>
+                    <!--gender-->
+                   
+                  
+
+                    <!--button group-->
+                    <div id="login-bt-group" style="text-align: center;"><button type="button" class="btn aqua-gradient" id="login" name="login">User Login</button>
+                        <button type="button" class="btn " id="signup" name="signup">Sign UP</button>
+                        <button class="btn sign" id="cancel" type="button">Cancel</button>
+                    </div>
+
+                    <!--password 찾기-->
+                    <div class="row forgot-password-row">
+                        <span class="blue-text text-lighten-1 waves-effect"> <a
+									href="../findPw.jsp" style="margin-right: 0px">Forgot
+										Password?</a></span>
+                    </div>
+
+
+                </div>
+            </form>
+            <div id="other-bt-group" style="text-align: center;">
+
+                <!-- Title -->
+                <h4 class="card-title" style="color: #e9e9e9"><strong>Other Login</strong></h4>
+                <!-- Subtitle -->
+
+                <!-- Text -->
+                <p class="card-text">
+                </p>
+
+                <!-- Facebook -->
+                <button type="button" class="btn-floating btn-lg btn-fb" id="facebook"><i class="fa fa-facebook"></i></button>
+                <button type="button" class="btn-floating btn-lg btn-tw" id="twitter"><i class="fa fa-twitter"></i></button>
+                <!--Google +-->
+                <button type="button" class="btn-floating btn-lg btn-gplus" id="google"><i class="fa fa-google-plus"></i></button>
+
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+=======
+>>>>>>> master
 
 	<!--back ground-->
 	<div class="bg view overlay">
