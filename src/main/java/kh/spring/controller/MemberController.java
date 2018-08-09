@@ -77,4 +77,5 @@ public class MemberController {
 		session.setAttribute("user", dto);
 		return "redirect:mypage.go";
 	}
+	
 }

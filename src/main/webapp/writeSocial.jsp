@@ -100,13 +100,14 @@ body {
 		<div class="col-md-12 my-3"></div>
 
 		<div class="col-md-6">
-			<form method="post" action="#" id="uploadform">
+			<form method="post" action="uploadSocialImg.sns" id="uploadform" enctype="multipart/form-data">
 				<div class="file-upload">
 					<!--   <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button> -->
 					<div class="row">
 						<div class="image-upload-wrap form-group my-3 col-md-12">
-							<label>-님의 스타일을 보여주세요.</label> <input id="imgfile"
-								class="file-upload-input form-control z-depth-3 hoverable" type='file' onchange="readURL(this);"
+							<label>-님의 스타일을 보여주세요.</label> 
+							<input type="file" name="file" id="imgfile"
+								class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);"
 								accept="image/*" />
 							<!--     <div class="drag-text">
       <h3>Drag and drop a file or select add Image</h3>
@@ -115,8 +116,8 @@ body {
 					</div>
 					<div class="row">
 						<div class="file-upload-content col-md-12 my-3">
-							<img class="file-upload-image z-depth-1" src="#" alt="your image"
-								id="imgselected" />
+							<img class="file-upload-image z-depth-1" src="" alt="your image"
+								id="imgselected"/>
 						</div>
 					</div>
 					<div class="image-title-wrap col-md-12">
@@ -188,8 +189,8 @@ body {
 			$('.image-upload-wrap').removeClass('image-dropping');
 		});
 		$("#nextbtn").click(function() {
-			/* $("#uploadform").submit(); */
-			$(location).attr('href', 'writeArticle2.jsp');
+			 $("#uploadform").submit(); 
+			/* $(location).attr('href', 'writeArticle2.jsp'); */
 		})
 	</script>
 </body>
