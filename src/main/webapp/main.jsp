@@ -168,17 +168,17 @@ aside {
 						<!--instagram-->
 						<button type="button" class="btn-floating btn-sm btn-is share "
 							style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-							<i class="fa fa-instagram"></i>
+							<i class="fab fa-instagram"></i>
 						</button>
 						<!--twitter-->
 						<button type="button" class="btn-floating btn-sm btn-tw share"
 							style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
-							<i class="fa fa-twitter"></i>
+							<i class="fab fa-twitter"></i>
 						</button>
 						<!--facebook-->
 						<button type="button" class="btn-floating btn-sm btn-fb share"
 							style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
-							<i class="fa fa-facebook"></i>
+							<i class="fab fa-facebook-f"></i>
 						</button>
 					</div>
 				</div>

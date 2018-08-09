@@ -21,6 +21,7 @@ public class FileDAOImpl implements IFileDAO {
 
 	@Override
 	public int editProfileImage(MemberDTO dto) {
+		System.out.println(dto.getSeq() + ":" + dto.getPhoto());
 		return template.update("Member.updateImage", dto);
 	}
 	
