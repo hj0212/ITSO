@@ -75,4 +75,5 @@ public class MemberController {
 		System.out.println(resultmsg);
 		return "redirect:mypage.go";
 	}
+	
 }
