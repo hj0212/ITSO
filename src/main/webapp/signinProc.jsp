@@ -12,13 +12,13 @@
  		<c:when test="${result>0}">
  		<script>
  		alert("회원가입을 환영합니다");
- 		location("loginMain.do");	
+ 		location.href="login.go";	
  		</script>
  		</c:when>
  		<c:otherwise>
  		<script>
  		alert("회원가입에 실패하였습니다");
- 		location("loginMain.do");	
+		location.href="login.go";	
  		</script>
  		</c:otherwise>
 

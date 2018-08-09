@@ -64,11 +64,11 @@ body {
 aside {
 	box-sizing: border-box;
 	position: fixed;
-	width: 18%;
-	height: 50%;
-	right: 10%;
-	top: 30%;
-	transform: translate(0px, -50%);
+	width: 20%;
+	right: 5%;
+	top: 40%;
+	overflow: auto;
+	transform: translate(0px, -30%);
 	background: #DDD;
 }
 
@@ -80,6 +80,8 @@ aside {
 
 .fixedcontainer {
 	padding: 1em;
+	width: 100%;
+	
 }
 
 .fixed {
@@ -293,7 +295,8 @@ aside {
 				</a>
 			</div>
 			<!--list-->
-			-------------------------------------------------------------------
+			-------------------------------------------------
+			
 			<div class="avatar mx-auto #DDD">
 				<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg"
 					alt="avatar mx-auto white" class="rounded-circle img-fluid"
@@ -302,7 +305,7 @@ aside {
 					<i class="fa fa-plus"></i>fallow
 				</button>
 			</div>
-			-------------------------------------------------------------------
+			-------------------------------------------------
 			<div class="avatar mx-auto #DDD">
 				<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg"
 					alt="avatar mx-auto white" class="rounded-circle img-fluid"
@@ -311,7 +314,7 @@ aside {
 					<i class="fa fa-plus"></i>fallow
 				</button>
 			</div>
-			-------------------------------------------------------------------
+		-------------------------------------------------
 			<div class="avatar mx-auto #DDD">
 				<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg"
 					alt="avatar mx-auto white" class="rounded-circle img-fluid"
@@ -320,7 +323,7 @@ aside {
 					<i class="fa fa-plus"></i>fallow
 				</button>
 			</div>
-			-------------------------------------------------------------------
+			-------------------------------------------------
 			<div class="avatar mx-auto #DDD">
 				<img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg"
 					alt="avatar mx-auto white" class="rounded-circle img-fluid"
@@ -329,7 +332,7 @@ aside {
 					<i class="fa fa-plus"></i>fallow
 				</button>
 			</div>
-			-------------------------------------------------------------------
+		-------------------------------------------------
 
 
 		</div>
