@@ -86,7 +86,7 @@ body {
 				</div>
 				<div class="md-form">
 					<input type="text" id="inputMDEx" class="form-control"
-						value="test@test.com" readonly> <label for="inputMDEx">email</label>
+						value="${sessionScope.user.name }" readonly> <label for="inputMDEx">email</label>
 				</div>
 				
 					<div class="md-form">
