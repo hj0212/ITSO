@@ -26,7 +26,7 @@ public class FileController {
 	@RequestMapping("/editProfileImg.do")
 	public String editProfileImg(@RequestParam("file") MultipartFile uploadfile, HttpSession session, HttpServletRequest request) {
 		System.out.println("여기 : " + uploadfile);
-		String path = request.getSession().getServletContext().getRealPath("/")+"upload";
+		String path = request.getSession().getServletContext().getRealPath("/")+"upload/profile";
 		System.out.println(path);
 
 		if(uploadfile != null) {
@@ -51,7 +51,6 @@ public class FileController {
 				FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
 				fos.write(data);
 				fos.close();
-				System.out.println("마지막");
 				int result = service.editProfileImage(dto);
 				System.out.println("result" + result);
 				String resultmsg = result>0?"성공":"실패";

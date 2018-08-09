@@ -26,25 +26,21 @@ public class MemberDAOImpl implements IMemberDAO{
 
 	@Override
 	public int insertUserData(MemberDTO dto) {
-		// TODO Auto-generated method stub
 		return template.insert("Member.insertData",dto);
 	}
 
 	@Override
 	public int updateUserData(MemberDTO dto) {
-		// TODO Auto-generated method stub
 		return template.update("Member.updateData",dto);
 	}
 
 	@Override
 	public int deleteUserData(MemberDTO dto) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<MemberDTO> emailExist(String email) {
-		// TODO Auto-generated method stub
 		return template.selectList("Member.emailExist",email);
 	}
 

@@ -18,31 +18,31 @@ public class MemberServiceImpl implements IMemberService {
 	
 	@Override
 	public List<MemberDTO> loginExist(MemberDTO dto) {
-		// TODO Auto-generated method stub
 		return this.dao.loginExist(dto);
 	}
 
 	@Override
 	public int insertUserData(MemberDTO dto) {
-		// TODO Auto-generated method stub
+		dto.setPart("home");
+		dto.setBlock("n");
+		dto.setState(" ");
+		dto.setPhoto("1.jpge");
+		dto.setWithdrawal("n");
 		return this.dao.insertUserData(dto);
 	}
 
 	@Override
 	public int updateUserData(MemberDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.dao.updateUserData(dto);
 	}
 
 	@Override
 	public int deleteUserData(MemberDTO dto) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<MemberDTO> emailExist(String email) {
-		// TODO Auto-generated method stub
 		return this.dao.emailExist(email);
 	}
 

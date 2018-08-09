@@ -16,7 +16,7 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
 	rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
 
 <style>
 @font-face {
@@ -42,6 +42,11 @@ body {
 #imagearea img {
 	width: 200px;
 	height: 200px;
+}
+
+.btn-itso {
+	background-color: #1B0946;
+	color: white;
 }
 </style>
 
@@ -74,7 +79,7 @@ body {
 				<div class="mb-3 text-center" id="imagearea">
 					<form action="editProfileImg.do" method="post"
 						enctype="multipart/form-data" id="profileImageForm">
-						<img id="profileImage" src="/upload/${sessionScope.user.photo}"
+						<img id="profileImage" src="/upload/profile/${sessionScope.user.photo}"
 							class="img-fluid z-depth-1 rounded-circle mb-1"
 							alt="Responsive image"> <br>
 						<button id="imgbtn" for="img_file" type="button"
@@ -85,29 +90,28 @@ body {
 				</div>
 				<div class="md-form">
 					<input type="text" id="inputMDEx" class="form-control"
-						value="test@test.com" readonly> <label for="inputMDEx">email</label>
+						value="${sessionScope.user.email }" readonly> <label for="inputMDEx">email</label>
 				</div>
 				<form action="editProfile.do" method="post">
 					<div class="md-form">
-						<input type="text" id="inputMDEx" class="form-control"> <label
+						<input type="text" id="inputMDEx" class="form-control" name="pw"> <label
 							for="inputMDEx" placeholder="비밀번호를 입력하세요">비밀번호</label>
 					</div>
 					<div class="md-form">
-						<input type="text" id="inputMDEx" class="form-control"> <label
-							for="inputMDEx" value="${sessionScope.user.name }">이름</label>
+						<input type="text" id="inputMDEx" class="form-control" value="${sessionScope.user.name }" name="name"> <label
+							for="inputMDEx">이름</label>
 					</div>
 					<div class="md-form">
-						<textarea type="text" id="form7" class="md-textarea form-control"
-							rows="3">${sessionScope.user.state }</textarea>
-						<label for="form7">상태메시지</label>
+						<input type="text" id="inputMDEx" class="form-control" value="${sessionScope.user.state }" name="state"> <label
+							for="inputMDEx">상태메시지</label>
 					</div>
 					<div class="md-form">
-						<input type="text" id="inputMDEx" class="form-control"> <label
-							for="inputMDEx" value="${sessionScope.user.age }">나이</label>
+						<input type="text" id="inputMDEx" class="form-control"  value="${sessionScope.user.age }" name="age"> <label
+							for="inputMDEx">나이</label>
 					</div>
 					<div id="btnarea text-center">
-						<button class="btn btn-indigo">수정</button>
-						<button type="button" class="btn btn-blue-grey">취소</button>
+						<button class="btn btn-itso">수정</button>
+						<button type="button" class="btn btn-mdb-color">취소</button>
 					</div>
 				</form>
 				<!-- Button -->
