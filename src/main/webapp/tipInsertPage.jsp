@@ -11,6 +11,8 @@
 <title>팁 작성하기 | ITSO</title>
 
 
+
+
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -26,9 +28,9 @@
 
 <script src="ckeditor/ckeditor.js"></script>
 
-	<!-- JQuery 원래 밑에 있었음-->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- JQuery 원래 밑에 있었음-->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 <style>
@@ -53,7 +55,8 @@
 
 <body>
 
-	<%@include file="navi.jsp" %>
+	<!-- navi -->
+	<%@include file="navi.jsp"%>
 
 
 	<!-- Material input text -->
@@ -109,7 +112,6 @@
 
 		<textarea name="editorTA" id="editorTA" required></textarea>
 		<div id=btns class="container mt-3">
-			<!-- 		<button id=tempSave type=button class="btn btn-indigo btn-sm">임시저장</button> -->
 			<button id=writeBtn type=submit class="btn btn-indigo">올리기</button>
 		</div>
 
@@ -120,17 +122,16 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="modalTitle">성공!</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+<!-- 						<button type="button" class="close" data-dismiss="modal" -->
+<!-- 							aria-label="Close"> -->
+<!-- 							<span aria-hidden="true">&times;</span> -->
+<!-- 						</button> -->
 					</div>
 					<div class="modal-body" id="modalBody">글 등록 성공!</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-indigo" id="modalConfirmBtn"
 							data-dismiss="modal"
-							onclick="javascript:location.href='tipBoardHome.go'">게시물
-							확인</button>
+							onclick="javascript:location.href'tipBoardMainPage.go'">팁 게시판으로</button>
 					</div>
 				</div>
 			</div>
@@ -138,7 +139,7 @@
 	</div>
 
 
-<!-- script -->
+	<!-- script -->
 	<script>
 		window.onload = function() {
 
@@ -198,16 +199,26 @@
 							success : function(response) {
 								if (response != null) {
 
+									console.log("DB insert success");
+
+									$("#modalTitle").html("성공!");
+									$("#modalBody").html("글쓰기 성공!")
+									$("#modalConfirmBtn").html("팁 게시판으로");
+									$("#modalConfirmBtn")
+											.attr("onclick",
+													"javascript:location.href='tipBoardMainPage.go'")
+
 									$("#insertSuccessModal").modal('show');
 
 								}
 							},
 							error : function(response) {
 
+								console.log("DB insert Failed")
 								console.log(response);
 
 								$("#modalTitle").html("실패!");
-								$("#modalBody").html("글쓰기 실패! 관리자에게 문의하세요")
+								$("#modalBody").html("글쓰기 실패! 제목, 카테고리, 내용을 모두 적으셔야 합니다.")
 								$("#modalConfirmBtn").html("닫기");
 								$("#modalConfirmBtn")
 										.attr("onclick",

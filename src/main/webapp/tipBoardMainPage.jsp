@@ -37,10 +37,12 @@
 
 <body>
 
+<!-- navi -->
+	<%@include file="navi.jsp"%>
 
 
-
-    <div id=wrapper class=container>
+	<!-- tip board main page -->
+	<div id=wrapper class=container>
 
 
         <div id="bestTipList" class="mt-4">
@@ -70,7 +72,7 @@
                             <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
                             
                             <div>
-                            <button type="button" class=" btn btn-light-blue btn-md">읽기</button>
+                            <button type="button" class=" btn btn-indigo btn-md">읽기</button>
                             <a><i class=" fa mr-2 fa-heart red-text" aria-hidden="true"></i>259</a>
                             <a><i class="fa mr-2 fa-share-alt green-text" aria-hidden="true"></i>82</a> 
                             <a><i class="fa mr-2 fa-comment amber-text" aria-hidden="true"></i>82</a> 
@@ -100,7 +102,7 @@
                             <!--Text-->
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                            <button type="button" class="btn btn-light-blue btn-md">읽기</button>
+                            <button type="button" class="btn btn-indigo btn-md">읽기</button>
 
                         </div>
 
@@ -126,7 +128,7 @@
                             <!--Text-->
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                            <button type="button" class="btn btn-light-blue btn-md">읽기</button>
+                            <button type="button" class="btn btn-indigo btn-md">읽기</button>
 
                         </div>
 
@@ -154,7 +156,7 @@
                             <!--Text-->
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                            <button type="button" class="btn btn-light-blue btn-md">읽기</button>
+                            <button type="button" class="btn btn-indigo btn-md">읽기</button>
 
                         </div>
 
@@ -180,7 +182,7 @@
                             <!--Text-->
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                            <button type="button" class="btn btn-light-blue btn-md">읽기</button>
+                            <button type="button" class="btn btn-indigo btn-md">읽기</button>
 
                         </div>
 
@@ -207,7 +209,7 @@
                             <!--Text-->
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                             <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                            <button type="button" class="btn btn-light-blue btn-md">읽기</button>
+                            <button type="button" class="btn btn-indigo btn-md">읽기</button>
 
                         </div>
 
@@ -338,6 +340,13 @@
                     </div>
                 </div>
             </div>
+            
+            
+            <div class=container>
+            
+            <button class="btn btn-indigo" onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
+            </div>
+            
         </div>
     </div>
 
