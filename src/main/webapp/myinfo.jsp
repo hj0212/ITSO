@@ -85,7 +85,7 @@ body {
 				</div>
 				<div class="md-form">
 					<input type="text" id="inputMDEx" class="form-control"
-						value="test@test.com" readonly> <label for="inputMDEx">email</label>
+						value="${sessionScope.user.email }" readonly> <label for="inputMDEx">email</label>
 				</div>
 				<form action="editProfile.do" method="post">
 					<div class="md-form">
