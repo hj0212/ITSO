@@ -62,4 +62,11 @@ public class FileController {
 		System.out.println("저기");
 		return "redirect:myinfo.go";
 	}
+	
+	@RequestMapping("/uploadSocialImg.sns")
+	public 
+	
+	
+
+	
 }
