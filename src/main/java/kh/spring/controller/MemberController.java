@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +37,7 @@ public class MemberController {
 		mav.addObject("result",result.size());
 		mav.setViewName("loginProc.jsp");
 		return mav;
+		
 	}
 	
 	@RequestMapping("/login.go")
@@ -51,8 +53,10 @@ public class MemberController {
 		return mav;
 	}
 	@RequestMapping("/signin.do")
-	public ModelAndView SigninProc(MemberDTO dto) {
+	public ModelAndView SigninProc(String mail,String pw, String name,int age) {
 		ModelAndView mav = new ModelAndView();
+	
+		MemberDTO dto = new MemberDTO(mail,pw,name,age);
 		int result = service.insertUserData(dto);
 		mav.addObject("result", result);
 		mav.setViewName("signinProc.jsp");
@@ -68,11 +72,12 @@ public class MemberController {
 		return "redirect:myinfo.jsp";
 	}
 	
-	@RequestMapping("editProfile.do")
-	public String updateProfile(MemberDTO dto) {
+	public String updateProfile(MemberDTO dto, HttpSession session) {
 		int result = service.updateUserData(dto);
 		String resultmsg = result>0?"성공":"실패";
 		System.out.println(resultmsg);
+		session.setAttribute("user", dto);
 		return "redirect:mypage.go";
 	}
+	
 }

@@ -138,8 +138,6 @@ $(document).ready(function () {
 
     $("#signup").click(function () {
         $(".sign").show("slow");
-        $("#signup").text("Sign In");
-        $("#signup").attr("id", "signin");
         $("#login").hide();
         $(".login").hide();
         $(".form-control").val("");
@@ -147,9 +145,7 @@ $(document).ready(function () {
 
     $("#cancel").click(function () {
         $("#login").show();
-        $(".sign").hide("slow");
-        $("#signin").text("Sign Up");
-        $("#signin").attr("id", "signup");
+        $(".sign").hide();
         $(".login").show();
         $(".form-control").val("");
     });
@@ -233,10 +229,15 @@ $(document).ready(function () {
             });
 
     /*login button click event*/
-    $("#signin").on('click', function () {
+ /*    $("#signin").on('click', function () {
         $("userform").attr("action", "signin.do");
     });
-
+ */
+    $("#signin").click(function(){
+    	$("#userform").attr("action","signin.do");
+    	$("#userform").submit();
+    });
+ 
     $("#login").click(function () {
         $("#userform").attr("action", "login.do");
         $("#userform").submit();
@@ -317,8 +318,11 @@ $(document).ready(function () {
 					<div id="login-bt-group" style="text-align: center;">
 						<button type="button" class="btn aqua-gradient" id="login"
 							name="login">User Login</button>
-						<button type="button" class="btn " id="signup" name="signup">Sign
+						<button type="button" class="btn login" id="signup" name="signup">Sign
 							UP</button>
+							
+							<button type="button" class="btn sign" id="signin" name="signin">Sign
+							in</button>
 						<button class="btn sign" id="cancel" type="button">Cancel</button>
 					</div>
 					<!--password 찾기-->
