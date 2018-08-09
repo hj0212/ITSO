@@ -5,9 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>It So</title>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -131,142 +132,121 @@ body, html {
 	border: 2px solid #feff19;
 }
 </style>
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	crossorigin="anonymous"></script>
 <script>
-	$(document)
-			.ready(
-					function() {
-						$(".sign").hide();
+$(document).ready(function () {
+    $(".sign").hide();
 
-						$("#signup").click(function() {
-							$(".sign").show("slow");
-							$("#signup").text("Sign In");
-							$("#signup").attr("id", "signin");
-							$("#login").hide();
-							$(".login").hide();
-							$(".form-control").val("");
-						});
+    $("#signup").click(function () {
+        $(".sign").show("slow");
+        $("#signup").text("Sign In");
+        $("#signup").attr("id", "signin");
+        $("#login").hide();
+        $(".login").hide();
+        $(".form-control").val("");
+    });
 
-						$("#cancel").click(function() {
-							$("#login").show();
-							$(".sign").hide("slow");
-							$("#signin").text("Sign Up");
-							$("#signin").attr("id", "signup");
-							$(".login").show();
-							$(".form-control").val("");
-						});
-						/*input regex*/
-						/*email*/
-						document.getElementById("inputIconEx1").onblur = function() {
-							var email = $("#inputIconEx1").val();
+    $("#cancel").click(function () {
+        $("#login").show();
+        $(".sign").hide("slow");
+        $("#signin").text("Sign Up");
+        $("#signin").attr("id", "signup");
+        $(".login").show();
+        $(".form-control").val("");
+    });
+    /*input regex*/
+    /*email*/
+    document.getElementById("inputIconEx1").onblur = function () {
+        var email = $("#inputIconEx1").val();
 
-							if (!emailCheck(email)) {
-								$("#inputIconEx1").val("");
-								console.log("emali형식이 맞지않습니다");
-							}
-							function emailCheck(email) {
-								var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-								return regex.test(email);
-							}
-						};
+        if (!emailCheck(email)) {
+            $("#inputIconEx1").val("");
+            console.log("emali형식이 맞지않습니다");
+        }
 
-						/*ajax */
-						document.getElementById("email").onblur = function() {
-							var email = $("#email").val();
-							if (!emailCheck(email)) {
-								$("#email").val("");
-								console.log("emali형식이 맞지않습니다");
-							}
-							function emailCheck(email) {
-								var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-								return regex.test(email);
-							}
-							
-							console.log(email);
-							$.ajax({
-								url : "emailcheck.ajax",
-								type : "post",
-								data : {
-									email : email
-								},
-								success : function(data) {
-									console.log("들어옴" + data),
-									$("#emailIcon").attr("class", data);																	  
-								    iconColor(data);
-								}
-							});
-						};
-						
-						function iconColor(data){
-							console.log(data+"1");
-							  if(data.indexOf("fa-close")>-1){
-								  	console.log(data+"2");
-							    	$("#email").val("");
-							    	$("#email").focus();
-							    	$("#emailIcon").css("color","red");
-							    }else{
-							    	$("#emailIcon").css("color","green");
-							    }
-						}
+        function emailCheck(email) {
+            var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            return regex.test(email);
+        }
+    };
 
-						/*password*/
-						$("#inputValidationEx2")
-								.keypress(
-										function() {
-											var password = $(
-													"#inputValidationEx2")
-													.val();
+    /*ajax */
+    document.getElementById("email").onblur = function () {
+        var email = $("#email").val();
+        if (!emailCheck(email)) {
+            $("#email").val("");
+            console.log("emali형식이 맞지않습니다");
+        }
 
-											if (blank(password)) {
-												console.log(password);
-												var regex = /\s/g;
-												document
-														.getElementById("inputValidationEx2").value = document
-														.getElementById("inputValidationEx2").value
-														.replace(regex, "");
-											}
-											;
+        function emailCheck(email) {
+            var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            return regex.test(email);
+        }
 
-											function blank(password) {
-												var regex = /\s/g;
-												return regex.test(password);
-											}
-											;
-										});
+        console.log(email);
+        $.ajax({
+            url: "emailcheck.ajax",
+            type: "post",
+            data: {
+                email: email
+            },
+            success: function (data) {
+                console.log("들어옴" + data),
+                    $("#emailIcon").attr("class", data);
+                iconColor(data);
+            }
+        });
+    };
 
-						/*login button click event*/
-						$("#signin").on('click',function(){
-							$("userform").attr("action", "signin.do");
-						});
+    function iconColor(data) {
+        console.log(data + "1");
+        if (data.indexOf("fa-close") > -1) {
+            console.log(data + "2");
+            $("#email").val("");
+            $("#email").focus();
+            $("#emailIcon").css("color", "red");
+        } else {
+            $("#emailIcon").css("color", "green");
+        }
+    }
 
-						$("#login").click(function() {
-							$("#userform").attr("action", "login.do");
-							$("#userform").submit();
-						});
+    /*password*/
+    $("#inputValidationEx2")
+        .keypress(
+            function () {
+                var password = $(
+                        "#inputValidationEx2")
+                    .val();
 
-					});
+                if (blank(password)) {
+                    console.log(password);
+                    var regex = /\s/g;
+                    document
+                        .getElementById("inputValidationEx2").value = document
+                        .getElementById("inputValidationEx2").value
+                        .replace(regex, "");
+                };
+
+                function blank(password) {
+                    var regex = /\s/g;
+                    return regex.test(password);
+                };
+            });
+
+    /*login button click event*/
+    $("#signin").on('click', function () {
+        $("userform").attr("action", "signin.do");
+    });
+
+    $("#login").click(function () {
+        $("#userform").attr("action", "login.do");
+        $("#userform").submit();
+    });
+
+});
+
 </script>
-
-
 </head>
-
 <body>
-
-
-	<!-- JQuery -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Bootstrap tooltips -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
-	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<!-- MDB core JavaScript -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 
 	<!--back ground-->
 	<div class="bg view overlay">
@@ -325,15 +305,13 @@ body, html {
 					<div class="row sign" style="width: 100%">
 						<div class="md-form " style="width: 100%">
 							<i class="fa fa-asterisk prefix" style="color: white"></i> <input
-								type="text" id="Age" class="form-control " name="age"
+								type="text" id="Age" class="form-control" name="age"
 								style="color: white"> <label for="Age"
 								data-error="wrong" data-success="right" style="color: white">
 								Age</label>
 						</div>
 					</div>
 					<!--gender-->
-
-
 
 					<!--button group-->
 					<div id="login-bt-group" style="text-align: center;">
@@ -349,8 +327,6 @@ body, html {
 							href="../findPw.jsp" style="margin-right: 0px">Forgot
 								Password?</a></span>
 					</div>
-
-
 				</div>
 			</form>
 			<div id="other-bt-group" style="text-align: center;">
@@ -367,26 +343,29 @@ body, html {
 				<!-- Facebook -->
 				<button type="button" class="btn-floating btn-lg btn-fb"
 					id="facebook">
-					<i class="fa fa-facebook"></i>
+					<i class="fab fa-facebook-f"></i>
 				</button>
 				<button type="button" class="btn-floating btn-lg btn-tw"
 					id="twitter">
-					<i class="fa fa-twitter"></i>
+					<i class="fab fa-twitter"></i>
 				</button>
 				<!--Google +-->
 				<button type="button" class="btn-floating btn-lg btn-gplus"
 					id="google">
-					<i class="fa fa-google-plus"></i>
+					<i class="fab fa-google-plus-g"></i>
 				</button>
-
 			</div>
-
-
-
 		</div>
-
-
 	</div>
-
 </body>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+
 </html>

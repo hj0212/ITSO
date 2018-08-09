@@ -10,5 +10,4 @@ public interface IMemberService {
   public int updateUserData(MemberDTO dto);
   public int deleteUserData(MemberDTO dto);
   public List<MemberDTO> emailExist(String email);
-  
 }

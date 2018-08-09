@@ -10,7 +10,7 @@ import kh.spring.interfaces.IMemberDAO;
 import kh.spring.interfaces.IMemberService;
 
 @Service
-public class ServiceImpl implements IMemberService {
+public class MemberServiceImpl implements IMemberService {
 
 	@Autowired
 	private IMemberDAO dao;
