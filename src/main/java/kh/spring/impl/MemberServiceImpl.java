@@ -24,7 +24,11 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	public int insertUserData(MemberDTO dto) {
-		// TODO Auto-generated method stub
+		dto.setPart("home");
+		dto.setBlock("n");
+		dto.setState(" ");
+		dto.setPhoto("1.jpge");
+		dto.setWithdrawal("n");
 		return this.dao.insertUserData(dto);
 	}
 
