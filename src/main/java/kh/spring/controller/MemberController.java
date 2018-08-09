@@ -69,10 +69,12 @@ public class MemberController {
 	}
 	
 	@RequestMapping("editProfile.do")
-	public String updateProfile(MemberDTO dto) {
+	public String updateProfile(MemberDTO dto, HttpSession session) {
+		System.out.println("controller: " + dto.getName()+":"+ dto.getState()+":"+dto.getAge());
 		int result = service.updateUserData(dto);
 		String resultmsg = result>0?"성공":"실패";
 		System.out.println(resultmsg);
+		session.setAttribute("user", dto);
 		return "redirect:mypage.go";
 	}
 }
