@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
+	 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -224,6 +227,8 @@ a#MOVE_TOP_BTN {
 		<!-- 드랍박스메뉴종료 -->
 
 		<!-- 포토컨테이너시작 -->
+		<c:choose>
+		<c:when test="${fn:length(result) > 0}">
 		<c:forEach items="${result}" var="list">
 
 		<section class="thirdSection col-md-12">
@@ -255,10 +260,15 @@ a#MOVE_TOP_BTN {
 			</div>
 
 		</div>
-		</section>
-		
-		
+		</section>		
 	</c:forEach>
+	</c:when>
+	<c:otherwise>
+	<tr>
+	<td colspan="3">게시글이 없습니다,</td>
+	</tr>
+	</c:otherwise>
+	</c:choose>
 	
 		<!-- 포토컨테이너종료 -->
 		

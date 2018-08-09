@@ -11,6 +11,7 @@ import kh.spring.interfaces.ISocialBoardService;
 
 @Service
 public class SocialBoardServiceImpl implements ISocialBoardService{
+	
 	@Autowired
 	private ISocialBoardDAO dao;
 

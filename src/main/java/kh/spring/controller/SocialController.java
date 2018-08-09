@@ -15,7 +15,7 @@ public class SocialController {
 	@Autowired
 	private ISocialBoardService service;
 	
-	@RequestMapping("/showSocialBoardList.go")
+	@RequestMapping("/Main2.go")
 	public ModelAndView showSocialBoardList(SocialBoardDTO dto) {	
 		System.out.println(dto.getSocial_title() + " : " + dto.getSocial_writer());
 		List<SocialBoardDTO> result = this.service.showSocialBoardList();
