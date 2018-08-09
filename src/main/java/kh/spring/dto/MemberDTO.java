@@ -14,6 +14,15 @@ public class MemberDTO {
 	private String photo;
 	private String withdrawal;
 	private String state;
+	
+	
+	public MemberDTO(String email, String pw, String name,Integer age) {
+		this.email = email;
+		this.pw = pw;
+		this.name = name;
+		this.age = age;
+	}
+	
 	public int getSeq() {
 		return seq;
 	}
