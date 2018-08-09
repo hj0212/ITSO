@@ -121,7 +121,13 @@
 					async: true,
 					success : function(response) {
 						if (response != null) {
-							alert("test");
+							
+							
+							
+							<!--Success message-->
+							<a class="btn btn-success" onclick="toastr.success('Hi! I am success message.');">성공!</a>
+						
+							
 						}
 					},
 					error : function(response) {
@@ -132,6 +138,7 @@
 		}
 	</script>
 
+<section id="resultSection"></section>
 
 	<!-- JQuery -->
 	<script type="text/javascript"
