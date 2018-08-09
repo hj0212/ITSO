@@ -33,7 +33,7 @@ public class MemberDAOImpl implements IMemberDAO{
 	@Override
 	public int updateUserData(MemberDTO dto) {
 		// TODO Auto-generated method stub
-		return 0;
+		return template.update("Member.updateData",dto);
 	}
 
 	@Override
