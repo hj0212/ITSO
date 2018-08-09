@@ -31,4 +31,10 @@ public class TipController {
 
 		return result;
 	}
+	
+	
+	@RequestMapping("tipBoardHome.go")
+	public String goTipBoardHome() {
+		return "redirect:tipBoardHome.jsp";
+	}
 }
