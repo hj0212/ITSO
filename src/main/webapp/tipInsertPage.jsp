@@ -60,7 +60,7 @@
 	<!-- category -->
 	<div class="md-form input-group">
 		<input class='form-control' type="text" id="category"
-			placeholder="카테고리" name="category" readonly required>
+			placeholder="카테고리" name="category" readonly required data-toggle="tooltip" data-placement="top" title="오른쪽 '카테고리' 버튼을 눌러 선택해주세요.">
 
 		<div class="input-group-append">
 			<button class="btn btn-elegant dropdown-toggle" type="button"
@@ -124,6 +124,11 @@
 	<script>
 		window.onload = function() {
 
+			// Tooltips Initialization
+			$(function () {
+			  $('[data-toggle="tooltip"]').tooltip()
+			})
+			
 			// Ckeditor Init
 			let editor = CKEDITOR
 					.replace(
@@ -180,6 +185,8 @@
 					},
 					error : function(response) {
 
+						console.log(response);
+						
 						$("#modalTitle").html("실패!");
 						$("#modalBody").html("글쓰기 실패! 관리자에게 문의하세요")
 						$("#modalConfirmBtn").html("닫기");
@@ -191,6 +198,8 @@
 					}
 				});
 			}
+
+		
 		};
 	</script>
 
