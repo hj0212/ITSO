@@ -9,7 +9,7 @@
 		insert into users values(users_seq.nextval,#{email},#{pw},#{name},NULL,NULL,home,sysdate,n,1.jpg,n,NULL,#{age})
 	</insert>
 	<update id="updateData" parameterType="dto">
-		update users set pw=#{pw}, name=#{name}, photo=#{photo}, state=#{state}, age=#{age} where seq=#{seq}
+		update users set pw=#{pw}, name=#{name}, state=#{state}, age=#{age} where seq=#{seq}
 	</update>
 	<update id="updateImage" parameterType="dto">
 		update users set photo=#{photo} where seq=#{seq}

@@ -450,16 +450,16 @@ $(document).ready(function () {
 				<!-- Facebook -->
 				<button type="button" class="btn-floating btn-lg btn-fb"
 					id="facebook">
-					<i class="fa fa-facebook"></i>
+					<i class="fab fa-facebook-f"></i>
 				</button>
 				<button type="button" class="btn-floating btn-lg btn-tw"
 					id="twitter">
-					<i class="fa fa-twitter"></i>
+					<i class="fab fa-twitter"></i>
 				</button>
 				<!--Google +-->
 				<button type="button" class="btn-floating btn-lg btn-gplus"
 					id="google">
-					<i class="fa fa-google-plus"></i>
+					<i class="fab fa-google-plus-g"></i>
 				</button>
 			</div>
 		</div>

@@ -3,6 +3,7 @@ package kh.spring.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +27,6 @@ public class MemberController {
 		System.out.println(dto.getEmail()+":"+dto.getPw());
 		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = service.loginExist(dto);
-<<<<<<< HEAD
-		mav.addObject("result", result);
-	
-		System.out.println(result);
-=======
 		if(result.size()>0) {
 			session.setMaxInactiveInterval(60*60);
 			MemberDTO user = result.get(0);
@@ -38,7 +34,6 @@ public class MemberController {
 			System.out.println(dto.getEmail());
 		}
 		mav.addObject("result",result.size());
->>>>>>> master
 		mav.setViewName("loginProc.jsp");
 		return mav;
 	}
@@ -71,5 +66,13 @@ public class MemberController {
 	@RequestMapping("/myinfo.go")
 	public String goMyinfo() {
 		return "redirect:myinfo.jsp";
+	}
+	
+	@RequestMapping("editProfile.do")
+	public String updateProfile(MemberDTO dto) {
+		int result = service.updateUserData(dto);
+		String resultmsg = result>0?"성공":"실패";
+		System.out.println(resultmsg);
+		return "redirect:mypage.go";
 	}
 }
