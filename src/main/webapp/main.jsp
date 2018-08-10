@@ -65,18 +65,35 @@ body {
 	#rightfix {
 		display: none;
 	}
+	#sidefooter{
+		display: none;
+	}
 }
 
 .avatar {
 	margin-bottom: 5px;
 }
 
-#rightfix {
-	
+#rightfix {	
 	width: 300px;
 	top: 20%;
 	right: 50px;
 	position: fixed;
+}
+#sidefooter{
+	width: 300px;
+	bottom:0px;
+	right: 50px;
+	position: fixed;
+	border-top: 2px solid black;
+}
+#sidefooter p{
+	font-style: oblique;
+}
+#sidefooter p a{
+	font-style: oblique;
+	color: black;
+
 }
 .media-body {
 	height: 70px;
@@ -88,6 +105,7 @@ body {
 	cursor: pointer;
 
 }
+
 
 
 
@@ -338,10 +356,19 @@ body {
 						
 					</div></li>
 			</ul>
-
-
-
 		</div>
+		<!--side footer -->
+		<div id="sidefooter">
+			<p>©2018 ItSo. All rights reserved.</p>
+			<p>
+			<a href="#">language</a>·
+			<a href="#">help</a>·
+			<a href="#">widgets</a>·
+			<a href="#">advertise</a>·
+			<a href="#">legal</a>	
+			</p>		
+		</div>
+		
 	</div>
 </body>
 <!-- JQuery -->

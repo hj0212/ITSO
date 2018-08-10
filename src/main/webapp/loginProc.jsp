@@ -17,7 +17,7 @@
    <c:otherwise>
    <script>
     alert("로그인에 실패하였습니다");
-    location.href="loginMain.do";
+    location.href="login.go";
    </script>
    </c:otherwise>
   </c:choose>

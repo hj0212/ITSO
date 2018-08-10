@@ -131,10 +131,25 @@ body, html {
 #cancel:hover {
 	border: 2px solid #feff19;
 }
+#gender{
+	border:0px;
+	border-bottom: 1px solid white;
+	width: 80%;
+	margin: 0px auto;
+	color: white;
+}
+.yes{
+	color: blue;
+}
+#gender #g{
+color: black;
+}
+
 </style>
 <script>
 $(document).ready(function () {
     $(".sign").hide();
+ 
 
     $("#signup").click(function () {
         $(".sign").show("slow");
@@ -242,6 +257,8 @@ $(document).ready(function () {
         $("#userform").attr("action", "login.do");
         $("#userform").submit();
     });
+    
+  
 
 });
 
@@ -313,6 +330,16 @@ $(document).ready(function () {
 						</div>
 					</div>
 					<!--gender-->
+					<div class="row sign" style="width: 100%">
+						<div class="md-form " style="width: 100%">
+							<i class="fa fa-venus-mars prefix" style="color: white"></i> 
+							<select class="form-control" id="gender" name="gender" >
+								<option value="" id="g" disabled selected>Gender</option>
+								<option value="m" id="m" class="yes">Male</option>
+								<option value="f" id="f" class="yes">Female</option>
+							</select>
+						</div>
+					</div>
 
 					<!--button group-->
 					<div id="login-bt-group" style="text-align: center;">
@@ -320,8 +347,8 @@ $(document).ready(function () {
 							name="login">User Login</button>
 						<button type="button" class="btn login" id="signup" name="signup">Sign
 							UP</button>
-							
-							<button type="button" class="btn sign" id="signin" name="signin">Sign
+
+						<button type="button" class="btn sign" id="signin" name="signin">Sign
 							in</button>
 						<button class="btn sign" id="cancel" type="button">Cancel</button>
 					</div>
