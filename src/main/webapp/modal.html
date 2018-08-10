@@ -8,14 +8,13 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
 
     <!--   ---------CDN 모음 끝------------------------------------------  -->
-
     <style>
         @font-face {
             font-family: 'NanumbarunpenR';
@@ -30,6 +29,7 @@
         body {
             font-family: 'NanumbarunpenR';
             margin: 0px;
+            box-sizing: border-box;
         }
 
         nav {
@@ -42,108 +42,364 @@
         }
 
         /*-------------------------------------*/
+
+        #collectionarea {
+            text-align: center;
+        }
+
+        @media (max-width: 575px) {
+            .collectionItem {
+                width: 80%;
+            }
+        }
+
+        @media (min-width: 576px) and (max-width: 991px) {
+            .collectionItem {
+                width: 50%;
+                float: left;
+            }
+        }
+
+        @media (min-width: 991px) {
+            .collectionItem {
+                width: 30%;
+
+            }
+        }
+
+        .collectionItem {
+            display: inline-block;
+            margin: 0 auto !important;
+            background: white;
+
+        }
+
+        .collectionItem:hover {
+            transform: scale(1.05);
+            transition: all 0.1s ease-in-out;
+        }
+
+
+        .collectionPhoto {
+            width: 100%;
+            height: auto;
+            margin: 1px;
+        }
+
+        .collectionPhoto td {
+            overflow: hidden;
+        }
+
+        .collectionPhoto img {
+            width: 100%;
+        }
+
+        /*체크아이콘*/
+
+        .check {
+            width: 136px;
+            height: 136px;
+            background: #e5e5e5;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -moz-transform: translateX(-50%) translateY(-50%);
+            -ms-transform: translateX(-50%) translateY(-50%);
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            -moz-box-shadow: 0px -4px 4px 0px rgba(255, 255, 255, 0.75), inset 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
+            -webkit-box-shadow: 0px -4px 4px 0px rgba(255, 255, 255, 0.75), inset 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
+            box-shadow: 0px -4px 4px 0px rgba(255, 255, 255, 0.75), inset 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+        }
+
+        .check:before {
+            content: "";
+            background: #fff;
+            position: absolute;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            top: 9%;
+            left: 9%;
+            right: 9%;
+            bottom: 9%;
+            -moz-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
+            -webkit-box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.08);
+        }
+
+        .check:after {
+            content: "";
+            position: absolute;
+            -moz-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-color: #60b247;
+            border-width: 0;
+            border-style: solid;
+        }
+
+        .check .check-icon {
+            position: absolute;
+            z-index: 3;
+            top: 31%;
+            left: 28%;
+            width: 45%;
+            fill: #e5e5e5;
+        }
+
+        .check.active:after {
+            -moz-transition: ease-out 0.1s all;
+            -o-transition: ease-out 0.1s all;
+            -webkit-transition: ease-out 0.1s all;
+            transition: ease-out 0.1s all;
+            border-width: 68px;
+        }
+
+        .check.active .check-icon {
+            fill: #fff;
+            -moz-animation: bounce 0.2s;
+            -webkit-animation: bounce 0.2s;
+            animation: bounce 0.2s;
+            -moz-animation-delay: 0.08s;
+            -webkit-animation-delay: 0.08s;
+            animation-delay: 0.08s;
+        }
+
+        @-moz-keyframes bounce {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @-webkit-keyframes bounce {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
     </style>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark" id="nav1"> <a class="navbar-brand" href="#"><img id="logo" alt=""
+    <nav class="navbar navbar-expand-lg navbar-dark" id="nav1"> <a class="navbar-brand" href="#"><img id="logo" alt=""
 		src="logo_white_no.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-    <div class="collapse navbar-collapse" id="navbar1">
-        <ul class="navbar-nav mr-auto" id="menu">
-            <li class="nav-item"><a class="nav-link" href="#">스타일 피드 <!-- <span class="sr-only">(current)</span> -->
+        <div class="collapse navbar-collapse" id="navbar1">
+            <ul class="navbar-nav mr-auto" id="menu">
+                <li class="nav-item"><a class="nav-link" href="#">스타일 피드 <!-- <span class="sr-only">(current)</span> -->
 			</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
-        </ul>
-        <form class="form-inline my-1">
-            <div class="md-form form-sm my-0">
-                <input class="form-control form-control-sm mr-sm-2 mb-0" type="text" placeholder="Search" aria-label="Search">
-            </div>
-            <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
-        </form>
-        <ul class="navbar-nav ml-auto nav-flex-icons">
-            <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
+                <li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
+            </ul>
+            <form class="form-inline my-1">
+                <div class="md-form form-sm my-0">
+                    <input class="form-control form-control-sm mr-sm-2 mb-0" type="text" placeholder="Search" aria-label="Search">
+                </div>
+                <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <ul class="navbar-nav ml-auto nav-flex-icons">
+                <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
 					class="far fa-bell"></i>알림
 			</a></li>
-            <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
+                <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
 					class="far fa-envelope"></i>메시지
 			</a></li>
-            <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
+                <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
 					class="fa fa-google-plus"></i>피드에 글쓰기
 			</a></li>
-            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="fa fa-user"></i>
 			</a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark" id="nav2">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2" aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
+                    <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <nav class="mb-1 navbar navbar-expand-lg navbar-dark" id="nav2">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2" aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-    <div class="collapse navbar-collapse" id="navbar2">
-        <ul class="navbar-nav mr-auto hide">
-            <li class="nav-item"><a class="nav-link" href="#">인기
+        <div class="collapse navbar-collapse" id="navbar2">
+            <ul class="navbar-nav mr-auto hide">
+                <li class="nav-item"><a class="nav-link" href="#">인기
 			</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">최신</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">팔로잉</a></li>
-        </ul>
+                <li class="nav-item"><a class="nav-link" href="#">최신</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">팔로잉</a></li>
+            </ul>
 
-        <ul class="navbar-nav mr-auto hide">
-            <li class="nav-item"><a class="nav-link" href="#">팁
+            <ul class="navbar-nav mr-auto hide">
+                <li class="nav-item"><a class="nav-link" href="#">팁
 			</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">스타일링</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
-        </ul>
+                <li class="nav-item"><a class="nav-link" href="#">스타일링</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
+            </ul>
 
-    </div>
-</nav>
+        </div>
+    </nav>
 
-<!-- Central Modal Medium Success -->
-<div class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <!--Content-->
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header">
-                <p class="heading lead">Modal Success</p>
+    <!-- Central Modal Medium Success -->
+    <div class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead mb-0">컬렉션으로 저장하기</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true" class="white-text">&times;</span>
-                                        </button>
-            </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <div id="modalbtnarea">
+                        <button class="btn btn-indigo"><i class="fas fa-plus"></i> 컬렉션 생성</button>
+                        <button class="btn btn-outline-indigo waves-effect" data-dismiss="modal">컬렉션 수정</button>
+                    </div>
 
-            <!--Body-->
-            <div class="modal-body">
-                <div class="text-center">
-                    <i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit iusto nulla aperiam
-                        blanditiis ad consequatur in dolores culpa, dignissimos, eius non possimus fugiat.
-                        Esse ratione fuga, enim, ab officiis totam.</p>
+                    <div id="collectionarea" class="mt-2">
+                        <!--<div class="collectionItem z-depth-1 mx-2">
+                            <table class="collectionPhoto" border="1">
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                            </table>
+                            <h4 class="mt-1 mb-1">collection</h4>
+                            <h6>컬렉션 설명</h6>
+                        </div>
+                        <div class="collectionItem z-depth-1 mx-2">
+                            <h6 class="mt-1 mb-1">collection</h6>
+                            <table class="collectionPhoto" border="1">
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                            </table>
+                            <h4 class="mt-1 mb-1">컬렉션 제목</h4>
+                            <h6>컬렉션 설명</h6>
+                        </div>-->
+                        <div class="collectionItem z-depth-1 mx-2">
+                            <div class="check">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="61" height="52" viewBox="0 0 61 52" class="check-icon">
+    <path d="M56.560,-0.010 C37.498,10.892 26.831,26.198 20.617,33.101 C20.617,33.101 5.398,23.373 5.398,23.373 C5.398,23.373 0.010,29.051 0.010,29.051 C0.010,29.051 24.973,51.981 24.973,51.981 C29.501,41.166 42.502,21.583 60.003,6.565 C60.003,6.565 56.560,-0.010 56.560,-0.010 Z" id="path-1" class="cls-2" fill-rule="evenodd"/>
+  </svg>
+                            </div>
+                            <h4 class="mt-1 mb-1">collection</h4>
+                            <h6>컬렉션 설명</h6>
+                            <table class="collectionPhoto" border="1">
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                            </table>
+                            <h6 class="mb-0" style="height: 19px;"></h6>
+                        </div>
+                        <div class="collectionItem z-depth-1 mx-2">
+                            <div class="check">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="61" height="52" viewBox="0 0 61 52" class="check-icon">
+    <path d="M56.560,-0.010 C37.498,10.892 26.831,26.198 20.617,33.101 C20.617,33.101 5.398,23.373 5.398,23.373 C5.398,23.373 0.010,29.051 0.010,29.051 C0.010,29.051 24.973,51.981 24.973,51.981 C29.501,41.166 42.502,21.583 60.003,6.565 C60.003,6.565 56.560,-0.010 56.560,-0.010 Z" id="path-1" class="cls-2" fill-rule="evenodd"/>
+  </svg>
+                            </div>
+                            <h4 class="mt-1 mb-1">collection</h4>
+                            <h6>컬렉션 설명</h6>
+                            <table class="collectionPhoto" border="1">
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                            </table>
+                            <h6 class="mb-0" style="height: 19px;"></h6>
+                        </div>
+                        <div class="collectionItem z-depth-1 mx-2">
+                            <div class="check">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="61" height="52" viewBox="0 0 61 52" class="check-icon">
+    <path d="M56.560,-0.010 C37.498,10.892 26.831,26.198 20.617,33.101 C20.617,33.101 5.398,23.373 5.398,23.373 C5.398,23.373 0.010,29.051 0.010,29.051 C0.010,29.051 24.973,51.981 24.973,51.981 C29.501,41.166 42.502,21.583 60.003,6.565 C60.003,6.565 56.560,-0.010 56.560,-0.010 Z" id="path-1" class="cls-2" fill-rule="evenodd"/>
+  </svg>
+                            </div>
+                            <h4 class="mt-1 mb-1">collection</h4>
+                            <h6>컬렉션 설명</h6>
+                            <table class="collectionPhoto" border="1">
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="background.jpg" alt=""></td>
+                                    <td><img src="background.jpg" alt=""></td>
+                                </tr>
+                            </table>
+                            <h6 class="mb-0" style="height: 19px;"></h6>
+                        </div>
+                    </div>
+
+
+
+
+
                 </div>
             </div>
-
-            <!--Footer-->
-            <div class="modal-footer justify-content-center">
-                <a type="button" class="btn btn-primary">Get it now <i class="fa fa-diamond ml-1"></i></a>
-                <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">No, thanks</a>
-            </div>
+            <!--/.Content-->
         </div>
-        <!--/.Content-->
     </div>
-</div>
-<!-- Central Modal Medium Success-->
+    <!-- Central Modal Medium Success-->
 
-<!-- Button trigger modal -->
-<div class="text-center">
-    <a href="" class="btn btn-default btn-rounded" data-toggle="modal" data-target="#centralModalSuccess">Launch Modal Success <i class="fa fa-eye ml-1"></i></a>
-</div>
+    <!-- Button trigger modal -->
+    <div class="text-center">
+        <a href="" class="btn btn-indigo btn-rounded" data-toggle="modal" data-target="#centralModalSuccess">Launch Modal Success <i class="fa fa-eye ml-1"></i></a>
+    </div>
 
 </body>
 <script>
@@ -173,18 +429,18 @@
             }
         }
     })
-    
-    $("#centralModalSuccess").on('show.bs.modal', function(){
-    	alert("Hello World!");
-	});
+
+    $("#collectionarea").on("click", ".collectionItem", function() {
+        /*$(this).css("background", "black");*/
+        $(this).children(".check").toggleClass('active');
+    })
+
 </script>
 <!-- Bootstrap tooltips -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+
 </html>
