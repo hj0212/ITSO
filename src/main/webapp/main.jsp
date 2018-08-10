@@ -99,11 +99,11 @@ body {
 
 		$(".heart").click(function() {
 			if (heartVal == 0) {
-				$(this).attr("class", "fa fa-heart red-text heart");
+				$(this).attr("class", "far fa-heart red-text heart");
 
 				heartVal = 1;
 			} else {
-				$(this).attr("class", "fa fa-heart-o red-text heart");
+				$(this).attr("class", "fas fa-heart red-text heart");
 				heartVal = 0;
 			}
 		});
@@ -138,7 +138,7 @@ body {
 					<div class="card-body">
 						<!--Title-->
 						<h4 class="card-title">
-							<a>김형섭</a><i class="fa fa-heart-o red-text heart"
+							<a>김형섭</a><i class="far fa-heart red-text heart"
 								aria-hidden="true" style="float: right;"><font color="black">0</font></i>
 						</h4>
 						<!--Text-->
@@ -185,7 +185,7 @@ body {
 					<div class="card-body">
 						<!--Title-->
 						<h4 class="card-title">
-							<a>김형섭</a><i class="fa fa-heart-o red-text heart"
+							<a>김형섭</a><i class="far fa-heart red-text heart"
 								aria-hidden="true" style="float: right;"><font color="black">0</font></i>
 						</h4>
 						<!--Text-->
@@ -232,7 +232,7 @@ body {
 					<div class="card-body">
 						<!--Title-->
 						<h4 class="card-title">
-							<a>김형섭</a><i class="fa fa-heart-o red-text heart"
+							<a>김형섭</a><i class="far fa-heart red-text heart"
 								aria-hidden="true" style="float: right;"><font color="black">0</font></i>
 						</h4>
 						<!--Text-->
@@ -279,7 +279,7 @@ body {
 					<div class="card-body">
 						<!--Title-->
 						<h4 class="card-title">
-							<a>김형섭</a><i class="fa fa-heart-o red-text heart"
+							<a>김형섭</a><i class="far fa-heart red-text heart"
 								aria-hidden="true" style="float: right;"><font color="black">0</font></i>
 						</h4>
 						<!--Text-->
