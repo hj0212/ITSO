@@ -2,6 +2,8 @@ package kh.spring.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,5 +28,16 @@ public class SocialController {
 	}
 	
 	
-
+	@RequestMapping("/test.go")
+	public ModelAndView test(HttpServletRequest request) {
+		System.out.println(request.getParameter("stylename"));
+		System.out.println(request.getParameter("stylecontent"));
+		System.out.println(request.getParameter("gender"));
+		System.out.println(request.getParameter("age"));
+		System.out.println(request.getParameter("taginfo"));
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("writeSocial.jsp");
+		return mav;
+	}
 }
