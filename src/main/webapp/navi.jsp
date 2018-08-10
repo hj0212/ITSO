@@ -60,7 +60,7 @@ nav {
 		</ul>
 		<!-- <form class="form-inline my-1">
             <div class="md-form form-sm my-0">
-                <input class="form-control form-control-sm mr-sm-2 mb-0" type="text" placeholder="Search" aria-label="Search">
+                <input class="form-control form-control-lg mr-lg-3 mb-0" type="text" placeholder="Search" aria-label="Search">
             </div>
             <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
         </form> -->
