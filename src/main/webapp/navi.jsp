@@ -45,15 +45,15 @@
         </form> -->
         <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
-					class="far fa-bell"></i>알림
+					class="far fa-bell"></i> 알림
 			</a></li>
             <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
-					class="far fa-envelope"></i>메시지
+					class="far fa-envelope"></i> 메시지
 			</a></li>
-            <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i class="fas fa-pen"></i>피드에 글쓰기
+            <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i class="fas fa-pen"></i> 피드에 글쓰기
 			</a></li>
             <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fa fa-user"></i>
+					<i class="fa fa-user"> </i>
 			</a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="mypage.go">마이페이지</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
@@ -75,7 +75,7 @@
         </ul>
 
         <ul class="navbar-nav mr-auto hide">
-            <li class="nav-item"><a class="nav-link" href="#">팁
+            <li class="nav-item"><a class="nav-link" href="tipBoardMainPage.go">팁
 			</a></li>
             <li class="nav-item"><a class="nav-link" href="#">스타일링</a></li>
             <li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
