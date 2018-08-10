@@ -52,8 +52,6 @@ body {
 
 <script>
 	$(document).ready(function() {
-
-		/* $("#profileImage").attr('src',"/WEB_06_18/file/${file_name}"); */
 		$("#imgbtn").click(function() {
 			$("#img_file").trigger("click");
 			$("#img_file").on('change', function() {

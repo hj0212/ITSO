@@ -5,19 +5,23 @@ public class CollectionDTO {
 	private String collection_title;
 	private String collection_contents;
 	private int writer;
+	private int social_seq;
 	private String photo;
 	
+	
+	
+	public CollectionDTO() {
+		super();
+	}
 	public CollectionDTO(int collection_seq, String collection_title, String collection_contents, int writer,
-			String photo) {
+			int social_seq, String photo) {
 		super();
 		this.collection_seq = collection_seq;
 		this.collection_title = collection_title;
 		this.collection_contents = collection_contents;
 		this.writer = writer;
+		this.social_seq = social_seq;
 		this.photo = photo;
-	}
-	public CollectionDTO() {
-		super();
 	}
 	public int getCollection_seq() {
 		return collection_seq;
@@ -43,11 +47,18 @@ public class CollectionDTO {
 	public void setWriter(int writer) {
 		this.writer = writer;
 	}
+	public int getSocial_seq() {
+		return social_seq;
+	}
+	public void setSocial_seq(int social_seq) {
+		this.social_seq = social_seq;
+	}
 	public String getPhoto() {
 		return photo;
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-		
+	
+	
 }

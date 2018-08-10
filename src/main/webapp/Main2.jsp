@@ -230,6 +230,10 @@ a#MOVE_TOP_BTN {
 .collectionPhoto img {
 	width: 100%;
 }
+
+.active {
+	border: 3px solid #21FCFF;
+}
 </style>
 </head>
 
@@ -266,7 +270,7 @@ a#MOVE_TOP_BTN {
 				<div class="dropdown-menu">
 					<a class="dropdown-item flex-center droptxt2" href="main.jsp">Full
 						view</a> <a class="dropdown-item flex-center droptxt2"
-						href="Main2.jsp">Tumbnail view</a>
+						href="main2.jsp">Tumbnail view</a>
 				</div>
 			</div>
 		</div>
@@ -359,19 +363,19 @@ a#MOVE_TOP_BTN {
 						<c:choose>
 						<c:when test="${not empty collectionList }">
 						<div id="collectionarea" class="mt-2">
-							<c:forEach items="${collectionList}" var="clist">
+							<c:set var="num" value="0"></c:set>
+							<c:forEach items="${collectionList}" var="clist" varStatus="status">
 							<div class="collectionItem z-depth-1 mx-2">
-
 								<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
 								<h6>${clist.collection_contents }</h6>
 								<table class="collectionPhoto" border="1">
 									<tr>
-										<td><img src="background.jpg" alt=""></td>
-										<td><img src="background.jpg" alt=""></td>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
 									</tr>
 									<tr>
-										<td><img src="background.jpg" alt=""></td>
-										<td><img src="background.jpg" alt=""></td>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
 									</tr>
 								</table>
 								<h6 class="mb-0" style="height: 19px;"></h6>
@@ -483,6 +487,19 @@ a#MOVE_TOP_BTN {
 			return false;
 		});
 	});
+	
+	$("#collectionarea").on("click", ".collectionItem", function() {
+        /*$(this).css("background", "black");*/
+        $(this).children(".check").toggleClass('active');
+    })
+
+    $("#createModal").on('show.bs.modal', function() {
+        $("#saveModal").hide();
+    });
+
+    $("#createModal").on('hidden.bs.modal', function() {
+        $("#saveModal").show();
+    });
 </script>
 
 
