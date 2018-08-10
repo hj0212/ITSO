@@ -14,4 +14,7 @@
 	<select id="deleteSocialBoard" parameterType="sdto">
 	 	delete from social where social_seq=#{social_seq}
 	</select>
+	<select id="getCollectionList" resultType="CollectionDTO">
+		select c1.*, c2.photo from (select c.collection_seq, c.social_seq, s.photo from collection_content c, social s where c.social_seq = s.social_seq) c2, collection c1 where c2.collection_seq = c1.collection_seq and c1.collection_writer = #{seq}
+	</select>
 </mapper>

@@ -23,7 +23,7 @@ public class MemberController {
 	@Autowired
 	private IMemberService service;
 	
-	@RequestMapping("/login1.do")
+	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO dto, HttpSession session) {
 		System.out.println(dto.getEmail()+":"+dto.getPw());
 		ModelAndView mav = new ModelAndView();
@@ -43,14 +43,7 @@ public class MemberController {
 	public String loginMain() {
 		return "redirect:login.jsp";
 	}
-	
-	@RequestMapping("/loginProc.do")
-	public ModelAndView loginProc(HttpSession session) {
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("main.jsp");
-		return mav;
-	}
+
 	@RequestMapping("/signin.do")
 	public ModelAndView SigninProc(String mail,String pw, String name,int age) {
 		ModelAndView mav = new ModelAndView();
@@ -61,6 +54,7 @@ public class MemberController {
 		mav.setViewName("signinProc.jsp");
 		return mav;
 	}
+	
 	@RequestMapping("/mypage.go")
 	public String goMypage() {
 		return "redirect:mypage.jsp";

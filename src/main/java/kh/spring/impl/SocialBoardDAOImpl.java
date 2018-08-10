@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.ISocialBoardDAO;
 
@@ -32,6 +34,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	@Override
 	public int deleteSocialBoard(SocialBoardDTO sdto) {
 		return template.delete("SocialBoard.deleteSocialBoard", sdto);
+	}
+
+	@Override
+	public List<CollectionDTO> getCollectionList(MemberDTO dto) {
+		return template.selectList("SocialBoard.getCollectionList", dto);
 	}
 
 }
