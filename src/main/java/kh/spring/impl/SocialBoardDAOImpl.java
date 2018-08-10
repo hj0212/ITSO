@@ -20,18 +20,18 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	}
 
 	@Override
-	public int insertSocialBoard(SocialBoardDTO dto) {
-		return template.insert("SocialBoard.insertSocialBoard", dto);
+	public int insertSocialBoard(SocialBoardDTO sdto) {
+		return template.insert("SocialBoard.insertSocialBoard", sdto);
 	}
 
 	@Override
-	public int updateSocialBoard(SocialBoardDTO dto) {
-		return template.update("SocialBoard.updateSocialBoard", dto);
+	public int updateSocialBoard(SocialBoardDTO sdto) {
+		return template.update("SocialBoard.updateSocialBoard", sdto);
 	}
 
 	@Override
-	public int deleteSocialBoard(SocialBoardDTO dto) {
-		return template.delete("SocialBoard.deleteSocialBoard", dto);
+	public int deleteSocialBoard(SocialBoardDTO sdto) {
+		return template.delete("SocialBoard.deleteSocialBoard", sdto);
 	}
 
 }

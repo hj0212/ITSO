@@ -21,18 +21,18 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
-	public int insertSocialBoard(SocialBoardDTO dto) {
-		return this.dao.insertSocialBoard(dto);
+	public int insertSocialBoard(SocialBoardDTO sdto) {
+		return this.dao.insertSocialBoard(sdto);
 	}
 
 	@Override
-	public int updateSocialBoard(SocialBoardDTO dto) {
-		return this.dao.updateSocialBoard(dto);
+	public int updateSocialBoard(SocialBoardDTO sdto) {
+		return this.dao.updateSocialBoard(sdto);
 	}
 
 	@Override
-	public int deleteSocialBoard(SocialBoardDTO dto) {
-		return this.dao.deleteSocialBoard(dto);
+	public int deleteSocialBoard(SocialBoardDTO sdto) {
+		return this.dao.deleteSocialBoard(sdto);
 	}
 
 }

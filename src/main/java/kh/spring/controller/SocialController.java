@@ -2,6 +2,8 @@ package kh.spring.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +17,9 @@ public class SocialController {
 	@Autowired
 	private ISocialBoardService service;
 	
-	@RequestMapping("/Main2.go")
-	public ModelAndView showSocialBoardList(SocialBoardDTO dto) {	
-		System.out.println(dto.getSocial_title() + " : " + dto.getSocial_writer());
+	@RequestMapping("/login.do")
+	public ModelAndView showSocialBoardList(SocialBoardDTO sdto ) {	
+		System.out.println(sdto.getSocial_title() + " : " + sdto.getSocial_writer());
 		List<SocialBoardDTO> result = this.service.showSocialBoardList();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("result",result);
