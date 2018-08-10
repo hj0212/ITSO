@@ -23,7 +23,7 @@ public class MemberController {
 	@Autowired
 	private IMemberService service;
 	
-	@RequestMapping("/login.do")
+	@RequestMapping("/login1.do")
 	public ModelAndView login(MemberDTO dto, HttpSession session) {
 		System.out.println(dto.getEmail()+":"+dto.getPw());
 		ModelAndView mav = new ModelAndView();
