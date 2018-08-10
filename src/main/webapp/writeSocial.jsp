@@ -124,15 +124,12 @@ body {
 						<div class="row">
 							<button type="button" onclick="removeUpload()"
 								class="remove-image btn btn-deep-purple">사진 바꾸기</button>
-							<button class="btn btn-deep-purple" id="nextbtn" type="button">다음
-								단계로</button>
-							<button class="btn btn-deep-purple" id="backbtn">취소</button>
+							<button class="btn btn-deep-purple" id="nextbtn" type="button">다음 단계로</button>
+							<input type="button" class="btn btn-deep-purple" id="backbtn" value="취소"></button>
 						</div>
 					</div>
 				</div>
-
 			</form>
-
 		</div>
 	</div>
 
