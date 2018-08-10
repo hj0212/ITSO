@@ -83,7 +83,7 @@
 		<div class="row">
 			<p>여기는 네비 인클루드</p>
 		</div>
-		<form>
+		<form method="post">
 			<div class="row" name="top">
 				<div class="md-form form-lg col-md-12">
 					<input type="text" id="stylename"

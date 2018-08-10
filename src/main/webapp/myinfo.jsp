@@ -50,7 +50,7 @@ body {
 }
 </style>
 
-<script>
+<script> 
 	$(document).ready(function() {
 
 		/* $("#profileImage").attr('src',"/WEB_06_18/file/${file_name}"); */
