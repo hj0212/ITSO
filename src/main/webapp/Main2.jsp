@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-	 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -174,7 +174,7 @@ body {
 a#MOVE_TOP_BTN {
 	position: fixed;
 	right: 2%;
-	width:100px;
+	width: 100px;
 	bottom: 100px;
 	display: none;
 	z-index: 999;
@@ -187,7 +187,7 @@ a#MOVE_TOP_BTN {
 
 <body>
 
-<%@include file="navi.jsp" %>
+	<%@include file="navi.jsp"%>
 
 	<div class="firstContainer col-md-8">
 
@@ -204,12 +204,12 @@ a#MOVE_TOP_BTN {
 
 		<!-- 메인인트로종료 -->
 
-		<!-- 드랍박스메뉴시작 -->		
-		
-		
-		
-		
-		<section class="secondSection col-md-12">		
+		<!-- 드랍박스메뉴시작 -->
+
+
+
+
+		<section class="secondSection col-md-12">
 		<div class="container">
 			<div class="btn-group">
 				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
@@ -227,51 +227,57 @@ a#MOVE_TOP_BTN {
 		<!-- 드랍박스메뉴종료 -->
 
 		<!-- 포토컨테이너시작 -->
-		<c:choose>
-		<c:when test="${fn:length(result) > 0}">
-		<c:forEach items="${result}" var="list">
+
 
 		<section class="thirdSection col-md-12">
+
+
 		<div class="gridPhotoContainer row">
 
-			<div class="gridPhoto col-lg-3 col-md-12 mb-3">
-				<a href="#"> <img src="resources/images/background.jpg"
-					class="img-fluid z-depth-2" alt="Responsive image">
-				</a>
-				<div class="photoContainer">
-					<div class="photoContainerHover z-depth-2">
-						<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
-						<p class="photoContainerHoverWriter">by ${list.social_writer}</p>
-						<img src="resources/images/background.jpg"
-							class="img-fluid z-depth-2" alt="Responsive image"
-							onclick="location='main.jsp'">
-						<button class="photoContainerButton1 btn btn-elegant"
-							id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
-							data-hover="+1">HYPE</button>
-						<button class="photoContainerButton2 btn btn-elegant"
-							id="hypeBtn2">default</button>
-						<dlv class="photoContainerHoverHashTag">
-						<P>
-							<span onclick="hashtag()">해쉬태그올곳</span>
-						</P>
-						</dlv>
-					</div>
-				</div>
-			</div>
+			<c:choose>
+				<c:when test="${fn:length(result) > 0}">
+					<c:forEach items="${result}" var="list">
 
+						<div class="gridPhoto col-lg-3 col-md-12 mb-3">
+							<a href="#"> <img src="resources/images/background.jpg"
+								class="img-fluid z-depth-2" alt="Responsive image">
+							</a>
+							<div class="photoContainer">
+								<div class="photoContainerHover z-depth-2">
+									<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
+									<p class="photoContainerHoverWriter">by
+										${list.social_writer}</p>
+									<img src="resources/images/background.jpg"
+										class="img-fluid z-depth-2" alt="Responsive image"
+										onclick="location='main.jsp'">
+									<button class="photoContainerButton1 btn btn-elegant"
+										id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
+										data-hover="+1">HYPE</button>
+									<button class="photoContainerButton2 btn btn-elegant"
+										id="hypeBtn2">default</button>
+									<div class="photoContainerHoverHashTag">
+										<P>
+											<span onclick="hashtag()">해쉬태그올곳</span>
+										</P>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+			<tr>
+				<td colspan="3">게시글이 없습니다,</td>
+			</tr>
+		</c:otherwise>
+		</c:choose>
 		</div>
-		</section>		
-	</c:forEach>
-	</c:when>
-	<c:otherwise>
-	<tr>
-	<td colspan="3">게시글이 없습니다,</td>
-	</tr>
-	</c:otherwise>
-	</c:choose>
-	
-		<!-- 포토컨테이너종료 -->
+		</section>
+
 		
+
+		<!-- 포토컨테이너종료 -->
+
 		<!-- top버튼 시작 -->
 
 		<a id="MOVE_TOP_BTN" href="#">TOP</a>
