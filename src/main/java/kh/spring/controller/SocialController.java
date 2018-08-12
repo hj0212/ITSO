@@ -22,10 +22,17 @@ public class SocialController {
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session) {
 		List<SocialBoardDTO> result = this.service.showSocialBoardList();
-		List<CollectionDTO> result2 = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 		ModelAndView mav = new ModelAndView();
+		
+		if((Integer)((MemberDTO)session.getAttribute("user")).getSeq() != null) {
+			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
+			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+			
+			mav.addObject("collectionList",collectionList);
+			mav.addObject("photoList",photoList);
+		}
+		
 		mav.addObject("socialList",result);
-		mav.addObject("collectionList",result2);
 		mav.setViewName("main2.jsp");
 		return mav;
 	}

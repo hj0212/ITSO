@@ -9,6 +9,7 @@ import kh.spring.dto.SocialBoardDTO;
 public interface ISocialBoardService {
 	public List<SocialBoardDTO> showSocialBoardList();
 	public List<CollectionDTO> getCollectionList(MemberDTO dto);
+	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto);
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
 	public int deleteSocialBoard(SocialBoardDTO sdto);

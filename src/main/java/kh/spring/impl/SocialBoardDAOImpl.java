@@ -41,4 +41,9 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.selectList("SocialBoard.getCollectionList", dto);
 	}
 
+	@Override
+	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto) {
+		return template.selectList("SocialBoard.getCollectionPhotoList", dto);
+	}
+
 }
