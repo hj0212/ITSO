@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SocialBoard">
+	<select id="showSocialBoardList" resultType="sdto">
+		select * from social;
+	</select>
+	<select id="insertSocialBoard" parameterType="sdto">
+		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, 1.jpg)
+	</select>
+	<select id="updateSocialBoard" parameterType="sdto">
+		
+	</select>
+	<select id="deleteSocialBoard" parameterType="sdto">
+	 	delete from social where social_seq=#{social_seq}
+	</select>
+</mapper>
