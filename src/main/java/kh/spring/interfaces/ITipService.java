@@ -22,5 +22,9 @@ public interface ITipService {
 
 	public int updateTipData(TipDTO dto);
 
+	public List<TipDTO> getThumpsUpData(int seq);
+
+	public int viewCountPlus(int seq);
+
 
 }

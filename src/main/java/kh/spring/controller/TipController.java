@@ -53,7 +53,10 @@ public class TipController {
 		List<TipDTO> dietTipData = service.getDietTipData();
 		List<TipDTO> fashionTipData = service.getFashionTipData();
 		List<TipDTO> businessTipData = service.getBusinessTipData();
-
+//		List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
+		
+		
+		
 		if (beautyTipData != null) {
 			System.out.println(beautyTipData.toString());
 
@@ -65,7 +68,9 @@ public class TipController {
 		mav.addObject("dietTipData", dietTipData);
 		mav.addObject("fashionTipData", fashionTipData);
 		mav.addObject("businessTipData", businessTipData);
-
+//		mav.addObject("tipThumpsUpCountData", tipThumpsUpCountData);
+		
+		
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;
 	}
@@ -77,7 +82,11 @@ public class TipController {
 		System.out.println(seq);
 
 		List<TipDTO> tipContent = service.getSpecificTipView(seq);
-
+		int viewCountPlus = service.viewCountPlus(seq);
+		if(viewCountPlus>0) {
+			System.out.println("ViewCount added +1");
+		}
+		
 		System.out.println(tipContent);
 		
 		ModelAndView mav = new ModelAndView();
@@ -86,4 +95,6 @@ public class TipController {
 		return mav;
 	}
 
+	
+	
 }

@@ -22,26 +22,29 @@ insert into TIP values(TIP_SEQ.NEXTVAL,#{tip_title},#{tip_contents},#{tip_writer
 
 <!-- tip articles get sql -->
 <select id="getBeautyTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category='뷰티'
+select * from Tip where category='뷰티' order by tip_seq DESC
 </select>
 
 <select id="getDietTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category='다이어트'
+select * from Tip where category='다이어트' order by tip_seq DESC
 </select>
 
 <select id="getFashionTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category = '패션'
+select * from Tip where category = '패션' order by tip_seq DESC
 </select>
 
 <select id="getBusinessTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category='직장생활'
+select * from Tip where category='직장생활' order by tip_seq DESC
 </select>
-
 
 <!-- specific article get sql by #{tip_seq} number -->
 <select id="getSpecificTipView" parameterType="TipDTO" resultMap="TipDTOResultMap">
 select * from Tip where tip_seq=#{seq}
 </select>
+
+<update id="viewCountPlus" parameterType="TipDTO">
+update tip set tip_viewcount = tip_viewcount+1 where tip_seq=#{seq}
+</update>
 
 
 </mapper>

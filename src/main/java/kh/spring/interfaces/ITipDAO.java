@@ -21,6 +21,8 @@ public interface ITipDAO {
 
 	public List<TipDTO> getSpecificTipView(int seq);
 
+	public int viewCountPlus(int seq);
 
+	public List<TipDTO> getThumpsUpData(int seq);
 
 }

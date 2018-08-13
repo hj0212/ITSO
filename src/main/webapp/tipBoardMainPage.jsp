@@ -211,7 +211,7 @@ table {
 											<td class="float-left"><a href="getSpecificTipView.tip?seq=${beautyTipData.tip_seq}">${beautyTipData.tip_title}</a></td>
 											<td class="float-right">${beautyTipData.tip_writer}</td>
 											<td class="float-right"><i
-												class=" fa fa-heart red-text" aria-hidden="true"></i>33</td>
+												class=" fa fa-heart red-text" aria-hidden="true"></i>??</td>
 											<td class="float-right"><i class="fa fa-eye"
 												aria-hidden="true"></i>${beautyTipData.tip_viewcount}</td>
 										</tr>

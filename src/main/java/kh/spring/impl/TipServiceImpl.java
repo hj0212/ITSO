@@ -57,5 +57,17 @@ public class TipServiceImpl implements ITipService {
 		return 0;
 	}
 
+	@Override
+	public List<TipDTO> getThumpsUpData(int seq) {
+		// TODO Auto-generated method stub
+		return this.dao.getThumpsUpData(seq);
+	}
+
+	@Override
+	public int viewCountPlus(int seq) {
+		// TODO Auto-generated method stub
+		return this.dao.viewCountPlus(seq);
+	}
+
 
 }
