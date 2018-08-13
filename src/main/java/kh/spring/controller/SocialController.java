@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,6 +38,7 @@ public class SocialController {
 	}
 	
 	
+	@Transactional
 	@RequestMapping("/test.go")
 	public ModelAndView test(HttpServletRequest request) throws IOException {
 		System.out.println(request.getParameter("stylename"));
@@ -53,17 +55,14 @@ public class SocialController {
 			om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			
 			SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
-			
-			System.out.println(myObjects.length);
-			
-//				System.out.println("===================");
-//				System.out.println(dto.getName());
-//				System.out.println(dto.getBrand());
-//				System.out.println(dto.getStore());
-//				System.out.println(dto.getUrl());
-//				System.out.println(dto.getCategory());
-//				System.out.println(dto.getCoords().getLat());
-//				System.out.println(dto.getCoords().getAlong());
+//			System.out.println("===================");
+//			System.out.println(dto.getName());
+//			System.out.println(dto.getBrand());
+//			System.out.println(dto.getStore());
+//			System.out.println(dto.getUrl());
+//			System.out.println(dto.getCategory());
+//			System.out.println(dto.getCoords().getLat());
+//			System.out.println(dto.getCoords().getAlong());
 			
 			System.out.println(myObjects.length);
 			
@@ -84,21 +83,30 @@ public class SocialController {
 				objNode.put("category",myObjects[i].getCategory());
 				
 				// 좌표
-				objNodeCoords.put("lat", myObjects[i].getCoords().getLat());
-				objNodeCoords.put("along", myObjects[i].getCoords().getAlong());
+				objNodeCoords.put("lat", Double.parseDouble(myObjects[i].getCoords().getLat()));
+				objNodeCoords.put("along", Double.parseDouble(myObjects[i].getCoords().getAlong()));
 				
 				objNode.put("coords", objNodeCoords);
 				
 				objNodeNumber.put(i+"", objNode);
 			}
 			
+			// canvs 객체 추가
+			ObjectNode canvas = om.createObjectNode();
+			canvas.put("width", 500);
+			canvas.put("height", 500);
+			canvas.put("src", "upload/social/"+request.getParameter("imageinfo"));
+			
+			objNodeNumber.put("canvas", canvas);
 			InfoNode.put("image_db", objNodeNumber);
 			
-			System.out.println(om.writerWithDefaultPrettyPrinter().writeValueAsString(InfoNode));
+			String json = om.writeValueAsString(InfoNode);
+			request.setAttribute("markerdata", json);
+			request.setAttribute("src", request.getParameter("imageinfo"));
 		}
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("writeSocial.jsp");
+		mav.setViewName("NewFile.jsp");
 		return mav;
 	}
 }
