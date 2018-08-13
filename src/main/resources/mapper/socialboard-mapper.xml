@@ -21,5 +21,6 @@
 	
 	<select id="getCollectionPhotoList" resultType="sdto">
 		select c1.collection_seq, c2.social_seq, c2.photo from (select c.collection_seq, c.social_seq, s.photo from collection_content c, social s where c.social_seq = s.social_seq) c2, collection c1 where c2.collection_seq = c1.collection_seq and c1.collection_writer = #{seq}
-	</select>
+	</select>	
 </mapper>
+

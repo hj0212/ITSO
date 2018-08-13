@@ -146,6 +146,15 @@
 			<version>2.9.6</version>
 		</dependency>
 
+		<!-- jsonArray -->
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180130</version>
+
+		</dependency>
+
 		<!-- jstl -->
 		<dependency>
 			<groupId>jstl</groupId>
