@@ -36,6 +36,7 @@ public class MemberController {
 		mav.addObject("result",result.size());
 		mav.setViewName("loginProc.jsp");
 		return mav;
+		
 	}
 
 	@RequestMapping("/login.go")

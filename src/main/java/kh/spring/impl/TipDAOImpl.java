@@ -10,11 +10,11 @@ import kh.spring.dto.TipDTO;
 import kh.spring.interfaces.ITipDAO;
 
 @Repository
-public class TipDAOImpl implements ITipDAO{
+public class TipDAOImpl implements ITipDAO {
 
 	@Autowired
 	SqlSessionTemplate template;
-	
+
 	@Override
 	public int insertTipData(TipDTO dto) {
 
@@ -22,9 +22,26 @@ public class TipDAOImpl implements ITipDAO{
 	}
 
 	@Override
-	public List<TipDTO> getTipData(TipDTO dto) {
+	public List<TipDTO> getBeautyTipData() {
 		// TODO Auto-generated method stub
-		return null;
+		return template.selectList("TipBoard.getBeautyTipData");
+	}
+
+	@Override
+	public List<TipDTO> getDietTipData() {
+		// TODO Auto-generated method stub
+		return template.selectList("TipBoard.getDietTipData");
+	}
+
+	@Override
+	public List<TipDTO> getFashionTipData() {
+		// TODO Auto-generated method stub
+		return template.selectList("TipBoard.getFashionTipData");
+	}
+
+	@Override
+	public List<TipDTO> getBusinessTipData() {
+		return template.selectList("TipBoard.getBusinessTipData");
 	}
 
 	@Override
@@ -39,6 +56,19 @@ public class TipDAOImpl implements ITipDAO{
 		return 0;
 	}
 
-	
-	
+	@Override
+	public List<TipDTO> getSpecificTipView(int seq) {
+		return template.selectList("TipBoard.getSpecificTipView", seq);
+	}
+	@Override
+	public List<TipDTO> getThumpsUpData(int seq) {
+
+		return template.selectList("TipBoard.getThumpsUpData", seq);
+	}
+	@Override
+	public int viewCountPlus(int seq) {
+		// TODO Auto-generated method stub
+		return template.update("TipBoard.viewCountPlus", seq);
+	}
+
 }
