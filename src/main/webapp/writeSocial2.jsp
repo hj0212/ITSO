@@ -94,7 +94,6 @@
 					<input type="text" id="inputLGEx" class="form-control form-control-lg" readonly disabled="disabled"> 
 					<label for="inputLGEx" class="ml-3">공유하고 싶은 아이템에 태그를 달아주세요.</label>
 					<br>
-					<br>
 					<div class="interactive-image" id="planit" data-toggle="modal" data-target="#styletag">
 						<img class="taggd z-depth-3 pin" src="upload/social/${sfileName}" alt="photo" id="imgstyle" easypin-id="image_db"/>
 					</div>
@@ -164,6 +163,7 @@
 				<a href="#top" class="btn btn-deep-purple ml-auto"><i class="fas fa-arrow-up"></i></a>
 			</div>
 			<input type="text" name="taginfo" readonly style="display:none" id="taginfo">
+			<input type="text" name="imageinfo" readonly style="display:none" id="imageinfo" value="${sfileName}">
 		</form>
 		
 
@@ -307,8 +307,13 @@
 	        let stylename = document.getElementById("stylename").value;
 	        let stylecontent = document.getElementById("textareaPrefix").value;
 	        
-	        console.log(stylename === "");
-	        console.log(stylecontent === "");
+	        if(stylename === "") {
+	        	alert("스타일 이름을 정해주세요");
+	        	return false;	
+	        }else if(stylecontent === ""){
+	        	alert("스타일을 소개해 주세요.");
+	        	return false;
+	        }
 	        
 	        // 제출 하기전 
 	        console.log(clothesInformation);
