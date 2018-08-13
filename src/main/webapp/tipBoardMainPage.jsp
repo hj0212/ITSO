@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,9 +15,6 @@
 <!-- Font Awesome 4.7-->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<!--     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"> -->
-
 
 <!-- Bootstrap core CSS -->
 <link
@@ -208,10 +203,15 @@ table {
 									<!-- for each jstl 적용될 부분 -->
 									<c:forEach items="${beautyTipData}" var="beautyTipData">
 										<tr class="clearfix">
-											<td class="float-left"><a href="getSpecificTipView.tip?seq=${beautyTipData.tip_seq}">${beautyTipData.tip_title}</a></td>
+											<!-- left title -->
+											<td class="float-left"><a
+												href="getSpecificTipView.tip?seq=${beautyTipData.tip_seq}">${beautyTipData.tip_title}</a></td>
+											<!-- right info -->
 											<td class="float-right">${beautyTipData.tip_writer}</td>
 											<td class="float-right"><i
-												class=" fa fa-heart red-text" aria-hidden="true"></i>??</td>
+												class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
+											<td class="float-right"><i class=" fa fa-heart red-text"
+												aria-hidden="true"></i>??</td>
 											<td class="float-right"><i class="fa fa-eye"
 												aria-hidden="true"></i>${beautyTipData.tip_viewcount}</td>
 										</tr>
@@ -233,8 +233,12 @@ table {
 
 									<c:forEach items="${dietTipData}" var="dietTipData">
 										<tr class="clearfix">
-											<td class="float-left"><a href="getSpecificTipView.tip?seq=${dietTipData.tip_seq}">${dietTipData.tip_title}</a></td>
+											<td class="float-left"><a
+												href="getSpecificTipView.tip?seq=${dietTipData.tip_seq}">${dietTipData.tip_title}</a></td>
 											<td class="float-right">${dietTipData.tip_writer}</td>
+
+											<td class="float-right"><i
+												class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
 											<td class="float-right"><i class="fa fa-heart red-text"
 												aria-hidden="true"></i>52</td>
 											<td class="float-right"><i class="fa fa-eye"
@@ -261,9 +265,16 @@ table {
 									<!-- for each jstl 적용될 부분 -->
 									<c:forEach items="${fashionTipData}" var="fashionTipData">
 										<tr class="clearfix">
-											
-											<td class="float-left"><a href="getSpecificTipView.tip?seq=${fashionTipData.tip_seq}">${fashionTipData.tip_title}</a></td>
+
+											<td class="float-left"><a
+												href="getSpecificTipView.tip?seq=${fashionTipData.tip_seq}">${fashionTipData.tip_title}</a></td>
+
+
 											<td class="float-right">${fashionTipData.tip_writer}</td>
+
+
+											<td class="float-right"><i
+												class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
 											<td class="float-right"><i class="fa fa-heart red-text"
 												aria-hidden="true"></i>66</td>
 											<td class="float-right"><i class="fa fa-eye"
@@ -286,8 +297,12 @@ table {
 									<!-- for each jstl 적용될 부분 -->
 									<c:forEach items="${businessTipData}" var="businessTipData">
 										<tr class="clearfix">
-											<td class="float-left"><a href="getSpecificTipView.tip?seq=${businessTipData.tip_seq}">${businessTipData.tip_title}</a></td>
+											<td class="float-left"><a
+												href="getSpecificTipView.tip?seq=${businessTipData.tip_seq}">${businessTipData.tip_title}</a></td>
 											<td class="float-right">${businessTipData.tip_writer}</td>
+
+											<td class="float-right"><i
+												class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
 											<td class="float-right"><i class="fa fa-heart red-text"
 												aria-hidden="true"></i>22</td>
 											<td class="float-right"><i class="fa fa-eye"

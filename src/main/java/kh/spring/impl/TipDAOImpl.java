@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.TipDTO;
+import kh.spring.dto.TipGoodDTO;
 import kh.spring.interfaces.ITipDAO;
 
 @Repository
@@ -46,13 +47,11 @@ public class TipDAOImpl implements ITipDAO {
 
 	@Override
 	public int deleteTipData(TipDTO dto) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int updateTipData(TipDTO dto) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -61,14 +60,19 @@ public class TipDAOImpl implements ITipDAO {
 		return template.selectList("TipBoard.getSpecificTipView", seq);
 	}
 	@Override
-	public List<TipDTO> getThumpsUpData(int seq) {
+	public List<TipGoodDTO> getTipLikeCounts(int seq) {
 
-		return template.selectList("TipBoard.getThumpsUpData", seq);
+		return template.selectList("TipGood.getTipLikeCounts", seq);
 	}
 	@Override
 	public int viewCountPlus(int seq) {
-		// TODO Auto-generated method stub
 		return template.update("TipBoard.viewCountPlus", seq);
 	}
+
+	@Override
+	public int tipArticleLikeProc(int seq) {
+		return template.update("TipBoard.tipArticleLikeProc",seq);
+	}
+
 
 }
