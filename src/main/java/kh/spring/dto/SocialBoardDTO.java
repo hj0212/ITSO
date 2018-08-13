@@ -1,6 +1,7 @@
 package kh.spring.dto;
 
 public class SocialBoardDTO {
+	private int collection_seq;
 	private int social_seq;
 	private String social_title;
 	private String social_contents;
@@ -82,6 +83,16 @@ public class SocialBoardDTO {
 
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+
+
+	public int getCollection_seq() {
+		return collection_seq;
+	}
+
+
+	public void setCollection_seq(int collection_seq) {
+		this.collection_seq = collection_seq;
 	}
 	
 	

@@ -57,11 +57,15 @@ public class MemberController {
 	@RequestMapping("/mypage.go")
 	public ModelAndView goMypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		if((Integer)((MemberDTO)session.getAttribute("user")).getSeq() != null) {
+		try {
+			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
 			List<CollectionDTO> collectionList = this.sservice.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.sservice.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
+		}catch(NullPointerException e) {
+			System.out.println("로그인x");
 		}
 		mav.setViewName("mypage.jsp");
 		return mav;
@@ -70,14 +74,6 @@ public class MemberController {
 	@RequestMapping("/myinfo.go")
 	public String goMyinfo() {
 		return "redirect:myinfo.jsp";
-	}
-
-	public String updateProfile(MemberDTO dto, HttpSession session) {
-		int result = mservice.updateUserData(dto);
-		String resultmsg = result>0?"성공":"실패";
-		System.out.println(resultmsg);
-		session.setAttribute("user", dto);
-		return "redirect:mypage.go";
 	}
 
 }

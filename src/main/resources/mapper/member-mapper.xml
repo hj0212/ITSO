@@ -17,4 +17,7 @@
 	<select id="emailExist" resultType="dto">
 		select * from users where email=#{email}
 	</select>
+	<insert id="followUser" parameterType="hashmap">
+		insert into follow values(follow_seq.nextval,#{user_seq},#{following_seq})
+	</insert>
 </mapper>

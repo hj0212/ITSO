@@ -8,8 +8,6 @@ public class CollectionDTO {
 	private int social_seq;
 	private String photo;
 	
-	
-	
 	public CollectionDTO() {
 		super();
 	}
