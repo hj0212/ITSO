@@ -23,17 +23,18 @@ public class SocialController {
 	public ModelAndView showSocialBoardList(HttpSession session) {
 		List<SocialBoardDTO> result = this.service.showSocialBoardList();
 		ModelAndView mav = new ModelAndView();
-		
-		if((Integer)((MemberDTO)session.getAttribute("user")).getSeq() != null) {
-			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
-			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
-			
-			mav.addObject("collectionList",collectionList);
-			mav.addObject("photoList",photoList);
+		try {
+				List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
+				List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+				
+				mav.addObject("collectionList",collectionList);
+				mav.addObject("photoList",photoList);
+		}catch(NullPointerException e) {
+			System.out.println("로그인x");
+		}finally {
+			mav.addObject("socialList",result);
+			mav.setViewName("main3.jsp");
 		}
-		
-		mav.addObject("socialList",result);
-		mav.setViewName("main2.jsp");
 		return mav;
 	}
 	

@@ -200,7 +200,96 @@
                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
                         <br>
 
-                        <p>스타일</p>
+                        <div class="row gb" style="margin: 0xp auto;">
+			<!-- Grid column -->
+			<div class="col-md-6 col-sm-12">
+				<!--Card-->
+				<div class="card">
+					<!--Card image-->
+					<div class="view">
+						<img src="https://mdbootstrap.com/img/Photos/Others/men.jpg"
+							class="card-img-top" alt="photo"> <a href="#">
+							<div class="mask rgba-white-slight"></div>
+						</a>
+					</div>
+
+					<!--Card content-->
+					<div class="card-body">
+						<!--Title-->
+						<h4 class="card-title">
+							<a>김형섭</a><i class="fa fa-heart-o red-text heart"
+								aria-hidden="true" style="float: right;"><font color="black">0</font></i>
+						</h4>
+						<!--Text-->
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn  btn-indigo"
+							style="background-color: black;"><i class="fa fa-plus">follow</i></a>
+						<!--share-->
+						<!--instagram-->
+						<button type="button" class="btn-floating btn-sm btn-is share "
+							style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
+							<i class="fab fa-instagram"></i>
+						</button>
+						<!--twitter-->
+						<button type="button" class="btn-floating btn-sm btn-tw share"
+							style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
+							<i class="fab fa-twitter"></i>
+						</button>
+						<!--facebook-->
+						<button type="button" class="btn-floating btn-sm btn-fb share"
+							style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
+							<i class="fab fa-facebook-f"></i>
+						</button>
+					</div>
+				</div>
+				<!--/.Card-->
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<!--Card-->
+				<div class="card mb-1">
+					<!--Card image-->
+					<div class="view">
+						<img src="https://mdbootstrap.com/img/Photos/Others/men.jpg"
+							class="card-img-top" alt="photo"> <a href="#">
+							<div class="mask rgba-white-slight"></div>
+						</a>
+					</div>
+
+					<!--Card content-->
+					<div class="card-body">
+						<!--Title-->
+						<h4 class="card-title">
+							<a>김형섭</a><i class="fa fa-heart-o red-text heart"
+								aria-hidden="true" style="float: right;"><font color="black">0</font></i>
+						</h4>
+						<!--Text-->
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn  btn-indigo"
+							style="background-color: black;"><i class="fa fa-plus">follow</i></a>
+						<!--share-->
+						<!--instagram-->
+						<button type="button" class="btn-floating btn-sm btn-is share "
+							style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
+							<i class="fab fa-instagram"></i>
+						</button>
+						<!--twitter-->
+						<button type="button" class="btn-floating btn-sm btn-tw share"
+							style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
+							<i class="fab fa-twitter"></i>
+						</button>
+						<!--facebook-->
+						<button type="button" class="btn-floating btn-sm btn-fb share"
+							style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
+							<i class="fab fa-facebook-f"></i>
+						</button>
+					</div>
+				</div>
+				<!--/.Card-->
+			</div>
+			<!-- Grid column -->
+		</div>
 
                     </div>
                     <!--/.Panel 1-->
@@ -208,6 +297,8 @@
                     <!--Panel 2-->
                     <div class="tab-pane fade" id="collectionPanel" role="tabpanel">
                         <table>
+                        <c:choose>
+                        <c:if test="${!empty collectionList }">
                             <tr>
                                 <td width=230>
                                     컬렉션이름<br> 3개
@@ -221,6 +312,11 @@
                                     <div class="rect">1</div>
                                 </td>
                             </tr>
+                            </c:if>
+                            <c:otherwise>
+                            <tr><td>생성한 컬렉션이 없습니다.
+                            </c:otherwise>
+                            </c:choose>
                         </table>
                     </div>
                     <!--/.Panel 2-->
@@ -237,7 +333,6 @@
                                 <td>
                                     <h6>어쩌구저쩌꾸asdfasdfasef</h6>
                                     <button class="btn btn-indigo btn-sm">팔로우</button>
-
                                 </td>
                             </tr>
                         </table>
@@ -249,7 +344,18 @@
                     <div class="tab-pane fade" id="panel4" role="tabpanel">
                         <br>
 
-                        <p>팔로잉</p>
+                        <table>
+                            <tr>
+                                <td width=115>
+                                    <div class="profilearea">
+                                        <img src="background.jpg" alt="" class="profileimg">
+                                    </div>
+                                </td>
+                                <td>
+                                    <h6>어쩌구저쩌꾸asdfasdfasef</h6>
+                                </td>
+                            </tr>
+                        </table>
 
                     </div>
                     <!--/.Panel 4-->
