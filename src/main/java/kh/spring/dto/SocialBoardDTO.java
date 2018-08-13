@@ -7,6 +7,9 @@ public class SocialBoardDTO {
 	private int social_writer;
 	private String social_date;
 	private String photo;
+	private int age;
+	private String gender;
+	
 	
 	public SocialBoardDTO() {
 		super();
@@ -14,7 +17,7 @@ public class SocialBoardDTO {
 	
 	
 	public SocialBoardDTO(int social_seq, String social_title, String social_contents, int social_writer,
-			String social_date, String photo) {
+			String social_date, String photo,int age,String gender) {
 		super();
 		this.social_seq = social_seq;
 		this.social_title = social_title;
@@ -22,6 +25,33 @@ public class SocialBoardDTO {
 		this.social_writer = social_writer;
 		this.social_date = social_date;
 		this.photo = photo;
+		this.age = age;
+		this.gender = gender;
+	}
+	public SocialBoardDTO(int age,String gender) {
+		this.age = age;
+		this.gender = gender;
+	}
+	
+	
+
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 

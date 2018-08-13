@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.ISocialBoardDAO;
@@ -18,8 +19,9 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	private ISocialBoardDAO dao;
 
 	@Override
-	public List<SocialBoardDTO> showSocialBoardList() {
-		return this.dao.showSocialBoardList();
+	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto) {
+		System.out.println(sdto.getAge()+":"+sdto.getGender());
+		return this.dao.showSocialBoardList(sdto);
 	}
 
 	@Override
@@ -45,6 +47,32 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	@Override
 	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto) {
 		return this.dao.getCollectionPhotoList(dto);
+	}
+
+	
+	
+	//좋아요
+	@Override
+	public int selectGoodCount(GoodDTO gdto) {
+		return this.dao.selectGoodCount(gdto);
+	}
+
+	@Override
+	public int insertGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return this.dao.insertGoodCount(gdto);
+	}
+
+	@Override
+	public int deleteGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return this.dao.deleteGoodCount(gdto);
+	}
+
+	@Override
+	public int allGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return this.dao.allGoodCount(gdto);
 	}
 
 }

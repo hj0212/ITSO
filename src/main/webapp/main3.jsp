@@ -103,7 +103,7 @@ body {
 .thirdSection .row .gridPhoto .photoContainer {
 	visibility: hidden;
 }
-
+/* hover */
 .thirdSection .row .gridPhoto:hover .photoContainerHover {
 	visibility: visible;
 	z-index: 41;
@@ -234,6 +234,14 @@ a#MOVE_TOP_BTN {
 .active {
 	border: 3px solid #21FCFF;
 }
+
+.btn-group {
+	margin-left: 3px;
+}
+
+.dropdown-toggle {
+	border: 1px solid #e9e9e9;
+}
 </style>
 </head>
 
@@ -256,25 +264,57 @@ a#MOVE_TOP_BTN {
 
 		<!-- 메인인트로종료 -->
 
+
 		<!-- 드랍박스메뉴시작 -->
-
-
-
-
 		<section class="secondSection col-md-12">
 		<div class="container">
+
 			<div class="btn-group">
 				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-					data-toggle="dropdown" aria-haspopup="true" aria=expanded="false">Full
-					view</button>
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+					id="gender">${gender}</button>
+
 				<div class="dropdown-menu">
-					<a class="dropdown-item flex-center droptxt2" href="main.jsp">Full
-						view</a> <a class="dropdown-item flex-center droptxt2"
-						href="main2.jsp">Tumbnail view</a>
+					<a class="dropdown-item flex-center droptxt2"
+						href="main.go?gender=g&age=${pAge }">무관 </a> <a
+						class="dropdown-item flex-center droptxt2"
+						href="main.go?gender=m&age=${pAge}&main=${main}">남성</a> <a
+						class="dropdown-item flex-center droptxt2"
+						href="main.go?gender=f&age=${pAge }&main=${main}">여성</a>
 				</div>
-			</div>
-		</div>
+				<div class="btn-group">
+					<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						id="age">${age}</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item flex-center droptxt2"
+							href="main.go?age=0&gender=${pGender }&main=${main}">모든연령 </a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=10&gender=${pGender }&main=${main}">10대</a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=20&gender=${pGender }&main=${main}">20대</a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=30&gender=${pGender }&main=${main}">30대</a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=40&gender=${pGender }&main=${main}">40대</a>
+					</div>
+					<div class="btn-group">
+						<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Full
+							view</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?main=full">Full view</a> <a
+								class="dropdown-item flex-center droptxt2"
+								href="main.go?main=tumbnail">Tumbnail view</a>
+						</div>
+					</div>
+				</div>
 		</section>
+
+
+
+
 
 		<!-- 드랍박스메뉴종료 -->
 
@@ -285,7 +325,9 @@ a#MOVE_TOP_BTN {
 
 
 		<div class="gridPhotoContainer row">
-<script>console.log("${empty socialList }");</script>
+			<script>
+				/* console.log("${empty socialList }"); */
+			</script>
 			<c:choose>
 				<c:when test="${fn:length(socialList) > 0}">
 					<c:forEach items="${socialList}" var="list">
@@ -305,13 +347,13 @@ a#MOVE_TOP_BTN {
 									<img src="upload/social/${list.photo}"
 										class="img-fluid z-depth-2" alt="Responsive image"
 										onclick="location='main.jsp'">
-										<c:if test="${!empty sessionScope.user }">
-									<button class="photoContainerButton1 btn btn-elegant"
-										id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
-										data-hover="+1">HYPE</button>
-									<a href="" class="photoContainerButton2 btn btn-elegant"
-										data-toggle="modal" data-target="#saveModal">save</a>
-										</c:if>
+									<c:if test="${!empty sessionScope.user }">
+										<button class="photoContainerButton1 btn btn-elegant"
+											id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
+											data-hover="+1">HYPE</button>
+										<a href="" class="photoContainerButton2 btn btn-elegant"
+											data-toggle="modal" data-target="#saveModal">save</a>
+									</c:if>
 									<div class="photoContainerHoverHashTag">
 										<P>
 											<span onclick="hashtag()">해쉬태그올곳</span>
@@ -363,31 +405,32 @@ a#MOVE_TOP_BTN {
 						</div>
 
 						<c:choose>
-						<c:when test="${not empty collectionList }">
-						<div id="collectionarea" class="mt-2">
-							<c:set var="num" value="0"></c:set>
-							<c:forEach items="${collectionList}" var="clist" varStatus="status">
-							<div class="collectionItem z-depth-1 mx-2">
-								<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
-								<h6>${clist.collection_contents }</h6>
-								<table class="collectionPhoto" border="1">
-									<tr>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-									</tr>
-									<tr>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-									</tr>
-								</table>
-								<h6 class="mb-0" style="height: 19px;"></h6>
-							</div>
-							</c:forEach>
-						</div>
-						</c:when>
-						<c:otherwise>
-						<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
-						</c:otherwise>
+							<c:when test="${not empty collectionList }">
+								<div id="collectionarea" class="mt-2">
+									<c:set var="num" value="0"></c:set>
+									<c:forEach items="${collectionList}" var="clist"
+										varStatus="status">
+										<div class="collectionItem z-depth-1 mx-2">
+											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
+											<h6>${clist.collection_contents }</h6>
+											<table class="collectionPhoto" border="1">
+												<tr>
+													<td><img src="/upload/social/${clist.photo }" alt=""></td>
+													<td><img src="/upload/social/${clist.photo }" alt=""></td>
+												</tr>
+												<tr>
+													<td><img src="/upload/social/${clist.photo }" alt=""></td>
+													<td><img src="/upload/social/${clist.photo }" alt=""></td>
+												</tr>
+											</table>
+											<h6 class="mb-0" style="height: 19px;"></h6>
+										</div>
+									</c:forEach>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>
@@ -489,20 +532,21 @@ a#MOVE_TOP_BTN {
 			return false;
 		});
 	});
-	
+
 	$("#collectionarea").on("click", ".collectionItem", function() {
-        /*$(this).css("background", "black");*/
-        $(this).children(".check").toggleClass('active');
-    })
+		/*$(this).css("background", "black");*/
+		$(this).children(".check").toggleClass('active');
+	})
 
-    $("#createModal").on('show.bs.modal', function() {
-        $("#saveModal").hide();
-    });
+	$("#createModal").on('show.bs.modal', function() {
+		$("#saveModal").hide();
+	});
 
-    $("#createModal").on('hidden.bs.modal', function() {
-        $("#saveModal").show();
-    });
+	$("#createModal").on('hidden.bs.modal', function() {
+		$("#saveModal").show();
+	});
 </script>
+
 
 
 </html>

@@ -131,6 +131,7 @@ body, html {
 #cancel:hover {
 	border: 2px solid #feff19;
 }
+
 </style>
 <script>
 $(document).ready(function () {
@@ -248,7 +249,7 @@ $(document).ready(function () {
 </script>
 </head>
 <body>
-
+		
 	<!--back ground-->
 	<div class="bg view overlay">
 		<!--  <div class="">-->
