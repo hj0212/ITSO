@@ -16,11 +16,11 @@ public interface ITipService {
 
 	public List<TipDTO> getBusinessTipData();
 
+	public List<TipDTO> getSpecificTipView(int seq);
+
 	public int deleteTipData(TipDTO dto);
 
 	public int updateTipData(TipDTO dto);
-
-	public List<TipDTO> getSpecificTipView(int seq);
 
 
 }

@@ -59,7 +59,7 @@ public class TipDAOImpl implements ITipDAO {
 
 	@Override
 	public List<TipDTO> getSpecificTipView(int seq) {
-		return template.selectList("TipBoard.getSpecificTipView",seq);
+		return template.selectList("TipBoard.getSpecificTipView",seq); 
 	}
 	
 }
