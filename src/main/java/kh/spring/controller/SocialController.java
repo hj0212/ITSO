@@ -18,17 +18,18 @@ import kh.spring.interfaces.ISocialBoardService;
 public class SocialController {
 	@Autowired
 	private ISocialBoardService service;
-	
+
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session) {
 		List<SocialBoardDTO> result = this.service.showSocialBoardList();
 		ModelAndView mav = new ModelAndView();
 		try {
-				List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
-				List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
-				
-				mav.addObject("collectionList",collectionList);
-				mav.addObject("photoList",photoList);
+			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
+			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
+			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+
+			mav.addObject("collectionList",collectionList);
+			mav.addObject("photoList",photoList);
 		}catch(NullPointerException e) {
 			System.out.println("로그인x");
 		}finally {
@@ -37,7 +38,7 @@ public class SocialController {
 		}
 		return mav;
 	}
-	
-	
+
+
 
 }
