@@ -3,6 +3,8 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="kh.spring.dto.MemberDTO" alias="dto"/>
-		<typeAlias type="kh.spring.dto.TipDTO" alias="TipDTO"/>		
+		<typeAlias type="kh.spring.dto.TipDTO" alias="TipDTO"/>
+		<typeAlias type="kh.spring.dto.TipGoodDTO" alias="TipGoodDTO"/>
+				
 	</typeAliases>
 </configuration>
