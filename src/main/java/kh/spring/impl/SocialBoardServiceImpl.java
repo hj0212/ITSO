@@ -47,4 +47,9 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.getCollectionPhotoList(dto);
 	}
 
+	@Override
+	public List<SocialBoardDTO> getSocialList(MemberDTO dto) {
+		return this.dao.getSocialList(dto);
+	}
+
 }

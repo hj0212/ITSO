@@ -20,7 +20,7 @@ public class SocialController {
 	private ISocialBoardService service;
 
 	@RequestMapping("/main.go")
-	public ModelAndView showSocialBoardList(HttpSession session) {
+	public ModelAndView showSocialBoardList(HttpSession session, HttpServletRequest request) {
 		List<SocialBoardDTO> result = this.service.showSocialBoardList();
 		ModelAndView mav = new ModelAndView();
 		try {

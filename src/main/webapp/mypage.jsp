@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -99,8 +100,8 @@
 }
 
 table .profilearea {
-	height: 100px;
-	width: 100px;
+	height: 80px;
+	width: 80px;
 	overflow: hidden;
 	display: inline;
 	float: left;
@@ -136,6 +137,26 @@ table .profilearea {
 		$("#myinfobtn").click(function() {
 			location.href="myinfo.go";
 		})
+		
+		$(".followbtn").on('click',function() {	
+			var following_seq = $(this).siblings("#seq").val();
+			alert(following_seq);
+			$.ajax({
+			    url: "followUser.do",
+			    type: "post",
+			    data: {following_seq:following_seq},
+			    success: function (response) {
+			        if (response != null) {
+			            console.log("DB insert success");
+			            $(this).hide();
+			        }
+			    },
+			    error: function (response) {
+			        console.log("DB insert Failed")
+			    }
+			});
+		})
+		
 	})
 </script>
 </head>
@@ -169,15 +190,15 @@ table .profilearea {
 				</div>
 				<div class="">
 					<p class="mb-0">팔로워</p>
-					<p>3</p>
+					<p>${fn:length(followerList) }</p>
 				</div>
 				<div class="">
 					<p class="mb-0">팔로잉</p>
-					<p>4</p>
+					<p>${fn:length(followingList) }</p>
 				</div>
 				<div class="">
 					<p class="mb-0">컬렉션</p>
-					<p>1</p>
+					<p>${fn:length(collectionList) }</p>
 				</div>
 			</div>
 		</div>
@@ -193,7 +214,7 @@ table .profilearea {
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#followerPanel" role="tab">팔로워</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#panel4" role="tab">팔로잉</a></li>
+						href="#followingPanel" role="tab">팔로잉</a></li>
 				</ul>
 
 				<!-- Tab panels -->
@@ -306,30 +327,29 @@ table .profilearea {
 					<div class="tab-pane fade" id="collectionPanel" role="tabpanel">
 						<table class="table">
 							<tbody>
-							<c:choose>
-								<c:when test="${!empty collectionList }">
-									<c:set var="num" value="0" />
-									<c:forEach var="clist" items="${collectionList }">
-									<tr>
-										<td width=230><h4>${clist.collection_title }</h4><br>
-										${clist.collection_contents }
-										</td>
-										<td><c:forEach var="slist" items="${photoList }">
-												<c:if
-													test="${slist.collection_seq eq clist.collection_seq }">
-													<div class="rect">
-														<img src="upload/social/${slist.photo }" alt="" />
-													</div>
-												</c:if>
-											</c:forEach></td>
-									</tr>
-									</c:forEach>
-								</c:when>
-								<c:otherwise>
-									<tr>
-										<td>생성한 컬렉션이 없습니다.
-								</c:otherwise>
-							</c:choose>
+								<c:choose>
+									<c:when test="${!empty collectionList }">
+										<c:set var="num" value="0" />
+										<c:forEach var="clist" items="${collectionList }">
+											<tr>
+												<td width=230><h4>${clist.collection_title }</h4>
+													<br> ${clist.collection_contents }</td>
+												<td><c:forEach var="slist" items="${photoList }">
+														<c:if
+															test="${slist.collection_seq eq clist.collection_seq }">
+															<div class="rect">
+																<img src="upload/social/${slist.photo }" alt="" />
+															</div>
+														</c:if>
+													</c:forEach></td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td>생성한 컬렉션이 없습니다.
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 					</div>
@@ -337,40 +357,82 @@ table .profilearea {
 
 					<!--Panel 3-->
 					<div class="tab-pane fade" id="followerPanel" role="tabpanel">
-						<table>
-							<tr>
-								<td width=115>
-									<div class="profilearea">
-										<img src="background.jpg" alt="" class="profileimg">
-									</div>
-								</td>
-								<td>
-									<h6>어쩌구저쩌꾸asdfasdfasef</h6>
-									<button class="btn btn-indigo btn-sm">팔로우</button>
-								</td>
-							</tr>
+						<table class="table mb-0">
+							<c:choose>
+								<c:when test="${empty followingList }">
+									<tr><td>나를 팔로우 하는 사람이 없습니다.
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="ferlist" items="${followerList }">
+										<tr>
+											<td width=100>
+												<div class="profilearea">
+													<img src="/upload/profile/${finglist.photo }" alt=""
+														class="profileimg">
+												</div>
+											</td>
+											<c:choose>
+												<c:when test="${ferlist.part eq 'home'}">
+													<td style="height: 100px; vertical-align: middle"><h6 class="mt-1">${ferlist.name }</h6>
+													<c:if test="${ferlist.followcheck eq 'n' }">
+														<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button> 
+													</c:if>
+													<c:if test="${ferlist.followcheck eq 'ㅛ' }">
+														<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button> 
+													</c:if>
+													<input type="hidden" value="${ferlist.seq }" id="seq" /></td>
+												</c:when>
+												<c:otherwise>
+													<!-- 페북 등 로그인일때 -->			
+												</c:otherwise>
+											</c:choose>
+										</tr>
+
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</table>
 
 					</div>
 					<!--/.Panel 3-->
 
 					<!--Panel 4-->
-					<div class="tab-pane fade" id="panel4" role="tabpanel">
-						<br>
+					<div class="tab-pane fade" id="followingPanel" role="tabpanel">
+						<table class="table mb-0">
+							<c:choose>
+								<c:when test="${empty followingList }">
+									<tr><td>팔로잉 하는 사람이 없습니다.
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="finglist" items="${followingList }">
+										<tr>
+											<td width=100>
+												<div class="profilearea">
+													<img src="/upload/profile/${finglist.photo }" alt=""
+														class="profileimg">
+												</div>
+											</td>
+											<c:choose>
+												<c:when test="${finglist.part eq 'home'}">
+													<td style="height: 100px; vertical-align: middle"><h6 class="mt-1">${finglist.name }</h6>
+													<c:if test="${ferlist.followcheck eq 'n' }">
+														<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button> 
+													</c:if>
+													<c:if test="${ferlist.followcheck eq 'ㅛ' }">
+														<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button> 
+													</c:if>
+													<input type="hidden" value="${finglist.seq }" id="seq" /></td>
+												</c:when>
+												<c:otherwise>
+													<!-- 페북 등 로그인일때 -->			
+												</c:otherwise>
+											</c:choose>
+										</tr>
 
-						<table>
-							<tr>
-								<td width=115>
-									<div class="profilearea">
-										<img src="background.jpg" alt="" class="profileimg">
-									</div>
-								</td>
-								<td>
-									<h6>어쩌구저쩌꾸asdfasdfasef</h6>
-								</td>
-							</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</table>
-
 					</div>
 					<!--/.Panel 4-->
 

@@ -7,9 +7,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
@@ -60,11 +62,17 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
+			List<SocialBoardDTO> socialList = this.sservice.getSocialList((MemberDTO)session.getAttribute("user"));
 			List<CollectionDTO> collectionList = this.sservice.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.sservice.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
-
-			mav.addObject("collectionList",collectionList);
-			mav.addObject("photoList",photoList);
+			List<MemberDTO> followerList = this.mservice.getFollowerList((MemberDTO)session.getAttribute("user"));
+			List<MemberDTO> followingList = this.mservice.getFollowingList((MemberDTO)session.getAttribute("user"));
+			followerList = followCheck(followerList, followingList);
+			mav.addObject("socialList", socialList);
+			mav.addObject("collectionList", collectionList);
+			mav.addObject("photoList", photoList);
+			mav.addObject("followerList", followerList);
+			mav.addObject("followingList", followingList);
 		}catch(NullPointerException e) {
 			System.out.println("로그인x");
 		}
@@ -75,6 +83,45 @@ public class MemberController {
 	@RequestMapping("/myinfo.go")
 	public String goMyinfo() {
 		return "redirect:myinfo.jsp";
+	}
+	
+	@RequestMapping("/editProfile.do")
+	public String updateInfo(MemberDTO dto, HttpSession session) {
+		System.out.println("1:"+dto.getPw());
+		int result = mservice.updateUserData(dto);
+		if(result > 0) {
+			System.out.println("성공");
+			MemberDTO user = mservice.getUserData(dto).get(0);
+			System.out.println("2:"+user.getPw());
+			session.setAttribute("user", user);
+			System.out.println("3:"+((MemberDTO)session.getAttribute("user")).getPw());
+		}
+		return "myinfo.go";
+	}
+	
+	@RequestMapping("/followUser.do")
+	public @ResponseBody int tipWriteProc(int following_seq, HttpSession session) {
+		System.out.println("여기");
+		FollowDTO dto = new FollowDTO();
+		dto.setFollowing_seq(following_seq);
+		dto.setUser_seq(((MemberDTO)session.getAttribute("user")).getSeq());
+		System.out.println(dto.getUser_seq()+":"+dto.getFollowing_seq());
+		int result = mservice.insertFollowData(dto);
+		return result;
+	}
+	
+	private List<MemberDTO> followCheck(List<MemberDTO> followerList, List<MemberDTO> followingList) {
+		for(MemberDTO followertmp : followerList) {
+			for(MemberDTO followingtmp : followingList) {
+				if(followertmp.getSeq() == followingtmp.getSeq()) {
+					followertmp.setFollowcheck("y");
+					break;
+				} else {
+					followertmp.setFollowcheck("n");
+				}
+			}
+		}
+		return followerList;		
 	}
 
 }

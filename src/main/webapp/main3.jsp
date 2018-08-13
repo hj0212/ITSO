@@ -267,10 +267,11 @@ a#MOVE_TOP_BTN {
 				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
 					data-toggle="dropdown" aria-haspopup="true" aria=expanded="false">Full
 					view</button>
-				<div class="dropdown-menu">
-					<a class="dropdown-item flex-center droptxt2" href="main.jsp">Full
+				<div class="dropdown-menu" name="menu">
+					<a class="dropdown-item flex-center droptxt2" href="main.go" value="Full
+						view">Full
 						view</a> <a class="dropdown-item flex-center droptxt2"
-						href="main2.jsp">Tumbnail view</a>
+						href="main.go" value="Thumbnail">Thumbnail view</a>
 				</div>
 			</div>
 		</div>
