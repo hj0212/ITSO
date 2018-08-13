@@ -1,6 +1,7 @@
 package kh.spring.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -89,12 +90,14 @@ public class FileController {
 				fos.close();
 				System.out.println("마지막");
 
-			} catch (IOException e1) {
+				mav.addObject("path",path);
+				mav.addObject("sfileName", sfileName);
+				mav.setViewName("writeSocial2.jsp");
+			}catch(FileNotFoundException e) {
+				mav.setViewName("writeSocial.jsp");
+			}catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			mav.addObject("path",path);
-			mav.addObject("sfileName", sfileName);
-			mav.setViewName("writeSocial2.jsp");
 		}
 		
 		return mav;
