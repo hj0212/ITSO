@@ -26,7 +26,7 @@
 
 <style>
 div {
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	box-sizing: border-box;
 }
 
@@ -50,8 +50,31 @@ body {
 	width: 100%;
 }
 
-#imgfile {
-	visibility: hidden;
+#voteitemimg {
+	width: 20%;
+}
+
+#voteitemdiv {
+	width: 100%;
+}
+
+img {
+	border: 0.3px solid lightgray;
+	text-align: center;
+	vertical-align: middle;
+}
+
+input[type="file"] {
+	border: 0px;
+}
+
+#voteitemimg {
+	width: 100px;
+	height: 100px;
+}
+
+.imgsel {
+	width: 70%;
 }
 </style>
 </head>
@@ -62,28 +85,65 @@ body {
 			<p>여기는 네비 인클루드</p>
 		</div>
 
-		<form method="post">
+		<form method="post" action="voteStyle.style" id="voteform"
+			enctype="multipart/form-data">
 			<div class="row" name="top">
-				<div class="md-form form-lg col-md-12">
-					<input type="text" id="votetitleid"
+				<h4>투표주제</h4>
+				<div class="md-form form-lg col-md-12 px-0 file-upload mt-0">
+					<input type="text" id="votetitleid" name="styling_vote_title"
 						class="form-control form-control-lg col-md-9 float-right">
-					<label for="votetitleid" class="offset-md-3">투표 주제를 입력해주세요.</label>
-					<div class="file-upload-content col-md-12 my-3">
-						<img class="file-upload-image z-depth-1" src="" alt="your image"
-							id="imgselected"/>
+					<label for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
+						id="votelabel">투표 주제를 입력해주세요.</label>
+					<div class="media-body image-upload-wrap form-group"
+						id="voteitemdiv">
+						<img class="d-flex file-upload-image" src="" alt="사진 없음"
+							id="voteitemimg"> <input type="file" name="imgfilename0"
+							id="imgfile0"
+							class="file-upload-input form-control z-depth-3 hoverable"
+							onchange="readURL(this);" accept="image/*" />
 					</div>
-					<div>
-						<input type="file" name="file" id="imgfile" class="file-upload-input form-control z-depth-3 hoverable out"
+				</div>
+			</div>
+			<hr />
+
+			<div class="row">
+				<h4 class="mb-0">투표항목</h4>
+				<a class="btn btn-outline-indigo btn-sm waves-effect px-1 py-1"
+					id="addvotebtn"> <i class="fa fa-plus i-indigo fa-2x"
+					aria-hidden="true"></i>
+				</a>
+
+				<div class="md-form form-lg col-md-12 mt-0">
+					<ul class="list-unstyled" id="voteul">
+						<li class="media"><img class="d-flex mr-3" src="" alt="후보사진">
+							<div class="media-body image-upload-wrap form-group">
+								<a class="btn btn-outline-indigo btn-sm px-1 py-0 waves-effect ordera">
+									<i class="fa fa-sort-asc fa-3x" aria-hidden="true"></i>
+								</a> <a
+									class="btn btn-outline-indigo btn-sm px-1 py-0 waves-effect ordera">
+									<i class="fa fa-sort-desc fa-3x" aria-hidden="true"></i>
+								</a> <input type="file" name="imgfilename1" id="imgfile1"
+									class="file-upload-inpud form-control z-depth-3 hoverable imgsel"
+									onchange="readURL(this);" accept="image/*" />
+							</div></li>
+
+						<li class="media my-4"><img class="d-flex mr-3" src=""
+							alt="후보사진2">
+							<div class="media-body">
+								<h5 class="mt-0 mb-1 font-weight-bold"></h5>
+							</div></li>
+					</ul>
+					<!-- <div>
+						<input type="file" name="file" id="imgfile1"
+							class="file-upload-input form-control z-depth-3 hoverable imgsel"
 							onchange="readURL(this);" accept="image/*" />
 						<button type="button" id="addimgbtn"
 							class="btn btn-outline-indigo btn-sm wave-effect">이미지
 							첨부하기</button>
-					</div>
+					</div> -->
 				</div>
-
 			</div>
-			<div class="row"></div>
-
+			
 			<div class="row">
 				<div class="md-form form-lg col-md-12">
 					<input type="text" id="cate" class="form-control form-control-lg"
@@ -100,7 +160,6 @@ body {
 			</div>
 			<div class="row my-2"></div>
 
-			<div class="row"></div>
 			<div class="row">
 				<div class="md-form form-lg col-md-12 my-2"></div>
 			</div>
@@ -127,9 +186,36 @@ body {
 		src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 
 	<script>
-		$("#addimgbtn").click(function() {
-			$("#imgfile").trigger("click");
+		document.oncontextmenu = function(e) {
+			return false;
+		};
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#voteitemimg').attr('src', e.target.result);
+					$('.image-title').html(input.files[0].name);
+				};
+
+				reader.readAsDataURL(input.files[0]);
+
+			} else {
+				removeUpload();
+			}
+		}
+		$("#addvotebtn").click(function() {
+			$('#voteul').append('<li class="media"><img class="d-flex mr-3" src="" alt="후보사진"> <div class="media-body image-upload-wrap form-group">'
+						+'<a class="btn btn-outline-indigo btn-sm px-1 py-0 waves-effect ordera">'
+						+'<i class="fa fa-sort-asc fa-3x" aria-hidden="true"></i></a>'
+						+'<a class="btn btn-outline-indigo btn-sm px-1 py-0 waves-effect ordera">'
+						+'<i class="fa fa-sort-desc fa-3x" aria-hidden="true"></i></a>'
+						+'<input type="file" name="imgfilename1" id="imgfile1"'
+						+'class="file-upload-inpud form-control z-depth-3 hoverable imgsel"'
+						+'onchange="readURL(this);" accept="image/*" </div></li>');						
 		})
 	</script>
+
 </body>
 </html>

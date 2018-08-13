@@ -146,7 +146,8 @@ body {
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js">
+	</script>
 
 	<script>
 	document.oncontextmenu = function(e) {
@@ -157,9 +158,8 @@ body {
 			if (input.files && input.files[0]) {
 
 				var reader = new FileReader();
-
 				reader.onload = function(e) {
-					$('.image-upload-wrap').hide();
+					/* $('.image-upload-wrap').hide(); */
 
 					$('.file-upload-image').attr('src', e.target.result);
 					$('#imgselected').css("visibility", "visible");
