@@ -34,4 +34,8 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.delete("SocialBoard.deleteSocialBoard", dto);
 	}
 
+	@Override
+	public int getSocialBoardcurrval() {
+		return template.selectOne("SocialBoard.getSocialBoardcurrval");
+	}
 }

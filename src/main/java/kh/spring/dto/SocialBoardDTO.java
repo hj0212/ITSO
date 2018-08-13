@@ -24,6 +24,16 @@ public class SocialBoardDTO {
 		this.social_gender = social_gender;
 		this.social_age = social_age;
 	}
+	
+
+	public SocialBoardDTO(String social_title, String social_contents, int social_writer, String photo, String social_gender, int social_age) {
+		this.social_title = social_title;
+		this.social_contents = social_contents;
+		this.social_writer = social_writer;
+		this.photo = photo;
+		this.social_gender = social_gender;
+		this.social_age = social_age;
+	}
 
 	public int getSocial_seq() {
 		return social_seq;

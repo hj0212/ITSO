@@ -35,4 +35,8 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.deleteSocialBoard(dto);
 	}
 
+	@Override
+	public int getSocialBoardcurrval() {
+		return this.dao.getSocialBoardcurrval();
+	}
 }

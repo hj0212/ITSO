@@ -41,11 +41,27 @@ public class SocialController {
 	@Transactional
 	@RequestMapping("/test.go")
 	public ModelAndView test(HttpServletRequest request) throws IOException {
-		System.out.println(request.getParameter("stylename"));
-		System.out.println(request.getParameter("stylecontent"));
-		System.out.println(request.getParameter("gender"));
-		System.out.println(request.getParameter("age"));
-		System.out.println(request.getParameter("imageinfo"));
+		String title = request.getParameter("stylename");
+		String content = request.getParameter("stylecontent");
+//		String writer = 글쓴이
+		String gender = request.getParameter("gender");
+		int age = Integer.parseInt(request.getParameter("age"));
+		String photo = request.getParameter("imageinfo");
+		
+		SocialBoardDTO dto = new SocialBoardDTO(title, content, 0, photo, gender, age);
+		System.out.println(dto.getSocial_title());
+		System.out.println(dto.getSocial_contents());
+		System.out.println(dto.getSocial_writer());
+		System.out.println(dto.getPhoto());
+		System.out.println(dto.getSocial_gender());
+		System.out.println(dto.getSocial_age());
+		
+		service.insertSocialBoard(dto);
+		
+		// 글 번호
+		int social_seq = service.getSocialBoardcurrval();
+		
+		// 태그 정보
 		String taginfo = request.getParameter("taginfo");
 		
 		if(taginfo.equals("{}")) {
@@ -53,18 +69,7 @@ public class SocialController {
 		}else {
 			ObjectMapper om = new ObjectMapper();
 			om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-			
 			SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
-//			System.out.println("===================");
-//			System.out.println(dto.getName());
-//			System.out.println(dto.getBrand());
-//			System.out.println(dto.getStore());
-//			System.out.println(dto.getUrl());
-//			System.out.println(dto.getCategory());
-//			System.out.println(dto.getCoords().getLat());
-//			System.out.println(dto.getCoords().getAlong());
-			
-			System.out.println(myObjects.length);
 			
 			// 오브젝트 세개 image_db -> {} -> 0 : {} ,1 : {} , 2 : {}...
 			ObjectNode InfoNode = om.createObjectNode();
@@ -102,8 +107,8 @@ public class SocialController {
 			
 			String json = om.writeValueAsString(InfoNode);
 			request.setAttribute("markerdata", json);
-			request.setAttribute("src", request.getParameter("imageinfo"));
 		}
+		request.setAttribute("src", request.getParameter("imageinfo"));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("NewFile.jsp");
