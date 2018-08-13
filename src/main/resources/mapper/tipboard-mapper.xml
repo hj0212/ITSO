@@ -30,7 +30,7 @@ select * from Tip where category='다이어트'
 </select>
 
 <select id="getFashionTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category='패션'
+select * from Tip where category = '패션'
 </select>
 
 <select id="getBusinessTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
