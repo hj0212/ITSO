@@ -62,13 +62,13 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
-			List<SocialBoardDTO> socialList = this.sservice.getSocialList((MemberDTO)session.getAttribute("user"));
+			//List<SocialBoardDTO> socialList = this.sservice.getSocialList((MemberDTO)session.getAttribute("user"));
 			List<CollectionDTO> collectionList = this.sservice.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.sservice.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followerList = this.mservice.getFollowerList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mservice.getFollowingList((MemberDTO)session.getAttribute("user"));
 			followerList = followCheck(followerList, followingList);
-			mav.addObject("socialList", socialList);
+			//mav.addObject("socialList", socialList);
 			mav.addObject("collectionList", collectionList);
 			mav.addObject("photoList", photoList);
 			mav.addObject("followerList", followerList);
@@ -87,14 +87,14 @@ public class MemberController {
 	
 	@RequestMapping("/editProfile.do")
 	public String updateInfo(MemberDTO dto, HttpSession session) {
-		System.out.println("1:"+dto.getPw());
+		dto.setSeq(((MemberDTO)session.getAttribute("user")).getSeq());
 		int result = mservice.updateUserData(dto);
 		if(result > 0) {
 			System.out.println("성공");
 			MemberDTO user = mservice.getUserData(dto).get(0);
-			System.out.println("2:"+user.getPw());
+			System.out.println("2:"+user.getSeq());
 			session.setAttribute("user", user);
-			System.out.println("3:"+((MemberDTO)session.getAttribute("user")).getPw());
+			System.out.println("3:"+((MemberDTO)session.getAttribute("user")).getSeq());
 		}
 		return "myinfo.go";
 	}
