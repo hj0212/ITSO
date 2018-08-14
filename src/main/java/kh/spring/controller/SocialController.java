@@ -46,6 +46,8 @@ public class SocialController {
 	public ModelAndView gogo(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		ObjectMapper om = new ObjectMapper();
+		// json에 넣을 순번
+		int i = 0;
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
@@ -58,22 +60,69 @@ public class SocialController {
 		// 각 태그
 		ObjectNode objNodeNumber = om.createObjectNode();
 		
-		for(SocialTagDTO tag : list) {
-			// tag 하나당 넣어야 하는 객체
-			ObjectNode objNode = om.createObjectNode();
-			// 좌표를 넣을 객체
-			ObjectNode objNodeCoords = om.createObjectNode();
+		if(list.size() == 0) {
+			mav.addObject("marerdata","{}");
+			mav.addObject("dataflag","false");
+		} else {
+			for(SocialTagDTO tag : list) {
+				// tag 하나당 넣어야 하는 객체
+				ObjectNode objNode = om.createObjectNode();
+				// 좌표를 넣을 객체
+				ObjectNode objNodeCoords = om.createObjectNode();
+				
+				objNode.put("name", tag.getTag_name());
+				if(tag.getTag_brand() == null) {
+					tag.setTag_brand("brand");
+				}
+				
+				if(tag.getTag_store() == null) {
+					tag.setTag_store("store");
+				}
+				
+				if(tag.getTag_url() == null) {
+					tag.setTag_url("#");
+				}
+				
+				if(tag.getTag_category() == null) {
+					tag.setTag_category("category");
+				}
+				
+				objNode.put("brand", tag.getTag_brand());
+				objNode.put("store", tag.getTag_store());
+				objNode.put("url", tag.getTag_store());
+				objNode.put("category", tag.getTag_category());
+				objNode.put("key", tag.getTag_seq());
+				
+				// 좌표
+				objNodeCoords.put("lat", Double.parseDouble(tag.getTag_lat()));
+				objNodeCoords.put("along", Double.parseDouble(tag.getTag_along()));
+				
+				objNode.put("coords", objNodeCoords);
+				
+				objNodeNumber.put(i++ +"", objNode);
+			}
 			
-			objNode.put("name", tag.getTag_name());
-			objNode.put("brand", tag.getTag_brand());
-			objNode.put("store", tag.getTag_store());
-			objNode.put("url", tag.getTag_store());
-			objNode.put("category", tag.getTag_category());
-			objNode.put("key", tag.getTag_seq());
+			// canvas 객체 추가
+			ObjectNode canvas = om.createObjectNode();
+			canvas.put("width", 500);
+			canvas.put("height", 500);
+			canvas.put("src", "upload/social/"+dto.getPhoto());
 			
-			System.out.println(tag.getTag_seq());
+			objNodeNumber.put("canvas", canvas);
+			infoNode.put("image_db", objNodeNumber);
+			
+			String json = "";
+			try {
+				json = om.writeValueAsString(infoNode);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			mav.addObject("markerdata", json);
+			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("src", dto.getPhoto());
 		mav.setViewName("readSocial.jsp");
 		return mav;
 	}
