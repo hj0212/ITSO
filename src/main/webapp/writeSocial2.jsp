@@ -85,7 +85,7 @@
 		<form id="submitInfo" method="post" action="insertSocial.go">
 			<div class="row" name="top">
 				<div class="md-form form-lg col-md-12">
-					<input type="text" id="stylename" class="form-control form-control-lg" name="stylename"> 
+					<input type="text" id="stylename" class="form-control form-control-lg" name="stylename" maxlength="80"> 
 					<label for="stylename" class="ml-3">스타일 이름을 정해주세요.</label>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 			<div class="row">
 				<div class="md-form form-lg col-md-12">
 					<i class="fas fa-pencil-alt"></i>
-					<textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent"></textarea>
+					<textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent" maxlength="166"></textarea>
 					<label for="textareaPrefix" class="ml-3">스타일을 소개해 주세요.</label>
 				</div>
 			</div>
