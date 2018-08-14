@@ -34,6 +34,7 @@
 
 body {
 	font-family: 'NanumbarunpenR';
+	box-sizing: border-box;
 }
 
 .firstContainer {
@@ -209,8 +210,9 @@ a#MOVE_TOP_BTN {
 
 .collectionItem {
 	display: inline-block;
-	margin: 0 auto !important;
+	margin: 0 auto 10px auto !important;
 	background: white;
+	height: 236px;
 }
 
 .collectionItem:hover {
@@ -232,7 +234,7 @@ a#MOVE_TOP_BTN {
 }
 
 .active {
-	border: 3px solid #21FCFF;
+	border: 4px solid #21FCFF;
 }
 </style>
 </head>
@@ -268,10 +270,11 @@ a#MOVE_TOP_BTN {
 					data-toggle="dropdown" aria-haspopup="true" aria=expanded="false">Full
 					view</button>
 				<div class="dropdown-menu" name="menu">
-					<a class="dropdown-item flex-center droptxt2" href="main.go" value="Full
-						view">Full
-						view</a> <a class="dropdown-item flex-center droptxt2"
-						href="main.go" value="Thumbnail">Thumbnail view</a>
+					<a class="dropdown-item flex-center droptxt2" href="main.go"
+						value="Full
+						view">Full view</a> <a
+						class="dropdown-item flex-center droptxt2" href="main.go"
+						value="Thumbnail">Thumbnail view</a>
 				</div>
 			</div>
 		</div>
@@ -286,7 +289,9 @@ a#MOVE_TOP_BTN {
 
 
 		<div class="gridPhotoContainer row">
-<script>console.log("${empty socialList }");</script>
+			<script>
+				console.log("${empty socialList }");
+			</script>
 			<c:choose>
 				<c:when test="${fn:length(socialList) > 0}">
 					<c:forEach items="${socialList}" var="list">
@@ -306,13 +311,13 @@ a#MOVE_TOP_BTN {
 									<img src="upload/social/${list.photo}"
 										class="img-fluid z-depth-2" alt="Responsive image"
 										onclick="location='main.jsp'">
-										<c:if test="${!empty sessionScope.user }">
-									<button class="photoContainerButton1 btn btn-elegant"
-										id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
-										data-hover="+1">HYPE</button>
-									<a href="" class="photoContainerButton2 btn btn-elegant"
-										data-toggle="modal" data-target="#saveModal">save</a>
-										</c:if>
+									<c:if test="${!empty sessionScope.user }">
+										<button class="photoContainerButton1 btn btn-elegant"
+											id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
+											data-hover="+1">HYPE</button>
+										<a href="" class="photoContainerButton2 btn btn-elegant"
+											data-toggle="modal" data-target="#saveModal">save</a>
+									</c:if>
 									<div class="photoContainerHoverHashTag">
 										<P>
 											<span onclick="hashtag()">해쉬태그올곳</span>
@@ -359,36 +364,58 @@ a#MOVE_TOP_BTN {
 								data-target="#createModal">
 								<i class="fas fa-plus"></i> 컬렉션 생성
 							</button>
-							<button class="btn btn-outline-itso waves-effect"
-								data-dismiss="modal">컬렉션 수정</button>
 						</div>
 
 						<c:choose>
-						<c:when test="${not empty collectionList }">
-						<div id="collectionarea" class="mt-2">
-							<c:set var="num" value="0"></c:set>
-							<c:forEach items="${collectionList}" var="clist" varStatus="status">
-							<div class="collectionItem z-depth-1 mx-2">
-								<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
-								<h6>${clist.collection_contents }</h6>
-								<table class="collectionPhoto" border="1">
-									<tr>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-									</tr>
-									<tr>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-										<td><img src="/upload/social/${clist.photo }" alt=""></td>
-									</tr>
-								</table>
-								<h6 class="mb-0" style="height: 19px;"></h6>
-							</div>
-							</c:forEach>
-						</div>
-						</c:when>
-						<c:otherwise>
-						<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
-						</c:otherwise>
+							<c:when test="${not empty collectionList }">
+								<div id="collectionarea" class="mt-2">
+									<c:set var="num" value="0"></c:set>
+									<c:forEach items="${collectionList}" var="clist">
+										<div class="collectionItem z-depth-1 mt-2">
+											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
+											<h6>${clist.collection_contents }</h6>
+											<table class="collectionPhoto">
+
+												<c:set var="check" value="true" />
+												<c:set var="num" value="0" />
+
+												<c:forEach items="${photoList }" var="plist"
+													varStatus="status">
+													<c:choose>
+														<c:when test="${check eq true }">
+															<c:if
+																test="${plist.collection_seq == clist.collection_seq }">
+																<c:set var="num" value="${num+1 }" />
+
+																<c:if test="${num%2 == 1 }">
+																	<tr>
+																</c:if>
+																<td><img src="/upload/social/${plist.photo }"
+																	alt=""></td>
+																<c:if test="${num == 4 || status.last}">
+																	<c:set var="check" value="false" />
+																</c:if>
+															</c:if>
+														</c:when>
+														<c:otherwise>
+															<c:set var="num2" value="${num%4 }" />
+															<c:set var="num3" value="${num2%2 }" />
+															<c:set var="num4" value="${num2/2 }" />
+
+
+														</c:otherwise>
+													</c:choose>
+
+												</c:forEach>
+											</table>
+											<h6 class="mb-0" style="height: 19px;"></h6>
+										</div>
+									</c:forEach>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>
@@ -490,19 +517,19 @@ a#MOVE_TOP_BTN {
 			return false;
 		});
 	});
-	
+
 	$("#collectionarea").on("click", ".collectionItem", function() {
-        /*$(this).css("background", "black");*/
-        $(this).children(".check").toggleClass('active');
-    })
+		/*$(this).css("background", "black");*/
+		$(this).toggleClass('active');
+	})
 
-    $("#createModal").on('show.bs.modal', function() {
-        $("#saveModal").hide();
-    });
+	$("#createModal").on('show.bs.modal', function() {
+		$("#saveModal").hide();
+	});
 
-    $("#createModal").on('hidden.bs.modal', function() {
-        $("#saveModal").show();
-    });
+	$("#createModal").on('hidden.bs.modal', function() {
+		$("#saveModal").show();
+	});
 </script>
 
 

@@ -14,7 +14,7 @@
 
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -25,7 +25,7 @@
 	rel="stylesheet">
 
 <!--   ---------CDN 모음 끝------------------------------------------  -->
-<title>페이지 기본 틀2-게시판 형태용</title>
+<title>MyPage</title>
 <style>
 #header {
 	height: 150px;
@@ -135,28 +135,30 @@ table .profilearea {
 <script>
 	$(document).ready(function() {
 		$("#myinfobtn").click(function() {
-			location.href="myinfo.go";
+			location.href = "myinfo.go";
 		})
-		
-		$(".followbtn").on('click',function() {	
+
+		$(".followbtn").on('click', function() {
 			var following_seq = $(this).siblings("#seq").val();
 			alert(following_seq);
 			$.ajax({
-			    url: "followUser.do",
-			    type: "post",
-			    data: {following_seq:following_seq},
-			    success: function (response) {
-			        if (response != null) {
-			            console.log("DB insert success");
-			            $(this).hide();
-			        }
-			    },
-			    error: function (response) {
-			        console.log("DB insert Failed")
-			    }
+				url : "followUser.do",
+				type : "post",
+				data : {
+					following_seq : following_seq
+				},
+				success : function(response) {
+					if (response != null) {
+						console.log("DB insert success");
+						$(this).hide();
+					}
+				},
+				error : function(response) {
+					console.log("DB insert Failed")
+				}
 			});
 		})
-		
+
 	})
 </script>
 </head>
@@ -177,7 +179,7 @@ table .profilearea {
 				<br>
 				<p class="h4-responsive mb-0 nanumB">"${sessionScope.user.state }"</p>
 				<br>
-				<button id="myinfobtn" class="btn btn-indigo btn-sm">프로필 수정</button>
+				<button id="myinfobtn" class="btn btn-itso btn-sm">프로필 수정</button>
 			</div>
 			<div id="profilestat" class="">
 				<div class="" style="border-left: 1px solid black;">
@@ -227,96 +229,67 @@ table .profilearea {
 
 						<div class="row gb" style="margin: 0xp auto;">
 							<!-- Grid column -->
-							<div class="col-md-6 col-sm-12">
-								<!--Card-->
-								<div class="card">
-									<!--Card image-->
-									<div class="view">
-										<img src="https://mdbootstrap.com/img/Photos/Others/men.jpg"
-											class="card-img-top" alt="photo"> <a href="#">
-											<div class="mask rgba-white-slight"></div>
-										</a>
-									</div>
+							<c:choose>
+								<c:when test="${empty socialList }">
+									작성한 글이 없습니다.
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="slist" items="${socialList }">
+										<div class="col-md-6 col-sm-12">
+											<!--Card-->
+											<div class="card mb-1">
+												<!--Card image-->
+												<div class="view">
+													<img src="/upload/social/${slist.photo }"
+														class="card-img-top" alt="photo"> <a href="#">
+														<div class="mask rgba-white-slight"></div>
+													</a>
+												</div>
 
-									<!--Card content-->
-									<div class="card-body">
-										<!--Title-->
-										<h4 class="card-title">
-											<a>김형섭</a><i class="fa fa-heart-o red-text heart"
-												aria-hidden="true" style="float: right;"><font
-												color="black">0</font></i>
-										</h4>
-										<!--Text-->
-										<p class="card-text">Some quick example text to build on
-											the card title and make up the bulk of the card's content.</p>
-										<a href="#" class="btn  btn-indigo"
-											style="background-color: black;"><i class="fa fa-plus">follow</i></a>
-										<!--share-->
-										<!--instagram-->
-										<button type="button"
-											class="btn-floating btn-sm btn-is share "
-											style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-											<i class="fab fa-instagram"></i>
-										</button>
-										<!--twitter-->
-										<button type="button" class="btn-floating btn-sm btn-tw share"
-											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
-											<i class="fab fa-twitter"></i>
-										</button>
-										<!--facebook-->
-										<button type="button" class="btn-floating btn-sm btn-fb share"
-											style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
-											<i class="fab fa-facebook-f"></i>
-										</button>
-									</div>
-								</div>
-								<!--/.Card-->
-							</div>
-							<div class="col-md-6 col-sm-12">
-								<!--Card-->
-								<div class="card mb-1">
-									<!--Card image-->
-									<div class="view">
-										<img src="https://mdbootstrap.com/img/Photos/Others/men.jpg"
-											class="card-img-top" alt="photo"> <a href="#">
-											<div class="mask rgba-white-slight"></div>
-										</a>
-									</div>
+												<!--Card content-->
+												<div class="card-body">
+													<!--Title-->
+													<h4 class="card-title">
+														<a>${slist.writerName }</a><i
+															class="fa fa-heart-o red-text heart" aria-hidden="true"
+															style="float: right;"><font color="black">0</font></i>
+													</h4>
+													<!--Text-->
+													<p class="card-text">Some quick example text to build
+														on the card title and make up the bulk of the card's
+														content.</p>
+													<a href="#" class="btn  btn-indigo"
+														style="background-color: black;"><i class="fa fa-plus">follow</i></a>
+													<!--share-->
+													<!--instagram-->
+													<button type="button"
+														class="btn-floating btn-sm btn-is share "
+														style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
+														<i class="fab fa-instagram"></i>
+													</button>
+													<!--twitter-->
+													<button type="button"
+														class="btn-floating btn-sm btn-tw share"
+														style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
+														<i class="fab fa-twitter"></i>
+													</button>
+													<!--facebook-->
+													<button type="button"
+														class="btn-floating btn-sm btn-fb share"
+														style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
+														<i class="fab fa-facebook-f"></i>
+													</button>
+												</div>
+											</div>
+											<!--/.Card-->
+										</div>
 
-									<!--Card content-->
-									<div class="card-body">
-										<!--Title-->
-										<h4 class="card-title">
-											<a>김형섭</a><i class="fa fa-heart-o red-text heart"
-												aria-hidden="true" style="float: right;"><font
-												color="black">0</font></i>
-										</h4>
-										<!--Text-->
-										<p class="card-text">Some quick example text to build on
-											the card title and make up the bulk of the card's content.</p>
-										<a href="#" class="btn  btn-indigo"
-											style="background-color: black;"><i class="fa fa-plus">follow</i></a>
-										<!--share-->
-										<!--instagram-->
-										<button type="button"
-											class="btn-floating btn-sm btn-is share "
-											style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-											<i class="fab fa-instagram"></i>
-										</button>
-										<!--twitter-->
-										<button type="button" class="btn-floating btn-sm btn-tw share"
-											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
-											<i class="fab fa-twitter"></i>
-										</button>
-										<!--facebook-->
-										<button type="button" class="btn-floating btn-sm btn-fb share"
-											style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
-											<i class="fab fa-facebook-f"></i>
-										</button>
-									</div>
-								</div>
-								<!--/.Card-->
-							</div>
+
+									</c:forEach>
+
+								</c:otherwise>
+							</c:choose>
+
 							<!-- Grid column -->
 						</div>
 
@@ -332,14 +305,21 @@ table .profilearea {
 										<c:set var="num" value="0" />
 										<c:forEach var="clist" items="${collectionList }">
 											<tr>
-												<td width=230><h4>${clist.collection_title }</h4>
-													<br> ${clist.collection_contents }</td>
-												<td><c:forEach var="slist" items="${photoList }">
-														<c:if
-															test="${slist.collection_seq eq clist.collection_seq }">
-															<div class="rect">
-																<img src="upload/social/${slist.photo }" alt="" />
-															</div>
+												<td width=190><h4><a href="collection.go?seq=${clist.collection_seq }">${clist.collection_title }</a></h4> <br>
+													${clist.collection_contents }</td>
+												<td><c:set var="loop" value="true" /> 
+												<c:set var="num" value="0" /> 
+													<c:forEach var="slist" items="${photoList }">
+														<c:if test="${loop eq true }">
+															<c:if test="${slist.collection_seq eq clist.collection_seq }">
+																<c:set var="num" value="${num+1 }" />
+																<div class="rect">
+																	<img src="upload/social/${slist.photo }" alt="" />
+																</div>
+																<c:if test="${num > 3 }">
+																	<c:set var="loop" value="false" />
+																</c:if>
+															</c:if>
 														</c:if>
 													</c:forEach></td>
 											</tr>
@@ -359,31 +339,31 @@ table .profilearea {
 					<div class="tab-pane fade" id="followerPanel" role="tabpanel">
 						<table class="table mb-0">
 							<c:choose>
-								<c:when test="${empty followingList }">
-									<tr><td>나를 팔로우 하는 사람이 없습니다.
+								<c:when test="${empty followerList }">
+									<tr>
+										<td>나를 팔로우 하는 사람이 없습니다.
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="ferlist" items="${followerList }">
 										<tr>
 											<td width=100>
 												<div class="profilearea">
-													<img src="/upload/profile/${finglist.photo }" alt=""
+													<img src="/upload/profile/${ferlist.photo }" alt=""
 														class="profileimg">
 												</div>
 											</td>
 											<c:choose>
 												<c:when test="${ferlist.part eq 'home'}">
-													<td style="height: 100px; vertical-align: middle"><h6 class="mt-1">${ferlist.name }</h6>
-													<c:if test="${ferlist.followcheck eq 'n' }">
-														<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button> 
-													</c:if>
-													<c:if test="${ferlist.followcheck eq 'ㅛ' }">
-														<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button> 
-													</c:if>
-													<input type="hidden" value="${ferlist.seq }" id="seq" /></td>
+													<td style="height: 100px; vertical-align: middle"><h6
+															class="mt-1">${ferlist.name }</h6> <c:if
+															test="${ferlist.followcheck eq 'n' }">
+															<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button>
+														</c:if> <c:if test="${ferlist.followcheck eq 'ㅛ' }">
+															<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button>
+														</c:if> <input type="hidden" value="${ferlist.seq }" id="seq" /></td>
 												</c:when>
 												<c:otherwise>
-													<!-- 페북 등 로그인일때 -->			
+													<!-- 페북 등 로그인일때 -->
 												</c:otherwise>
 											</c:choose>
 										</tr>
@@ -401,7 +381,8 @@ table .profilearea {
 						<table class="table mb-0">
 							<c:choose>
 								<c:when test="${empty followingList }">
-									<tr><td>팔로잉 하는 사람이 없습니다.
+									<tr>
+										<td>팔로우 하는 사람이 없습니다.
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="finglist" items="${followingList }">
@@ -412,19 +393,22 @@ table .profilearea {
 														class="profileimg">
 												</div>
 											</td>
+											<script>
+												console
+														.log("${finglist.followcheck}")
+											</script>
 											<c:choose>
 												<c:when test="${finglist.part eq 'home'}">
-													<td style="height: 100px; vertical-align: middle"><h6 class="mt-1">${finglist.name }</h6>
-													<c:if test="${ferlist.followcheck eq 'n' }">
-														<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button> 
-													</c:if>
-													<c:if test="${ferlist.followcheck eq 'ㅛ' }">
-														<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button> 
-													</c:if>
-													<input type="hidden" value="${finglist.seq }" id="seq" /></td>
+													<td style="height: 100px; vertical-align: middle"><h6
+															class="mt-1">${finglist.name }</h6> <c:if
+															test="${ferlist.followcheck eq 'n' }">
+															<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button>
+														</c:if> <c:if test="${finglist.followcheck eq 'y' }">
+															<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button>
+														</c:if> <input type="hidden" value="${finglist.seq }" id="seq" /></td>
 												</c:when>
 												<c:otherwise>
-													<!-- 페북 등 로그인일때 -->			
+													<!-- 페북 등 로그인일때 -->
 												</c:otherwise>
 											</c:choose>
 										</tr>
@@ -441,9 +425,6 @@ table .profilearea {
 		</div>
 	</div>
 </body>
-<!-- JQuery -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

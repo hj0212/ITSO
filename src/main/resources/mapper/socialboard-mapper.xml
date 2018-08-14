@@ -22,4 +22,16 @@
 	<select id="getCollectionPhotoList" resultType="sdto">
 		select c1.collection_seq, c2.social_seq, c2.photo from (select c.collection_seq, c.social_seq, s.photo from collection_content c, social s where c.social_seq = s.social_seq) c2, collection c1 where c2.collection_seq = c1.collection_seq and c1.collection_writer = #{seq}
 	</select>
+	
+	<select id="getCollectionSocialList" resultType="sdto">
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, to_char(s.social_date, 'YYYY/MM/DD') social_date,  s.photo, s.social_gender, s.social_age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+	</select>
+	
+	<select id="getMySocialList" parameterType ="dto" resultType="sdto">
+		select s.*, u.name social_writerName from social s, users u where s.social_writer = u.seq and s.social_writer=#{seq} order by social_date desc
+	</select>
+	
+	<select id="getCollectionData" resultType="CollectionDTO">
+		select c.*, u.name from collection c, users u where c.collection_writer = u.seq and collection_seq = #{collection_seq}
+	</select>
 </mapper>

@@ -7,12 +7,13 @@ public class CollectionDTO {
 	private int writer;
 	private int social_seq;
 	private String photo;
+	private String name; // 작성자 이름
 	
 	public CollectionDTO() {
 		super();
 	}
 	public CollectionDTO(int collection_seq, String collection_title, String collection_contents, int writer,
-			int social_seq, String photo) {
+			int social_seq, String photo, String name) {
 		super();
 		this.collection_seq = collection_seq;
 		this.collection_title = collection_title;
@@ -20,6 +21,7 @@ public class CollectionDTO {
 		this.writer = writer;
 		this.social_seq = social_seq;
 		this.photo = photo;
+		this.name = name;
 	}
 	public int getCollection_seq() {
 		return collection_seq;
@@ -56,6 +58,12 @@ public class CollectionDTO {
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

@@ -33,7 +33,6 @@ public class MemberController {
 			session.setMaxInactiveInterval(60*60);
 			MemberDTO user = result.get(0);
 			session.setAttribute("user", user);
-			System.out.println(dto.getEmail());
 		}
 		mav.addObject("result",result.size());
 		mav.setViewName("loginProc.jsp");
@@ -61,14 +60,13 @@ public class MemberController {
 	public ModelAndView goMypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
-			//List<SocialBoardDTO> socialList = this.sservice.getSocialList((MemberDTO)session.getAttribute("user"));
+			List<SocialBoardDTO> socialList = this.sservice.getSocialList((MemberDTO)session.getAttribute("user"));
 			List<CollectionDTO> collectionList = this.sservice.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.sservice.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followerList = this.mservice.getFollowerList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mservice.getFollowingList((MemberDTO)session.getAttribute("user"));
-			followerList = followCheck(followerList, followingList);
-			//mav.addObject("socialList", socialList);
+			followCheck(followerList, followingList);
+			mav.addObject("socialList", socialList);
 			mav.addObject("collectionList", collectionList);
 			mav.addObject("photoList", photoList);
 			mav.addObject("followerList", followerList);
@@ -92,9 +90,7 @@ public class MemberController {
 		if(result > 0) {
 			System.out.println("성공");
 			MemberDTO user = mservice.getUserData(dto).get(0);
-			System.out.println("2:"+user.getSeq());
 			session.setAttribute("user", user);
-			System.out.println("3:"+((MemberDTO)session.getAttribute("user")).getSeq());
 		}
 		return "myinfo.go";
 	}
@@ -110,18 +106,29 @@ public class MemberController {
 		return result;
 	}
 	
-	private List<MemberDTO> followCheck(List<MemberDTO> followerList, List<MemberDTO> followingList) {
+	private void followCheck(List<MemberDTO> followerList, List<MemberDTO> followingList) {
 		for(MemberDTO followertmp : followerList) {
 			for(MemberDTO followingtmp : followingList) {
 				if(followertmp.getSeq() == followingtmp.getSeq()) {
 					followertmp.setFollowcheck("y");
+					System.out.println("followcheck" +followertmp.getFollowcheck());
 					break;
 				} else {
 					followertmp.setFollowcheck("n");
 				}
 			}
 		}
-		return followerList;		
+		
+		for(MemberDTO followingtmp : followingList) {
+			for(MemberDTO followertmp : followingList) {
+				if(followingtmp.getSeq() == followertmp.getSeq()) {
+					followingtmp.setFollowcheck("y");
+					break;
+				} else {
+					followingtmp.setFollowcheck("n");
+				}
+			}
+		}	
 	}
 
 }

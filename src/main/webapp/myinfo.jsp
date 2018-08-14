@@ -59,6 +59,10 @@ body {
 				$("#profileImageForm").submit();
 			})
 		});
+		
+		$("#backbtn").click(function() {
+			location.href = "mypage.go";
+		})
 	});
 </script>
 </head>
@@ -109,7 +113,7 @@ body {
 					</div>
 					<div id="btnarea text-center">
 						<button class="btn btn-itso">수정</button>
-						<button type="button" class="btn btn-mdb-color">취소</button>
+						<button type="button" id="backbtn" class="btn btn-mdb-color">취소</button>
 					</div>
 				</form>
 				<!-- Button -->
