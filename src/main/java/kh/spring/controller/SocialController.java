@@ -40,6 +40,43 @@ public class SocialController {
 		mav.setViewName("Main2.jsp");
 		return mav;
 	}
+	
+	@Transactional
+	@RequestMapping("/readSocial.go")
+	public ModelAndView gogo(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		ObjectMapper om = new ObjectMapper();
+		
+		int seq = Integer.parseInt(request.getParameter("seq"));
+		SocialBoardDTO dto = service.selectSocialBoard(seq);
+		
+		int social_seq = dto.getSocial_seq();
+		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
+		
+		// image_db -> {} -> 0 : {}, 1 : {}
+		ObjectNode infoNode = om.createObjectNode();
+		// 각 태그
+		ObjectNode objNodeNumber = om.createObjectNode();
+		
+		for(SocialTagDTO tag : list) {
+			// tag 하나당 넣어야 하는 객체
+			ObjectNode objNode = om.createObjectNode();
+			// 좌표를 넣을 객체
+			ObjectNode objNodeCoords = om.createObjectNode();
+			
+			objNode.put("name", tag.getTag_name());
+			objNode.put("brand", tag.getTag_brand());
+			objNode.put("store", tag.getTag_store());
+			objNode.put("url", tag.getTag_store());
+			objNode.put("category", tag.getTag_category());
+			objNode.put("key", tag.getTag_seq());
+			
+			System.out.println(tag.getTag_seq());
+		}
+		
+		mav.setViewName("readSocial.jsp");
+		return mav;
+	}
 
 
 	@Transactional

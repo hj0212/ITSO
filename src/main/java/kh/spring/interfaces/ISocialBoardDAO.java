@@ -6,6 +6,7 @@ import kh.spring.dto.SocialBoardDTO;
 
 public interface ISocialBoardDAO {
 	public List<SocialBoardDTO> showSocialBoardList();
+	public SocialBoardDTO selectSocialBoard(int seq);
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO dto);
 	public int updateSocialBoard(SocialBoardDTO dto);

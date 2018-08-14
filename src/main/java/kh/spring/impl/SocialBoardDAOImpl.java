@@ -38,4 +38,9 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	public int getSocialBoardcurrval() {
 		return template.selectOne("SocialBoard.getSocialBoardcurrval");
 	}
+
+	@Override
+	public SocialBoardDTO selectSocialBoard(int seq) {
+		return template.selectOne("SocialBoard.selectSocialBoard", seq);
+	}
 }

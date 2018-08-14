@@ -39,4 +39,9 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public int getSocialBoardcurrval() {
 		return this.dao.getSocialBoardcurrval();
 	}
+
+	@Override
+	public SocialBoardDTO selectSocialBoard(int seq) {
+		return this.dao.selectSocialBoard(seq);
+	}
 }
