@@ -19,13 +19,17 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.SocialTagDTO;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
 
 @Controller
 public class SocialController {
 	@Autowired
 	private ISocialBoardService service;
+	@Autowired 
+	ISocialTagService tagService;
 
 	@RequestMapping("/Main2.go")
 	public ModelAndView showSocialBoardList(SocialBoardDTO dto) {	
@@ -40,7 +44,7 @@ public class SocialController {
 
 	@Transactional
 	@RequestMapping("/insertSocial.go")
-	public ModelAndView test(HttpServletRequest request) throws IOException {
+	public void test(HttpServletRequest request) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		
 		String title = request.getParameter("stylename");
@@ -75,11 +79,21 @@ public class SocialController {
 			SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
 
 			for(int i = 0; i < myObjects.length; i++) {
+				String tag_name = myObjects[i].getName();
+				String tag_brand = myObjects[i].getBrand();
+				String tag_store = myObjects[i].getStore();
+				String tag_url = myObjects[i].getUrl();
+				String tag_lat = myObjects[i].getCoords().getLat();
+				String tag_along = myObjects[i].getCoords().getAlong();
+				String tag_category = myObjects[i].getCategory();
 				
+				SocialTagDTO stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
+				tagService.insertSocialTag(stdto);
 			}
 			
-			mav.setViewName("readSocial.jsp");
 		}
-		return mav;
+		
+//		mav.setViewName("readSocial.jsp");
+//		return mav;
 	}
 }
