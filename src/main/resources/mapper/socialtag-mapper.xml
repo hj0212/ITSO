@@ -3,6 +3,6 @@
 
 <mapper namespace="SocialTag">
 	<insert id="insertSocialTag" parameterType="stdto">
-		
+		insert into social_tag values(tag_seq.nextval,#{social_seq},#{tag_name},#{tag_brand},#{tag_store},#{tag_url},#{tag_lat},#{tag_along},#{tag_category})
 	</insert>
 </mapper>

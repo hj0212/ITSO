@@ -82,7 +82,7 @@
 		<div class="row">
 			<p>여기는 네비 인클루드</p>
 		</div>
-		<form id="submitInfo" method="post" action="test.go">
+		<form id="submitInfo" method="post" action="insertSocial.go">
 			<div class="row" name="top">
 				<div class="md-form form-lg col-md-12">
 					<input type="text" id="stylename" class="form-control form-control-lg" name="stylename"> 
@@ -123,8 +123,8 @@
 				</div>
 				<!-- Group of default radios - option 3 -->
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="t">
-					<label class="custom-control-label" for="defaultGroupExample3">남,여</label>
+					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="g">
+					<label class="custom-control-label" for="defaultGroupExample3">무관</label>
 				</div>
 			</div>
 			<div class="row my-2"></div>
@@ -151,7 +151,7 @@
 				</div>
 				<div class="custom-control custom-radio col-md-12 ml-5">
 					<input type="radio" class="custom-control-input" id="defaultGroupExample8" name="age" value="0">
-					<label class="custom-control-label" for="defaultGroupExample8">기타(10세이하/50세 이상)</label>
+					<label class="custom-control-label" for="defaultGroupExample8">모든 연령</label>
 				</div>
 			</div>
 			<div class="row">
@@ -285,6 +285,11 @@
 	                            cinfo[key].coords.along = Number(cinfo[key].coords.along) + 40;
 	                            //obj[num] = cinfo[key];
 	                            //num++;
+	                            
+	                            if(cinfo[key]["key"] === undefined){
+	                            	console.log("정의되지 않음");
+		                            cinfo[key]["key"] = "un";
+	                            }
 	                            
 	                            obj.push(cinfo[key]);
 	                            // console.log(obj);

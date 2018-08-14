@@ -120,23 +120,24 @@
     <script>
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
-           	let markerdata = ${markerdata};
-        	
-            $j('.pin').easypinShow({
-            	data : markerdata,
-                popover : {
-                    animate : true,
-                },
-            });
-
-            $j(".image-containers").hover(function(){
-                $j(this).css("display","none");
-            });
-
-            $j(".pin-containers").mouseleave(function(){
-                $j(".image-containers").css("display","block");
-                $j(".easypin-marker").css("z-index","0");
-            })
+        	if("${dataflag}" === "true"){
+	           	let markerdata = ${markerdata};
+	            $j('.pin').easypinShow({
+	            	data : markerdata,
+	                popover : {
+	                    animate : true,
+	                },
+	            });
+	
+	            $j(".image-containers").hover(function(){
+	                $j(this).css("display","none");
+	            });
+	
+	            $j(".pin-containers").mouseleave(function(){
+	                $j(".image-containers").css("display","block");
+	                $j(".easypin-marker").css("z-index","0");
+	            })
+        	};
         });
     </script>
         <!-- Font Awesome -->

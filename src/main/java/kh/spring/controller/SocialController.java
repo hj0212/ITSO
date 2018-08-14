@@ -26,7 +26,7 @@ import kh.spring.jsonobject.SocialTag;
 public class SocialController {
 	@Autowired
 	private ISocialBoardService service;
-	
+
 	@RequestMapping("/Main2.go")
 	public ModelAndView showSocialBoardList(SocialBoardDTO dto) {	
 		System.out.println(dto.getSocial_title() + " : " + dto.getSocial_writer());
@@ -36,18 +36,20 @@ public class SocialController {
 		mav.setViewName("Main2.jsp");
 		return mav;
 	}
-	
-	
+
+
 	@Transactional
-	@RequestMapping("/test.go")
+	@RequestMapping("/insertSocial.go")
 	public ModelAndView test(HttpServletRequest request) throws IOException {
+		ModelAndView mav = new ModelAndView();
+		
 		String title = request.getParameter("stylename");
 		String content = request.getParameter("stylecontent");
-//		String writer = 글쓴이
+		//String writer = 글쓴이
 		String gender = request.getParameter("gender");
 		int age = Integer.parseInt(request.getParameter("age"));
 		String photo = request.getParameter("imageinfo");
-		
+
 		SocialBoardDTO dto = new SocialBoardDTO(title, content, 0, photo, gender, age);
 		System.out.println(dto.getSocial_title());
 		System.out.println(dto.getSocial_contents());
@@ -56,62 +58,28 @@ public class SocialController {
 		System.out.println(dto.getSocial_gender());
 		System.out.println(dto.getSocial_age());
 		
+		// 글 작성
 		service.insertSocialBoard(dto);
 		
-		// 글 번호
+		// 작성된 글 번호
 		int social_seq = service.getSocialBoardcurrval();
-		
+
 		// 태그 정보
 		String taginfo = request.getParameter("taginfo");
-		
+
 		if(taginfo.equals("{}")) {
-			System.out.println("태그가 없음");
+			System.out.println("태그가 없음 : 파일만 저장");
 		}else {
 			ObjectMapper om = new ObjectMapper();
 			om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
-			
-			// 오브젝트 세개 image_db -> {} -> 0 : {} ,1 : {} , 2 : {}...
-			ObjectNode InfoNode = om.createObjectNode();
-			// 각 태그
-			ObjectNode objNodeNumber = om.createObjectNode();
+
 			for(int i = 0; i < myObjects.length; i++) {
-				// tag 하나당 넣어야 하는 객체
-				ObjectNode objNode = om.createObjectNode();
-				// 좌표를 넣을 객체
-				ObjectNode objNodeCoords = om.createObjectNode();
 				
-				objNode.put("name",myObjects[i].getName());
-				objNode.put("brand",myObjects[i].getBrand());
-				objNode.put("store",myObjects[i].getStore());
-				objNode.put("url",myObjects[i].getUrl());
-				objNode.put("category",myObjects[i].getCategory());
-				
-				// 좌표
-				objNodeCoords.put("lat", Double.parseDouble(myObjects[i].getCoords().getLat()));
-				objNodeCoords.put("along", Double.parseDouble(myObjects[i].getCoords().getAlong()));
-				
-				objNode.put("coords", objNodeCoords);
-				
-				objNodeNumber.put(i+"", objNode);
 			}
 			
-			// canvs 객체 추가
-			ObjectNode canvas = om.createObjectNode();
-			canvas.put("width", 500);
-			canvas.put("height", 500);
-			canvas.put("src", "upload/social/"+request.getParameter("imageinfo"));
-			
-			objNodeNumber.put("canvas", canvas);
-			InfoNode.put("image_db", objNodeNumber);
-			
-			String json = om.writeValueAsString(InfoNode);
-			request.setAttribute("markerdata", json);
+			mav.setViewName("readSocial.jsp");
 		}
-		request.setAttribute("src", request.getParameter("imageinfo"));
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("NewFile.jsp");
 		return mav;
 	}
 }
