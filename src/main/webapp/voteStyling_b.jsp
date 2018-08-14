@@ -112,7 +112,7 @@ var count=0;
 							id="voteitemimg"> <input type="file" name="imgfilename0"
 							id="imgfile0"
 							class="file-upload-input form-control z-depth-3 hoverable"
-							 accept="image/*" />
+							onchange="readURL(this);" accept="image/*" />
 					</div>
 				</div>
 			</div>
@@ -130,9 +130,9 @@ var count=0;
 						<li class="media">
 							<div class="media-img">
 								<img class="d-flex mr-3 selimg" src="" alt="후보사진"> <input
-									type="file" name="imgfilename${count}"
-									class="file-upload-input form-control z-depth-3 hoverable filesel"
-									onchange="readURL(this);" accept="image/*">
+									type="file" name="imgfilename"
+									class="file-upload-input form-control z-depth-3 hoverable filesel${count}"
+									onchange="readURL(this);" accept="image/*" />
 							</div>
 
 							<div class="media-body image-upload-wrap form-group" id="btnsdiv">
@@ -204,18 +204,14 @@ var count=0;
 		document.oncontextmenu = function(e) {
 			return false;
 		};
-		
-		
-		function onChange()
-		onchange="readURL(this);"
 
-		function readURL(input,img) {
+		function readURL(input) {
 			if (input.files && input.files[0]) {
-				console.log(img);
+				var image = jQuery(input).data('image-target');
 				var reader = new FileReader();
 
 				reader.onload = function(e) {
-					$(img).attr('src', e.target.result);
+					jQuery(image).attr('src', e.target.result);
 					$('.image-title').html(input.files[0].name);
 				};
 
@@ -259,8 +255,6 @@ var count=0;
 			var wrapper = $(this).closest('li');
 			wrapper.insertAfter(wrapper.next());
 		})
-		
-		
 	</script>
 
 </body>
