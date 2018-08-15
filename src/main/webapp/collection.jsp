@@ -100,7 +100,6 @@ body {
 
 .collection-description a {
 	display: inline-block;
-	margin-bottom: 30px;
 	color: var(- -main-color);
 	color: #1B0946;
 	font-size: 6.75vw;
@@ -232,10 +231,12 @@ section .follow-action .follow-button {
 	<%@include file="navi.jsp"%>
 
 	<div class="wrapper">
+		<c:forEach var="clist" items="${collectionList }">
+		
 		<div class="container">
 			<div class="collection-top">
 				<div class="collection-meta">
-					by <a href="#">${collectionList.name }</a> <span class="sep">•</span> updated
+					by <a href="#">${clist.writerName }</a> <span class="sep">•</span> updated
 					over 2 years ago <span class="sep">•</span> 12 looks
 				</div>
 				<div class="follow">
@@ -243,10 +244,12 @@ section .follow-action .follow-button {
 				</div>
 			</div>
 			<div class="collection-description">
-				<a href="#">summer/spring collection</a>
+				<a href="#">${clist.collection_title }</a>
+				<h4 class="mb-3">${clist.collection_contents }</h4>
 				<p>Page 1 of 3</p>
 			</div>
 		</div>
+		</c:forEach>
 	</div>
 
 	<section>

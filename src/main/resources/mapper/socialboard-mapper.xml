@@ -32,6 +32,6 @@
 	</select>
 	
 	<select id="getCollectionData" resultType="CollectionDTO">
-		select c.*, u.name from collection c, users u where c.collection_writer = u.seq and collection_seq = #{collection_seq}
+		select c.*, u.name writerName from collection c, users u where c.collection_writer = u.seq and collection_seq = #{collection_seq}
 	</select>
 </mapper>
