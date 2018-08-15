@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.ISocialBoardDAO;
 import kh.spring.interfaces.ISocialBoardService;
@@ -21,18 +23,43 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
-	public int insertSocialBoard(SocialBoardDTO dto) {
-		return this.dao.insertSocialBoard(dto);
+	public int insertSocialBoard(SocialBoardDTO sdto) {
+		return this.dao.insertSocialBoard(sdto);
 	}
 
 	@Override
-	public int updateSocialBoard(SocialBoardDTO dto) {
-		return this.dao.updateSocialBoard(dto);
+	public int updateSocialBoard(SocialBoardDTO sdto) {
+		return this.dao.updateSocialBoard(sdto);
 	}
 
 	@Override
-	public int deleteSocialBoard(SocialBoardDTO dto) {
-		return this.dao.deleteSocialBoard(dto);
+	public int deleteSocialBoard(SocialBoardDTO sdto) {
+		return this.dao.deleteSocialBoard(sdto);
+	}
+
+	@Override
+	public List<CollectionDTO> getCollectionList(MemberDTO dto) {
+		return this.dao.getCollectionList(dto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto) {
+		return this.dao.getCollectionPhotoList(dto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSocialList(MemberDTO dto) {
+		return this.dao.getSocialList(dto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto) {
+		return this.dao.getCollectionSocialList(dto);
+	}
+
+	@Override
+	public List<CollectionDTO> getCollectionData(CollectionDTO dto) {
+		return this.dao.getCollectionData(dto);
 	}
 
 }

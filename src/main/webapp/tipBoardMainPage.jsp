@@ -211,7 +211,7 @@ table {
 											<td class="float-left"><a href="getSpecificTipView.tip?seq=${beautyTipData.tip_seq}">${beautyTipData.tip_title}</a></td>
 											<td class="float-right">${beautyTipData.tip_writer}</td>
 											<td class="float-right"><i
-												class=" fa fa-heart red-text" aria-hidden="true"></i>33</td>
+												class=" fa fa-heart red-text" aria-hidden="true"></i>??</td>
 											<td class="float-right"><i class="fa fa-eye"
 												aria-hidden="true"></i>${beautyTipData.tip_viewcount}</td>
 										</tr>
@@ -233,7 +233,7 @@ table {
 
 									<c:forEach items="${dietTipData}" var="dietTipData">
 										<tr class="clearfix">
-											<td class="float-left">${dietTipData.tip_title}</td>
+											<td class="float-left"><a href="getSpecificTipView.tip?seq=${dietTipData.tip_seq}">${dietTipData.tip_title}</a></td>
 											<td class="float-right">${dietTipData.tip_writer}</td>
 											<td class="float-right"><i class="fa fa-heart red-text"
 												aria-hidden="true"></i>52</td>
@@ -261,7 +261,8 @@ table {
 									<!-- for each jstl 적용될 부분 -->
 									<c:forEach items="${fashionTipData}" var="fashionTipData">
 										<tr class="clearfix">
-											<td class="float-left">${fashionTipData.tip_title}</td>
+											
+											<td class="float-left"><a href="getSpecificTipView.tip?seq=${fashionTipData.tip_seq}">${fashionTipData.tip_title}</a></td>
 											<td class="float-right">${fashionTipData.tip_writer}</td>
 											<td class="float-right"><i class="fa fa-heart red-text"
 												aria-hidden="true"></i>66</td>
@@ -285,7 +286,7 @@ table {
 									<!-- for each jstl 적용될 부분 -->
 									<c:forEach items="${businessTipData}" var="businessTipData">
 										<tr class="clearfix">
-											<td class="float-left">${businessTipData.tip_title}</td>
+											<td class="float-left"><a href="getSpecificTipView.tip?seq=${businessTipData.tip_seq}">${businessTipData.tip_title}</a></td>
 											<td class="float-right">${businessTipData.tip_writer}</td>
 											<td class="float-right"><i class="fa fa-heart red-text"
 												aria-hidden="true"></i>22</td>

@@ -25,7 +25,6 @@ public class AjaxController {
 	
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
-		System.out.println("일단들어옴");
 		System.out.println(email);
 		List<MemberDTO> emailcheck = service.emailExist(email);
 		String msg;

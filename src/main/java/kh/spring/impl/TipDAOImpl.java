@@ -5,7 +5,6 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kh.spring.dto.TipDTO;
 import kh.spring.interfaces.ITipDAO;
@@ -59,7 +58,17 @@ public class TipDAOImpl implements ITipDAO {
 
 	@Override
 	public List<TipDTO> getSpecificTipView(int seq) {
-		return template.selectList("TipBoard.getSpecificTipView",seq);
+		return template.selectList("TipBoard.getSpecificTipView", seq);
 	}
-	
+	@Override
+	public List<TipDTO> getThumpsUpData(int seq) {
+
+		return template.selectList("TipBoard.getThumpsUpData", seq);
+	}
+	@Override
+	public int viewCountPlus(int seq) {
+		// TODO Auto-generated method stub
+		return template.update("TipBoard.viewCountPlus", seq);
+	}
+
 }
