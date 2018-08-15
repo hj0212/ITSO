@@ -60,20 +60,20 @@ nav {
 		<ul class="navbar-nav ml-auto nav-flex-icons">
 			<li class="nav-item"><a
 				class="nav-link waves-effect waves-light"> <i
-					class="fa-bell"></i> 알림
+					class="fa fa-bell"></i> 알림
 			</a></li>
 			<li class="nav-item"><a
 				class="nav-link waves-effect waves-light"> <i
-					class="fa-envelope"></i> 메시지
+					class="fa fa-envelope"></i> 메시지
 			</a></li>
 			<li class="nav-item"><a
-				class="nav-link waves-effect waves-light"> <i class="fas fa-pen"></i>
+				class="nav-link waves-effect waves-light"> <i class="fa fa-pencil"></i>
 					피드에 글쓰기
 			</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fa-user"> </i>
+					<i class="fa fa-user"> </i>
 			</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-default"
 					aria-labelledby="navbarDropdownMenuLink">
