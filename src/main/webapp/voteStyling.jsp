@@ -129,7 +129,7 @@ input[type="file"] {
 						<li class="media">
 							<div class="media-img">
 								<img class="d-flex mr-3 selimg" src="" alt="후보사진"> <input
-									type="file" name="imgfilename"
+									type="file" name="imgfilename" id="imgfile"+count
 									class="file-upload-input form-control z-depth-3 hoverable filesel"
 									onchange="readURL(this);" accept="image/*">
 							</div>
@@ -223,7 +223,7 @@ input[type="file"] {
 			console.log(input.files[0].name);		
 			 var inputId =input.id;
 			 console.log(document.getElementById(inputId));
-			 var imageId = document.getElementById(inputId).parentNode.firstChild;
+			 var imageId = document.getElementById(inputId).parentElement.children[1];
 		/* 	 console.log(document.getElementById(imageId)); ->null나옴 */
 		
 			var imagesrc = imageId.src;
@@ -261,15 +261,12 @@ input[type="file"] {
 													+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
 													+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
 													+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
-													+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a></div><li>');
-													+ '<input type="text" "name="styling_item_image"'
-													+'class="form-control form-control-lg col-md-9 float-right">'
-													+'<label for="votetitleid" class="offset-md-3 my-0 font-weight-bold"'
-													+'	id="votelabel">아이템에 대해 간단히 입력해주세요.</label>'
+													+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a></div><li>');												
 						})
 
 		$(document).on('click', '.delvotebtn', function() {
 			$(this).closest("li").remove();
+			count--;
 		})
 
 		$(document).on('click', '.upvotebtn', function() {
