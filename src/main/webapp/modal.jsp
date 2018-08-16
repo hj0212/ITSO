@@ -1,8 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
     <!--   ---------CDN 모음 ------------------------------------------  -->
     <!-- jquery  -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -83,7 +86,6 @@
         .collectionPhoto {
             width: 100%;
             height: auto;
-            margin: 1px;
         }
 
         .collectionPhoto td {
@@ -92,6 +94,17 @@
 
         .collectionPhoto img {
             width: 100%;
+        }
+
+        .btn-itso {
+            background: #1B0946;
+            color: white;
+        }
+
+        .btn-outline-itso {
+            border: 2px solid #1B0946;
+            background: white;
+            color: #1B0946;
         }
 
         /*체크아이콘*/
@@ -209,72 +222,12 @@
                 transform: scale(1);
             }
         }
-
     </style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark" id="nav1"> <a class="navbar-brand" href="#"><img id="logo" alt=""
-		src="logo_white_no.png"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-        <div class="collapse navbar-collapse" id="navbar1">
-            <ul class="navbar-nav mr-auto" id="menu">
-                <li class="nav-item"><a class="nav-link" href="#">스타일 피드 <!-- <span class="sr-only">(current)</span> -->
-			</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
-            </ul>
-            <form class="form-inline my-1">
-                <div class="md-form form-sm my-0">
-                    <input class="form-control form-control-sm mr-sm-2 mb-0" type="text" placeholder="Search" aria-label="Search">
-                </div>
-                <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
-            </form>
-            <ul class="navbar-nav ml-auto nav-flex-icons">
-                <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
-					class="far fa-bell"></i>알림
-			</a></li>
-                <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
-					class="far fa-envelope"></i>메시지
-			</a></li>
-                <li class="nav-item"><a class="nav-link waves-effect waves-light"> <i
-					class="fa fa-google-plus"></i>피드에 글쓰기
-			</a></li>
-                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fa fa-user"></i>
-			</a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a> <a class="dropdown-item" href="#">Another action</a> <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <nav class="mb-1 navbar navbar-expand-lg navbar-dark" id="nav2">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2" aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-        <div class="collapse navbar-collapse" id="navbar2">
-            <ul class="navbar-nav mr-auto hide">
-                <li class="nav-item"><a class="nav-link" href="#">인기
-			</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">최신</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">팔로잉</a></li>
-            </ul>
 
-            <ul class="navbar-nav mr-auto hide">
-                <li class="nav-item"><a class="nav-link" href="#">팁
-			</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">스타일링</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
-            </ul>
-
-        </div>
-    </nav>
-
-    <!-- Central Modal Medium Success -->
-    <div class="modal fade" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<!-- saveModal -->
+    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <!--Content-->
             <div class="modal-content">
@@ -289,46 +242,13 @@
                 <!--Body-->
                 <div class="modal-body">
                     <div id="modalbtnarea">
-                        <button class="btn btn-indigo"><i class="fas fa-plus"></i> 컬렉션 생성</button>
-                        <button class="btn btn-outline-indigo waves-effect" data-dismiss="modal">컬렉션 수정</button>
+                        <button class="btn btn-itso" data-toggle="modal" data-target="#createModal"><i class="fas fa-plus"></i> 컬렉션 생성</button>
+                        <button class="btn btn-outline-itso waves-effect" data-dismiss="modal">컬렉션 수정</button>
                     </div>
 
                     <div id="collectionarea" class="mt-2">
-                        <!--<div class="collectionItem z-depth-1 mx-2">
-                            <table class="collectionPhoto" border="1">
-                                <tr>
-                                    <td><img src="background.jpg" alt=""></td>
-                                    <td><img src="background.jpg" alt=""></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="background.jpg" alt=""></td>
-                                    <td><img src="background.jpg" alt=""></td>
-                                </tr>
-                            </table>
-                            <h4 class="mt-1 mb-1">collection</h4>
-                            <h6>컬렉션 설명</h6>
-                        </div>
                         <div class="collectionItem z-depth-1 mx-2">
-                            <h6 class="mt-1 mb-1">collection</h6>
-                            <table class="collectionPhoto" border="1">
-                                <tr>
-                                    <td><img src="background.jpg" alt=""></td>
-                                    <td><img src="background.jpg" alt=""></td>
-                                </tr>
-                                <tr>
-                                    <td><img src="background.jpg" alt=""></td>
-                                    <td><img src="background.jpg" alt=""></td>
-                                </tr>
-                            </table>
-                            <h4 class="mt-1 mb-1">컬렉션 제목</h4>
-                            <h6>컬렉션 설명</h6>
-                        </div>-->
-                        <div class="collectionItem z-depth-1 mx-2">
-                            <div class="check">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="61" height="52" viewBox="0 0 61 52" class="check-icon">
-    <path d="M56.560,-0.010 C37.498,10.892 26.831,26.198 20.617,33.101 C20.617,33.101 5.398,23.373 5.398,23.373 C5.398,23.373 0.010,29.051 0.010,29.051 C0.010,29.051 24.973,51.981 24.973,51.981 C29.501,41.166 42.502,21.583 60.003,6.565 C60.003,6.565 56.560,-0.010 56.560,-0.010 Z" id="path-1" class="cls-2" fill-rule="evenodd"/>
-  </svg>
-                            </div>
+
                             <h4 class="mt-1 mb-1">collection</h4>
                             <h6>컬렉션 설명</h6>
                             <table class="collectionPhoto" border="1">
@@ -344,11 +264,7 @@
                             <h6 class="mb-0" style="height: 19px;"></h6>
                         </div>
                         <div class="collectionItem z-depth-1 mx-2">
-                            <div class="check">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="61" height="52" viewBox="0 0 61 52" class="check-icon">
-    <path d="M56.560,-0.010 C37.498,10.892 26.831,26.198 20.617,33.101 C20.617,33.101 5.398,23.373 5.398,23.373 C5.398,23.373 0.010,29.051 0.010,29.051 C0.010,29.051 24.973,51.981 24.973,51.981 C29.501,41.166 42.502,21.583 60.003,6.565 C60.003,6.565 56.560,-0.010 56.560,-0.010 Z" id="path-1" class="cls-2" fill-rule="evenodd"/>
-  </svg>
-                            </div>
+
                             <h4 class="mt-1 mb-1">collection</h4>
                             <h6>컬렉션 설명</h6>
                             <table class="collectionPhoto" border="1">
@@ -364,11 +280,7 @@
                             <h6 class="mb-0" style="height: 19px;"></h6>
                         </div>
                         <div class="collectionItem z-depth-1 mx-2">
-                            <div class="check">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid" width="61" height="52" viewBox="0 0 61 52" class="check-icon">
-    <path d="M56.560,-0.010 C37.498,10.892 26.831,26.198 20.617,33.101 C20.617,33.101 5.398,23.373 5.398,23.373 C5.398,23.373 0.010,29.051 0.010,29.051 C0.010,29.051 24.973,51.981 24.973,51.981 C29.501,41.166 42.502,21.583 60.003,6.565 C60.003,6.565 56.560,-0.010 56.560,-0.010 Z" id="path-1" class="cls-2" fill-rule="evenodd"/>
-  </svg>
-                            </div>
+
                             <h4 class="mt-1 mb-1">collection</h4>
                             <h6>컬렉션 설명</h6>
                             <table class="collectionPhoto" border="1">
@@ -384,21 +296,51 @@
                             <h6 class="mb-0" style="height: 19px;"></h6>
                         </div>
                     </div>
-
-
-
-
-
                 </div>
             </div>
             <!--/.Content-->
         </div>
     </div>
-    <!-- Central Modal Medium Success-->
+
+
+    <!-- createModal -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <p class="heading lead mb-0">컬렉션 생성</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="md-form">
+                        <input type="text" id="inputMDEx" class="form-control">
+                        <label for="inputMDEx">컬렉션 이름</label>
+                    </div>
+                    <div class="md-form">
+                        <textarea type="text" id="form7" class="md-textarea form-control" rows="3"></textarea>
+                        <label for="form7">컬렉션 상세 설명</label>
+                    </div>
+                </div>
+
+                <!--Footer-->
+                <div class="modal-footer justify-content-center">
+                    <button class="btn btn-itso" data-toggle="modal" data-target="#modal">생성</button>
+                    <button class="btn btn-outline-itso waves-effect" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
 
     <!-- Button trigger modal -->
     <div class="text-center">
-        <a href="" class="btn btn-indigo btn-rounded" data-toggle="modal" data-target="#centralModalSuccess">Launch Modal Success <i class="fa fa-eye ml-1"></i></a>
+        <a href="" class="btn btn-itso btn-rounded" data-toggle="modal" data-target="#saveModal">save</a>
     </div>
 
 </body>
@@ -435,6 +377,13 @@
         $(this).children(".check").toggleClass('active');
     })
 
+    $("#createModal").on('show.bs.modal', function() {
+        $("#saveModal").hide();
+    });
+
+    $("#createModal").on('hidden.bs.modal', function() {
+        $("#saveModal").show();
+    });
 </script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

@@ -2,12 +2,21 @@ package kh.spring.interfaces;
 
 import java.util.List;
 
+import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 
 public interface ISocialBoardService {
 	public List<SocialBoardDTO> showSocialBoardList();
-	public int insertSocialBoard(SocialBoardDTO dto);
-	public int updateSocialBoard(SocialBoardDTO dto);
-	public int deleteSocialBoard(SocialBoardDTO dto);
-
+	public List<SocialBoardDTO> getSocialList(MemberDTO dto);
+	public List<CollectionDTO> getCollectionList(MemberDTO dto);
+	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto);
+	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto);
+	public List<CollectionDTO> getCollectionData(CollectionDTO dto);
+	public SocialBoardDTO selectSocialBoard(int seq);
+	public int getSocialBoardcurrval();
+	public int insertSocialBoard(SocialBoardDTO sdto);
+	public int updateSocialBoard(SocialBoardDTO sdto);
+	public int deleteSocialBoard(SocialBoardDTO sdto);
+	
 }

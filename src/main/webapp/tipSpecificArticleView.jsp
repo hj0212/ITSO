@@ -88,6 +88,9 @@ img {
 						console.log(this.data + "," + this.url + ","
 								+ this.textStatus + "," + this.jqXHR);
 						console.log("좋아요  + 1");
+						
+						alert("좋아요 표시를 하였습니다!")
+						
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
 						console.log(this.textStatus + "," + this.jqXHR + ","
@@ -109,7 +112,7 @@ img {
 	<!-- body -->
 	<table class="container-fluid">
 		<c:forEach items="${tipContent}" var="tipContent">
-			<tr>
+			<tr class="container">
 				<td><div id="tip_seq" class="container">${tipContent.tip_seq}</div></td>
 				<td><div class="container">
 						<h1>${tipContent.tip_title}</h1>
@@ -119,7 +122,7 @@ img {
 				<td><div class="container">${tipContent.tip_writer}</div></td>
 			</tr>
 			<tr>
-				<td colspan=5><div>${tipContent.tip_contents}</div></td>
+				<td colspan=5><div class="container">${tipContent.tip_contents}</div></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -130,7 +133,7 @@ img {
 	<div id=reaction>
 		<button id="like-btn" class="btn white btn-sm">
 <%-- 			<c:forEach items="${tipLikeCounts}" var="tipLikeCounts"> --%>
-				<i class=" fa fa-heart red-text mr-1" aria-hidden="true"></i>
+				<i class=" fa fa-heart red-text" aria-hidden="true"></i>
 <%-- 				${tipLikeCounts.tip_good_seq} --%>
 <%-- 			</c:forEach> --%>
 		</button>

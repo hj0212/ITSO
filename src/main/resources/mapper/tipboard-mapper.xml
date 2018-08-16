@@ -12,6 +12,7 @@
 <!-- <result property="tip_date" column="tip_date" jdbcType="DATE" javaType="java.util.Date"/> -->
 <result property="tip_viewcount" column="tip_viewcount" jdbcType="VARCHAR" javaType="java.lang.String"/>
 <result property="category" column="category" jdbcType="VARCHAR" javaType="java.lang.String"/>
+<result property="tip_like_count" column="tip_like_count" jdbcType="INTEGER" javaType="java.lang.Integer"/>
 </resultMap>
 
 <!-- 글쓰기 sql -->
@@ -21,20 +22,28 @@ insert into TIP values(TIP_SEQ.NEXTVAL,#{tip_title},#{tip_contents},#{tip_writer
 
 <!-- tip articles get sql -->
 <select id="getBeautyTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category='뷰티' order by tip_seq DESC
+select * from users u, tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq  where t.tip_writer=u.seq and t.category='뷰티' order by t.TIP_SEQ desc
 </select>
 
 <select id="getDietTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category='다이어트' order by tip_seq DESC
+select * from users u, tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq  where t.tip_writer=u.seq and t.category='다이어트' order by t.TIP_SEQ desc
 </select>
 
 <select id="getFashionTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category = '패션' order by tip_seq DESC
+select * from users u, tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq  where t.tip_writer=u.seq and t.category='패션' order by t.TIP_SEQ desc
 </select>
 
+
 <select id="getBusinessTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-select * from Tip where category='직장생활' order by tip_seq DESC
+select * from users u, tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq  where t.tip_writer=u.seq and t.category='직장생활' order by t.TIP_SEQ desc
 </select>
+
+<!-- getToBeUpvotingArticles 50>tip_like_count>15 -->
+<select id="getUpvotingArticles" parameterType="TipDTO" resultMap="TipDTOResultMap">
+<!-- select * from tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq where <![CDATA[ (tg.tip_like_count>15) and (tg.tip_like_count<50) ]]>order by tg.tip_like_count desc -->
+select * from users u, tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq where u.seq = t.tip_writer and <![CDATA[ (tg.tip_like_count>15) and (tg.tip_like_count<50) ]]> order by tg.tip_like_count desc
+</select>
+
 
 <!-- specific article get sql by #{tip_seq} number -->
 <select id="getSpecificTipView" parameterType="TipDTO" resultMap="TipDTOResultMap">
@@ -50,7 +59,5 @@ update tip set tip_viewcount = tip_viewcount+1 where tip_seq=#{seq}
 <insert id="tipArticleLikeProc" parameterType="TipDTO">
 insert into tip_good values(TIP_GOOD_SEQ.NEXTVAL,#{seq},0)
  </insert>
-
-
 
 </mapper>

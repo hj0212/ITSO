@@ -75,5 +75,10 @@ public class TipServiceImpl implements ITipService {
 		return this.dao.tipArticleLikeProc(seq);
 	}
 
+	@Override
+	public List<TipDTO> getUpvotingArticles() {
+		return this.dao.getUpvotingArticles();
+	}
+
 
 }
