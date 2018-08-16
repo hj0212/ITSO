@@ -1,7 +1,5 @@
 package kh.spring.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.MemberDTO;
@@ -46,5 +43,11 @@ public class AjaxController {
 			e.printStackTrace();
 		}
 		return msg;
+	}
+	
+	@RequestMapping("/saveCollection.ajax")
+	public @ResponseBody int dd(int seq) {
+		
+		return 0;
 	}
 }

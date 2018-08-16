@@ -515,11 +515,9 @@ a#MOVE_TOP_BTN {
 	$('.photoContainerButton2').on("click", function() {
 		social_seq=$(this).parent().siblings(".inputSocialSeq").val();/* $(this).closest('.social_seq').val(); */
 		console.log(social_seq);
-		
 	})
 
 	$("#collectionarea").on("click", ".collectionItem", function() {
-		/*$(this).css("background", "black");*/
 		$(this).toggleClass('active');
 		var collection_seq =$(this).children(".seq").val();
 		console.log("collection_seq: " + collection_seq);
