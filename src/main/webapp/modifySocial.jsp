@@ -91,7 +91,7 @@
 					<label for="inputLGEx" class="ml-3">공유하고 싶은 아이템에 태그를 달아주세요.</label>
 					<br>
 					<div class="interactive-image" id="planit" data-toggle="modal" data-target="#styletag">
-						<img class="taggd z-depth-3 pin" src="upload/social/${sfileName}" alt="photo" id="imgstyle" easypin-id="image_db"/>
+						<img class="taggd z-depth-3 pin" src="upload/social/${sbdto.photo}" alt="photo" id="imgstyle" easypin-id="image_db"/>
 					</div>
 				</div>
 			</div>
@@ -119,7 +119,7 @@
 				</div>
 				<!-- Group of default radios - option 3 -->
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="g" checked>
+					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="g">
 					<label class="custom-control-label" for="defaultGroupExample3">무관</label>
 				</div>
 			</div>
@@ -146,7 +146,7 @@
 					<label class="custom-control-label" for="defaultGroupExample7">40대</label>
 				</div>
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample8" name="age" value="0" checked>
+					<input type="radio" class="custom-control-input" id="defaultGroupExample8" name="age" value="0" ${sbdto.social_age == '10' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample8">모든 연령</label>
 				</div>
 			</div>
@@ -159,7 +159,7 @@
 				<a href="#top" class="btn btn-deep-purple ml-auto"><i class="fas fa-arrow-up"></i></a>
 			</div>
 			<input type="text" name="taginfo" readonly style="display:none" id="taginfo">
-			<input type="text" name="imageinfo" readonly style="display:none" id="imageinfo" value="${sfileName}">
+			<input type="text" name="imageinfo" readonly style="display:none" id="imageinfo" value="${sbdto.photo}">
 		</form>
 		
 
@@ -195,6 +195,7 @@
 	<script>	
 		var $j = jQuery.noConflict();
 	    var $instance = $j('.pin').easypin({
+	    	init : ${markerdata},
 	        modalWidth: 300,
 	        done: function (element) {
 	            if ($j('input[name="content"]', element).val() != '') {
@@ -257,21 +258,18 @@
 	                //console.log(clothesInformation);
 	
 	                // localStorage.setItem("clothesInformation", JSON.stringify(clothesInformation));
-		
+	
 	                //location.href = "test2.html";
 	            });
 	        });
 	        
 	        let stylename = document.getElementById("stylename").value;
 	        let stylecontent = document.getElementById("textareaPrefix").value;
-	        let age = document.getElementById("").value;
 	        
 	        if(stylename === "") {
 	        	alert("스타일 이름을 정해주세요");
 	        	return false;	
-	        }
-	        
-	        if(stylecontent === ""){
+	        }else if(stylecontent === ""){
 	        	alert("스타일을 소개해 주세요.");
 	        	return false;
 	        }
@@ -283,11 +281,8 @@
 	        
 	       	document.getElementById("submitInfo").submit();
 	    }
-	
-		
 	</script>
-
-	<!-- Font Awesome -->
+		<!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
     crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
@@ -302,6 +297,5 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
-</body>
-
+	<script>
 </html>

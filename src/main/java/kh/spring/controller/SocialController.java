@@ -68,7 +68,7 @@ public class SocialController {
 	
 	@Transactional
 	@RequestMapping("/readSocial.go")
-	public ModelAndView gogo(HttpServletRequest request) {
+	public ModelAndView readSocial(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		ObjectMapper om = new ObjectMapper();
 		// json에 넣을 순번
@@ -87,7 +87,7 @@ public class SocialController {
 		ObjectNode objNodeNumber = om.createObjectNode();
 		
 		if(list.size() == 0) {
-			mav.addObject("marerdata","{}");
+			mav.addObject("markerdata","{}");
 			mav.addObject("dataflag","false");
 		} else {
 			for(SocialTagDTO tag : list) {
@@ -145,6 +145,7 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());
 		mav.setViewName("styleShareBoard.jsp");
@@ -154,7 +155,7 @@ public class SocialController {
 
 	@Transactional
 	@RequestMapping("/insertSocial.go")
-	public void test(HttpServletRequest request) throws IOException {
+	public void insertSocial(HttpServletRequest request) throws IOException {
 		ModelAndView mav = new ModelAndView();
 		
 		String title = request.getParameter("stylename");
@@ -165,12 +166,12 @@ public class SocialController {
 		String photo = request.getParameter("imageinfo");
 
 		SocialBoardDTO dto = new SocialBoardDTO(title, content, 0, photo, gender, age);
-		System.out.println(dto.getSocial_title());
-		System.out.println(dto.getSocial_contents());
-		System.out.println(dto.getSocial_writer());
-		System.out.println(dto.getPhoto());
-		System.out.println(dto.getSocial_gender());
-		System.out.println(dto.getSocial_age());
+//		System.out.println(dto.getSocial_title());
+//		System.out.println(dto.getSocial_contents());
+//		System.out.println(dto.getSocial_writer());
+//		System.out.println(dto.getPhoto());
+//		System.out.println(dto.getSocial_gender());
+//		System.out.println(dto.getSocial_age());
 		
 		// 글 작성
 		service.insertSocialBoard(dto);
@@ -211,5 +212,85 @@ public class SocialController {
 		
 //		mav.setViewName("readSocial.jsp");
 //		return mav;
+	}
+	
+	@Transactional
+	@RequestMapping("/modifySocial.go")
+	public ModelAndView modifySocial(HttpServletRequest request) throws IOException {
+		ModelAndView mav = new ModelAndView();
+		ObjectMapper om = new ObjectMapper();
+		int social_seq = Integer.parseInt(request.getParameter("seq"));
+		int i = 0;
+		
+		SocialBoardDTO sbdto = service.selectSocialBoard(social_seq);
+		mav.addObject("sbdto",sbdto);
+		
+		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
+		
+		ObjectNode infoNode = om.createObjectNode();
+		// 각 태그
+		ObjectNode objNodeNumber = om.createObjectNode();
+		
+		if(list.size() == 0) {
+			mav.addObject("markerdata", "{}");
+			mav.addObject("dataflag","false");
+		}else {
+			for(SocialTagDTO tag : list) {
+				// tag 하나당 넣어야 하는 객체
+				ObjectNode objNode = om.createObjectNode();
+				// 좌표를 넣을 객체
+				ObjectNode objNodeCoords = om.createObjectNode();
+				objNode.put("name", tag.getTag_name());
+				
+				if(tag.getTag_store() == null) {
+					tag.setTag_store("");
+				}
+				
+				if(tag.getTag_url() == null) {
+					tag.setTag_url("#");
+				}
+				
+				if(tag.getTag_category() == null) {
+					tag.setTag_category("");
+				}
+				
+				objNode.put("brand", tag.getTag_brand());
+				objNode.put("store", tag.getTag_store());
+				objNode.put("url", tag.getTag_store());
+				objNode.put("category", tag.getTag_category());
+				objNode.put("key", tag.getTag_seq());
+				
+				// 좌표
+				objNodeCoords.put("lat", Double.parseDouble(tag.getTag_lat()));
+				objNodeCoords.put("along", Double.parseDouble(tag.getTag_along()));
+				
+				objNode.put("coords", objNodeCoords);
+				
+				objNodeNumber.put(i++ +"", objNode);
+			}
+			
+			// canvas 객체 추가
+			ObjectNode canvas = om.createObjectNode();
+			canvas.put("width", 500);
+			canvas.put("height", 500);
+			canvas.put("src", "upload/social/"+sbdto.getPhoto());
+			
+			objNodeNumber.put("canvas", canvas);
+			infoNode.put("image_db", objNodeNumber);
+			
+			String json = "";
+			try {
+				json = om.writeValueAsString(infoNode);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			mav.addObject("list",list);
+			mav.addObject("markerdata", json);
+			mav.addObject("dataflag","true");
+		}
+		
+		mav.setViewName("modifySocial.jsp");
+		return mav;
 	}
 }

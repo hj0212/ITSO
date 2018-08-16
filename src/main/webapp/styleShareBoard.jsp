@@ -8,22 +8,13 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title> Style-Share | ITSO</title>
- 
- <!-- Font Awesome -->
-<link rel="stylesheet"
-href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Bootstrap core CSS -->
-<link
-href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
-rel="stylesheet">
-<!-- Material Design Bootstrap -->
-<link
-href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
-rel="stylesheet">
-
- <style>
-        
+            <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+                    <!-- Font Awesome -->
+	   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+	   <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
+	   <title> Style-Share | ITSO</title>
+		<style>
             #wrapper {
                 min-height: 100%;
                 width: 980px;
@@ -103,6 +94,25 @@ rel="stylesheet">
                 width:70%;
                 display:inline-block;
             }
+            
+	        body {
+	            font-family: 'Montserrat'
+	        }
+	        .inner {
+	            position: absolute;
+	        }
+	
+	        .image-containers {
+	            display: block;
+	        }
+	        
+	        .pin-containers img {
+	        	object-fit : contain;
+	        }
+	        
+	        .image-containers img {
+	        	object-fit : contain;
+	        }
 
 
             /* #comment {
@@ -159,7 +169,7 @@ rel="stylesheet">
                         <br>
                         <!-- header -->
                         <header class="container">
-                            <h3>Marsquest Giveaway</h3>
+                            <h3>${content.social_title}</h3>
                             <time>${date[1]} ${date[2]}, ${date[0]}</time>
                             <div class="instafilta-target mt-1">
                                 2
@@ -167,32 +177,40 @@ rel="stylesheet">
                             </div>
                         </header>
 
-                        <div>
-                            <!-- image -->
-                            <br>
-                            <figure>
-                                <img src="https://78.media.tumblr.com/851d55a1f3d275a127b63961500b3e91/tumblr_mgztb7LSrv1rlmfrlo1_500.jpg"> </figure>
-                            </figure>
+						<div>
+							<!-- image -->
+							<br>
+							<figure>
+								<div class="pin-container" style="width: 500px; height: 500px">
+									<div class="pin-containers inner">
+										<img src="upload/social/${src}" class="pin" width="500"
+											height="500" easypin-id="image_db">
+									</div>
+									<div class="image-containers inner">
+										<img src="upload/social/${src}" width="500" height="500">
+									</div>
+								</div>
+							</figure>
+							</figure>
+
+							<div style="display: none;" easypin-tpl>
+								<popover> 
+								</popover>
+
+								<marker>
+									<div style="border: solid 1px #1B0946; width: 15px; height: 15px; background-color: black; border-radius: 50%" class="clothes-marker" id="clothes-marker"></div>
+								</marker>
+							</div>
 
 
-                            <!-- user-context -->
+							<!-- user-context -->
 
-                            <div class=container>
+							<div class=container>
+								${content.social_contents}
+							</div>
+						</div>
 
-                                <a href="">#bike</a>
-                                <a href="">#black</a>
-                                <a href="">#short</a>
-                                <a href="">#brown-hair</a>
-                                <a href="">#white-shirt</a>
-
-
-                                디자이너에게 완벽함이란 무엇인가를 추가할 것이 있는 상태가 아니라 더 이상 버릴 것이 없는 상태다.</div>
-
-
-
-                        </div>
-
-                        <div class="container mt-4">
+						<div class="container mt-4">
                             <table id="comment">
                                 <tbody>
                                     <tr>
@@ -342,8 +360,9 @@ rel="stylesheet">
                     </div>
                     <ol>
                     	<c:forEach var="item" items="${list}">
+                    	    <div class="clothesinfo">
                     	    <li class="mb-2">
-	                            <div>${item.tag_name}</div>
+  	                            <div>${item.tag_name}</div>
 	                            <div>
 	                                <a href=${item.tag_url} target="_blank">${item.tag_brand}</a>
 	                                <c:if test="${!empty item.tag_store }">
@@ -351,6 +370,7 @@ rel="stylesheet">
 	                                </c:if>
 	                            </div>
                         	</li>
+                    	    </div>
                     	</c:forEach>
                     </ol>
                 </section>
@@ -411,30 +431,51 @@ rel="stylesheet">
 
 
     </div>
-
-
-
-
-
-
-<!-- JQuery -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!-- Bootstrap tooltips -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
-<!-- Bootstrap core JavaScript -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<!-- MDB core JavaScript -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	crossorigin="anonymous"></script>
-
-
-
+    <script>
+   		var $j  = jQuery.noConflict();
+        $j(document).ready(function () {
+        	if("${dataflag}" === "true"){
+	           	let markerdata = ${markerdata};
+	            $j('.pin').easypinShow({
+	            	data : markerdata,
+	                popover : {
+	                    animate : true,
+	                },
+	            });
+	
+	            $j(".image-containers").hover(function(){
+	                $j(this).css("display","none");
+	            });
+	
+	            $j(".pin-containers").mouseleave(function(){
+	                $j(".image-containers").css("display","block");
+	                $j(".easypin-marker").css("z-index","0");
+	            })
+        	};
+        	
+            $j(".clothes-marker").mouseover(function(){
+           		var index = $(".clothes-marker").index(this);
+           		$j(".clothesinfo")[index].style.backgroundColor = "yellow";
+        	}).mouseout(function(){
+           		var index = $(".clothes-marker").index(this);
+            	$j(".clothesinfo")[index].style.backgroundColor = "white";
+        	});
+        });
+    </script>
+	</script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 </body>
 
     </html>
