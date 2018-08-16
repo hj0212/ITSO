@@ -15,4 +15,6 @@
 select max(tip_good_seq) from tip_good where TIP_SEQ=#{seq}
 </select>
 
+
+
 </mapper>

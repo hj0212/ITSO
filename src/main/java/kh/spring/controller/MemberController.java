@@ -35,6 +35,7 @@ public class MemberController {
 			System.out.println(dto.getEmail());
 		}
 		mav.addObject("result",result.size());
+		System.out.println(result.size());
 		mav.setViewName("loginProc.jsp");
 		return mav;
 		

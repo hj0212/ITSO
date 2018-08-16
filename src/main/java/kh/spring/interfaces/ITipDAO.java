@@ -28,4 +28,6 @@ public interface ITipDAO {
 
 	public List<TipGoodDTO> getTipLikeCounts(int seq);
 
+	public List<TipDTO> getUpvotingArticles();
+
 }
