@@ -35,7 +35,6 @@
 
 body {
 	font-family: 'NanumbarunpenR';
-	box-sizing: border-box;
 }
 
 .firstContainer {
@@ -214,6 +213,7 @@ a#MOVE_TOP_BTN {
 	margin: 0 auto 10px auto !important;
 	background: white;
 	height: 236px;
+	box-sizing: content-box;
 }
 
 .collectionItem:hover {
@@ -222,20 +222,21 @@ a#MOVE_TOP_BTN {
 }
 
 .collectionPhoto {
-	width: 100%;
-	height: auto;
+	height: 100%;
+	padding-left: 5px;
 }
-
-.collectionPhoto td {
-	height: overflow: hidden;
+.collectionPhotoItem {
+	float:left;
+	display: inline;
+	padding: 2px;
 }
-
-.collectionPhoto img {
-	width: 100%;
+.collectionPhotoItem img {
+	width: 107px;
 }
 
 .active {
 	border: 4px solid #21FCFF;
+	margin-left: 1px;
 }
 </style>
 </head>
@@ -298,17 +299,16 @@ a#MOVE_TOP_BTN {
 					<c:forEach items="${socialList}" var="list">
 
 						<div class="gridPhoto col-lg-3 col-md-12 mb-3">
+							
 							<a href="#"> <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image">
 							</a>
 							<div class="photoContainer">
+								<input type="hidden" class="inputSocialSeq" value="${list.social_seq }"/>
 								<div class="photoContainerHover z-depth-2">
 									<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
 									<p class="photoContainerHoverWriter">by
 										${list.social_writer}</p>
-									<!-- <img src="resources/images/background.jpg"
-										class="img-fluid z-depth-2" alt="Responsive image"
-										onclick="location='main.jsp'"> -->
 									<img src="upload/social/${list.photo}"
 										class="img-fluid z-depth-2" alt="Responsive image"
 										onclick="location='main.jsp'">
@@ -363,7 +363,7 @@ a#MOVE_TOP_BTN {
 						<div id="modalbtnarea">
 							<button class="btn btn-itso" data-toggle="modal"
 								data-target="#createModal">
-								<i class="fas fa-plus"></i> 컬렉션 생성
+								<i class="fa fa-plus"></i> 컬렉션 생성
 							</button>
 						</div>
 
@@ -375,7 +375,8 @@ a#MOVE_TOP_BTN {
 										<div class="collectionItem z-depth-1 mt-2">
 											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
 											<h6>${clist.collection_contents }</h6>
-											<table class="collectionPhoto">
+											<input type="hidden" class="seq" value="${clist.collection_seq }"/>
+											<div class="collectionPhoto">
 
 												<c:set var="check" value="true" />
 												<c:set var="num" value="0" />
@@ -387,28 +388,22 @@ a#MOVE_TOP_BTN {
 															<c:if
 																test="${plist.collection_seq == clist.collection_seq }">
 																<c:set var="num" value="${num+1 }" />
-
-																<c:if test="${num%2 == 1 }">
-																	<tr>
-																</c:if>
-																<td><img src="/upload/social/${plist.photo }"
-																	alt=""></td>
+																
+																<div class="collectionPhotoItem"><img src="/upload/social/${plist.photo }"
+																	alt=""></div>
 																<c:if test="${num == 4 || status.last}">
 																	<c:set var="check" value="false" />
 																</c:if>
 															</c:if>
 														</c:when>
 														<c:otherwise>
-															<c:set var="num2" value="${num%4 }" />
-															<c:set var="num3" value="${num2%2 }" />
-															<c:set var="num4" value="${num2/2 }" />
 
 
 														</c:otherwise>
 													</c:choose>
 
 												</c:forEach>
-											</table>
+											</div>
 											<h6 class="mb-0" style="height: 19px;"></h6>
 										</div>
 									</c:forEach>
@@ -515,10 +510,33 @@ a#MOVE_TOP_BTN {
 			return false;
 		});
 	});
+	
+	social_seq = 0;
+	$('.photoContainerButton2').on("click", function() {
+		var seq = $(this).closest(".inputSocialSeq").val();/* $(this).closest('.social_seq').val(); */
+		console.log(seq);
+	})
 
 	$("#collectionarea").on("click", ".collectionItem", function() {
 		/*$(this).css("background", "black");*/
 		$(this).toggleClass('active');
+		var collection_seq =$(this).children(".seq").val();
+		console.log("collection_seq: " + collection_seq);
+		
+		var social_seq = $(this).closest(".gridPhoto").children(".social_seq").val();
+		console.log("social_seq: "+social_seq);
+		$.ajax({
+	        url:"saveCollection.ajax",
+	        type:"post",
+	        data:{
+	          collection_seq:collection_seq,
+	          social_seq:social_seq
+	        },
+	        success:function(data){
+	          console.log("들어옴"+data);
+	        }
+	     });
+	 
 	})
 
 	$("#createModal").on('show.bs.modal', function() {
