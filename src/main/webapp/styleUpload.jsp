@@ -23,7 +23,7 @@
 <!-- Material Design Bootstrap -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
-	rel="1-sheet">
+	rel="stylesheet">
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -100,14 +100,13 @@ body {
 		<div class="col-md-12 my-3"></div>
 
 		<div class="col-md-6">
-			<form method="post" action="uploadSocialImg.sns" id="uploadform" enctype="multipart/form-data">
+			<form method="post" action="#" id="uploadform">
 				<div class="file-upload">
 					<!--   <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Add Image</button> -->
 					<div class="row">
 						<div class="image-upload-wrap form-group my-3 col-md-12">
-							<label>-님의 스타일을 보여주세요.</label> 
-							<input type="file" name="file" id="imgfile"
-								class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);"
+							<label>-님의 스타일을 보여주세요.</label> <input id="imgfile"
+								class="file-upload-input form-control z-depth-3 hoverable" type='file' onchange="readURL(this);"
 								accept="image/*" />
 							<!--     <div class="drag-text">
       <h3>Drag and drop a file or select add Image</h3>
@@ -116,20 +115,23 @@ body {
 					</div>
 					<div class="row">
 						<div class="file-upload-content col-md-12 my-3">
-							<img class="file-upload-image z-depth-1" src="" alt="your image"
-								id="imgselected"/>
+							<img class="file-upload-image z-depth-1" src="#" alt="your image"
+								id="imgselected" />
 						</div>
 					</div>
 					<div class="image-title-wrap col-md-12">
 						<div class="row">
 							<button type="button" onclick="removeUpload()"
 								class="remove-image btn btn-deep-purple">사진 바꾸기</button>
-							<button class="btn btn-deep-purple" id="nextbtn" type="button">다음 단계로</button>
-							<input type="button" class="btn btn-deep-purple" id="backbtn" value="취소"></button>
+							<button class="btn btn-deep-purple" id="nextbtn" type="button">다음
+								단계로</button>
+							<button class="btn btn-deep-purple" id="backbtn">취소</button>
 						</div>
 					</div>
 				</div>
+
 			</form>
+
 		</div>
 	</div>
 
@@ -186,8 +188,8 @@ body {
 			$('.image-upload-wrap').removeClass('image-dropping');
 		});
 		$("#nextbtn").click(function() {
-			 $("#uploadform").submit(); 
-			/* $(location).attr('href', 'writeArticle2.jsp'); */
+			/* $("#uploadform").submit(); */
+			$(location).attr('href', 'writeArticle2.jsp');
 		})
 	</script>
 </body>

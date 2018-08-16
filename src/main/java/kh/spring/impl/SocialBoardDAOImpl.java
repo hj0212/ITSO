@@ -35,6 +35,16 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	public int deleteSocialBoard(SocialBoardDTO sdto) {
 		return template.delete("SocialBoard.deleteSocialBoard", sdto);
 	}
+	
+	@Override
+	public int getSocialBoardcurrval() {
+		return template.selectOne("SocialBoard.getSocialBoardcurrval");
+	}
+
+	@Override
+	public SocialBoardDTO selectSocialBoard(int seq) {
+		return template.selectOne("SocialBoard.selectSocialBoard", seq);
+	}
 
 	@Override
 	public List<CollectionDTO> getCollectionList(MemberDTO dto) {

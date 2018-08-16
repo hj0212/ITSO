@@ -82,10 +82,10 @@
 		<div class="row">
 			<p>여기는 네비 인클루드</p>
 		</div>
-		<form id="submitInfo" method="post" action="test.go">
+		<form id="submitInfo" method="post" action="insertSocial.go">
 			<div class="row" name="top">
 				<div class="md-form form-lg col-md-12">
-					<input type="text" id="stylename" class="form-control form-control-lg" name="stylename"> 
+					<input type="text" id="stylename" class="form-control form-control-lg" name="stylename" maxlength="80"> 
 					<label for="stylename" class="ml-3">스타일 이름을 정해주세요.</label>
 				</div>
 			</div>
@@ -93,7 +93,6 @@
 				<div class="md-form form-lg col-md-12">
 					<input type="text" id="inputLGEx" class="form-control form-control-lg" readonly disabled="disabled"> 
 					<label for="inputLGEx" class="ml-3">공유하고 싶은 아이템에 태그를 달아주세요.</label>
-					<br>
 					<br>
 					<div class="interactive-image" id="planit" data-toggle="modal" data-target="#styletag">
 						<img class="taggd z-depth-3 pin" src="upload/social/${sfileName}" alt="photo" id="imgstyle" easypin-id="image_db"/>
@@ -103,7 +102,7 @@
 			<div class="row">
 				<div class="md-form form-lg col-md-12">
 					<i class="fas fa-pencil-alt"></i>
-					<textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent"></textarea>
+					<textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent" maxlength="166"></textarea>
 					<label for="textareaPrefix" class="ml-3">스타일을 소개해 주세요.</label>
 				</div>
 			</div>
@@ -124,8 +123,8 @@
 				</div>
 				<!-- Group of default radios - option 3 -->
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="t">
-					<label class="custom-control-label" for="defaultGroupExample3">남,여</label>
+					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="g">
+					<label class="custom-control-label" for="defaultGroupExample3">무관</label>
 				</div>
 			</div>
 			<div class="row my-2"></div>
@@ -152,7 +151,7 @@
 				</div>
 				<div class="custom-control custom-radio col-md-12 ml-5">
 					<input type="radio" class="custom-control-input" id="defaultGroupExample8" name="age" value="0">
-					<label class="custom-control-label" for="defaultGroupExample8">기타(10세이하/50세 이상)</label>
+					<label class="custom-control-label" for="defaultGroupExample8">모든 연령</label>
 				</div>
 			</div>
 			<div class="row">
@@ -164,6 +163,7 @@
 				<a href="#top" class="btn btn-deep-purple ml-auto"><i class="fas fa-arrow-up"></i></a>
 			</div>
 			<input type="text" name="taginfo" readonly style="display:none" id="taginfo">
+			<input type="text" name="imageinfo" readonly style="display:none" id="imageinfo" value="${sfileName}">
 		</form>
 		
 
@@ -173,7 +173,9 @@
 				<div class="required">
 					<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
 				</div>
-				<input type="text" class="form-control" name="brand" placeholder="상품 이름" />
+				<div class="required">
+					<input type="text" class="form-control" name="brand" placeholder="브랜드" />
+				</div>
 				<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
 				<input type="text" class="form-control" name="url" placeholder="URL" />
 				<select name="category" id="category" class="form-control">
@@ -261,7 +263,8 @@
 	    	
 	    function notsubmit() {
             let num = 0;
-            let obj = {};
+            //let obj = {};
+            let obj = [];
             let clothesInformation = {};
             
 	        $instance.easypin.fire("get.coordinates", { param1: 1, param2: 2, param3: 3 }, function (data) {
@@ -277,21 +280,29 @@
 		            let cinfo = cloinfo["image_db"];
 	
 	                for (key in cinfo) {
-	                    if (!(cinfo[key]["name"] === undefined) && !(key == "canvas") && !(cinfo[key]["name"] == "")) {
+	                    if (!(cinfo[key]["name"] === undefined) && !(key == "canvas") && !(cinfo[key]["name"] == "") && !(cinfo[key]["brand"] == "")) {
 	                        if (!(cinfo[key]["name"].match(/^\s/g))) {
 	                            // cinfo[key]["num"] = num;
 	                            cinfo[key].coords.lat = Number(cinfo[key].coords.lat) + 23;
-	                            cinfo[key].coords.long = Number(cinfo[key].coords.long) + 40;
-	                            obj[num] = cinfo[key];
-	                            num++;
+	                            cinfo[key].coords.along = Number(cinfo[key].coords.along) + 40;
+	                            //obj[num] = cinfo[key];
+	                            //num++;
+	                            
+	                            if(cinfo[key]["key"] === undefined){
+	                            	console.log("정의되지 않음");
+		                            cinfo[key]["key"] = "un";
+	                            }
+	                            
+	                            obj.push(cinfo[key]);
 	                            // console.log(obj);
 	                        }
 	                    }
 	                }
 	
-	                obj["canvas"] = { "src": "upload/social/${sfileName}", "width": "500", "height": "500" };
+	                //obj["canvas"] = { "src": "upload/social/${sfileName}", "width": "500", "height": "500" };
 	
-	                clothesInformation["image_db"] = obj;
+	                //clothesInformation["image_db"] = obj;
+	                clothesInformation = obj;
 	                //console.log(clothesInformation);
 	
 	                // localStorage.setItem("clothesInformation", JSON.stringify(clothesInformation));
@@ -300,11 +311,23 @@
 	            });
 	        });
 	        
+	        let stylename = document.getElementById("stylename").value;
+	        let stylecontent = document.getElementById("textareaPrefix").value;
+	        
+	        if(stylename === "") {
+	        	alert("스타일 이름을 정해주세요");
+	        	return false;	
+	        }else if(stylecontent === ""){
+	        	alert("스타일을 소개해 주세요.");
+	        	return false;
+	        }
+	        
 	        // 제출 하기전 
+	        console.log(clothesInformation);
 	        document.getElementById("taginfo").value = JSON.stringify(clothesInformation);
 	        console.log(document.getElementById("taginfo").value);
 	        
-	        document.getElementById("submitInfo").submit();
+	       	document.getElementById("submitInfo").submit();
 	    }
 		
 	</script>
