@@ -173,7 +173,9 @@
 				<div class="required">
 					<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
 				</div>
-				<input type="text" class="form-control" name="brand" placeholder="상품 이름" />
+				<div class="required">
+					<input type="text" class="form-control" name="brand" placeholder="브랜드" />
+				</div>
 				<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
 				<input type="text" class="form-control" name="url" placeholder="URL" />
 				<select name="category" id="category" class="form-control">
@@ -278,7 +280,7 @@
 		            let cinfo = cloinfo["image_db"];
 	
 	                for (key in cinfo) {
-	                    if (!(cinfo[key]["name"] === undefined) && !(key == "canvas") && !(cinfo[key]["name"] == "")) {
+	                    if (!(cinfo[key]["name"] === undefined) && !(key == "canvas") && !(cinfo[key]["name"] == "") && !(cinfo[key]["brand"] == "")) {
 	                        if (!(cinfo[key]["name"].match(/^\s/g))) {
 	                            // cinfo[key]["num"] = num;
 	                            cinfo[key].coords.lat = Number(cinfo[key].coords.lat) + 23;

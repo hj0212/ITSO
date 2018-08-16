@@ -3,105 +3,99 @@ package kh.spring.dto;
 import java.sql.Date;
 
 public class SocialBoardDTO {
-	private int collection_seq;
 	private int social_seq;
 	private String social_title;
 	private String social_contents;
 	private int social_writer;
-	private String writerName;
-	private String sdate;
 	private Date social_date;
 	private String photo;
+	private String social_gender;
+	private int social_age;
 	
-	public SocialBoardDTO() {
-		super();
-	}
+	public SocialBoardDTO() {}
 
-	public SocialBoardDTO(int collection_seq, int social_seq, String social_title, String social_contents,
-			int social_writer, String writerName, String sdate, Date social_date, String photo) {
-		super();
-		this.collection_seq = collection_seq;
+	public SocialBoardDTO(int social_seq, String social_title, String social_contents, int social_writer, Date social_date, String photo, String social_gender, int social_age) {
 		this.social_seq = social_seq;
 		this.social_title = social_title;
 		this.social_contents = social_contents;
 		this.social_writer = social_writer;
-		this.writerName = writerName;
-		this.sdate = sdate;
 		this.social_date = social_date;
 		this.photo = photo;
+		this.social_gender = social_gender;
+		this.social_age = social_age;
 	}
+	
 
-	public int getCollection_seq() {
-		return collection_seq;
-	}
-
-	public void setCollection_seq(int collection_seq) {
-		this.collection_seq = collection_seq;
+	public SocialBoardDTO(String social_title, String social_contents, int social_writer, String photo, String social_gender, int social_age) {
+		this.social_title = social_title;
+		this.social_contents = social_contents;
+		this.social_writer = social_writer;
+		this.photo = photo;
+		this.social_gender = social_gender;
+		this.social_age = social_age;
 	}
 
 	public int getSocial_seq() {
 		return social_seq;
 	}
-
+	
 	public void setSocial_seq(int social_seq) {
 		this.social_seq = social_seq;
 	}
-
+	
 	public String getSocial_title() {
 		return social_title;
 	}
-
+	
 	public void setSocial_title(String social_title) {
 		this.social_title = social_title;
 	}
-
+	
 	public String getSocial_contents() {
 		return social_contents;
 	}
-
+	
 	public void setSocial_contents(String social_contents) {
 		this.social_contents = social_contents;
 	}
-
+	
 	public int getSocial_writer() {
 		return social_writer;
 	}
-
+	
 	public void setSocial_writer(int social_writer) {
 		this.social_writer = social_writer;
 	}
-
-	public String getWriterName() {
-		return writerName;
-	}
-
-	public void setWriterName(String writerName) {
-		this.writerName = writerName;
-	}
-
-	public String getSdate() {
-		return sdate;
-	}
-
-	public void setSdate(String sdate) {
-		this.sdate = sdate;
-	}
-
+	
 	public Date getSocial_date() {
 		return social_date;
 	}
-
+	
 	public void setSocial_date(Date social_date) {
 		this.social_date = social_date;
 	}
-
+	
 	public String getPhoto() {
 		return photo;
 	}
-
+	
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 	
+	public String getSocial_gender() {
+		return social_gender;
+	}
 	
+	public void setSocial_gender(String social_gender) {
+		this.social_gender = social_gender;
+	}
+	
+	public int getSocial_age() {
+		return social_age;
+	}
+	
+	public void setSocial_age(int social_age) {
+		this.social_age = social_age;
+	}
 }

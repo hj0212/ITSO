@@ -36,6 +36,16 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public int deleteSocialBoard(SocialBoardDTO sdto) {
 		return this.dao.deleteSocialBoard(sdto);
 	}
+	
+	@Override
+	public int getSocialBoardcurrval() {
+		return this.dao.getSocialBoardcurrval();
+	}
+
+	@Override
+	public SocialBoardDTO selectSocialBoard(int seq) {
+		return this.dao.selectSocialBoard(seq);
+	}
 
 	@Override
 	public List<CollectionDTO> getCollectionList(MemberDTO dto) {

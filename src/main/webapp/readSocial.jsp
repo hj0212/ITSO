@@ -93,7 +93,7 @@
         <popover>
             <div class="clothes-info">
                 <div class="clothes-header">
-                    <a href="#">
+                    <a href="http://www.naver.com">
                         <div class="clothes-name">
                             {[name]}
                         </div>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="clothes-body">
                     <div class="brand">
-                        {[brand]} in 
+                        {[brand]} 
                     </div>
                     <div class="store">
                         {[store]}
@@ -138,6 +138,7 @@
 	                $j(".easypin-marker").css("z-index","0");
 	            })
         	};
+        	
         });
     </script>
         <!-- Font Awesome -->

@@ -5,9 +5,19 @@
 	<select id="showSocialBoardList" resultType="sdto">
 		select * from social
 	</select>
-	<select id="insertSocialBoard" parameterType="sdto">
-		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, 1.jpg)
+	
+	<select id="getSocialBoardcurrval" resultType="int">
+		select social_seq.currval from dual
 	</select>
+	
+	<insert id="insertSocialBoard" parameterType="sdto">
+		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{social_gender},#{social_age})
+	</insert>
+	
+	<select id="selectSocialBoard" parameterType="int" resultType="sdto">
+		select * from social where social_seq = #{0}
+	</select>
+	
 	<select id="updateSocialBoard" parameterType="sdto">
 		
 	</select>
