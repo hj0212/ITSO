@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SocialTag">
+	<insert id="insertSocialTag" parameterType="stdto">
+		insert into social_tag values(tag_seq.nextval,#{social_seq},#{tag_name},#{tag_brand,jdbcType=VARCHAR},#{tag_store, jdbcType=VARCHAR},#{tag_url, jdbcType=VARCHAR},#{tag_lat},#{tag_along},#{tag_category, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="showSelectedTagList" resultType="stdto" parameterType="int">
+		select * from social_tag where social_seq = #{0}
+	</select>
+</mapper>
