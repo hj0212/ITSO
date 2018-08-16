@@ -513,8 +513,9 @@ a#MOVE_TOP_BTN {
 	
 	social_seq = 0;
 	$('.photoContainerButton2').on("click", function() {
-		var seq = $(this).closest(".inputSocialSeq").val();/* $(this).closest('.social_seq').val(); */
-		console.log(seq);
+		social_seq=$(this).parent().siblings(".inputSocialSeq").val();/* $(this).closest('.social_seq').val(); */
+		console.log(social_seq);
+		
 	})
 
 	$("#collectionarea").on("click", ".collectionItem", function() {
@@ -523,7 +524,6 @@ a#MOVE_TOP_BTN {
 		var collection_seq =$(this).children(".seq").val();
 		console.log("collection_seq: " + collection_seq);
 		
-		var social_seq = $(this).closest(".gridPhoto").children(".social_seq").val();
 		console.log("social_seq: "+social_seq);
 		$.ajax({
 	        url:"saveCollection.ajax",
