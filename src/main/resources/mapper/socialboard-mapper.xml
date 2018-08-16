@@ -34,4 +34,8 @@
 	<select id="getCollectionData" resultType="CollectionDTO">
 		select c.*, u.name writerName from collection c, users u where c.collection_writer = u.seq and collection_seq = #{collection_seq}
 	</select>
+	
+	<insert id="insertCollectionContent" parameterType="CollectionDTO">
+		insert into collection_content values(#{collection_seq}, )
+	</insert>
 </mapper>

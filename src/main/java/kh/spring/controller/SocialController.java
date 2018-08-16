@@ -1,6 +1,5 @@
 package kh.spring.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,14 +7,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.MemberDTO;
@@ -60,5 +55,14 @@ public class SocialController {
 		mav.setViewName("collection.jsp");
 		return mav;
 	}
+	
+	@RequestMapping("/saveCollection.ajax")
+	public @ResponseBody int saveCollection(@RequestParam int collection_seq, @RequestParam int social_seq) {
+		System.out.println(collection_seq+":"+social_seq);
+		
+		return 0;
+	}
+	
+	
 	
 }

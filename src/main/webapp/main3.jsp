@@ -299,17 +299,16 @@ a#MOVE_TOP_BTN {
 					<c:forEach items="${socialList}" var="list">
 
 						<div class="gridPhoto col-lg-3 col-md-12 mb-3">
+							
 							<a href="#"> <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image">
 							</a>
 							<div class="photoContainer">
+								<input type="hidden" class="inputSocialSeq" value="${list.social_seq }"/>
 								<div class="photoContainerHover z-depth-2">
 									<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
 									<p class="photoContainerHoverWriter">by
 										${list.social_writer}</p>
-									<!-- <img src="resources/images/background.jpg"
-										class="img-fluid z-depth-2" alt="Responsive image"
-										onclick="location='main.jsp'"> -->
 									<img src="upload/social/${list.photo}"
 										class="img-fluid z-depth-2" alt="Responsive image"
 										onclick="location='main.jsp'">
@@ -376,6 +375,7 @@ a#MOVE_TOP_BTN {
 										<div class="collectionItem z-depth-1 mt-2">
 											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
 											<h6>${clist.collection_contents }</h6>
+											<input type="hidden" class="seq" value="${clist.collection_seq }"/>
 											<div class="collectionPhoto">
 
 												<c:set var="check" value="true" />
@@ -510,12 +510,33 @@ a#MOVE_TOP_BTN {
 			return false;
 		});
 	});
+	
+	social_seq = 0;
+	$('.photoContainerButton2').on("click", function() {
+		var seq = $(this).closest(".inputSocialSeq").val();/* $(this).closest('.social_seq').val(); */
+		console.log(seq);
+	})
 
 	$("#collectionarea").on("click", ".collectionItem", function() {
 		/*$(this).css("background", "black");*/
 		$(this).toggleClass('active');
+		var collection_seq =$(this).children(".seq").val();
+		console.log("collection_seq: " + collection_seq);
 		
-		$.ajax
+		var social_seq = $(this).closest(".gridPhoto").children(".social_seq").val();
+		console.log("social_seq: "+social_seq);
+		$.ajax({
+	        url:"saveCollection.ajax",
+	        type:"post",
+	        data:{
+	          collection_seq:collection_seq,
+	          social_seq:social_seq
+	        },
+	        success:function(data){
+	          console.log("들어옴"+data);
+	        }
+	     });
+	 
 	})
 
 	$("#createModal").on('show.bs.modal', function() {
