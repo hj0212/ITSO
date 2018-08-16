@@ -160,7 +160,7 @@ rel="stylesheet">
                         <!-- header -->
                         <header class="container">
                             <h3>Marsquest Giveaway</h3>
-                            <time>Nov 17, 2017</time>
+                            <time>${date[1]} ${date[2]}, ${date[0]}</time>
                             <div class="instafilta-target mt-1">
                                 2
                                 <i class="fa fa-comment-o"></i>
@@ -334,7 +334,8 @@ rel="stylesheet">
                         </li>
                     </ul>
                 </section>
-
+				
+				<c:if test="${!empty list}">
                 <section class=border-bottom-line>
                     <div class="mt-4 mb-3 ">
                         <strong>사진 속 의류 정보</strong>
@@ -353,6 +354,7 @@ rel="stylesheet">
                     	</c:forEach>
                     </ol>
                 </section>
+				</c:if>
                
                 <div>
                     <!-- you may like these users -->

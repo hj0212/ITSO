@@ -76,10 +76,11 @@ public class SocialController {
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
+		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
-		
+		System.out.println(dto.getSocial_date());
 		// image_db -> {} -> 0 : {}, 1 : {}
 		ObjectNode infoNode = om.createObjectNode();
 		// 각 태그
@@ -144,6 +145,7 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());
 		mav.setViewName("styleShareBoard.jsp");
 		return mav;

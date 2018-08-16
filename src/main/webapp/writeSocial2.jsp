@@ -243,10 +243,11 @@
 		</div> -->
 	</div>
 	<script>	
-	    var $instance = $('.pin').easypin({
+		var $j = jQuery.noConflict();
+	    var $instance = $j('.pin').easypin({
 	        modalWidth: 300,
 	        done: function (element) {
-	            if ($('input[name="content"]', element).val() != '') {
+	            if ($j('input[name="content"]', element).val() != '') {
 	                return true;
 	            }
 	            return false;
@@ -258,7 +259,7 @@
 	
 	    // set the 'get.coordinates' event
 	    $instance.easypin.event("get.coordinates", function ($instance, data, params) {
-	        console.log(data, params);
+	        // console.log(data, params);
 	    });
 	    	
 	    function notsubmit() {
@@ -271,7 +272,7 @@
 	            $instance.easypin.fire("get.coordinates", function (data) {
 	                let jcloinfo = JSON.stringify(data);
 	                let cloinfo = JSON.parse(jcloinfo);
-	                console.log(cloinfo);
+	                // console.log(cloinfo);
 	
 	                if (cloinfo === null) {
 	                    return;
@@ -281,7 +282,7 @@
 	
 	                for (key in cinfo) {
 	                    if (!(cinfo[key]["name"] === undefined) && !(key == "canvas") && !(cinfo[key]["name"] == "") && !(cinfo[key]["brand"] == "")) {
-	                        if (!(cinfo[key]["name"].match(/^\s/g))) {
+	                        if (!(cinfo[key]["name"].match(/^\s/g)) && !(cinfo[key]["brand"].match(/^\s/g))) {
 	                            // cinfo[key]["num"] = num;
 	                            cinfo[key].coords.lat = Number(cinfo[key].coords.lat) + 23;
 	                            cinfo[key].coords.along = Number(cinfo[key].coords.along) + 40;
@@ -289,7 +290,7 @@
 	                            //num++;
 	                            
 	                            if(cinfo[key]["key"] === undefined){
-	                            	console.log("정의되지 않음");
+	                            	// console.log("정의되지 않음");
 		                            cinfo[key]["key"] = "un";
 	                            }
 	                            
@@ -323,9 +324,9 @@
 	        }
 	        
 	        // 제출 하기전 
-	        console.log(clothesInformation);
+	        //console.log(clothesInformation);
 	        document.getElementById("taginfo").value = JSON.stringify(clothesInformation);
-	        console.log(document.getElementById("taginfo").value);
+	        //console.log(document.getElementById("taginfo").value);
 	        
 	       	document.getElementById("submitInfo").submit();
 	    }
