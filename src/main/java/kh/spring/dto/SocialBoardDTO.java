@@ -3,6 +3,7 @@ package kh.spring.dto;
 import java.sql.Date;
 
 public class SocialBoardDTO {
+	private int collection_seq;
 	private int social_seq;
 	private String social_title;
 	private String social_contents;
@@ -14,7 +15,8 @@ public class SocialBoardDTO {
 	
 	public SocialBoardDTO() {}
 
-	public SocialBoardDTO(int social_seq, String social_title, String social_contents, int social_writer, Date social_date, String photo, String social_gender, int social_age) {
+	public SocialBoardDTO(int collection_seq, int social_seq, String social_title, String social_contents, int social_writer, Date social_date, String photo, String social_gender, int social_age) {
+		this.collection_seq = collection_seq;
 		this.social_seq = social_seq;
 		this.social_title = social_title;
 		this.social_contents = social_contents;
@@ -33,6 +35,14 @@ public class SocialBoardDTO {
 		this.photo = photo;
 		this.social_gender = social_gender;
 		this.social_age = social_age;
+	}
+	
+	public int getCollection_seq() {
+		return collection_seq;
+	}
+
+	public void setCollection_seq(int collection_seq) {
+		this.collection_seq = collection_seq;
 	}
 
 	public int getSocial_seq() {
