@@ -21,4 +21,5 @@ public interface ISocialBoardDAO {
 	public int insertGoodCount(GoodDTO gdto);
 	public int deleteGoodCount(GoodDTO gdto);
 	public int allGoodCount(GoodDTO gdto);
+	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto);
 }

@@ -75,4 +75,10 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.allGoodCount(gdto);
 	}
 
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		return this.dao.getMyGoodSocialList(dto);
+	}
+
 }

@@ -78,6 +78,9 @@
 	<select id="allGoodCount" resultType="int" >
 		select count(*) from social_good where social_seq =#{social_seq}
 	</select>
+	<select id="getMyGoodSocialList" resultType="sdto">
+		select social_seq from social_good where user_seq = #{seq}
+	</select>
 	
 	
 	

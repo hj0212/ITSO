@@ -74,4 +74,9 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.selectOne("SocialBoard.allGoodCount",gdto);
 	}
 
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
+		return template.selectList("SocialBoard.getMyGoodSocialList", dto);
+	}
+
 }

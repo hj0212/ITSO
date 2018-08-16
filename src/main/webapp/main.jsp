@@ -143,16 +143,16 @@ body {
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
 	$(document).ready(function() {
-		var heartVal = 0;
+		
 
 		$(".heart").click(function() {
-			if (heartVal == 0) {
-				$(this).attr("class", "fa fa-heart red-text heart");
-
-				heartVal = 1;
+			var heartVal = $(this).attr("class");
+				
+			if (heartVal =="fa fa-heart red-text heart") {
+				$(this).attr("class", "fa fa-heart-o red-text heart");		
 			} else {
-				$(this).attr("class", "fa fa-heart-o red-text heart");
-				heartVal = 0;
+				$(this).attr("class", "fa fa-heart red-text heart");
+				
 			}
 		});
 
@@ -272,9 +272,29 @@ body {
 									<!--Title-->
 									<h4 class="card-title">
 										<a>${list.social_writer}</a>
-										<i	class="fa fa-heart-o red-text heart" aria-hidden="true"
+										<script type="text/javascript">
+											console.log("${goodCount[status.count]}");
+										</script>
+										
+										<c:set var="loop_flag" value="false"/>
+										<c:forEach items="${goodList }" var="good" varStatus="gstatus">
+										<c:if test="${loop_flag == false }">
+											<c:choose>
+												<c:when test="${good.social_seq == list.social_seq }">
+													<i	class="fa fa-heart red-text heart" aria-hidden="true"
 											style="float: right;" value="${list.social_seq}"><font color="black">${heart[status.index].toString()}</font></i>
-											
+												<c:set var="loop_flag" value="true"/>
+												</c:when>
+												<c:otherwise>
+													<c:if test="${gstatus.last }">
+														<i	class="fa fa-heart-o red-text heart" aria-hidden="true"
+											style="float: right;" value="${list.social_seq}"><font color="black">${heart[status.index].toString()}</font></i>
+													</c:if>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+										</c:forEach>
+										
 									</h4>
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
