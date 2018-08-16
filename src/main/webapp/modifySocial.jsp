@@ -81,7 +81,7 @@
 		<form id="submitInfo" method="post" action="insertSocial.go">
 			<div class="row" name="top">
 				<div class="md-form form-lg col-md-12">
-					<input type="text" id="stylename" class="form-control form-control-lg" name="stylename" maxlength="80"> 
+					<input type="text" id="stylename" class="form-control form-control-lg" name="stylename" maxlength="80" value="${sbdto.social_title}"> 
 					<label for="stylename" class="ml-3">스타일 이름을 정해주세요.</label>
 				</div>
 			</div>
@@ -98,7 +98,7 @@
 			<div class="row">
 				<div class="md-form form-lg col-md-12">
 					<i class="fas fa-pencil-alt"></i>
-					<textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent" maxlength="166"></textarea>
+					<textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent" maxlength="166">${sbdto.social_contents}</textarea>
 					<label for="textareaPrefix" class="ml-3">스타일을 소개해 주세요.</label>
 				</div>
 			</div>
@@ -110,16 +110,16 @@
 				<span class="col-md-12">1. 성별</span>
 				<!-- Group of default radios - option 1 -->
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample1" name="gender" value="m">
+					<input type="radio" class="custom-control-input" id="defaultGroupExample1" name="gender" value="m" ${sbdto.social_gender == 'm' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample1">남</label>
 				</div>
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample2" name="gender" value="f">
+					<input type="radio" class="custom-control-input" id="defaultGroupExample2" name="gender" value="f" ${sbdto.social_gender == 'f' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample2">여</label>
 				</div>
 				<!-- Group of default radios - option 3 -->
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="g">
+					<input type="radio" class="custom-control-input" id="defaultGroupExample3" name="gender" value="g" ${sbdto.social_gender == 'g' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample3">무관</label>
 				</div>
 			</div>
@@ -129,24 +129,24 @@
 				<span class="col-md-12">2. 나이</span>
 
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample4" name="age" value="10">
+					<input type="radio" class="custom-control-input" id="defaultGroupExample4" name="age" value="10" ${sbdto.social_age == '10' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample4">10대</label>
 				</div>
 				<!-- Group of default radios - option 3 -->
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample5" name="age" value="20"> 
+					<input type="radio" class="custom-control-input" id="defaultGroupExample5" name="age" value="20" ${sbdto.social_age == '20' ? 'checked' : ''}> 
 					<label class="custom-control-label" for="defaultGroupExample5">20대</label>
 				</div>
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample6" name="age" value="30">
+					<input type="radio" class="custom-control-input" id="defaultGroupExample6" name="age" value="30" ${sbdto.social_age == '30' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample6">30대</label>
 				</div>
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample7" name="age" value="40">
+					<input type="radio" class="custom-control-input" id="defaultGroupExample7" name="age" value="40" ${sbdto.social_age == '40' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample7">40대</label>
 				</div>
 				<div class="custom-control custom-radio col-md-12 ml-5">
-					<input type="radio" class="custom-control-input" id="defaultGroupExample8" name="age" value="0" ${sbdto.social_age == '10' ? 'checked' : ''}>
+					<input type="radio" class="custom-control-input" id="defaultGroupExample8" name="age" value="0" ${sbdto.social_age == '0' ? 'checked' : ''}>
 					<label class="custom-control-label" for="defaultGroupExample8">모든 연령</label>
 				</div>
 			</div>
