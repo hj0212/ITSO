@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-	 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -174,7 +174,7 @@ body {
 a#MOVE_TOP_BTN {
 	position: fixed;
 	right: 2%;
-	width:100px;
+	width: 100px;
 	bottom: 100px;
 	display: none;
 	z-index: 999;
@@ -182,12 +182,64 @@ a#MOVE_TOP_BTN {
 	color: white;
 	text-align: center;
 }
+
+/* ---------------- 모달 스타일 ------------------*/
+#collectionarea {
+	text-align: center;
+}
+
+@media ( max-width : 575px) {
+	.collectionItem {
+		width: 80%;
+	}
+}
+
+@media ( min-width : 576px) and (max-width: 991px) {
+	.collectionItem {
+		width: 50%;
+		float: left;
+	}
+}
+
+@media ( min-width : 991px) {
+	.collectionItem {
+		width: 30%;
+	}
+}
+
+.collectionItem {
+	display: inline-block;
+	margin: 0 auto !important;
+	background: white;
+}
+
+.collectionItem:hover {
+	transform: scale(1.05);
+	transition: all 0.1s ease-in-out;
+}
+
+.collectionPhoto {
+	width: 100%;
+	height: auto;
+}
+
+.collectionPhoto td {
+	height: overflow: hidden;
+}
+
+.collectionPhoto img {
+	width: 100%;
+}
+
+.active {
+	border: 3px solid #21FCFF;
+}
 </style>
 </head>
 
 <body>
 
-<%@include file="navi.jsp" %>
+	<%@include file="navi.jsp"%>
 
 	<div class="firstContainer col-md-8">
 
@@ -204,12 +256,12 @@ a#MOVE_TOP_BTN {
 
 		<!-- 메인인트로종료 -->
 
-		<!-- 드랍박스메뉴시작 -->		
-		
-		
-		
-		
-		<section class="secondSection col-md-12">		
+		<!-- 드랍박스메뉴시작 -->
+
+
+
+
+		<section class="secondSection col-md-12">
 		<div class="container">
 			<div class="btn-group">
 				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
@@ -218,7 +270,7 @@ a#MOVE_TOP_BTN {
 				<div class="dropdown-menu">
 					<a class="dropdown-item flex-center droptxt2" href="main.jsp">Full
 						view</a> <a class="dropdown-item flex-center droptxt2"
-						href="Main2.jsp">Tumbnail view</a>
+						href="main2.jsp">Tumbnail view</a>
 				</div>
 			</div>
 		</div>
@@ -227,56 +279,163 @@ a#MOVE_TOP_BTN {
 		<!-- 드랍박스메뉴종료 -->
 
 		<!-- 포토컨테이너시작 -->
-		<c:choose>
-		<c:when test="${fn:length(result) > 0}">
-		<c:forEach items="${result}" var="list">
+
 
 		<section class="thirdSection col-md-12">
-		<div class="gridPhotoContainer row">
 
-			<div class="gridPhoto col-lg-3 col-md-12 mb-3">
-				<a href="#"> <img src="resources/images/background.jpg"
-					class="img-fluid z-depth-2" alt="Responsive image">
-				</a>
-				<div class="photoContainer">
-					<div class="photoContainerHover z-depth-2">
-						<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
-						<p class="photoContainerHoverWriter">by ${list.social_writer}</p>
-						<img src="resources/images/background.jpg"
-							class="img-fluid z-depth-2" alt="Responsive image"
-							onclick="location='main.jsp'">
-						<button class="photoContainerButton1 btn btn-elegant"
-							id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
-							data-hover="+1">HYPE</button>
-						<button class="photoContainerButton2 btn btn-elegant"
-							id="hypeBtn2">default</button>
-						<dlv class="photoContainerHoverHashTag">
-						<P>
-							<span onclick="hashtag()">해쉬태그올곳</span>
-						</P>
-						</dlv>
+
+		<div class="gridPhotoContainer row">
+<script>console.log("${empty socialList }");</script>
+			<c:choose>
+				<c:when test="${fn:length(socialList) > 0}">
+					<c:forEach items="${socialList}" var="list">
+
+						<div class="gridPhoto col-lg-3 col-md-12 mb-3">
+							<a href="#"> <img src="resources/images/background.jpg"
+								class="img-fluid z-depth-2" alt="Responsive image">
+							</a>
+							<div class="photoContainer">
+								<div class="photoContainerHover z-depth-2">
+									<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
+									<p class="photoContainerHoverWriter">by
+										${list.social_writer}</p>
+									<!-- <img src="resources/images/background.jpg"
+										class="img-fluid z-depth-2" alt="Responsive image"
+										onclick="location='main.jsp'"> -->
+									<img src="upload/social/${list.photo}"
+										class="img-fluid z-depth-2" alt="Responsive image"
+										onclick="location='main.jsp'">
+									<button class="photoContainerButton1 btn btn-elegant"
+										id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
+										data-hover="+1">HYPE</button>
+									<a href="" class="photoContainerButton2 btn btn-elegant"
+										data-toggle="modal" data-target="#saveModal">save</a>
+									<div class="photoContainerHoverHashTag">
+										<P>
+											<span onclick="hashtag()">해쉬태그올곳</span>
+										</P>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="3">게시글이 없습니다,</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+		</div>
+		</section>
+		<!-- 포토컨테이너종료 -->
+
+		<!-- top버튼 시작 -->
+		<a id="MOVE_TOP_BTN" href="#">TOP</a>
+		<!--  top버튼 종료 -->
+
+		<!-- saveModal -->
+		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead mb-0">컬렉션으로 저장하기</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<!--Body-->
+					<div class="modal-body">
+						<div id="modalbtnarea">
+							<button class="btn btn-itso" data-toggle="modal"
+								data-target="#createModal">
+								<i class="fas fa-plus"></i> 컬렉션 생성
+							</button>
+							<button class="btn btn-outline-itso waves-effect"
+								data-dismiss="modal">컬렉션 수정</button>
+						</div>
+
+						<c:choose>
+						<c:when test="${not empty collectionList }">
+						<div id="collectionarea" class="mt-2">
+							<c:set var="num" value="0"></c:set>
+							<c:forEach items="${collectionList}" var="clist" varStatus="status">
+							<div class="collectionItem z-depth-1 mx-2">
+								<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
+								<h6>${clist.collection_contents }</h6>
+								<table class="collectionPhoto" border="1">
+									<tr>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
+									</tr>
+									<tr>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
+										<td><img src="/upload/social/${clist.photo }" alt=""></td>
+									</tr>
+								</table>
+								<h6 class="mb-0" style="height: 19px;"></h6>
+							</div>
+							</c:forEach>
+						</div>
+						</c:when>
+						<c:otherwise>
+						<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+						</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
+				<!--/.Content-->
 			</div>
-
 		</div>
-		</section>		
-	</c:forEach>
-	</c:when>
-	<c:otherwise>
-	<tr>
-	<td colspan="3">게시글이 없습니다,</td>
-	</tr>
-	</c:otherwise>
-	</c:choose>
-	
-		<!-- 포토컨테이너종료 -->
-		
-		<!-- top버튼 시작 -->
 
-		<a id="MOVE_TOP_BTN" href="#">TOP</a>
 
-		<!--  top버튼 종료 -->
+		<!-- createModal -->
+		<div class="modal fade" id="createModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead mb-0">컬렉션 생성</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<!--Body-->
+					<div class="modal-body">
+						<div class="md-form">
+							<input type="text" id="inputMDEx" class="form-control"> <label
+								for="inputMDEx">컬렉션 이름</label>
+						</div>
+						<div class="md-form">
+							<textarea type="text" id="form7" class="md-textarea form-control"
+								rows="3"></textarea>
+							<label for="form7">컬렉션 상세 설명</label>
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<button class="btn btn-itso" data-toggle="modal"
+							data-target="#modal">생성</button>
+						<button class="btn btn-outline-itso waves-effect"
+							data-dismiss="modal">취소</button>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+
+		<!-- Button trigger modal -->
+		<div class="text-center"></div>
 	</div>
 
 
@@ -328,6 +487,19 @@ a#MOVE_TOP_BTN {
 			return false;
 		});
 	});
+	
+	$("#collectionarea").on("click", ".collectionItem", function() {
+        /*$(this).css("background", "black");*/
+        $(this).children(".check").toggleClass('active');
+    })
+
+    $("#createModal").on('show.bs.modal', function() {
+        $("#saveModal").hide();
+    });
+
+    $("#createModal").on('hidden.bs.modal', function() {
+        $("#saveModal").show();
+    });
 </script>
 
 

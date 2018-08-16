@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dto.TipDTO;
+import kh.spring.dto.TipGoodDTO;
 import kh.spring.interfaces.ITipService;
-
 
 @Service
 public class TipServiceImpl implements ITipService {
@@ -22,9 +22,28 @@ public class TipServiceImpl implements ITipService {
 	}
 
 	@Override
-	public List<TipDTO> getTipData(TipDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TipDTO> getBeautyTipData() {
+		return this.dao.getBeautyTipData();
+	}
+
+	@Override
+	public List<TipDTO> getDietTipData() {
+		return this.dao.getDietTipData();
+	}
+	
+	@Override
+	public List<TipDTO> getFashionTipData() {
+		return this.dao.getFashionTipData();
+	}
+
+	@Override
+	public List<TipDTO> getBusinessTipData(){
+		return this.dao.getBusinessTipData();
+	}
+
+	@Override
+	public List<TipDTO> getSpecificTipView(int seq) {
+		return this.dao.getSpecificTipView(seq);
 	}
 
 	@Override
@@ -38,5 +57,23 @@ public class TipServiceImpl implements ITipService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public List<TipGoodDTO> getTipLikeCounts(int seq) {
+		// TODO Auto-generated method stub
+		return this.dao.getTipLikeCounts(seq);
+	}
+
+	@Override
+	public int viewCountPlus(int seq) {
+		// TODO Auto-generated method stub
+		return this.dao.viewCountPlus(seq);
+	}
+
+	@Override
+	public int tipArticleLikeProc(int seq) {
+		return this.dao.tipArticleLikeProc(seq);
+	}
+
 
 }

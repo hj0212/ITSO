@@ -10,12 +10,11 @@
 
 <title>팁 작성하기 | ITSO</title>
 
-
-
-
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -49,12 +48,14 @@
 #cke_1_top, #cke_1_bottom {
 	background-color: white;
 }
+
+.btn-itso {
+	background-color: #1B0946;
+	color: white;
+}
 </style>
-
 </head>
-
 <body>
-
 	<!-- navi -->
 	<%@include file="navi.jsp"%>
 
@@ -79,7 +80,7 @@
 					title="오른쪽 '카테고리' 버튼을 눌러 선택해주세요.">
 
 				<div class="input-group-append">
-					<button class="btn btn-indigo dropdown-toggle" type="button"
+					<button class="btn btn-itso dropdown-toggle" type="button"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카테고리
 						선택</button>
 
@@ -87,14 +88,11 @@
 						<a class="dropdown-item" href="#"
 							onclick="javascript:document.getElementById('category').value=this.innerHTML">뷰티</a>
 						<a class="dropdown-item" href="#"
-							onclick="javascript:document.getElementById('category').value=this.innerHTML">피트니스</a>
-						<a class="dropdown-item" href="#"
-							onclick="javascript:document.getElementById('category').value=this.innerHTML">영양</a>
-						<a class="dropdown-item" href="#"
-							onclick="javascript:document.getElementById('category').value=this.innerHTML">네일아트</a>
+							onclick="javascript:document.getElementById('category').value=this.innerHTML">다이어트</a>
 						<a class="dropdown-item" href="#"
 							onclick="javascript:document.getElementById('category').value=this.innerHTML">패션</a>
-
+						<a class="dropdown-item" href="#"
+							onclick="javascript:document.getElementById('category').value=this.innerHTML">직장생활</a>
 					</div>
 				</div>
 			</div>
@@ -112,7 +110,7 @@
 
 		<textarea name="editorTA" id="editorTA" required></textarea>
 		<div id=btns class="container mt-3">
-			<button id=writeBtn type=submit class="btn btn-indigo">올리기</button>
+			<button id=writeBtn type=submit class="btn btn-itso">올리기</button>
 		</div>
 
 		<!-- Modal -->
@@ -122,16 +120,17 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="modalTitle">성공!</h5>
-<!-- 						<button type="button" class="close" data-dismiss="modal" -->
-<!-- 							aria-label="Close"> -->
-<!-- 							<span aria-hidden="true">&times;</span> -->
-<!-- 						</button> -->
+						<!-- 						<button type="button" class="close" data-dismiss="modal" -->
+						<!-- 							aria-label="Close"> -->
+						<!-- 							<span aria-hidden="true">&times;</span> -->
+						<!-- 						</button> -->
 					</div>
 					<div class="modal-body" id="modalBody">글 등록 성공!</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-indigo" id="modalConfirmBtn"
+						<button type="button" class="btn btn-itso" id="modalConfirmBtn"
 							data-dismiss="modal"
-							onclick="javascript:location.href'tipBoardMainPage.go'">팁 게시판으로</button>
+							onclick="javascript:location.href'tipBoardMainPage.go'">팁
+							게시판으로</button>
 					</div>
 				</div>
 			</div>
@@ -153,7 +152,6 @@
 					.replace(
 							'editorTA',
 							{
-
 								extraPlugins : 'easyimage',
 								cloudServices_tokenUrl : 'https://34277.cke-cs.com/token/dev/A2fh69MdD6ZbneTSLEawfBh2LsSlsoSyzyN4vF3UziV89xsfCWH7ntLhAIBD',
 								cloudServices_uploadUrl : 'https://34277.cke-cs.com/easyimage/upload/'
@@ -206,7 +204,7 @@
 									$("#modalConfirmBtn").html("팁 게시판으로");
 									$("#modalConfirmBtn")
 											.attr("onclick",
-													"javascript:location.href='tipBoardMainPage.go'")
+													"javascript:location.href='tipBoardMainPage.tip'")
 
 									$("#insertSuccessModal").modal('show');
 
@@ -218,7 +216,8 @@
 								console.log(response);
 
 								$("#modalTitle").html("실패!");
-								$("#modalBody").html("글쓰기 실패! 제목, 카테고리, 내용을 모두 적으셔야 합니다.")
+								$("#modalBody").html(
+										"글쓰기 실패! 제목, 카테고리, 내용을 모두 적으셔야 합니다.")
 								$("#modalConfirmBtn").html("닫기");
 								$("#modalConfirmBtn")
 										.attr("onclick",
@@ -232,17 +231,6 @@
 
 		};
 	</script>
-
-
-
-
-
-
-
-
-
-
-
 
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"

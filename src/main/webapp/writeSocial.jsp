@@ -11,7 +11,7 @@
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet"
+<link rel= 
 	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
 	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
 	crossorigin="anonymous">
@@ -19,7 +19,7 @@
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet">
+	rel="stylesheet">	
 <!-- Material Design Bootstrap -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
@@ -123,15 +123,12 @@ body {
 						<div class="row">
 							<button type="button" onclick="removeUpload()"
 								class="remove-image btn btn-deep-purple">사진 바꾸기</button>
-							<button class="btn btn-deep-purple" id="nextbtn" type="button">다음
-								단계로</button>
-							<button class="btn btn-deep-purple" id="backbtn">취소</button>
+							<button class="btn btn-deep-purple" id="nextbtn" type="button">다음 단계로</button>
+							<input type="button" class="btn btn-deep-purple" id="backbtn" value="취소"></button>
 						</div>
 					</div>
 				</div>
-
 			</form>
-
 		</div>
 	</div>
 

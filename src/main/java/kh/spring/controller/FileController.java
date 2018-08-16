@@ -1,6 +1,7 @@
 package kh.spring.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -62,44 +63,44 @@ public class FileController {
 		System.out.println("저기");
 		return "redirect:myinfo.go";
 	}
-	
 
 	@RequestMapping("/uploadSocialImg.sns")
 	public ModelAndView uploadSocialImg(@RequestParam("file") MultipartFile uploadfile, HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		String path = request.getSession().getServletContext().getRealPath("/")+"upload/social";
-		System.out.println(path);
+		try {
+			String path = request.getSession().getServletContext().getRealPath("/")+"upload/social";
+			//System.out.println(path);
 
-		if(uploadfile != null) {
-			File file = new File(path);
+			if(uploadfile != null) {
+				File file = new File(path);
 
-			String ofileName = uploadfile.getOriginalFilename();
-			String sfileName = "";
-			if (ofileName != null && !ofileName.equals("")) {
-				if(file.exists()) {
-					sfileName = System.currentTimeMillis() + "_" + ofileName;
-					System.out.println("sfileName : " + sfileName);
+				String ofileName = uploadfile.getOriginalFilename();
+				String sfileName = "";
+				if (ofileName != null && !ofileName.equals("")) {
+					if(file.exists()) {
+						sfileName = System.currentTimeMillis() + "_" + ofileName;
+						//System.out.println("sfileName : " + sfileName);
+					}
+				}
+
+				try {
+					byte[] data = uploadfile.getBytes();
+					FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
+					fos.write(data);
+					fos.close();
+
+					mav.addObject("path",path);
+					mav.addObject("sfileName", sfileName);
+					mav.setViewName("writeSocial2.jsp");
+				}catch(Exception e) {
+					mav.setViewName("writeSocial.jsp");
 				}
 			}
-
-			try {
-				byte[] data = uploadfile.getBytes();
-				FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
-				fos.write(data);
-				fos.close();
-				System.out.println("마지막");
-
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-			mav.addObject("path",path);
-			mav.addObject("sfileName", sfileName);
-			mav.setViewName("writeSocial2.jsp");
+		}catch(Exception e) {
+			mav.setViewName("writeSocial.jsp");
 		}
-		
 		return mav;
 	}
-	
 }
 
 

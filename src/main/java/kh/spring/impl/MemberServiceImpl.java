@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.interfaces.IMemberDAO;
 import kh.spring.interfaces.IMemberService;
@@ -30,7 +31,13 @@ public class MemberServiceImpl implements IMemberService {
 		dto.setWithdrawal("n");
 		return this.dao.insertUserData(dto);
 	}
+	
+	@Override
+	public List<MemberDTO> getUserData(MemberDTO dto) {
+		return this.dao.getUserData(dto);
+	}
 
+	
 	@Override
 	public int updateUserData(MemberDTO dto) {
 		return this.dao.updateUserData(dto);
@@ -44,6 +51,21 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	public List<MemberDTO> emailExist(String email) {
 		return this.dao.emailExist(email);
+	}
+
+	@Override
+	public int insertFollowData(FollowDTO dto) {
+		return this.dao.insertFollowData(dto);
+	}
+
+	@Override
+	public List<MemberDTO> getFollowerList(MemberDTO dto) {
+		return this.dao.getFollowerList(dto);
+	}
+
+	@Override
+	public List<MemberDTO> getFollowingList(MemberDTO dto) {
+		return this.dao.getFollowingList(dto);
 	}
 
 }
