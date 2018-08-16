@@ -35,7 +35,6 @@
 
 body {
 	font-family: 'NanumbarunpenR';
-	box-sizing: border-box;
 }
 
 .firstContainer {
@@ -214,6 +213,7 @@ a#MOVE_TOP_BTN {
 	margin: 0 auto 10px auto !important;
 	background: white;
 	height: 236px;
+	box-sizing: content-box;
 }
 
 .collectionItem:hover {
@@ -222,20 +222,21 @@ a#MOVE_TOP_BTN {
 }
 
 .collectionPhoto {
-	width: 100%;
-	height: auto;
+	height: 100%;
+	padding-left: 5px;
 }
-
-.collectionPhoto td {
-	height: overflow: hidden;
+.collectionPhotoItem {
+	float:left;
+	display: inline;
+	padding: 2px;
 }
-
-.collectionPhoto img {
-	width: 100%;
+.collectionPhotoItem img {
+	width: 107px;
 }
 
 .active {
 	border: 4px solid #21FCFF;
+	margin-left: 1px;
 }
 </style>
 </head>
@@ -363,7 +364,7 @@ a#MOVE_TOP_BTN {
 						<div id="modalbtnarea">
 							<button class="btn btn-itso" data-toggle="modal"
 								data-target="#createModal">
-								<i class="fas fa-plus"></i> 컬렉션 생성
+								<i class="fa fa-plus"></i> 컬렉션 생성
 							</button>
 						</div>
 
@@ -375,7 +376,7 @@ a#MOVE_TOP_BTN {
 										<div class="collectionItem z-depth-1 mt-2">
 											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
 											<h6>${clist.collection_contents }</h6>
-											<table class="collectionPhoto">
+											<div class="collectionPhoto">
 
 												<c:set var="check" value="true" />
 												<c:set var="num" value="0" />
@@ -387,28 +388,22 @@ a#MOVE_TOP_BTN {
 															<c:if
 																test="${plist.collection_seq == clist.collection_seq }">
 																<c:set var="num" value="${num+1 }" />
-
-																<c:if test="${num%2 == 1 }">
-																	<tr>
-																</c:if>
-																<td><img src="/upload/social/${plist.photo }"
-																	alt=""></td>
+																
+																<div class="collectionPhotoItem"><img src="/upload/social/${plist.photo }"
+																	alt=""></div>
 																<c:if test="${num == 4 || status.last}">
 																	<c:set var="check" value="false" />
 																</c:if>
 															</c:if>
 														</c:when>
 														<c:otherwise>
-															<c:set var="num2" value="${num%4 }" />
-															<c:set var="num3" value="${num2%2 }" />
-															<c:set var="num4" value="${num2/2 }" />
 
 
 														</c:otherwise>
 													</c:choose>
 
 												</c:forEach>
-											</table>
+											</div>
 											<h6 class="mb-0" style="height: 19px;"></h6>
 										</div>
 									</c:forEach>
@@ -519,6 +514,8 @@ a#MOVE_TOP_BTN {
 	$("#collectionarea").on("click", ".collectionItem", function() {
 		/*$(this).css("background", "black");*/
 		$(this).toggleClass('active');
+		
+		$.ajax
 	})
 
 	$("#createModal").on('show.bs.modal', function() {
