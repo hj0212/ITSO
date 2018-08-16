@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dto.TipDTO;
+import kh.spring.dto.TipGoodDTO;
 import kh.spring.interfaces.ITipService;
 
 @Service
@@ -58,15 +59,20 @@ public class TipServiceImpl implements ITipService {
 	}
 
 	@Override
-	public List<TipDTO> getThumpsUpData(int seq) {
+	public List<TipGoodDTO> getTipLikeCounts(int seq) {
 		// TODO Auto-generated method stub
-		return this.dao.getThumpsUpData(seq);
+		return this.dao.getTipLikeCounts(seq);
 	}
 
 	@Override
 	public int viewCountPlus(int seq) {
 		// TODO Auto-generated method stub
 		return this.dao.viewCountPlus(seq);
+	}
+
+	@Override
+	public int tipArticleLikeProc(int seq) {
+		return this.dao.tipArticleLikeProc(seq);
 	}
 
 

@@ -5,7 +5,6 @@
 <mapper namespace="TipBoard">
 
 <resultMap type="TipDTO" id="TipDTOResultMap">
-
 <result property="tip_seq" column="tip_seq" jdbcType="INTEGER" javaType="java.lang.Integer"/>
 <result property="tip_title" column="tip_title" jdbcType="VARCHAR" javaType="java.lang.String"/>
 <result property="tip_contents" column="tip_contents" jdbcType="CLOB" javaType="java.lang.String" />
@@ -42,9 +41,16 @@ select * from Tip where category='직장생활' order by tip_seq DESC
 select * from Tip where tip_seq=#{seq}
 </select>
 
+<!-- tip board viewcount +1 proc -->
 <update id="viewCountPlus" parameterType="TipDTO">
 update tip set tip_viewcount = tip_viewcount+1 where tip_seq=#{seq}
 </update>
+
+<!-- tipArticle Like +1 Proc -->
+<insert id="tipArticleLikeProc" parameterType="TipDTO">
+insert into tip_good values(TIP_GOOD_SEQ.NEXTVAL,#{seq},0)
+ </insert>
+
 
 
 </mapper>

@@ -28,7 +28,7 @@
 <body>
 	<%@include file="navi.jsp" %>
 	
-	<button id="mypagebtn" type="button" class="btn btn-primary">Primary</button>
+	
 </body>
 
 <!-- Bootstrap tooltips -->
