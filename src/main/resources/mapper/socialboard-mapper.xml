@@ -46,6 +46,14 @@
 	</select>
 	
 	<insert id="insertCollectionContent" parameterType="CollectionDTO">
-		insert into collection_content values(#{collection_seq}, )
+		insert into collection_content values(#{collection_seq}, #{social_seq})
 	</insert>
+	
+	<delete id="deleteCollectionContent" parameterType="sdto">
+		delete from collection_content where social_seq = #{social_seq}
+	</delete>
+	
+	<select id="selectCollectionContent" resultType="sdto">
+		select * from collection_content where social_seq = #{social_seq} and collection_seq = #{collection_seq}
+	</select>
 </mapper>

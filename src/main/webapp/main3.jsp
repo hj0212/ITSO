@@ -213,7 +213,6 @@ a#MOVE_TOP_BTN {
 	margin: 0 auto 10px auto !important;
 	background: white;
 	height: 236px;
-	box-sizing: content-box;
 }
 
 .collectionItem:hover {
@@ -235,7 +234,7 @@ a#MOVE_TOP_BTN {
 }
 
 .active {
-	border: 4px solid #21FCFF;
+	border: 3px solid #21FCFF;
 	margin-left: 1px;
 }
 </style>

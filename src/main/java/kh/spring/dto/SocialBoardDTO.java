@@ -8,6 +8,7 @@ public class SocialBoardDTO {
 	private String social_title;
 	private String social_contents;
 	private int social_writer;
+	private String writerName;
 	private Date social_date;
 	private String photo;
 	private String social_gender;
@@ -108,4 +109,14 @@ public class SocialBoardDTO {
 	public void setSocial_age(int social_age) {
 		this.social_age = social_age;
 	}
+
+	public String getWriterName() {
+		return writerName;
+	}
+
+	public void setWriterName(String writerName) {
+		this.writerName = writerName;
+	}
+	
+	
 }

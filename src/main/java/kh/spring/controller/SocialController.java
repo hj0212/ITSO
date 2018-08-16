@@ -40,7 +40,7 @@ public class SocialController {
 			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
-
+			//List<SocialBoardDTO> collectionContentList = service.getCollectionContent((MemberDTO)session.getAttribute("user"));
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 		}catch(NullPointerException e) {

@@ -5,6 +5,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
+import kh.spring.interfaces.ISocialBoardService;
 
 @Controller
 public class AjaxController {
 	@Autowired
 	private IMemberService service;
-	
+	@Autowired
+	private ISocialBoardService sservice;
 	
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
@@ -46,8 +50,20 @@ public class AjaxController {
 	}
 	
 	@RequestMapping("/saveCollection.ajax")
-	public @ResponseBody int dd(int seq) {
+	public @ResponseBody int saveCollection(int collection_seq, int social_seq, HttpSession session) {
+		System.out.println("ajax"+collection_seq+":"+social_seq);
+		SocialBoardDTO dto = new SocialBoardDTO();
+		dto.setCollection_seq(collection_seq);
+		dto.setSocial_seq(social_seq);
 		
+		List<SocialBoardDTO> list = sservice.selectCollectionContent(dto);
+		
+		if(list.size() > 0) {
+			int delete = sservice.deleteCollectionContent(dto);
+			System.out.println(delete>0?"성공":"실패");
+		}else {
+			int insert = sservice.insertCollectionContent(dto);
+		}
 		return 0;
 	}
 }
