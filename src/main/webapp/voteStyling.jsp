@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,11 +84,6 @@ input[type="file"] {
 }
 </style>
 
-<script>
-var count=0;
-
-</script>
-
 </head>
 
 
@@ -96,6 +92,9 @@ var count=0;
 		<div class="row">
 			<p>여기는 네비 인클루드</p>
 		</div>
+		<script>
+		var count =1;
+		</script>
 
 		<form method="post" action="voteStyle.style" id="voteform"
 			enctype="multipart/form-data">
@@ -110,9 +109,9 @@ var count=0;
 						id="voteitemdiv">
 						<img class="d-flex file-upload-image" src="" alt="사진 없음"
 							id="voteitemimg"> <input type="file" name="imgfilename0"
-							id="imgfile0"
+							id="imgfile0" onchange="readURL(this);"
 							class="file-upload-input form-control z-depth-3 hoverable"
-							 accept="image/*" />
+							accept="image/*" />
 					</div>
 				</div>
 			</div>
@@ -130,7 +129,7 @@ var count=0;
 						<li class="media">
 							<div class="media-img">
 								<img class="d-flex mr-3 selimg" src="" alt="후보사진"> <input
-									type="file" name="imgfilename${count}"
+									type="file" name="imgfilename"
 									class="file-upload-input form-control z-depth-3 hoverable filesel"
 									onchange="readURL(this);" accept="image/*">
 							</div>
@@ -162,14 +161,25 @@ var count=0;
 			<div class="row">
 				<div class="md-form form-lg col-md-12">
 					<input type="text" id="cate" class="form-control form-control-lg"
-						readOnly placeholder="카테고리 항목에 가장 적합한 한 가지를 선택해 주세요.">
+						readOnly placeholder="종료방법">
 				</div>
-				<span class="col-md-12">1. 성별</span>
+				<span class="col-md-12"></span>
 				<!-- Group of default radios - option 1 -->
 				<div class="custom-control custom-radio col-md-12 ml-5">
 					<input type="radio" class="custom-control-input"
 						id="defaultGroupExample1" name="groupOfDefaultRadios"> <label
-						class="custom-control-label" for="defaultGroupExample1">남</label>
+						class="custom-control-label" for="defaultGroupExample1">기간</label>
+				</div>
+				<div class="custom-control custom-radio col-md-12 ml-5">
+					<input type="radio" class="custom-control-input"
+						id="defaultGroupExample2" name="groupOfDefaultRadios"> <label
+						class="custom-control-label" for="defaultGroupExample2">참여자수</label>
+				</div>
+				<div class="custom-control custom-radio col-md-12 ml-5">
+					<input type="radio" class="custom-control-input"
+						id="defaultGroupExample3" name="groupOfDefaultRadios"> <label
+						class="custom-control-label" for="defaultGroupExample3">종료
+						없음</label>
 				</div>
 
 			</div>
@@ -204,18 +214,27 @@ var count=0;
 		document.oncontextmenu = function(e) {
 			return false;
 		};
-		
-		
-		function onChange()
-		onchange="readURL(this);"
+		/* $('.file-upload-input').attr('onchange',onChange()); */
+		/* function onChange()
+		onchange="readURL(this);" */
 
-		function readURL(input,img) {
+		function readURL(input) {
+			console.log(input.id);
+			console.log(input.files[0].name);		
+			 var inputId =input.id;
+			 console.log(document.getElementById(inputId));
+			 var imageId = document.getElementById(inputId).parentNode.firstChild;
+		/* 	 console.log(document.getElementById(imageId)); ->null나옴 */
+		
+			var imagesrc = imageId.src;
+		console.log(imagesrc);
+			/*  console.log(imageId.src); */
 			if (input.files && input.files[0]) {
-				console.log(img);
 				var reader = new FileReader();
 
 				reader.onload = function(e) {
-					$(img).attr('src', e.target.result);
+					imageId.src = e.target.result;
+					/* imagesrc = e.target.result; */
 					$('.image-title').html(input.files[0].name);
 				};
 
@@ -229,20 +248,24 @@ var count=0;
 		$("#addvotebtn")
 				.on(
 						"click",
-						function() {
+						function() {	
 							count++;
-							
+							console.log(count);
 							$('#voteul')
 									.append(
-											'<li class="media"> <div class="media-head">'
+											'<li class="media"> <div class="media-head"><p>'+count+'.</p>'
 													+ '<img class="d-flex mr-3 selimg" src="" alt="후보사진">'
-													+ '<input type="file" name="imgfilename" id="imgfile"'
-													+ 'class="file-upload-input form-control z-depth-3 hoverable imgsel"'
+													+ '<input type="file" name="imgfilename" id="imgfile'+count
+													+ '" class="file-upload-input form-control z-depth-3 hoverable imgsel"'
 													+ '	onchange="readURL(this);" accept="image/*" /> </div>'
 													+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
 													+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
 													+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
 													+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a></div><li>');
+													+ '<input type="text" "name="styling_item_image"'
+													+'class="form-control form-control-lg col-md-9 float-right">'
+													+'<label for="votetitleid" class="offset-md-3 my-0 font-weight-bold"'
+													+'	id="votelabel">아이템에 대해 간단히 입력해주세요.</label>'
 						})
 
 		$(document).on('click', '.delvotebtn', function() {
@@ -253,14 +276,12 @@ var count=0;
 			var wrapper = $(this).closest('li');
 			wrapper.insertBefore(wrapper.prev());
 		})
-
+		
 		$(document).on('click', '.downvotebtn', function() {
 
 			var wrapper = $(this).closest('li');
 			wrapper.insertAfter(wrapper.next());
 		})
-		
-		
 	</script>
 
 </body>
