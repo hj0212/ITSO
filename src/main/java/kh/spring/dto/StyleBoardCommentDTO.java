@@ -6,18 +6,23 @@ public class StyleBoardCommentDTO {
 	private int styling_seq;
 	private int user_seq;
 	private String styling_comment_time;
-	private String styling_commnet_contents;
+	private String styling_comment_contents;
 	
 	public StyleBoardCommentDTO() {	}
 
 	public StyleBoardCommentDTO(int styling_comment_seq, int styling_seq, int user_seq, String styling_comment_time,
-			String styling_commnet_contents) {
+			String styling_comment_contents) {
 		super();
 		this.styling_comment_seq = styling_comment_seq;
 		this.styling_seq = styling_seq;
 		this.user_seq = user_seq;
 		this.styling_comment_time = styling_comment_time;
-		this.styling_commnet_contents = styling_commnet_contents;
+		this.styling_comment_contents = styling_comment_contents;
+	}	
+
+	public StyleBoardCommentDTO(int styling_comment_seq) {
+		super();
+		this.styling_comment_seq = styling_comment_seq;
 	}
 
 	public int getStyling_comment_seq() {
@@ -52,13 +57,14 @@ public class StyleBoardCommentDTO {
 		this.styling_comment_time = styling_comment_time;
 	}
 
-	public String getStyling_commnet_contents() {
-		return styling_commnet_contents;
+	public String getStyling_comment_contents() {
+		return styling_comment_contents;
 	}
 
-	public void setStyling_commnet_contents(String styling_commnet_contents) {
-		this.styling_commnet_contents = styling_commnet_contents;
+	public void setStyling_comment_contents(String styling_comment_contents) {
+		this.styling_comment_contents = styling_comment_contents;
 	}
+
 	
 	
 }

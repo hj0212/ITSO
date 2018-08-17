@@ -7,6 +7,7 @@
 		<typeAlias type="kh.spring.dto.TipDTO" alias="TipDTO"/>	
 		<typeAlias type="kh.spring.dto.CollectionDTO" alias="CollectionDTO"/>	
 		<typeAlias type="kh.spring.dto.StyleBoardDTO" alias="stydto"/>	
+		<typeAlias type="kh.spring.dto.StyleBoardCommentDTO" alias="sbcdto"/>
 	</typeAliases>
 </configuration>
 

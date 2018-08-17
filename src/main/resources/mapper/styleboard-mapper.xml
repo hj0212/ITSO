@@ -7,7 +7,7 @@
 	</select>
 	
 	<select id="insertStyleBoard" parameterType="stydto">
-		insert into styling values(styling_seq.nextval, #{styling_title}, #{styling_contents}, 0, sysdate , 0)
+		
 	</select>
 	
 	<select id="updateStyleBoard" parameterType="stydto">

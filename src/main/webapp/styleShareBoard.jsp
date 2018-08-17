@@ -179,86 +179,44 @@
 
 											<a href="">#bike</a> <a href="">#black</a> <a href="">#short</a>
 											<a href="">#brown-hair</a> <a href="">#white-shirt</a>
-
-
 											${list.styling_contents }
 										</div>
-
-
 
 									</div>
 
 									<div class="container mt-4">
 										<table id="comment">
 											<tbody>
-												<tr>
-													<td><img
-														class="avatar rounded-circle z-depth-1-half mr-3"
-														src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-													</td>
-													<td>
-														<div>
-															<a href="#">Risovic N.</a> <a href="#">@risovic</a>
-														</div>
-														<div>Nice dress, color, and the vibe</div>
-														<div id=comment>
-															0 <a href="#">▲</a>· reply · flag · 6 months ago
-														</div>
+												<c:choose>
+													<c:when test="${fn:length(result1) >0 }">
+														<c:forEach items="${result1}" var="commentList">
+															<tr>
+																<td>
+																<img
+																	class="avatar rounded-circle z-depth-1-half mr-3"
+																	src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+																</td>
+																<td>
+																	<div>
+																		<a href="#">${commentList.user_seq }</a> <a href="#">@${commentList.user_seq }</a>																		
+																		<a href="styleCommentdelete.go?styling_comment_seq=${commentList.styling_comment_seq}">X</a>																		
+																	</div>
+																	<div>${commentList.styling_comment_contents }</div>
+																	<div id=comment>
+																		0 <a href="#">▲</a>· reply · flag · ${commentList.styling_comment_time }
+																	</div>
 
-													</td>
-												</tr>
-
-
-												<tr>
-													<table>
+																</td>
+															</tr>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
 														<tr>
-															<td>
-																<div class="comment-child">
-																	<img
-																		class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-																		src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-																</div>
-															</td>
-															<td></td>
-															<td>
-																<div>
-																	<a href="#">Alex X.</a> <a href="">@Alex</a>
-																</div>
-																<div>How sweet of her.</div>
-
-																<div id=comment>
-																	2 <a href="#">▲</a· reply>· flag · 6 months ago 
-																</div>
-															</td>
+															<td colspan="3">댓글이 없습니다.</td>
 														</tr>
-
-														<tr>
-															<td>
-																<div class="comment-child">
-																	<img
-																		class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-																		src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-																</div>
-															</td>
-															<td></td>
-															<td>
-																<div>
-																	<a href="#">Lauren A.</a> <a href="">@Lauren</a>
-																</div>
-																<div>I envy her body ratio</div>
-
-																<div id=comment>
-																	5 <a href="#">▲</a>· reply· flag · 6 months ago
-																</div>
-															</td>
-														</tr>
-													</table>
-
-												</tr>
-
+													</c:otherwise>
+												</c:choose>
 											</tbody>
-
-
 										</table>
 									</div>
 
@@ -500,9 +458,7 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.js"
 		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		crossorigin="anonymous"></script>
-
-
-
 </body>
+
 
 </html>

@@ -35,7 +35,8 @@ public class StyleBoardCommentDAOImpl implements IStyleBoardCommentDAO{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
+
 	
 
 }

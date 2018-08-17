@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -125,67 +122,35 @@ body {
 	<div class="container mt-4">
 		<table id="comment">
 			<tbody>
-				<tr>
-					<td><img class="avatar rounded-circle z-depth-1-half mr-3"
-						src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-					</td>
-					<td>
-						<div>
-							<a href="#">Risovic N.</a> <a href="#">@risovic</a>
-						</div>
-						<div>Nice dress, color, and the vibe</div>
-						<div id=comment>
-							0 <a href="#">▲</a>· reply · flag · 6 months ago
-						</div>
+				<c:choose>
+					<c:when test="${fn:length(result1) >0 }">
+						<c:forEach items="${result1}" var="list">
+							<tr>
+								<td><img class="avatar rounded-circle z-depth-1-half mr-3"
+									src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+								</td>
+								<td>
+									<div>
+										<a href="#">${list.user_seq}</a> <a href="#">@${list.user_seq}</a>
+									</div>
+									<div>${list.styling_comment_contents}</div>
+									<div id=comment>
+										0 <a href="#">▲</a>· reply · flag · ${list.styling_comment_time}
+									</div>
 
-					</td>
-				</tr>
-
-
-				<tr>
-					<table>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
 						<tr>
-							<td>
-								<div class="comment-child">
-									<img class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-										src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-								</div>
-							</td>
-							<td></td>
-							<td>
-								<div>
-									<a href="#">Alex X.</a> <a href="">@Alex</a>
-								</div>
-								<div>How sweet of her.</div>
-
-								<div id=comment>
-									2 <a href="#">▲</a· reply>· flag · 6 months ago 
-								</div>
-							</td>
+							<td colspan="3">댓글이 없습니다.</td>
 						</tr>
-
-						<tr>
-							<td>
-								<div class="comment-child">
-									<img class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-										src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-								</div>
-							</td>
-							<td></td>
-							<td>
-								<div>
-									<a href="#">Lauren A.</a> <a href="">@Lauren</a>
-								</div>
-								<div>I envy her body ratio</div>
-
-								<div id=comment>
-									5 <a href="#">▲</a>· reply· flag · 6 months ago
-								</div>
-							</td>
-						</tr>
-					</table>
-				</tr>
-			</tbody>
+					</c:otherwise>
+				</c:choose>
+		</table>
+		</tr>
+		</tbody>
 		</table>
 	</div>
 	<!-- 리플박스종료 -->
@@ -230,7 +195,7 @@ body {
 			</div>
 		</div>
 	</form>
-<!-- 리플종료 -->
+	<!-- 리플종료 -->
 
 </body>
 <!-- JQuery -->

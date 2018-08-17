@@ -9,5 +9,6 @@ public interface IStyleBoardCommentDAO {
 	public int insertStyleComment(StyleBoardCommentDTO sbcdto);
 	public int deleteStyleComment(StyleBoardCommentDTO sbcdto);
 	public int updateStyleComment(StyleBoardCommentDTO sbcdto);
+	
 
 }

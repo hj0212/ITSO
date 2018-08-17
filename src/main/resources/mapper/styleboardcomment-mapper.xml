@@ -5,5 +5,13 @@
 	<select id="showStyleComment" resultType="sbcdto">
 		select * from styling_comment
 	</select>
+	
+	<select id="insertStyleComment" parameterType="sbcdto">
+		insert into styling_comment values(styling_comment_seq.nextval,#{styling_seq}, #{user_seq}, sysdate, #{styling_comment_contents} where styling_seq=#{styling_seq})
+	</select>
+	
+	<select id="deleteStyleComment" parameterType="sbcdto">
+		delete from styling_comment where styling_comment_seq=#{styling_comment_seq}
+	</select>
 
 </mapper>

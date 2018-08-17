@@ -35,6 +35,7 @@ public class StyleBoardCommentServiceImpl implements IStyleBoardCommentService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 	
 	
 }
