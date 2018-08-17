@@ -29,6 +29,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
+<!-- flickity carousel css / js -->
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+
 <style>
 ul {
 	list-style-type: none;
@@ -46,6 +51,35 @@ ul {
 table {
 	width: 100%;
 }
+
+/* Carousel */
+
+.carousel-cell {
+  width: 100%;
+  height: 500px;
+  margin-right: 10px;
+}
+
+@media screen and ( min-width: 768px ) {
+  /* half-width cells for larger devices */
+  .carousel-cell { width: 30%; }
+}
+
+.carousel-cell.is-selected {
+  background: #ED2;
+}
+
+/* position dots up a bit */
+.flickity-page-dots {
+  bottom: -22px;
+}
+/* dots are lines */
+.flickity-page-dots .dot {
+  height: 4px;
+  width: 40px;
+  margin: 0;
+  border-radius: 0;
+}
 </style>
 
 
@@ -53,32 +87,24 @@ table {
 </head>
 
 <body>
+
 	<!-- navi -->
 	<%@include file="navi.jsp"%>
 
 
 
 	<!-- tip board main page -->
-	<div id=wrapper class=container-fluid>
-
-
-
 		<div id="bestTipList" class="mt-4">
-
 			<div class="container-fluid">
 				<h1 class="text-center mb-3">
 					<i class="fa fa-thumbs-o-up align-top"></i> 베스트 팁
 				</h1>
 			</div>
 			<!-- Card deck -->
-			<div class="card-deck">
-
-				<div class="row carousel slide carousel-fade " data-ride="carousel"
-					id="carousel-example">
+			<div class="container-fluid main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'>
 					<!-- Card1 -->
 					<c:forEach items="${upvotingArticles}" var="upvotingArticles">
-						<div class="card mb-4 ca carousel-item active">
-
+						<div class="mb-4 carousel-cell">
 							<!--Card image-->
 							<div class="view overlay">
 								<img class="card-img-top"
@@ -108,24 +134,21 @@ table {
 									<a><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${upvotingArticles.tip_viewcount}</a>
 								</div>
 							</div>
-
 						</div>
 					</c:forEach>
 
 				</div>
 			</div>
-		</div>
-	</div>
 
-	<!-- isUpvoting list -->
-	<div id="isUpvotingList" class="container">
-		<h2>주목받고 있는 팁</h2>
-		<div class="row mb-4">
+<!-- 	<!-- isUpvoting list --> 
+<!-- 	<div id="isUpvotingList" class="container"> -->
+<!-- 		<h2>주목받고 있는 팁</h2> -->
+<!-- 		<div class="row mb-4"> -->
 
-			<div class="card col"></div>
+<!-- 			<div class="card col"></div> -->
 
-		</div>
-	</div>
+<!-- 		</div> -->
+<!-- 	</div> -->
 
 
 	<!-- recent tip list -->
