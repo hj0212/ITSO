@@ -282,9 +282,9 @@ public class SocialController {
 			
 			// canvas 객체 추가
 			ObjectNode canvas = om.createObjectNode();
+			canvas.put("src", "upload/social/"+sbdto.getPhoto());
 			canvas.put("width", 500);
 			canvas.put("height", 500);
-			canvas.put("src", "upload/social/"+sbdto.getPhoto());
 			
 			objNodeNumber.put("canvas", canvas);
 			infoNode.put("image_db", objNodeNumber);
@@ -302,7 +302,7 @@ public class SocialController {
 		}
 		
 		mav.addObject("seq",social_seq);
-		mav.setViewName("modifySocial.jsp");
+		mav.setViewName("nmodifySocial.jsp");
 		return mav;
 	}
 	

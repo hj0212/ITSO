@@ -75,15 +75,45 @@
 
 	<body>
 		<div id="wrapper" class="container-fluid col-md-8">
-			<div class="row">
-				<div class="md-form form-lg col-md-12">
-					<input type="text" id="inputLGEx" class="form-control form-control-lg" readonly disabled="disabled"> 
-					<label for="inputLGEx" class="ml-3">공유하고 싶은 아이템에 태그를 달아주세요.</label>
-					<br>
-					<div class="interactive-image" id="planit" data-toggle="modal" data-target="#styletag">
-						<img class="taggd z-depth-3 pin" src="upload/social/${sbdto.photo}" alt="photo" id="imgstyle" easypin-id="image_db"/>
+				<div class="row">
+					<div class="md-form form-lg col-md-12">
+						<input type="text" id="inputLGEx" class="form-control form-control-lg" readonly disabled="disabled"> 
+						<label for="inputLGEx" class="ml-3">공유하고 싶은 아이템에 태그를 달아주세요.</label>
+						<br>
+						<div class="interactive-image" id="planit" data-toggle="modal" data-target="#styletag">
+							<img class="taggd z-depth-3 pin" src="upload/social/${sbdto.photo}" alt="photo" id="imgstyle" easypin-id="image_db"/>
+						</div>
 					</div>
 				</div>
+
+	
+			<div class="easy-modal" style="display: none;" modal-position="free">
+				<form>
+					<div class="tag-notification">EDIT ITEM TAG</div>
+					<div class="required">
+						<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
+					</div>
+					<div class="required">
+						<input type="text" class="form-control" name="brand" placeholder="브랜드" />
+					</div>
+					<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
+					<input type="text" class="form-control" name="url" placeholder="URL" />
+					<select name="category" id="category" class="form-control">
+						<option value="not" disabled selected>카테고리 선택</option>
+						<option value="accessory">액세서리</option>
+						<option value="top">상의</option>
+						<option value="bottom">하의</option>
+						<option value="outer">아우터</option>
+						<option value="shoes">신발</option>
+						<option value="bag">가방</option>
+					</select>
+					<br />
+					<button type="button" class="btn btn-primary easy-submit">Save Content</button>
+				</form>
+			</div>
+	
+			<div style="display: none;" width="130" shadow="true" popover>
+				<div style="width: 100%; text-align: center;">{[name]}</div>
 			</div>
 		</div>
 		<script>	

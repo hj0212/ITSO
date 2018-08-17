@@ -431,6 +431,9 @@
 
 
     </div>
+    <div>
+    	<button id="test">안녕하세요</button>
+    </div>
     <script>
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
@@ -461,6 +464,10 @@
             	$j(".clothesinfo")[index].style.backgroundColor = "white";
         	});
         });
+        
+        document.getElementById("test").onclick = function() {
+        	location.href = "redmod.go?seq="+${content.social_seq};
+        }
     </script>
 	</script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
