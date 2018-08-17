@@ -218,13 +218,6 @@ public class SocialController {
 //		return mav;
 	}
 	
-	@RequestMapping("/redmod.go")
-	public String redmod(RedirectAttributes redirectAttr, HttpServletRequest request) {
-		String social_seq = request.getParameter("seq");
-		redirectAttr.addAttribute("seq", social_seq);
-		return "redirect:/modifySocial.go";
-	}
-	
 	@Transactional
 	@RequestMapping("/modifySocial.go")
 	public ModelAndView modifySocial(HttpServletRequest request) throws IOException {

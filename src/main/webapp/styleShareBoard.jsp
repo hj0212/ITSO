@@ -463,11 +463,11 @@
            		var index = $(".clothes-marker").index(this);
             	$j(".clothesinfo")[index].style.backgroundColor = "white";
         	});
+            
+            document.getElementById("test").onclick = function() {
+            	location.href = "modifySocial.go?seq="+${content.social_seq};
+            }
         });
-        
-        document.getElementById("test").onclick = function() {
-        	location.href = "redmod.go?seq="+${content.social_seq};
-        }
     </script>
 	</script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
