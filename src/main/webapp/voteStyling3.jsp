@@ -52,7 +52,7 @@ body {
 }
 
 #voteitemimg {
-	width: 10%;
+	width: 20%;
 }
 
 #voteitemdiv {
@@ -123,53 +123,31 @@ input[type="file"] {
 					id="addvotebtn"> <i class="fa fa-plus i-indigo fa-2x"
 					aria-hidden="true"></i>
 				</a>
+
 				<div class="md-form form-lg col-md-12 mt-0">
-					<table class="table table-borderless">
-						<thead>
-							<tr>
-								<th scope="col">seq</th>
-								<th scope="col">img</th>
+				<c:forEach var="counting" begin=1 end=countList.size() step=1>  
+					<ul class="list-unstyled" id="voteul">
+						<li class="media">
+							<div class="media-img">
+								<img class="d-flex mr-3 selimg" src="" alt="후보사진"> <input
+									type="file" name="imgfilename" id="imgfile" +count
+									class="file-upload-input form-control z-depth-3 hoverable filesel"
+									onchange="readURL(this);" accept="image/*">
+							</div>
 
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th scope="row"></th>
-								<td>
-									<div class="media">
-										<div class="media-img">
-											<img class="d-flex mr-3 selimg" src="" alt="후보사진"> <input
-												type="file" name="imgfilename" id="imgfile"
-												class="file-upload-input form-control z-depth-3 hoverable filesel"
-												onchange="readURL(this);" accept="image/*">
-										</div>
-
-										<div class="media-body image-upload-wrap form-group"
-											id="btnsdiv">
-											<a class="upvotebtn"> <i
-												class="fa fa-arrow-circle-o-up indigo-text fa-1x"
-												aria-hidden="true"></i>
-											</a> <a class="downvotebtn"> <i
-												class="fa fa-arrow-circle-o-down fa-1x indigo-text"
-												aria-hidden="true"></i>
-											</a> <a class="delvotebtn"> <i
-												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
-											</a>
-											<br>
-											<input type="text" id="voteitemtext"
-												class="form-control form-control-lg" readonly
-												disabled="disabled"> <label for="voteitemtext"
-												class="ml-3">아이템의 특징을 간단히 적어주세요.</label>
-										</div>
-										
-									
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-
-
+							<div class="media-body image-upload-wrap form-group" id="btnsdiv">
+								<a class="upvotebtn"> <i
+									class="fa fa-arrow-circle-o-up indigo-text fa-1x"
+									aria-hidden="true"></i>
+								</a> <a class="downvotebtn"> <i
+									class="fa fa-arrow-circle-o-down fa-1x indigo-text"
+									aria-hidden="true"></i>
+								</a> <a class="delvotebtn"> <i
+									class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
+								</a>
+							</div>
+						</li>
+					</ul>
 					<!-- <div>
 						<input type="file" name="file" id="imgfile1"
 							class="file-upload-input form-control z-depth-3 hoverable imgsel"
@@ -178,7 +156,7 @@ input[type="file"] {
 							class="btn btn-outline-indigo btn-sm wave-effect">이미지
 							첨부하기</button>
 					</div> -->
-
+					</c:forEach> 
 				</div>
 			</div>
 
@@ -275,12 +253,14 @@ input[type="file"] {
 						"click",
 						function() {
 							count++;
-
+							
 							$('#voteul')
 									.append(
-											'<div class="media"> <div class="media-head">
+											'<li class="media"> <div class="media-head"><p class="itemnumber">'
+													+ '.</p>'
 													+ '<img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 													+ '<input type="file" name="imgfilename" id="imgfile'
+													+ a
 													+ '" class="file-upload-input form-control z-depth-3 hoverable imgsel"'
 													+ '	onchange="readURL(this);" accept="image/*" /> </div>'
 													+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
@@ -304,6 +284,7 @@ input[type="file"] {
 			var wrapper = $(this).closest('li');
 			wrapper.insertAfter(wrapper.next());
 		})
+
 	</script>
 
 </body>
