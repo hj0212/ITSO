@@ -91,9 +91,9 @@ public class FileController {
 
 					mav.addObject("path",path);
 					mav.addObject("sfileName", sfileName);
-					mav.setViewName("writeSocial2.jsp");
+					mav.setViewName("nwriteSocial.jsp");
 				}catch(Exception e) {
-					mav.setViewName("writeSocial.jsp");
+					mav.setViewName("nwriteSocial.jsp");
 				}
 			}
 		}catch(Exception e) {

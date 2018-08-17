@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -155,12 +159,12 @@ public class SocialController {
 
 	@Transactional
 	@RequestMapping("/insertSocial.go")
-	public void insertSocial(HttpServletRequest request) throws IOException {
+	public void insertSocial(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		
 		String title = request.getParameter("stylename");
 		String content = request.getParameter("stylecontent");
-		//String writer = 글쓴이
+		//int writer = 글쓴이
 		String gender = request.getParameter("gender");
 		int age = Integer.parseInt(request.getParameter("age"));
 		String photo = request.getParameter("imageinfo");
@@ -203,7 +207,7 @@ public class SocialController {
 					myObjects[i].setUrl("http://"+myObjects[i].getUrl());
 					tag_url = myObjects[i].getUrl();
 				}
-				System.out.println(tag_url);
+				
 				SocialTagDTO stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
 				tagService.insertSocialTag(stdto);
 			}
@@ -212,6 +216,13 @@ public class SocialController {
 		
 //		mav.setViewName("readSocial.jsp");
 //		return mav;
+	}
+	
+	@RequestMapping("/redmod.go")
+	public String redmod(RedirectAttributes redirectAttr, HttpServletRequest request) {
+		String social_seq = request.getParameter("seq");
+		redirectAttr.addAttribute("seq", social_seq);
+		return "redirect:/modifySocial.go";
 	}
 	
 	@Transactional
@@ -290,7 +301,89 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("seq",social_seq);
 		mav.setViewName("modifySocial.jsp");
+		return mav;
+	}
+	
+	@Transactional
+	@RequestMapping("/modifySocialProc.go")
+	public ModelAndView modifySocialProc(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		
+		String title = request.getParameter("stylename");
+		String content = request.getParameter("stylecontent");
+		// int writer = 글쓴이
+		String gender = request.getParameter("gender");
+		int age = Integer.parseInt(request.getParameter("age"));
+		String photo = request.getParameter("imageinfo");
+		// 수정된 글 번호
+		int social_seq = Integer.parseInt(request.getParameter("seq"));
+		
+		SocialBoardDTO dto = new SocialBoardDTO(social_seq,title,content,0,photo,gender,age);
+		
+//		System.out.println(dto.getSocial_title());
+//		System.out.println(dto.getSocial_contents());
+//		System.out.println(dto.getSocial_writer());
+//		System.out.println(dto.getPhoto());
+//		System.out.println(dto.getSocial_gender());
+//		System.out.println(dto.getSocial_age());
+		
+		// 글 수정
+		service.updateSocialBoard(dto);
+		
+		// 태그 정보
+		String taginfo = request.getParameter("taginfo");
+		//System.out.println(taginfo);
+		
+		if(taginfo.equals("{}")) {
+			System.out.println("태그가 없음 : 파일만 저장");
+		} else {
+			ObjectMapper om = new ObjectMapper();
+			om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
+			
+			for(int i = 0; i < myObjects.length; i++) {
+				String tag_name = myObjects[i].getName();
+				String tag_brand = myObjects[i].getBrand();
+				String tag_store = myObjects[i].getStore();
+				String tag_url = myObjects[i].getUrl();
+				String tag_lat = myObjects[i].getCoords().getLat();
+				String tag_along = myObjects[i].getCoords().getAlong();
+				String tag_category = myObjects[i].getCategory();
+				String tag_key = myObjects[i].getKey();
+				
+				if(!tag_url.startsWith("http://")) {
+					myObjects[i].setUrl("http://"+myObjects[i].getUrl());
+					tag_url = myObjects[i].getUrl();
+				}
+				SocialTagDTO stdto;
+				if(myObjects[i].getKey().equals("un")) {
+					stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
+					tagService.insertSocialTag(stdto);
+					myObjects[i].setKey(tagService.getSocialTagcurrval()+"");
+				}else {
+					stdto = new SocialTagDTO(Integer.parseInt(tag_key),social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
+					tagService.updateSocialTag(stdto);
+				}
+			}
+			
+			List<SocialTagDTO> tagList = tagService.showSelectedTagList(social_seq);
+			
+			for(int i = 0; i < myObjects.length; i++) {
+				for(int j = 0; j < tagList.size(); j++) {
+					if(tagList.get(j).getTag_seq() == Integer.parseInt(myObjects[i].getKey())) {
+						tagList.remove(tagList.get(j));
+					}
+				}
+			}
+			
+			for(SocialTagDTO tagdto : tagList) {
+				tagService.deleteSocialTag(tagdto.getTag_seq());
+			}
+		}
+		
+		mav.setViewName("readSocial.go?seq="+social_seq);
 		return mav;
 	}
 }

@@ -13,4 +13,12 @@
 	<select id="showSelectedTagList" resultType="stdto" parameterType="int">
 		select * from social_tag where social_seq = #{0}
 	</select>
+	
+	<delete id="deleteSocialTag" parameterType="int">
+		delete from social_tag where tag_seq = #{0}
+	</delete>
+	
+	<select id="getSocialTagcurrval" resultType="int">
+		select tag_seq.currval from dual
+	</select>
 </mapper>
