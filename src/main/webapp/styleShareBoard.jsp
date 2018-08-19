@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       <!DOCTYPE html>
     <html lang="en">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -182,11 +181,11 @@
 							<figure>
 								<div class="pin-container" style="width: 500px; height: 500px">
 									<div class="pin-containers inner">
-										<img src="upload/social/${src}" class="pin" width="500"
+										<img src="upload/social/${src}?1234567" class="pin" width="500"
 											height="500" easypin-id="image_db">
 									</div>
 									<div class="image-containers inner">
-										<img src="upload/social/${src}" width="500" height="500">
+										<img src="upload/social/${src}?1234567" width="500" height="500">
 									</div>
 								</div>
 							</figure>
