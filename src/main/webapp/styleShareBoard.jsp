@@ -8,9 +8,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-                    <!-- Font Awesome -->
-	   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+       <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 	   <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
 	   <title> Style-Share | ITSO</title>
@@ -469,7 +468,6 @@
             }
         });
     </script>
-	</script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">

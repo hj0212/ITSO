@@ -6,7 +6,7 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    <!-- Font Awesome -->
-	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 	    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 	    <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
 	<style>
