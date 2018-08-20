@@ -33,8 +33,8 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
-	public int deleteSocialBoard(SocialBoardDTO sdto) {
-		return this.dao.deleteSocialBoard(sdto);
+	public int deleteSocialBoard(int seq) {
+		return this.dao.deleteSocialBoard(seq);
 	}
 	
 	@Override

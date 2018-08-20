@@ -111,7 +111,10 @@
 	        .image-containers img {
 	        	object-fit : contain;
 	        }
-
+			
+			.modify-delete {
+				float : right;
+			}
 
             /* #comment {
                 border: 1px solid #e6e6e6;
@@ -205,6 +208,10 @@
 
 							<div class=container>
 								${content.social_contents}
+							</div>
+							<div style="float:right;">
+								<button id="modify" class="btn btn-grey btn-sm">수정</button>
+								<button id="delete" class="btn btn-grey btn-sm">삭제</button>
 							</div>
 						</div>
 
@@ -429,9 +436,6 @@
 
 
     </div>
-    <div>
-    	<button id="test">안녕하세요</button>
-    </div>
     <script>
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
@@ -462,9 +466,13 @@
             	$j(".clothesinfo")[index].style.backgroundColor = "white";
         	});
             
-            document.getElementById("test").onclick = function() {
+            document.getElementById("modify").onclick = function() {
             	location.href = "modifySocial.go?seq="+${content.social_seq};
             }
+            
+           	document.getElementById("delete").onclick = function() {
+           		location.href = "deleteSocial.go?seq="+${content.social_seq};
+           	}
         });
     </script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">

@@ -22,8 +22,8 @@
 		update social set social_title = #{social_title}, social_contents = #{social_contents}, social_gender = #{social_gender}, social_age = #{social_age} where social_seq = #{social_seq}	
 	</update>
 	
-	<select id="deleteSocialBoard" parameterType="sdto">
-	 	delete from social where social_seq=#{social_seq}
+	<select id="deleteSocialBoard" parameterType="int">
+	 	delete from social where social_seq=#{0}
 	</select>
 	
 	<select id="getCollectionList" parameterType ="dto" resultType="CollectionDTO">

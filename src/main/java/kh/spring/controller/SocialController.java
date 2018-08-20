@@ -371,4 +371,13 @@ public class SocialController {
 		mav.setViewName("redirect:readSocial.go?seq="+social_seq);
 		return mav;
 	}
+	
+	@RequestMapping("/deleteSocial.go")
+	public ModelAndView deleteSocial(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int seq = Integer.parseInt(request.getParameter("seq"));
+		service.deleteSocialBoard(seq);
+		System.out.println("삭제 성공!!");
+		return mav;
+	}
 }

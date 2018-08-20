@@ -17,6 +17,6 @@ public interface ISocialBoardService {
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
-	public int deleteSocialBoard(SocialBoardDTO sdto);
+	public int deleteSocialBoard(int seq);
 	
 }

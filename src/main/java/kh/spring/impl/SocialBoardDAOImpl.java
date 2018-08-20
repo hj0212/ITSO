@@ -32,8 +32,8 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	}
 
 	@Override
-	public int deleteSocialBoard(SocialBoardDTO sdto) {
-		return template.delete("SocialBoard.deleteSocialBoard", sdto);
+	public int deleteSocialBoard(int seq) {
+		return template.delete("SocialBoard.deleteSocialBoard", seq);
 	}
 	
 	@Override
