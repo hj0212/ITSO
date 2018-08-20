@@ -181,11 +181,11 @@
 							<figure>
 								<div class="pin-container" style="width: 500px; height: 500px">
 									<div class="pin-containers inner">
-										<img src="upload/social/${src}?1234567" class="pin" width="500"
+										<img src="upload/social/${src}?${dummy}" class="pin" width="500"
 											height="500" easypin-id="image_db">
 									</div>
 									<div class="image-containers inner">
-										<img src="upload/social/${src}?1234567" width="500" height="500">
+										<img src="upload/social/${src}?${dummy}" width="500" height="500">
 									</div>
 								</div>
 							</figure>
@@ -455,10 +455,10 @@
         	};
         	
             $j(".clothes-marker").mouseover(function(){
-           		var index = $(".clothes-marker").index(this);
+           		var index = $j(".clothes-marker").index(this);
            		$j(".clothesinfo")[index].style.backgroundColor = "yellow";
         	}).mouseout(function(){
-           		var index = $(".clothes-marker").index(this);
+           		var index = $j(".clothes-marker").index(this);
             	$j(".clothesinfo")[index].style.backgroundColor = "white";
         	});
             

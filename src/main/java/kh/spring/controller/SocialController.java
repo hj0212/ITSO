@@ -75,6 +75,7 @@ public class SocialController {
 	public ModelAndView readSocial(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		ObjectMapper om = new ObjectMapper();
+		long dummy = System.currentTimeMillis();
 		// json에 넣을 순번
 		int i = 0;
 		
@@ -152,6 +153,7 @@ public class SocialController {
 		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());
+		mav.addObject("dummy",dummy);
 		mav.setViewName("styleShareBoard.jsp");
 		return mav;
 	}
@@ -225,6 +227,7 @@ public class SocialController {
 		ObjectMapper om = new ObjectMapper();
 		int social_seq = Integer.parseInt(request.getParameter("seq"));
 		int i = 0;
+		long dummy = System.currentTimeMillis();
 		
 		SocialBoardDTO sbdto = service.selectSocialBoard(social_seq);
 		mav.addObject("sbdto",sbdto);
@@ -245,18 +248,6 @@ public class SocialController {
 				// 좌표를 넣을 객체
 				ObjectNode objNodeCoords = om.createObjectNode();
 				objNode.put("name", tag.getTag_name());
-				
-				if(tag.getTag_store() == null) {
-					tag.setTag_store("");
-				}
-				
-				if(tag.getTag_url() == null) {
-					tag.setTag_url("#");
-				}
-				
-				if(tag.getTag_category() == null) {
-					tag.setTag_category("");
-				}
 				
 				objNode.put("brand", tag.getTag_brand());
 				objNode.put("store", tag.getTag_store());
@@ -294,6 +285,7 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("dummy", dummy);
 		mav.addObject("seq",social_seq);
 		mav.setViewName("nmodifySocial.jsp");
 		return mav;
@@ -376,7 +368,7 @@ public class SocialController {
 			}
 		}
 		
-		mav.setViewName("readSocial.go?seq="+social_seq);
+		mav.setViewName("redirect:readSocial.go?seq="+social_seq);
 		return mav;
 	}
 }
