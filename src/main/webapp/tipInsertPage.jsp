@@ -61,12 +61,9 @@
 
 
 	<!-- Material input text -->
-
-
 	<div id=wrapper class=container>
 		<!-- tip article title -->
 		<div class="row">
-
 			<div class="col md-form input-group">
 				<input type="text" id="tip_title" class="form-control"
 					placeholder="제목" name="tip_title" required>
@@ -101,7 +98,7 @@
 
 		<!-- hidden writer -->
 		<input class=form-control type="hidden" id="tip_writer"
-			placeholder="0" name="tip_writer">
+			value="${sessionScope.user.seq}" name="tip_writer">
 
 		<!-- hidden view count -->
 		<input class=form-control type="hidden" id="tip_viewcount" value=0

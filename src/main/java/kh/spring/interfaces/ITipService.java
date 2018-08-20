@@ -29,6 +29,8 @@ public interface ITipService {
 
 	public int tipArticleLikeProc(int seq);
 
+	public List<TipDTO> getUpvotingArticles();
+
 
 
 }

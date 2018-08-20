@@ -73,6 +73,11 @@ public class TipDAOImpl implements ITipDAO {
 	public int tipArticleLikeProc(int seq) {
 		return template.update("TipBoard.tipArticleLikeProc",seq);
 	}
+	
+	@Override
+	public List<TipDTO> getUpvotingArticles() {
+		return template.selectList("TipBoard.getUpvotingArticles");
+	}
 
 
 }

@@ -56,7 +56,9 @@ public class TipController {
 		List<TipDTO> fashionTipData = service.getFashionTipData();
 		List<TipDTO> businessTipData = service.getBusinessTipData();
 		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
-
+		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
+		
+		
 		if (beautyTipData != null) {
 			System.out.println(beautyTipData.toString());
 
@@ -69,7 +71,7 @@ public class TipController {
 		mav.addObject("fashionTipData", fashionTipData);
 		mav.addObject("businessTipData", businessTipData);
 		// mav.addObject("tipThumpsUpCountData", tipThumpsUpCountData);
-
+		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;
 	}
@@ -80,7 +82,7 @@ public class TipController {
 		System.out.println(seq);
 		List<TipDTO> tipContent = service.getSpecificTipView(seq);
 		List<TipGoodDTO> tipLikeCounts = service.getTipLikeCounts(seq);
-		
+
 		// viewcount +1
 		int viewCountPlus = service.viewCountPlus(seq);
 		if (viewCountPlus > 0) {
@@ -91,24 +93,25 @@ public class TipController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("tipContent", tipContent);
-		mav.addObject("tipLikeCounts",tipLikeCounts);
+		mav.addObject("tipLikeCounts", tipLikeCounts);
 		mav.setViewName("tipSpecificArticleView.jsp");
 		return mav;
 	}
 
 	@RequestMapping("tipArticleLikeProc.tip")
 	public @ResponseBody int tipArticleLikeProc(@RequestParam int tipSeq) {
-		
+
 		int result = service.tipArticleLikeProc(tipSeq);
-		
-		if(result>0) {
-			System.out.println("글번호 " +  tipSeq + " 좋아요 +1 성공");
-		}else {
+
+		if (result > 0) {
+			System.out.println("글번호 " + tipSeq + " 좋아요 +1 성공");
+		} else {
 			System.out.println("Ajax Error!");
 		}
-		
+
 		return result;
-		
+
 	}
-	
+
+
 }

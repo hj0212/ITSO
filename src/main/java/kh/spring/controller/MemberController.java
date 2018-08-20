@@ -35,6 +35,7 @@ public class MemberController {
 			session.setAttribute("user", user);
 		}
 		mav.addObject("result",result.size());
+		System.out.println(result.size());
 		mav.setViewName("loginProc.jsp");
 		return mav;
 		
