@@ -287,7 +287,7 @@ public class SocialController {
 		
 		mav.addObject("dummy", dummy);
 		mav.addObject("seq",social_seq);
-		mav.setViewName("nmodifySocial.jsp");
+		mav.setViewName("modifySocial.jsp");
 		return mav;
 	}
 	
