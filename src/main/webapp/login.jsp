@@ -205,6 +205,10 @@ $(document).ready(function () {
         }
     }
 
+
+    
+    
+    
     /*password*/
     $("#inputValidationEx2")
         .keypress(

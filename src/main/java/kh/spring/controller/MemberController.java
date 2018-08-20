@@ -74,7 +74,7 @@ public class MemberController {
 	@RequestMapping("/editProfile.do")
 	public String updateProfile(MemberDTO dto) {
 		int result = service.updateUserData(dto);
-		String resultmsg = result>0?"성공":"실패";
+		String resultmsg = result>0?"�꽦怨�":"�떎�뙣";
 		System.out.println(resultmsg);
 		return "redirect:mypage.go";
 	}
