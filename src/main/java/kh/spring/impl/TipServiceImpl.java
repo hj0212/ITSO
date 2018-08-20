@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
 import kh.spring.interfaces.ITipService;
@@ -78,6 +79,16 @@ public class TipServiceImpl implements ITipService {
 	@Override
 	public List<TipDTO> getUpvotingArticles() {
 		return this.dao.getUpvotingArticles();
+	}
+
+	@Override
+	public int insertTipCommentProc(TipCommentDTO dto) {
+		return this.dao.insertTipCommentProc(dto);
+	}
+
+	@Override
+	public List<TipCommentDTO> getCommentsFromTip(int seq) {
+		return this.dao.getCommentsFromTip(seq);
 	}
 
 
