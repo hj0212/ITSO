@@ -276,11 +276,11 @@ a#MOVE_TOP_BTN {
 
 				<div class="dropdown-menu">
 					<a class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=g&age=${pAge }">무관 </a> <a
+						href="main.go?gender=g&age=${pAge }&feed=${feed}">무관 </a> <a
 						class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=m&age=${pAge}&main=${main}">남성</a> <a
+						href="main.go?gender=m&age=${pAge}&main=${main}&feed=${feed}">남성</a> <a
 						class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=f&age=${pAge }&main=${main}">여성</a>
+						href="main.go?gender=f&age=${pAge }&main=${main}&feed=${feed}">여성</a>
 				</div>
 				<div class="btn-group">
 					<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
@@ -288,15 +288,15 @@ a#MOVE_TOP_BTN {
 						id="age">${age}</button>
 					<div class="dropdown-menu">
 						<a class="dropdown-item flex-center droptxt2"
-							href="main.go?age=0&gender=${pGender }&main=${main}">모든연령 </a> <a
+							href="main.go?age=0&gender=${pGender }&main=${main}&feed=${feed}">모든연령 </a> <a
 							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=10&gender=${pGender }&main=${main}">10대</a> <a
+							href="main.go?age=10&gender=${pGender }&main=${main}&feed=${feed}">10대</a> <a
 							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=20&gender=${pGender }&main=${main}">20대</a> <a
+							href="main.go?age=20&gender=${pGender }&main=${main}&feed=${feed}">20대</a> <a
 							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=30&gender=${pGender }&main=${main}">30대</a> <a
+							href="main.go?age=30&gender=${pGender }&main=${main}&feed=${feed}">30대</a> <a
 							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=40&gender=${pGender }&main=${main}">40대</a>
+							href="main.go?age=40&gender=${pGender }&main=${main}&feed=${feed}">40대</a>
 					</div>
 					<div class="btn-group">
 						<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
@@ -304,9 +304,9 @@ a#MOVE_TOP_BTN {
 							view</button>
 						<div class="dropdown-menu">
 							<a class="dropdown-item flex-center droptxt2"
-								href="main.go?main=full">Full view</a> <a
+								href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full view</a> <a
 								class="dropdown-item flex-center droptxt2"
-								href="main.go?main=tumbnail">Tumbnail view</a>
+								href="main.go?main=tumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Tumbnail view</a>
 						</div>
 					</div>
 				</div>

@@ -28,9 +28,10 @@ public class SocialBoardDTO {
 		this.age = age;
 		this.gender = gender;
 	}
-	public SocialBoardDTO(int age,String gender) {
+	public SocialBoardDTO(int age,String gender,int social_seq) {
 		this.age = age;
 		this.gender = gender;
+		this.social_seq =social_seq;
 	}
 	
 	

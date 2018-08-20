@@ -51,7 +51,7 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 
 	
 	
-	//좋아요
+	//醫뗭븘�슂
 	@Override
 	public int selectGoodCount(GoodDTO gdto) {
 		return this.dao.selectGoodCount(gdto);
@@ -79,6 +79,21 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		// TODO Auto-generated method stub
 		return this.dao.getMyGoodSocialList(dto);
+	}
+
+	
+	//게시물 인기
+	@Override
+	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		return this.dao.showSocialHotBoardList(sdto);
+	}
+	
+	//게시물 최신
+	@Override
+	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		return this.dao.showSocialFollowBoardList(sdto);
 	}
 
 }

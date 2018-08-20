@@ -8,7 +8,13 @@ import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 
 public interface ISocialBoardDAO {
-	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto);
+	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto);//최신
+	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto);//인기
+	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto);//팔로잉
+	
+	
+	
+	
 	public List<CollectionDTO> getCollectionList(MemberDTO dto);
 	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto);
 	public int insertSocialBoard(SocialBoardDTO sdto);
@@ -16,7 +22,7 @@ public interface ISocialBoardDAO {
 	public int deleteSocialBoard(SocialBoardDTO sdto);
 
 	
-	//좋아요 select insert delete
+	//���ƿ� select insert delete
 	public int selectGoodCount(GoodDTO gdto);
 	public int insertGoodCount(GoodDTO gdto);
 	public int deleteGoodCount(GoodDTO gdto);

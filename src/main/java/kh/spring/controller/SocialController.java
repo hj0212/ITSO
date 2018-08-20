@@ -24,9 +24,8 @@ public class SocialController {
 
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session,HttpServletRequest request) {
-		String nonw = request.getParameter("new");
-		System.out.println(nonw);
-		
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+
 		ModelAndView mav = new ModelAndView();
 		String main =null;
 		String gender =null;
@@ -34,7 +33,7 @@ public class SocialController {
 
 		String pGender =null;
 		int pAge =0;
-		//여기는 성별입니다.
+		//성별 나이 
 		try {
 			gender =	request.getParameter("gender");		 
 			pGender = request.getParameter("gender");
@@ -90,29 +89,52 @@ public class SocialController {
 		}
 
 
-		SocialBoardDTO sdto = new SocialBoardDTO(pAge,pGender);
-		List<SocialBoardDTO> result = this.service.showSocialBoardList(sdto);
+		SocialBoardDTO sdto = new SocialBoardDTO(pAge,pGender,user_seq);
 
-		
-		
+		List<SocialBoardDTO> result =null ;
+		String feed=null;
+		try {
+			feed = request.getParameter("feed");
+			System.out.println(feed);
+			if(feed.equals("new")) { //최신
+				result= this.service.showSocialBoardList(sdto);
+				System.out.println("1");
+				
+			}else if(feed.equals("hot")) {//인기
+				result = this.service.showSocialHotBoardList(sdto);
+				
+			
+			}else if(feed.equals("following")) { //팔로잉
+				result =this.service.showSocialFollowBoardList(sdto);
+				System.out.println("3");
+
+			}
+		}catch(Exception ea) {
+			result = this.service.showSocialBoardList(sdto);
+			System.out.println("10");
+			feed="new";
+		}
+
+
+
 		List<Integer> ggdto = new ArrayList<>();
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
 			ggdto.add(this.service.allGoodCount(gdto)) ;
-			
+
 			/*System.out.println(ggdto);*/
 
 		}
 
-		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		
 		List<Integer> goodCount = new ArrayList<>();
 		for(SocialBoardDTO sdd : result) {
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq(),user_seq);
 			goodCount.add(this.service.selectGoodCount(gdto));
 			/*System.out.println("goodCount"+goodCount);*/
 		}
-		
-		
+
+
 		try {
 			/*System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());*/
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
@@ -122,8 +144,10 @@ public class SocialController {
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
 		}catch(NullPointerException e) {
-			/*		System.out.println("로그인x");*/
+			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
+
+			mav.addObject("feed",feed);
 			mav.addObject("goodCount",goodCount);
 			mav.addObject("heart",ggdto);
 			mav.addObject("pAge",pAge);

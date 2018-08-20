@@ -19,7 +19,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto) {
-		System.out.println(sdto.getAge()+":"+sdto.getGender());
+
 		return template.selectList("SocialBoard.showSocialBoardList",sdto);
 	}
 
@@ -49,7 +49,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	}
 	
 	
-	//	좋아요
+	//���ƿ� 
 	@Override
 	public int selectGoodCount(GoodDTO gdto) {
 		// TODO Auto-generated method stub
@@ -77,6 +77,22 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	@Override
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		return template.selectList("SocialBoard.getMyGoodSocialList", dto);
+	}
+
+	
+	
+	//인기
+	@Override
+	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		System.out.println("2");
+		return template.selectList("SocialBoard.showSocialHotBoardList",sdto);
+	}
+	//팔로잉
+	@Override
+	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		return template.selectList("SocialBoard.showSocialFollowBoardList",sdto);
 	}
 
 }
