@@ -35,6 +35,9 @@
 
 
 <style>
+.lpadding-40{
+padding-left:40px;
+}
 ul {
 	list-style-type: none;
 }
@@ -51,6 +54,10 @@ ul {
 table {
 	width: 100%;
 }
+#bestTipList{
+margin-bottom:60px;
+}
+
 
 /* Carousel */
 
@@ -96,8 +103,9 @@ table {
 	<!-- tip board main page -->
 		<div id="bestTipList" class="mt-4">
 			<div class="container-fluid">
-				<h1 class="text-center mb-3">
-					<i class="fa fa-thumbs-o-up align-top"></i> 베스트 팁
+				<h1 class="mb-3">
+				<i class="fa fa-thumbs-o-up align-top"></i> 
+					베스트 팁
 				</h1>
 			</div>
 			<!-- Card deck -->
@@ -153,13 +161,12 @@ table {
 
 	<!-- recent tip list -->
 	<div id="unVotedListWrapper ">
-		<h2>최근 팁</h2>
 		<!-- unvotedListWrapper  -->
 		<div class=" row  mb-4">
 
-			<div class="card col mr-4">
+			<div class="container col ">
 				<div class="" id="beautyTipList">
-					<h2>뷰티</h2>
+					<h2 class="lpadding-40">뷰티</h2>
 					<ul>
 						<li>
 							<table>
@@ -188,7 +195,7 @@ table {
 
 
 				<div class="" id="dietTipList">
-					<h2>다이어트</h2>
+					<h2 class="lpadding-40">다이어트</h2>
 					<ul>
 						<li>
 							<table>
@@ -219,9 +226,9 @@ table {
 			</div>
 
 
-			<div class="col card ml-4">
+			<div class="col container">
 				<div class=" " id="fashionTipList">
-					<h2>패션</h2>
+					<h2 class="lpadding-40">패션</h2>
 					<ul>
 						<li>
 							<table>
@@ -251,7 +258,7 @@ table {
 
 
 				<div class="" id="businessTipList">
-					<h2>직장생활</h2>
+					<h2 class="lpadding-40">직장생활</h2>
 					<ul>
 						<li>
 							<table>
