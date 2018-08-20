@@ -172,12 +172,6 @@ public class SocialController {
 		String photo = request.getParameter("imageinfo");
 
 		SocialBoardDTO dto = new SocialBoardDTO(title, content, 0, photo, gender, age);
-//		System.out.println(dto.getSocial_title());
-//		System.out.println(dto.getSocial_contents());
-//		System.out.println(dto.getSocial_writer());
-//		System.out.println(dto.getPhoto());
-//		System.out.println(dto.getSocial_gender());
-//		System.out.println(dto.getSocial_age());
 		
 		// 글 작성
 		service.insertSocialBoard(dto);
@@ -307,13 +301,6 @@ public class SocialController {
 		
 		SocialBoardDTO dto = new SocialBoardDTO(social_seq,title,content,0,photo,gender,age);
 		
-//		System.out.println(dto.getSocial_title());
-//		System.out.println(dto.getSocial_contents());
-//		System.out.println(dto.getSocial_writer());
-//		System.out.println(dto.getPhoto());
-//		System.out.println(dto.getSocial_gender());
-//		System.out.println(dto.getSocial_age());
-		
 		// 글 수정
 		service.updateSocialBoard(dto);
 		
@@ -338,10 +325,23 @@ public class SocialController {
 				String tag_category = myObjects[i].getCategory();
 				String tag_key = myObjects[i].getKey();
 				
+				if(tag_store == null) {
+					tag_store = "";
+				}
+				
+				if(tag_category == null) {
+					tag_category = "";
+				}
+				
+				if(tag_url == null) {
+					tag_url = "";
+				}
+				
 				if(!tag_url.startsWith("http://")) {
 					myObjects[i].setUrl("http://"+myObjects[i].getUrl());
 					tag_url = myObjects[i].getUrl();
 				}
+				
 				SocialTagDTO stdto;
 				if(myObjects[i].getKey().equals("un")) {
 					stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
