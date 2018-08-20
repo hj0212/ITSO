@@ -228,7 +228,7 @@ body {
 							class="dropdown-item flex-center droptxt2"
 							href="main.go?age=10&gender=${pGender }&main=${main}">10대</a> <a
 							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=20&gender=${pGender } &main=${main}">20대</a> <a
+							href="main.go?age=20&gender=${pGender }&main=${main}">20대</a> <a
 							class="dropdown-item flex-center droptxt2"
 							href="main.go?age=30&gender=${pGender }&main=${main}">30대</a> <a
 							class="dropdown-item flex-center droptxt2"

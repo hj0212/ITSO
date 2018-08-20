@@ -24,7 +24,9 @@ public class SocialController {
 
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session,HttpServletRequest request) {
-
+		String nonw = request.getParameter("new");
+		System.out.println(nonw);
+		
 		ModelAndView mav = new ModelAndView();
 		String main =null;
 		String gender =null;
@@ -91,6 +93,8 @@ public class SocialController {
 		SocialBoardDTO sdto = new SocialBoardDTO(pAge,pGender);
 		List<SocialBoardDTO> result = this.service.showSocialBoardList(sdto);
 
+		
+		
 		List<Integer> ggdto = new ArrayList<>();
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
