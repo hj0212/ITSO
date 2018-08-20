@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -153,7 +153,7 @@ body {
 	line-height: 10px;
 }
 
-.thirdSection .row .gridPhoto .photoContainer .photoContainerButton2 {
+.thirdSection .row .gridPhoto .photoContainer .savebtn {
 	border: none;
 	background-color: black;
 	color: white;
@@ -187,39 +187,39 @@ a#MOVE_TOP_BTN {
 /* ---------------- 모달 스타일 ------------------*/
 #collectionarea {
 	text-align: center;
+	overflow: auto;
+	-ms-overflow-style: none;
 }
 
+::-webkit-scrollbar {
+	display:none;
+}
 @media ( max-width : 575px) {
 	.collectionItem {
 		width: 80%;
 	}
 }
-
 @media ( min-width : 576px) and (max-width: 991px) {
 	.collectionItem {
 		width: 50%;
 		float: left;
 	}
 }
-
 @media ( min-width : 991px) {
 	.collectionItem {
 		width: 30%;
 	}
 }
-
 .collectionItem {
 	display: inline-block;
 	margin: 0 auto 10px auto !important;
 	background: white;
 	height: 236px;
 }
-
 .collectionItem:hover {
 	transform: scale(1.05);
 	transition: all 0.1s ease-in-out;
 }
-
 .collectionPhoto {
 	height: 100%;
 	padding-left: 5px;
@@ -227,12 +227,11 @@ a#MOVE_TOP_BTN {
 .collectionPhotoItem {
 	float:left;
 	display: inline;
-	padding: 2px;
+	padding: 1px;
 }
 .collectionPhotoItem img {
-	width: 107px;
+	width: 105px;
 }
-
 .active {
 	border: 3px solid #21FCFF;
 	margin-left: 1px;
@@ -290,9 +289,6 @@ a#MOVE_TOP_BTN {
 
 
 		<div class="gridPhotoContainer row">
-			<script>
-				console.log("${empty socialList }");
-			</script>
 			<c:choose>
 				<c:when test="${fn:length(socialList) > 0}">
 					<c:forEach items="${socialList}" var="list">
@@ -307,7 +303,7 @@ a#MOVE_TOP_BTN {
 								<div class="photoContainerHover z-depth-2">
 									<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
 									<p class="photoContainerHoverWriter">by
-										${list.social_writer}</p>
+										${list.writerName}</p>
 									<img src="upload/social/${list.photo}"
 										class="img-fluid z-depth-2" alt="Responsive image"
 										onclick="location='main.jsp'">
@@ -315,7 +311,7 @@ a#MOVE_TOP_BTN {
 										<button class="photoContainerButton1 btn btn-elegant"
 											id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
 											data-hover="+1">HYPE</button>
-										<a href="" class="photoContainerButton2 btn btn-elegant"
+										<a href="" class="savebtn btn btn-elegant"
 											data-toggle="modal" data-target="#saveModal">save</a>
 									</c:if>
 									<div class="photoContainerHoverHashTag">
@@ -371,10 +367,11 @@ a#MOVE_TOP_BTN {
 								<div id="collectionarea" class="mt-2">
 									<c:set var="num" value="0"></c:set>
 									<c:forEach items="${collectionList}" var="clist">
-										<div class="collectionItem z-depth-1 mt-2">
+									
+										<div class="collectionItem z-depth-1 mt-2">									
 											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
 											<h6>${clist.collection_contents }</h6>
-											<input type="hidden" class="seq" value="${clist.collection_seq }"/>
+											<input type="hidden" class="collectionseq" value="${clist.collection_seq }"/>
 											<div class="collectionPhoto">
 
 												<c:set var="check" value="true" />
@@ -389,7 +386,7 @@ a#MOVE_TOP_BTN {
 																<c:set var="num" value="${num+1 }" />
 																
 																<div class="collectionPhotoItem"><img src="/upload/social/${plist.photo }"
-																	alt=""></div>
+																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
 																<c:if test="${num == 4 || status.last}">
 																	<c:set var="check" value="false" />
 																</c:if>
@@ -437,12 +434,12 @@ a#MOVE_TOP_BTN {
 					<!--Body-->
 					<div class="modal-body">
 						<div class="md-form">
-							<input type="text" id="inputMDEx" class="form-control"> <label
+							<input type="text" id="inputMDEx" class="form-control" name="collection_title" maxlength="30"> <label
 								for="inputMDEx">컬렉션 이름</label>
 						</div>
 						<div class="md-form">
 							<textarea type="text" id="form7" class="md-textarea form-control"
-								rows="3"></textarea>
+								rows="3"  name="collection_contents"></textarea>
 							<label for="form7">컬렉션 상세 설명</label>
 						</div>
 					</div>
@@ -450,7 +447,7 @@ a#MOVE_TOP_BTN {
 					<!--Footer-->
 					<div class="modal-footer justify-content-center">
 						<button class="btn btn-itso" data-toggle="modal"
-							data-target="#modal">생성</button>
+							data-target="#modal" id="createcolbtn">생성</button>
 						<button class="btn btn-outline-itso waves-effect"
 							data-dismiss="modal">취소</button>
 					</div>
@@ -474,9 +471,6 @@ a#MOVE_TOP_BTN {
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.js"
-	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-	crossorigin="anonymous"></script>
 <script>
 	const hypeBtn1 = document.getElementById("hypeBtn1");
 	let hypeBtn2 = document.getElementById("hypeBtn2");
@@ -511,14 +505,15 @@ a#MOVE_TOP_BTN {
 	});
 	
 	social_seq = 0;
-	$('.photoContainerButton2').on("click", function() {
-		social_seq=$(this).parent().siblings(".inputSocialSeq").val();/* $(this).closest('.social_seq').val(); */
+	$('.savebtn').on("click", function() {
+		social_seq=$(this).parent().siblings(".inputSocialSeq").val();
 		console.log(social_seq);
+		
 	})
 
 	$("#collectionarea").on("click", ".collectionItem", function() {
 		$(this).toggleClass('active');
-		var collection_seq =$(this).children(".seq").val();
+		var collection_seq =$(this).children(".collectionseq").val();
 		console.log("collection_seq: " + collection_seq);
 		
 		console.log("social_seq: "+social_seq);
@@ -530,11 +525,32 @@ a#MOVE_TOP_BTN {
 	          social_seq:social_seq
 	        },
 	        success:function(data){
-	          console.log("들어옴"+data);
+	          console.log("들어옴:"+data);
 	        }
 	     });
 	 
 	})
+	
+	$("#createcolbtn").on('click', function() {
+		var collection_title = $("input[name='collection_title']").val();
+		var collection_contents = $("textarea[name='collection_contents']").val();
+		
+		$.ajax({
+	        url:"createCollection.ajax",
+	        type:"post",
+	        data:{
+	          collection_title:collection_title,
+	          collection_contents:collection_contents
+	        },
+	        success:function(data){
+	          console.log("생성");
+	          $("input[name='collection_title']").val("");
+	          $("textarea[name='collection_contents']").val("");
+	          $("#createModal").hide();
+	          $("#saveModal").show();
+	        }
+	    });
+	});
 
 	$("#createModal").on('show.bs.modal', function() {
 		$("#saveModal").hide();

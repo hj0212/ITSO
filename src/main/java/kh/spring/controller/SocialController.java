@@ -210,4 +210,6 @@ public class SocialController {
 //		mav.setViewName("readSocial.jsp");
 //		return mav;
 	}
+	
+	
 }

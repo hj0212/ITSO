@@ -87,6 +87,11 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.selectCollectionContent(dto);
 	}
 
+	@Override
+	public int insertCollection(CollectionDTO dto) {
+		return this.dao.insertCollection(dto);
+	}
+
 	
 
 }

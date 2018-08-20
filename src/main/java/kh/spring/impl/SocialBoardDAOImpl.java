@@ -48,12 +48,12 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<CollectionDTO> getCollectionList(MemberDTO dto) {
-		return template.selectList("SocialBoard.getCollectionList", dto);
+		return template.selectList("Collection.getCollectionList", dto);
 	}
 
 	@Override
 	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto) {
-		return template.selectList("SocialBoard.getCollectionPhotoList", dto);
+		return template.selectList("Collection.getCollectionPhotoList", dto);
 	}
 
 	@Override
@@ -63,27 +63,32 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto) {
-		return template.selectList("SocialBoard.getCollectionSocialList",dto);
+		return template.selectList("Collection.getCollectionSocialList",dto);
 	}
 
 	@Override
 	public List<CollectionDTO> getCollectionData(CollectionDTO dto) {
-		return template.selectList("SocialBoard.getCollectionData",dto);
+		return template.selectList("Collection.getCollectionData",dto);
 	}
 
 	@Override
 	public int insertCollectionContent(SocialBoardDTO dto) {
-		return template.insert("SocialBoard.insertCollectionContent", dto);
+		return template.insert("Collection.insertCollectionContent", dto);
 	}
 
 	@Override
 	public List<SocialBoardDTO> selectCollectionContent(SocialBoardDTO dto) {
-		return template.selectList("SocialBoard.selectCollectionContent", dto);
+		return template.selectList("Collection.selectCollectionContent", dto);
 	}
 
 	@Override
 	public int deleteCollectionContent(SocialBoardDTO dto) {
-		return template.delete("SocialBoard.deleteCollectionContent", dto);
+		return template.delete("Collection.deleteCollectionContent", dto);
+	}
+
+	@Override
+	public int insertCollection(CollectionDTO dto) {
+		return template.insert("Collection.insertCollection", dto);
 	}
 
 }
