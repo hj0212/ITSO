@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SocialComment">
+	<insert id="insertSocialComment" parameterType="scdto">
+		insert into social_comment values(social_comment_seq.nextval,#{social_seq},#{user_seq},sysdate,#{social_comment_contents})
+	</insert>
+	
+	<select id="selectSocialComment" parameterType="int">
+		
+	</select>
+</mapper>
