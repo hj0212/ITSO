@@ -107,6 +107,7 @@ public class TipController {
 	@RequestMapping("tipArticleLikeProc.tip")
 	public @ResponseBody int tipArticleLikeProc(@RequestParam int tipSeq) {
 		int result = service.tipArticleLikeProc(tipSeq);
+	
 		if (result > 0) {
 			System.out.println("글번호 " + tipSeq + " 좋아요 +1 성공");
 		} else {
@@ -124,4 +125,15 @@ public class TipController {
 		int result = service.insertTipCommentProc(dto);
 		return result;
 	}
+	@RequestMapping("deleteSpecificTip.tip")
+	public @ResponseBody int deleteSpecificTip(@RequestParam int tipSeq) {
+
+		System.out.println(tipSeq);
+		int result = service.deleteSpecificTip(tipSeq);
+		System.out.println(result);
+		return result;
+		
+	}
+	
+	
 }

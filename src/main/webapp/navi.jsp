@@ -92,9 +92,9 @@ nav {
 	</button>
 	<div class="collapse navbar-collapse" id="navbar2">
 		<ul class="navbar-nav mr-auto hide">
-			<li class="nav-item"><a class="nav-link" href="main.go">인기 </a></li>
-			<li class="nav-item"><a class="nav-link" href="main.go">최신</a></li>
-			<li class="nav-item"><a class="nav-link" href="main.go">팔로잉</a></li>
+			<li class="nav-item"><a class="nav-link" href="main.go?feed=new" >최신</a></li>
+			<li class="nav-item"><a class="nav-link" href="main.go?feed=hot">인기</a></li>
+			<li class="nav-item"><a class="nav-link" href="main.go?feed=following">팔로잉</a></li>
 		</ul>
 
         <ul class="navbar-nav mr-auto hide">
