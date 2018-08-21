@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.ISocialBoardDAO;
@@ -18,8 +19,9 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	private ISocialBoardDAO dao;
 
 	@Override
-	public List<SocialBoardDTO> showSocialBoardList() {
-		return this.dao.showSocialBoardList();
+	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto) {
+		System.out.println(sdto.getAge()+":"+sdto.getGender());
+		return this.dao.showSocialBoardList(sdto);
 	}
 
 	@Override
@@ -57,9 +59,56 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.getCollectionPhotoList(dto);
 	}
 
+	
+	
+	//醫뗭븘�슂
 	@Override
-	public List<SocialBoardDTO> getSocialList(MemberDTO dto) {
-		return this.dao.getSocialList(dto);
+	public int selectGoodCount(GoodDTO gdto) {
+		return this.dao.selectGoodCount(gdto);
+	}
+
+	@Override
+	public int insertGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return this.dao.insertGoodCount(gdto);
+	}
+
+	@Override
+	public int deleteGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return this.dao.deleteGoodCount(gdto);
+	}
+
+	@Override
+	public int allGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return this.dao.allGoodCount(gdto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		return this.dao.getMyGoodSocialList(dto);
+	}
+
+	
+	//게시물 인기
+	@Override
+	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		return this.dao.showSocialHotBoardList(sdto);
+	}
+	
+	//게시물 최신
+	@Override
+	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		return this.dao.showSocialFollowBoardList(sdto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getMySocialList(MemberDTO dto) {
+		return this.dao.getMySocialList(dto);
 	}
 
 	@Override
@@ -71,5 +120,27 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public List<CollectionDTO> getCollectionData(CollectionDTO dto) {
 		return this.dao.getCollectionData(dto);
 	}
+
+	@Override
+	public int insertCollectionContent(SocialBoardDTO dto) {
+		return this.dao.insertCollectionContent(dto);
+	}
+	
+	@Override
+	public int deleteCollectionContent(SocialBoardDTO dto) {
+		return this.dao.deleteCollectionContent(dto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> selectCollectionContent(SocialBoardDTO dto) {
+		return this.dao.selectCollectionContent(dto);
+	}
+
+	@Override
+	public int insertCollection(CollectionDTO dto) {
+		return this.dao.insertCollection(dto);
+	}
+
+	
 
 }
