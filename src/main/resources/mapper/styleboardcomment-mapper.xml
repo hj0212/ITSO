@@ -3,15 +3,16 @@
 
 <mapper namespace="SocialBoardComment">
 	<select id="showStyleComment" resultType="sbcdto">
-		select * from styling_comment
+		select users.photo, styling_comment.user_seq, styling_comment.styling_comment_time, styling_comment.styling_comment_contents from users inner join styling_comment on users.seq = styling_comment.user_seq
 	</select>
 	
 	<select id="insertStyleComment" parameterType="sbcdto">
-		insert into styling_comment values(styling_comment_seq.nextval,#{styling_seq}, #{user_seq}, sysdate, #{styling_comment_contents} where styling_seq=#{styling_seq})
+		insert into styling_comment values(styling_comment_seq.nextval, #{styling_seq}, #{user_seq}, sysdate, #{styling_comment_contents})
 	</select>
 	
 	<select id="deleteStyleComment" parameterType="sbcdto">
 		delete from styling_comment where styling_comment_seq=#{styling_comment_seq}
 	</select>
+	
 
 </mapper>

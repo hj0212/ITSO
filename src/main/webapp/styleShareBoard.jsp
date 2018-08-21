@@ -195,6 +195,7 @@
 																<img
 																	class="avatar rounded-circle z-depth-1-half mr-3"
 																	src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+																	<!-- src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"> -->
 																</td>
 																<td>
 																	<div>
@@ -225,11 +226,11 @@
 							</div>
 
 							<!-- reply -->
-							<form action="" method="post">
+							<form action="styleCommentInsert.go" method="post">
 								<div class="container mt-4">
 									<div class="form-group">
 										<textarea class="form-control rounded-0"
-											id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"></textarea>
+											id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기" name="styling_comment_contents"></textarea>
 
 										<!-- Default inline 1-->
 

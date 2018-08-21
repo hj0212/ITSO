@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import kh.spring.dto.MemberDTO;
 import kh.spring.dto.StyleBoardCommentDTO;
 import kh.spring.dto.StyleBoardDTO;
 import kh.spring.interfaces.IMemberService;
@@ -54,6 +53,18 @@ public class StyleController {
 		mav.setViewName("styleBoardCommentDeleteProcView.jsp");
 		return mav;		
 	}
+	
+	@RequestMapping("/styleCommentInsert.go")
+	@Transactional
+	public ModelAndView insertStyleComment(StyleBoardCommentDTO sbcdto) {
+		int result = this.sbcservice.insertStyleComment(sbcdto);
+		System.out.println(result);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("result",result);
+		mav.setViewName("styleBoardCommentInsertProcView.jsp");
+		return mav;
+	}
+	
 
 
 }
