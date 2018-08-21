@@ -18,5 +18,5 @@ public interface ISocialBoardService {
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
 	public int deleteSocialBoard(int seq);
-	
+	public int selectSocialWriter(int seq);
 }

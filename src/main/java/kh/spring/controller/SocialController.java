@@ -240,6 +240,7 @@ public class SocialController {
 	@RequestMapping("/modifySocial.go")
 	public ModelAndView modifySocial(HttpServletRequest request) throws IOException {
 		ModelAndView mav = new ModelAndView();
+		MemberDTO mdto;
 		int social_seq = Integer.parseInt(request.getParameter("seq"));
 		
 		try {
@@ -248,12 +249,10 @@ public class SocialController {
 				throw new LoginException();
 			}
 			
-			
 			ObjectMapper om = new ObjectMapper();
 			mav.addObject("seq",social_seq);
 			
 			SocialBoardDTO sbdto = service.selectSocialBoard(social_seq);
-			MemberDTO mdto;
 			
 			mdto = (MemberDTO)request.getSession().getAttribute("user");
 			
@@ -429,8 +428,22 @@ public class SocialController {
 	public ModelAndView deleteSocial(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		int seq = Integer.parseInt(request.getParameter("seq"));
-		service.deleteSocialBoard(seq);
-		System.out.println("삭제 성공!!");
+		
+		try {
+			int writer = service.selectSocialWriter(seq);
+			if(request.getSession().getAttribute("user") == null) {
+				throw new NotLoginException();
+			}
+			
+			if(writer == ((MemberDTO)request.getSession().getAttribute("user")).getSeq()) {
+				service.deleteSocialBoard(seq);
+				System.out.println("삭제 성공!!");
+			}
+			mav.setViewName("main.go");
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:readSocial.go?seq="+seq);
+		}
 		return mav;
 	}
 }

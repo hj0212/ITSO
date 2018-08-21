@@ -26,6 +26,10 @@
 	 	delete from social where social_seq=#{0}
 	</select>
 	
+	<select id="selectSocialWriter" parameterType="int" resultType="java.lang.Integer">
+		select social_writer from social where social_seq = #{0}
+	</select>
+	
 	<select id="getCollectionList" parameterType ="dto" resultType="CollectionDTO">
 		select * from collection where collection_writer = #{seq}
 	</select>
@@ -35,7 +39,7 @@
 	</select>
 	
 	<select id="getCollectionSocialList" resultType="sdto">
-		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, to_char(s.social_date, 'YYYY/MM/DD') social_date,  s.photo, s.social_gender, s.social_age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, to_char(s.social_date, 'YYYY/MM/DD') social_date,  s.photo, s.gender, s.age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
 	</select>
 	
 	<select id="getMySocialList" parameterType ="dto" resultType="sdto">

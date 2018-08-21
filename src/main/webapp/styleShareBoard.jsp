@@ -210,8 +210,10 @@
 								${content.social_contents}
 							</div>
 							<div style="float:right;">
-								<button id="modify" class="btn btn-grey btn-sm">수정</button>
-								<button id="delete" class="btn btn-grey btn-sm">삭제</button>
+								<c:if test="${sessionScope.user.seq == content.social_writer}">
+									<button id="modify" class="btn btn-grey btn-sm">수정</button>
+									<button id="delete" class="btn btn-grey btn-sm">삭제</button>								
+								</c:if>
 							</div>
 						</div>
 
@@ -456,25 +458,32 @@
 	                $j(".image-containers").css("display","block");
 	                $j(".easypin-marker").css("z-index","0");
 	            })
+	            
+	            $j(".clothes-marker").mouseover(function(){
+	           		var index = $j(".clothes-marker").index(this);
+	           		$j(".clothesinfo")[index].style.backgroundColor = "yellow";
+	        	}).mouseout(function(){
+	           		var index = $j(".clothes-marker").index(this);
+	            	$j(".clothesinfo")[index].style.backgroundColor = "white";
+	        	});
         	};
-        	
-            $j(".clothes-marker").mouseover(function(){
-           		var index = $j(".clothes-marker").index(this);
-           		$j(".clothesinfo")[index].style.backgroundColor = "yellow";
-        	}).mouseout(function(){
-           		var index = $j(".clothes-marker").index(this);
-            	$j(".clothesinfo")[index].style.backgroundColor = "white";
-        	});
-            
-            document.getElementById("modify").onclick = function() {
-            	location.href = "modifySocial.go?seq="+${content.social_seq};
-            }
-            
-           	document.getElementById("delete").onclick = function() {
-           		location.href = "deleteSocial.go?seq="+${content.social_seq};
-           	}
+
         });
     </script>
+    <c:if test="${sessionScope.user.seq == content.social_writer}">
+   	<script>
+        document.getElementById("modify").onclick = function() {
+        	location.href = "modifySocial.go?seq="+${content.social_seq};
+        }
+        
+       	document.getElementById("delete").onclick = function() {
+       		let delcheck = confirm("글을 삭제하시겠습니까?");
+       		if(delcheck) {
+	       		location.href = "deleteSocial.go?seq="+${content.social_seq};
+       		}
+       	}    	
+   	</script>
+    </c:if>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">

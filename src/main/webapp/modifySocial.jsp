@@ -102,36 +102,36 @@
                 <div class="col-sm-12">
                     <span>1.성별</span>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="genderGroup1" name="gender" value="m" ${sbdto.social_gender == 'm' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="genderGroup1" name="gender" value="m" ${sbdto.gender == 'm' ? 'checked' : ''}>
                         <label class="custom-control-label" for="genderGroup1">남</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="genderGroup2" name="gender" value="f" ${sbdto.social_gender == 'f' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="genderGroup2" name="gender" value="f" ${sbdto.gender == 'f' ? 'checked' : ''}>
                         <label class="custom-control-label" for="genderGroup2">여</label>
                     </div>
                     <div class="custom-control custom-radio ml-2 mb-3">
-                        <input type="radio" class="custom-control-input" id="genderGroup3" name="gender" value="g" ${sbdto.social_gender == 'g' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="genderGroup3" name="gender" value="g" ${sbdto.gender == 'g' ? 'checked' : ''}>
                         <label class="custom-control-label" for="genderGroup3">무관</label>
                     </div>
                     <span class="">2.나이</span>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup1" name="age" value="10" ${sbdto.social_age == '10' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="ageGroup1" name="age" value="10" ${sbdto.age == '10' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup1">10대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup2" name="age" value="20" ${sbdto.social_age == '20' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="ageGroup2" name="age" value="20" ${sbdto.age == '20' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup2">20대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup3" name="age" value="30" ${sbdto.social_age == '30' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="ageGroup3" name="age" value="30" ${sbdto.age == '30' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup3">30대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup4" name="age" value="40" ${sbdto.social_age == '40' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="ageGroup4" name="age" value="40" ${sbdto.age == '40' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup4">40대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2 mb-3">
-                        <input type="radio" class="custom-control-input" id="ageGroup5" name="age" value="0" ${sbdto.social_age == '0' ? 'checked' : ''}>
+                        <input type="radio" class="custom-control-input" id="ageGroup5" name="age" value="0" ${sbdto.age == '0' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup5">모든 연령</label>
                     </div>
                 </div>
