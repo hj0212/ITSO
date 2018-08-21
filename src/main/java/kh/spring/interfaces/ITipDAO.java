@@ -35,4 +35,6 @@ public interface ITipDAO {
 
 	public List<TipCommentDTO> getCommentsFromTip(int seq);
 
+	public int deleteSpecificTip(int tipSeq);
+
 }
