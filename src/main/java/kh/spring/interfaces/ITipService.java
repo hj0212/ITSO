@@ -20,25 +20,27 @@ public interface ITipService {
 
 	public List<TipDTO> getSpecificTipView(int seq);
 
-	public int deleteTipData(TipDTO dto);
+	public List<TipDTO> getUpvotingArticles();
+
 
 	public int updateTipData(TipDTO dto);
 
-	public List<TipGoodDTO> getTipLikeCounts(int seq);
+	public int deleteSpecificTip(int tipSeq);
 
 	public int viewCountPlus(int seq);
 
-	public int tipArticleLikeProc(int seq);
-
-	public List<TipDTO> getUpvotingArticles();
 
 	public int insertTipCommentProc(TipCommentDTO dto);
 
+
+	
+	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser);
+
+	public int tipArticleLikeProc(int seq, int tipLikingUser);
+
+	public List<TipGoodDTO> getTipLikeCounts(int seq);
+
 	public List<TipCommentDTO> getCommentsFromTip(int seq);
 
-	public int deleteSpecificTip(int tipSeq);
-
-
-
-
+	
 }

@@ -4,17 +4,29 @@
 
 <mapper namespace="TipGood">
 
-<resultMap type="TipGoodDTO" id="TipDTOResultMap">
-<result property="tip_good_seq" column="tip_good_seq" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-<result property="tip_seq" column="tip_seq" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-<result property="user_seq" column="user_seq" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-</resultMap>
+	<resultMap type="TipGoodDTO" id="TipGoodDTOResultMap">
+		<result property="tip_good_seq" column="tip_good_seq" jdbcType="INTEGER"
+			javaType="java.lang.Integer" />
+		<result property="tip_seq" column="tip_seq" jdbcType="INTEGER"
+			javaType="java.lang.Integer" />
+		<result property="user_seq" column="user_seq" jdbcType="INTEGER"
+			javaType="java.lang.Integer" />
+	</resultMap>
 
-<!-- get tip like counts select -->
-<select id="getTipLikeCounts" parameterType="TipGoodDTO" resultMap="TipDTOResultMap">
-select max(tip_good_seq) from tip_good where TIP_SEQ=#{seq}
-</select>
+	<!-- get tip like counts select -->
+	<select id="getTipLikeCounts" parameterType="TipGoodDTO"
+		resultMap="TipGoodDTOResultMap">
+		select max(tip_good_seq) from tip_good where TIP_SEQ=#{seq}
+	</select>
 
+	<!-- tip like check whether the user has liked it before -->
+	<select id="isThisLikeWhetherFirst" parameterType="HashMap"
+		resultMap="TipGoodDTOResultMap" resultType="TipGoodDTO">
+		select * from tip_good 
+		where tip_seq = #{tipSeq} 
+		and
+		user_seq = #{tipLikingUser}
+	</select>
 
 
 </mapper>
