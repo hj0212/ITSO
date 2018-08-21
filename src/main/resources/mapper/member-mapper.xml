@@ -17,9 +17,12 @@
 	<select id="emailExist" resultType="dto">
 		select * from users where email=#{email}
 	</select>
-	<insert id="followUser" parameterType="hashmap">
+	<insert id="insertFollow" parameterType="FollowDTO">
 		insert into follow values(follow_seq.nextval,#{user_seq},#{following_seq})
 	</insert>
+	<delete id="deleteFollow">
+		delete from follow where user_seq=#{user_seq} and following_seq=#{following_seq}
+	</delete>
 	<select id="selectFollower" resultType="dto">
 		select u.* from (select * from follow where following_seq = #{seq}) f, users u where  f.user_seq = u.seq
 	</select>

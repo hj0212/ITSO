@@ -36,9 +36,16 @@ public class SocialController {
 
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session,HttpServletRequest request) {
-		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
-
 		ModelAndView mav = new ModelAndView();
+		int user_seq = 0;
+		try {
+			user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		} catch(Exception e) {
+			mav.setViewName("login.go");
+			return mav;
+		}
+
+		
 		String main =null;
 		String gender =null;
 		String age =null;
@@ -89,7 +96,7 @@ public class SocialController {
 			main = request.getParameter("main");
 			if(main.equals("full")) {
 				mav.setViewName("main.jsp");
-			}else if(main.equals("tumbnail")) {
+			}else if(main.equals("thumbnail")) {
 				mav.setViewName("main3.jsp");
 			}else {
 				mav.setViewName("main.jsp");

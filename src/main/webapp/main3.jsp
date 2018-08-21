@@ -35,6 +35,7 @@
 
 body {
 	font-family: 'NanumbarunpenR';
+	box-sizing: border-box;
 }
 
 .firstContainer {
@@ -65,7 +66,7 @@ body {
 	box-shadow: none !important;
 }
 
-.dropdown-menu :hover {
+.btn-group .dropdown-menu :hover {
 	background-color: black;
 	color: white;
 }
@@ -308,24 +309,16 @@ a#MOVE_TOP_BTN {
 							<a class="dropdown-item flex-center droptxt2"
 								href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full view</a> <a
 								class="dropdown-item flex-center droptxt2"
-								href="main.go?main=tumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Tumbnail view</a>
+								href="main.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Thumbnail view</a>
 						</div>
 					</div>
 				</div>
 		</section>
-
-
-
-
-
+		
 		<!-- 드랍박스메뉴종료 -->
 
 		<!-- 포토컨테이너시작 -->
-
-
 		<section class="thirdSection col-md-12">
-
-
 		<div class="gridPhotoContainer row">
 			<c:choose>
 				<c:when test="${fn:length(socialList) > 0}">
@@ -398,6 +391,7 @@ a#MOVE_TOP_BTN {
 								data-target="#createModal">
 								<i class="fa fa-plus"></i> 컬렉션 생성
 							</button>
+							<button class="btn btn-indigo" id="managebtn"> 컬렉션 관리 </button>
 						</div>
 
 						<c:choose>
@@ -472,10 +466,10 @@ a#MOVE_TOP_BTN {
 					<!--Body-->
 					<div class="modal-body">
 						<div class="md-form">
-							<input type="text" id="inputMDEx" class="form-control" name="collection_title" maxlength="30"> <label
-								for="inputMDEx">컬렉션 이름</label>
+							<input type="text" id="inputMD" class="form-control" name="collection_title" maxlength="30"> <label
+								for="inputMD">컬렉션 이름</label>
 						</div>
-						<div class="md-form">
+						<div class="md-form mt-1">
 							<textarea type="text" id="form7" class="md-textarea form-control"
 								rows="3"  name="collection_contents"></textarea>
 							<label for="form7">컬렉션 상세 설명</label>
@@ -542,11 +536,14 @@ a#MOVE_TOP_BTN {
 		});
 	});
 	
+	$("#managebtn").on("click", function() {
+		window.open('mypage.go?view=collection', '_blank');
+	})
+	
 	social_seq = 0;
 	$('.savebtn').on("click", function() {
 		social_seq=$(this).parent().siblings(".inputSocialSeq").val();
 		console.log(social_seq);
-		
 	})
 
 	$("#collectionarea").on("click", ".collectionItem", function() {
