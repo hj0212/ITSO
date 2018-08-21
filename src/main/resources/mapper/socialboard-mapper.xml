@@ -11,7 +11,7 @@
 	</select>
 	
 	<insert id="insertSocialBoard" parameterType="sdto">
-		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{social_gender},#{social_age})
+		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{gender},#{age})
 	</insert>
 	
 	<select id="selectSocialBoard" parameterType="int" resultType="sdto">
@@ -19,7 +19,7 @@
 	</select>
 	
 	<update id="updateSocialBoard" parameterType="sdto">
-		update social set social_title = #{social_title}, social_contents = #{social_contents}, social_gender = #{social_gender}, social_age = #{social_age} where social_seq = #{social_seq}	
+		update social set social_title = #{social_title}, social_contents = #{social_contents}, gender = #{gender}, age = #{age} where social_seq = #{social_seq}	
 	</update>
 	
 	<select id="deleteSocialBoard" parameterType="int">
