@@ -59,7 +59,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	}
 
 	@Override
-	public List<SocialBoardDTO> getSocialList(MemberDTO dto) {
+	public List<SocialBoardDTO> getMySocialList(MemberDTO dto) {
 		return template.selectList("SocialBoard.getMySocialList", dto);
 	}
 

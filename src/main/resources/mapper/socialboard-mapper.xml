@@ -43,12 +43,6 @@
 		order by s.social_date desc
 	</select>
 	
-	
-	
-	<select id="insertSocialBoard" parameterType="sdto">
-		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, 1.jpg)
-	</select>
-	
 	<insert id="insertSocialBoard" parameterType="sdto">
 		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{social_gender},#{social_age})
 	</insert>
@@ -68,14 +62,9 @@
 		select s.*, u.name social_writerName from social s, users u where s.social_writer = u.seq and s.social_writer=#{seq} order by social_date desc
 	</select>
 	
-	<select id="getCollectionList" parameterType ="dto" resultType="CollectionDTO">
-		select * from collection where collection_writer = #{seq}
+	<select id="getSocialBoardcurrval" resultType="int">
+		select social_seq.currval from dual
 	</select>
-	
-	<select id="getCollectionPhotoList" resultType="sdto">
-		select c1.collection_seq, c2.social_seq, c2.photo from (select c.collection_seq, c.social_seq, s.photo from collection_content c, social s where c.social_seq = s.social_seq) c2, collection c1 where c2.collection_seq = c1.collection_seq and c1.collection_writer = #{seq}
-	</select>
-	
 	
 	
 	<!--좋아요 select insert delete -->

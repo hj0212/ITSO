@@ -288,8 +288,8 @@ public class SocialController {
 		System.out.println(dto.getSocial_contents());
 		System.out.println(dto.getSocial_writer());
 		System.out.println(dto.getPhoto());
-		System.out.println(dto.getSocial_gender());
-		System.out.println(dto.getSocial_age());
+		System.out.println(dto.getGender());
+		System.out.println(dto.getAge());
 		
 		// 글 작성
 		service.insertSocialBoard(dto);

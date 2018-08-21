@@ -107,8 +107,8 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
-	public List<SocialBoardDTO> getSocialList(MemberDTO dto) {
-		return this.dao.getSocialList(dto);
+	public List<SocialBoardDTO> getMySocialList(MemberDTO dto) {
+		return this.dao.getMySocialList(dto);
 	}
 
 	@Override

@@ -11,6 +11,8 @@ public interface ISocialBoardService {
 	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto);//최신
 	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto);//인기
 	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto);//팔로잉
+	
+	public List<SocialBoardDTO> getMySocialList(MemberDTO dto);
 	public List<CollectionDTO> getCollectionList(MemberDTO dto);
 	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto);
 	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto);
