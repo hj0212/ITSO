@@ -22,6 +22,8 @@ public interface ISocialBoardService {
 	public List<SocialBoardDTO> selectCollectionContent(SocialBoardDTO dto);
 	public SocialBoardDTO selectSocialBoard(int seq);
 	public int insertCollection(CollectionDTO dto);
+	public int deleteCollection(CollectionDTO dto);
+	public int updateCollection(CollectionDTO dto);
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);

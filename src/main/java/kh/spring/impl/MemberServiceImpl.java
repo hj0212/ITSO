@@ -12,10 +12,8 @@ import kh.spring.interfaces.IMemberService;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
-
 	@Autowired
 	private IMemberDAO dao;
-	
 	
 	@Override
 	public List<MemberDTO> loginExist(MemberDTO dto) {
@@ -66,6 +64,11 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	public List<MemberDTO> getFollowingList(MemberDTO dto) {
 		return this.dao.getFollowingList(dto);
+	}
+
+	@Override
+	public int deleteFollowData(FollowDTO dto) {
+		return this.dao.deleteFollowData(dto);
 	}
 
 }

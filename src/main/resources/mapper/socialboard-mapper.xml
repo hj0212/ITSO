@@ -8,12 +8,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND|OR ">
 		<if test="age gt 0">
 			<!-- 연령순 -->
-			social_age=#{age}
+			age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
 
-			and social_gender = #{gender}
+			and gender = #{gender}
 			
 		</if>		
 		</trim>
@@ -24,10 +24,10 @@
 		select s.*,sg.count count from social s,(select social_seq,count(*) count from social_good GROUP by social_seq)sg where s.SOCIAL_SEQ = sg.social_seq
 		
 			<if test="age gt 0">
-			 	and s.SOCIAL_AGE= #{age}
+			 	and s.AGE= #{age}
 			</if>
 			<if test="gender !=null and gender !='g'.toString()">
-				and s.SOCIAL_GENDER=#{gender}
+				and s.GENDER=#{gender}
 			</if> 
 		ORDER by count desc
 	</select>
@@ -35,10 +35,10 @@
 	<select id="showSocialFollowBoardList" resultType="sdto">
 	select s.*from(select following_seq from follow where USER_SEQ =#{social_seq})f,SOCIAL s where f.following_seq = s.SOCIAL_WRITER
 		<if test="age gt 0">
-			and s.SOCIAL_AGE=#{age}
+			and s.AGE=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString()">
-			and s.SOCIAL_GENDER=#{gender}
+			and s.GENDER=#{gender}
 		</if>
 		order by s.social_date desc
 	</select>

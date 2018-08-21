@@ -69,25 +69,21 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 
 	@Override
 	public int insertGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return this.dao.insertGoodCount(gdto);
 	}
 
 	@Override
 	public int deleteGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return this.dao.deleteGoodCount(gdto);
 	}
 
 	@Override
 	public int allGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return this.dao.allGoodCount(gdto);
 	}
 
 	@Override
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
-		// TODO Auto-generated method stub
 		return this.dao.getMyGoodSocialList(dto);
 	}
 
@@ -95,14 +91,12 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	//게시물 인기
 	@Override
 	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
-		// TODO Auto-generated method stub
 		return this.dao.showSocialHotBoardList(sdto);
 	}
 	
 	//게시물 최신
 	@Override
 	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
-		// TODO Auto-generated method stub
 		return this.dao.showSocialFollowBoardList(sdto);
 	}
 
@@ -143,6 +137,16 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	@Override
 	public int insertCollection(CollectionDTO dto) {
 		return this.dao.insertCollection(dto);
+	}
+
+	@Override
+	public int deleteCollection(CollectionDTO dto) {
+		return this.dao.deleteCollection(dto);
+	}
+
+	@Override
+	public int updateCollection(CollectionDTO dto) {
+		return this.dao.updateCollection(dto);
 	}
 
 	

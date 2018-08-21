@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.FollowDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
@@ -111,4 +112,46 @@ public class AjaxController {
 		String resultmsg = result>0?"생성성공":"생성실패";
 		System.out.println(resultmsg);
 	}
+	
+	@RequestMapping("/removeCollection.ajax")
+	public @ResponseBody void removeCollection(int collection_seq) {
+		CollectionDTO dto = new CollectionDTO();
+		dto.setCollection_seq(collection_seq);
+		int result = sservice.deleteCollection(dto);
+		String resultmsg = result>0?"삭제성공":"삭제실패";
+		System.out.println(resultmsg);
+	}
+	
+	@RequestMapping("/editCollection.ajax")
+	public @ResponseBody void editCollection(CollectionDTO dto) {
+		System.out.println(dto.getCollection_seq()+":"+dto.getCollection_title());
+		int result = sservice.updateCollection(dto);
+		String resultmsg = result>0?"수정성공":"수정실패";
+		System.out.println(resultmsg);
+	}
+	
+	@RequestMapping("/followUser.ajax")
+	public @ResponseBody String followProc(int seq, String text, HttpSession session) {
+		System.out.println("여기");
+		FollowDTO dto = new FollowDTO();
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		if(text.equals("팔로우")) {
+			dto.setUser_seq(user_seq);
+			dto.setFollowing_seq(seq);
+			int result = service.insertFollowData(dto);
+			String resultmsg = result>0?"팔로우성공":"팔로우실패";
+			System.out.println(resultmsg);
+			return "언팔로우";
+		} else {
+			dto.setUser_seq(user_seq);
+			dto.setFollowing_seq(seq);
+			int result = service.deleteFollowData(dto);
+			String resultmsg = result>0?"언팔로우성공":"언팔로우실패";
+			System.out.println(resultmsg);
+			return "팔로우";
+		}
+		
+	}
+	
+	
 }

@@ -35,6 +35,7 @@ nav {
 	background: white;
 	color: #1B0946;
 }
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark" id="nav1">
@@ -79,7 +80,7 @@ nav {
 					aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="mypage.go">마이페이지</a> <a
 						class="dropdown-item" href="#">Another action</a> <a
-						class="dropdown-item" href="#">Something else here</a>
+						class="dropdown-item" href="logout.do">로그아웃</a>
 				</div></li>
 		</ul>
 	</div>

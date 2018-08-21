@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -130,6 +129,15 @@ table .profilearea {
 .active {
 	font-weight: bold;
 }
+
+.textbtn {
+	font-size: 12px;
+	display: inline;
+	margin-right: 5px;
+	border: none;
+	background: transparent;
+	padding: 8px;
+}
 </style>
 
 <script>
@@ -139,26 +147,112 @@ table .profilearea {
 		})
 
 		$(".followbtn").on('click', function() {
-			var following_seq = $(this).siblings("#seq").val();
-			alert(following_seq);
+			var seq = $(this).siblings("#seq").val();
+			var text = $(this).text();
+			
+			var btn = $(this);
+			
 			$.ajax({
-				url : "followUser.do",
+				url : "followUser.ajax",
 				type : "post",
 				data : {
-					following_seq : following_seq
+					seq : seq,
+					text : text
 				},
 				success : function(response) {
 					if (response != null) {
-						console.log("DB insert success");
-						$(this).hide();
+						console.log("DB success : " + response);
+						btn.toggleClass("btn-itso");
+						btn.toggleClass("btn-indigo");
+						btn.html(response);
 					}
 				},
 				error : function(response) {
-					console.log("DB insert Failed")
+					console.log("DB Failed")
 				}
 			});
 		})
+		
+		function getUrlParameter(sParam) {
+	    	var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+	        sURLVariables = sPageURL.split('&'), sParameterName, i;
 
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+		
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : sParameterName[1];
+		        }
+		    }
+		};
+		
+		var view = getUrlParameter('view');
+		
+		if(view == "collection") {
+			$("a[href='#collectionPanel']").addClass("active show");
+			$("#collectionPanel").addClass("in show active");
+		} else {
+			$("a[href='#socialPanel']").addClass("active show");
+			$("#socialPanel").addClass("in show active");
+		}
+		
+		function setModal(seq, title, contents) {
+			$("#seqform").val(seq);
+			$("#titleform").val(title);
+			$("#contentsform").text(contents);
+		}
+		
+		$(".editbtn").on("click", function() {
+			var collection_seq = $(this).siblings("input[name='collectionseq']").val();
+			var collection_title = $(this).parent().siblings("h4").children("a").children(".collectiontitle").html();
+			var collection_contents = $(this).parent().siblings(".collectioncontents").html();
+			
+			setModal(collection_seq, collection_title, collection_contents);
+		})
+		
+		$("#savebtn").on("click", function() {
+			var collection_seq = $("#seqform").val();
+			var collection_title = $("#titleform").val();
+			var collection_contents = $("#contentsform").val();
+			
+			$.ajax({
+				url : "editCollection.ajax",
+				type : "post",
+				data : {
+					collection_seq : collection_seq,
+					collection_title : collection_title,
+					collection_contents : collection_contents
+				},
+				success : function(response) {
+					if (response != null) {
+						location.href = "mypage.go?view=collection";
+					}
+				},
+				error : function(response) {
+					console.log("DB Failed")
+				}
+			}); 
+		})
+		
+		$(".removebtn").on("click", function() {
+			var collection_seq = $(this).siblings("input[name='collectionseq']").val();
+			$.ajax({
+				url : "removeCollection.ajax",
+				type : "post",
+				data : {
+					collection_seq : collection_seq
+				},
+				success : function(response) {
+					if (response != null) {
+						location.href = "mypage.go?view=collection";
+					}
+				},
+				error : function(response) {
+					console.log("DB Failed")
+				}
+			});
+		})
+	
 	})
 </script>
 </head>
@@ -210,7 +304,7 @@ table .profilearea {
 			<div class="col-sm-12 z-depth-1 mr-2" id="leftarea">
 				<ul class="nav md-pills nav-justified pills-secondary" id="tablist">
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#panel1" role="tab">스타일</a></li>
+						href="#socialPanel" role="tab">스타일</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#collectionPanel" role="tab">컬렉션</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -225,9 +319,7 @@ table .profilearea {
 				<div class="tab-content">
 
 					<!--Panel 1-->
-					<div class="tab-pane fade in show active" id="panel1"
-						role="tabpanel">
-						<br>
+					<div class="tab-pane fade" id="socialPanel" role="tabpanel">
 
 						<div class="row gb" style="margin: 0xp auto;">
 							<!-- Grid column -->
@@ -260,27 +352,25 @@ table .profilearea {
 													<p class="card-text">Some quick example text to build
 														on the card title and make up the bulk of the card's
 														content.</p>
+														
+													
 													<a href="#" class="btn  btn-indigo"
-														style="background-color: black;"><i class="fa fa-plus">follow</i></a>
+														style="background-color: black;"><i class="fa fa-plus"></i> 팔로우</a>
 													<!--share-->
 													<!--instagram-->
-													<button type="button"
-														class="btn-floating btn-sm btn-is share "
+													<button type="button" class="btn-floating btn-sm btn-is share "
 														style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-														<i class="fab fa-instagram"></i>
+														<i class="fa fa-instagram"></i>
 													</button>
 													<!--twitter-->
-													<button type="button"
-														class="btn-floating btn-sm btn-tw share"
+													<button type="button" class="btn-floating btn-sm btn-tw share"
 														style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
-														<i class="fab fa-twitter"></i>
+														<i class="fa fa-twitter"></i>
 													</button>
 													<!--facebook-->
-													<button type="button"
-														class="btn-floating btn-sm btn-fb share"
+													<button type="button" class="btn-floating btn-sm btn-fb share"
 														style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
-														<i class="fab fa-facebook-f"></i>
-													</button>
+														<i class="fa fa-facebook-f"></i></button>
 												</div>
 											</div>
 											<!--/.Card-->
@@ -307,8 +397,14 @@ table .profilearea {
 										<c:set var="num" value="0" />
 										<c:forEach var="clist" items="${collectionList }">
 											<tr>
-												<td width=190><h4><a href="collection.go?seq=${clist.collection_seq }">${clist.collection_title }</a></h4> <br>
-													${clist.collection_contents }</td>
+												<td width=190><h4><a href="collection.go?seq=${clist.collection_seq }"><div class="collectiontitle">${clist.collection_title }</div></a></h4>
+													<div class="collectioncontents">${clist.collection_contents }</div>
+													<div class="linkarea mt-2"><button class="btn btn-itso btn-sm ml-0" style="padding-left: 8px;padding-right: 8px;">
+														<a href="collection.go?seq=${clist.collection_seq }" style="color:white;">보기</a></button>
+														<button class="textbtn editbtn" data-toggle="modal" data-target="#editCollectionModal"> 수정 </button><button class="textbtn removebtn"> 삭제 </button>
+														<input type="hidden" value="${clist.collection_seq }" name="collectionseq"/>
+													</div>
+												</td>
 												<td><c:set var="loop" value="true" /> 
 												<c:set var="num" value="0" /> 
 													<c:forEach var="slist" items="${photoList }">
@@ -353,16 +449,19 @@ table .profilearea {
 													<img src="/upload/profile/${ferlist.photo }" alt=""
 														class="profileimg">
 												</div>
+												<input type="hidden" value="${ferlist.seq }"/>
 											</td>
 											<c:choose>
 												<c:when test="${ferlist.part eq 'home'}">
 													<td style="height: 100px; vertical-align: middle"><h6
-															class="mt-1">${ferlist.name }</h6> <c:if
-															test="${ferlist.followcheck eq 'n' }">
+															class="mt-1">${ferlist.name }</h6> 
+														<c:if test="${ferlist.followcheck eq 'n' }">
 															<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button>
-														</c:if> <c:if test="${ferlist.followcheck eq 'ㅛ' }">
+														</c:if> 
+														<c:if test="${ferlist.followcheck eq 'y' }">
 															<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button>
-														</c:if> <input type="hidden" value="${ferlist.seq }" id="seq" /></td>
+														</c:if> 
+														<input type="hidden" value="${ferlist.seq }" id="seq" /></td>
 												</c:when>
 												<c:otherwise>
 													<!-- 페북 등 로그인일때 -->
@@ -395,16 +494,13 @@ table .profilearea {
 														class="profileimg">
 												</div>
 											</td>
-											<script>
-												console.log("${finglist.followcheck}")
-											</script>
 											<c:choose>
 												<c:when test="${finglist.part eq 'home'}">
-													<td style="height: 100px; vertical-align: middle"><h6
-															class="mt-1">${finglist.name }</h6> <c:if
-															test="${ferlist.followcheck eq 'n' }">
+													<td style="height: 100px; vertical-align: middle"><h6 class="mt-1">${finglist.name }</h6> 
+														<c:if test="${ferlist.followcheck eq 'n' }">
 															<button class="btn btn-itso btn-sm followbtn ml-0">팔로우</button>
-														</c:if> <c:if test="${finglist.followcheck eq 'y' }">
+														</c:if> 
+														<c:if test="${finglist.followcheck eq 'y' }">
 															<button class="btn btn-indigo btn-sm followbtn ml-0">언팔로우</button>
 														</c:if> <input type="hidden" value="${finglist.seq }" id="seq" /></td>
 												</c:when>
@@ -426,6 +522,47 @@ table .profilearea {
 						
 					</div>
 					<!--/.Panel 5-->
+					
+					<!-- Modal -->
+					<div class="modal fade" id="editCollectionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-sm" role="document">
+						<!--Content-->
+						<div class="modal-content">
+							<!--Header-->
+							<div class="modal-header">
+								<p class="heading lead mb-0">컬렉션 수정</p>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+		
+							<!--Body-->
+							<div class="modal-body">
+								<input type="hidden" id="seqform" />
+								<div class="md-form">
+									<input type="text" id="titleform" class="form-control" name="collection_title" maxlength="30" autofocus> <label
+										for="titleform">컬렉션 이름</label>
+								</div>
+								<div class="md-form mt-1">
+									<textarea type="text" id="contentsform" class="md-textarea form-control"
+										rows="3"  name="collection_contents"></textarea>
+									<label for="form7" class="mb-0">컬렉션 상세 설명</label>
+								</div>
+							</div>
+		
+							<!--Footer-->
+							<div class="modal-footer justify-content-center">
+								<button class="btn btn-itso" data-toggle="modal"
+									data-target="#modal" id="savebtn">수정</button>
+								<button class="btn btn-outline-itso waves-effect"
+									data-dismiss="modal">취소</button>
+							</div>
+						</div>
+						<!--/.Content-->
+			</div>
+					</div>
+					
 				</div>
 			</div>
 		</div>
