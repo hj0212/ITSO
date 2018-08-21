@@ -217,6 +217,8 @@ table .profilearea {
 						href="#followerPanel" role="tab">팔로워</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#followingPanel" role="tab">팔로잉</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#boardPanel" role="tab">내가 쓴 글</a></li>
 				</ul>
 
 				<!-- Tab panels -->
@@ -394,8 +396,7 @@ table .profilearea {
 												</div>
 											</td>
 											<script>
-												console
-														.log("${finglist.followcheck}")
+												console.log("${finglist.followcheck}")
 											</script>
 											<c:choose>
 												<c:when test="${finglist.part eq 'home'}">
@@ -419,7 +420,12 @@ table .profilearea {
 						</table>
 					</div>
 					<!--/.Panel 4-->
-
+					
+					<!--Panel 5-->
+					<div class="tab-pane fade" id="boardPanel" role="tabpanel">
+						
+					</div>
+					<!--/.Panel 5-->
 				</div>
 			</div>
 		</div>

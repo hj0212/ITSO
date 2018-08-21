@@ -61,7 +61,7 @@ public class MemberController {
 	public ModelAndView goMypage(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		try {
-			List<SocialBoardDTO> socialList = this.sservice.getSocialList((MemberDTO)session.getAttribute("user"));
+			List<SocialBoardDTO> socialList = this.sservice.getMySocialList((MemberDTO)session.getAttribute("user"));
 			List<CollectionDTO> collectionList = this.sservice.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.sservice.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followerList = this.mservice.getFollowerList((MemberDTO)session.getAttribute("user"));
