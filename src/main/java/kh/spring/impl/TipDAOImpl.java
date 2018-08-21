@@ -1,11 +1,15 @@
 package kh.spring.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
 import kh.spring.interfaces.ITipDAO;
@@ -70,9 +74,40 @@ public class TipDAOImpl implements ITipDAO {
 	}
 
 	@Override
-	public int tipArticleLikeProc(int seq) {
-		return template.update("TipBoard.tipArticleLikeProc",seq);
+	public int tipArticleLikeProc(int seq, int tipLikingUser) {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("seq", seq);
+		map.put("tipLikingUser", tipLikingUser);
+		return template.insert("TipBoard.tipArticleLikeProc", map);
+	}
+	
+	@Override
+	public List<TipDTO> getUpvotingArticles() {
+		return template.selectList("TipBoard.getUpvotingArticles");
 	}
 
+	@Override
+	public int insertTipCommentProc(TipCommentDTO dto) {
+		
+		return template.insert("TipComment.insertTipCommentProc",dto);
+	}
+
+	@Override
+	public List<TipCommentDTO> getCommentsFromTip(int seq) {
+		return template.selectList("TipComment.getCommentsFromTip",seq);
+	}
+
+	@Override
+	public int deleteSpecificTip(int tipSeq) {
+		return template.delete("TipBoard.deleteSpecificTip",tipSeq);
+	}
+
+	@Override
+	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("tipSeq",tipSeq);
+		map.put("tipLikingUser", tipLikingUser);
+		return template.selectList("TipGood.isThisLikeWhetherFirst",map);
+	}
 
 }

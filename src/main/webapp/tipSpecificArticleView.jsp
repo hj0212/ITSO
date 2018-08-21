@@ -67,27 +67,102 @@ img {
 	<script>
 		window.onload = function() {
 
-			var tipSeq = document.getElementById("tip_seq").innerHTML;
+			// 			tip delete btn proc
 
-			console.log(tipSeq);
+			$("#tipDeleteBtn").click(function() {
+
+				var tipSeq = document.getElementById("tip_seq").innerHTML;
+
+				console.log(tipSeq);
+
+				$.ajax({
+					url : "deleteSpecificTip.tip",
+					data : {
+						"tipSeq" : tipSeq
+					},
+					type : "get",
+					success : function() {
+						alert("success");
+						location.replace("tipBoardMainPage.tip");
+					},
+					error : function() {
+						alert("error");
+					}
+				})
+
+			})
+
+			// 		tip comment proc
+			$("#insertTipCommentBtn")
+					.click(
+							function() {
+
+								var data = JSON
+										.stringify({
+											tip_seq : document
+													.getElementById("tip_seq").innerHTML,
+											user_seq : document
+													.getElementById("user_seq").value,
+											tip_comment_contents : document
+													.getElementById("tip_comment_contents").value,
+										});
+
+								console.log(data);
+
+								$
+										.ajax({
+											url : "insertTipCommentProc.tip",
+											type : "post",
+											data : data,
+											dataType : "json",
+											contentType : "application/json;charset=UTF-8",
+											async : true,
+											success : function() {
+												alert("success");
+												location.reload();
+											},
+											error : function() {
+												alert("failure");
+											}
+
+										})
+
+							});
+
+			var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
+			var tipLikingUser = document.getElementById("user_seq").value;
 
 			var i = 0;
 
 			document.getElementById("like-btn").onclick = function() {
 
 				console.log("like btn clicked! " + ++i);
+				if (tipLikingUser == "") {
+					tipLikingUser = 0;
+				}
+				console.log(tipSeqForLike + ":" + tipLikingUser);
 
 				$.ajax({
 
 					url : "tipArticleLikeProc.tip",
-					method : "GET",
+					method : "post",
 					data : {
-						"tipSeq" : tipSeq
+						"tipSeq" : tipSeqForLike,
+						"tipLikingUser" : tipLikingUser
 					},
 					success : function(data, textStatus, jqXHR) {
-						console.log(this.data + "," + this.url + ","
-								+ this.textStatus + "," + this.jqXHR);
-						console.log("좋아요  + 1");
+						console.log("[" + data + "]");
+
+						if (data == 9) {
+							alert("좋아요는 한번만 할 수 있습니다.");
+
+						} else if (data == 1) {
+							console.log("좋아요  + 1");
+							alert("좋아요!")
+						} else {
+							alert("좋아요 에러 발생!");
+						};
+
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
 						console.log(this.textStatus + "," + this.jqXHR + ","
@@ -107,19 +182,19 @@ img {
 
 
 	<!-- body -->
-	<table class="container-fluid">
+	<table class="container">
 		<c:forEach items="${tipContent}" var="tipContent">
 			<tr>
-				<td><div id="tip_seq" class="container">${tipContent.tip_seq}</div></td>
-				<td><div class="container">
-						<h1>${tipContent.tip_title}</h1>
-					</div></td>
-				<td><div class="container">${tipContent.category}</div></td>
-				<td><div class="container">${tipContent.tip_viewcount}</div></td>
-				<td><div class="container">${tipContent.tip_writer}</div></td>
+				<td>
+					<h1>${tipContent.tip_title}</h1>
 			</tr>
 			<tr>
-				<td colspan=5><div>${tipContent.tip_contents}</div></td>
+				<td><p id="tip_seq">${tipContent.tip_seq}</p></td>
+				<td>${tipContent.category}${tipContent.tip_viewcount}
+					${tipContent.tip_writer}</td>
+			</tr>
+			<tr>
+				<td><div class="container">${tipContent.tip_contents}</div></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -129,10 +204,10 @@ img {
 
 	<div id=reaction>
 		<button id="like-btn" class="btn white btn-sm">
-<%-- 			<c:forEach items="${tipLikeCounts}" var="tipLikeCounts"> --%>
-				<i class=" fa fa-heart red-text mr-1" aria-hidden="true"></i>
-<%-- 				${tipLikeCounts.tip_good_seq} --%>
-<%-- 			</c:forEach> --%>
+			<%-- 			<c:forEach items="${tipLikeCounts}" var="tipLikeCounts"> --%>
+			<i class=" fa fa-heart red-text" aria-hidden="true"></i>
+			<%-- 				${tipLikeCounts.tip_good_seq} --%>
+			<%-- 			</c:forEach> --%>
 		</button>
 		<button class="btn white btn-sm">
 			<i class="fa fa-bomb black-text" aria-hidden="true"></i>
@@ -140,83 +215,53 @@ img {
 	</div>
 
 
+
+
 	<!-- comments -->
 	<div class="container mt-4">
 		<table id="comment">
 			<tbody>
-				<tr>
-					<td><img class="avatar rounded-circle z-depth-1-half mr-3"
-						src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-					</td>
-					<td>
-						<div>
-							<a href="#">Risovic N.</a> <a href="#">@risovic</a>
-						</div>
-						<div>Nice dress, color, and the vibe</div>
-						<div id=comment>
-							0 <a href="#">▲</a>· reply · flag · 6 months ago
-						</div>
+				<c:forEach items="${tipComments}" var="tipComments">
 
-					</td>
-				</tr>
+					<tr>
+						<td><img class="avatar rounded-circle z-depth-1-half mr-3"
+							src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+						</td>
 
+						<td>
+							<div>
+								<a href="#">${tipComments.name}</a>
+							</div>
 
-				<tr>
-					<table>
-						<tr>
-							<td>
-								<div class="comment-child">
-									<img class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-										src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-								</div>
-							</td>
-							<td></td>
-							<td>
-								<div>
-									<a href="#">Alex X.</a> <a href="">@Alex</a>
-								</div>
-								<div>How sweet of her.</div>
-
-								<div id=comment>
-									2 <a href="#">▲</a>· reply>· flag · 6 months ago
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<td>
-								<div class="comment-child">
-									<img class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-										src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-								</div>
-							</td>
-							<td></td>
-							<td>
-								<div>
-									<a href="#">Lauren A.</a> <a href="">@Lauren</a>
-								</div>
-								<div>I envy her body ratio</div>
-
-								<div id=comment>
-									5 <a href="#">▲</a>· reply· flag · 6 months ago
-								</div>
-							</td>
-						</tr>
-					</table>
-				</tr>
-
+							<div>${tipComments.tip_comment_contents}</div>
+						</td>
+						<td>${tipComments.tip_comment_time}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
-
-
 		</table>
+	</div>
+
+	<!-- To write reply -->
+	<div class="mt-4 container">
+		<textarea class="form-control" name="tip_comment_contents"
+			id="tip_comment_contents"></textarea>
+		<input type="hidden" class="form-control"
+			value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
+		<button id="insertTipCommentBtn" type="button"
+			class="btn btn-sm btn-itso">댓글 쓰기</button>
 	</div>
 
 
 
+	<!-- like btn -->
 	<div id=btns>
 		<button class="btn btn-itso"
 			onclick="javascript:location.replace('tipBoardMainPage.tip')">돌아가기</button>
+
 		<!-- location.replace = history.back() + refresh() -->
+		<button id="tipDeleteBtn" class="btn btn-itso">지우기</button>
+
 	</div>
 
 

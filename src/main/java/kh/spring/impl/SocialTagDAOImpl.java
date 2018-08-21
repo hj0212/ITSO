@@ -23,4 +23,19 @@ public class SocialTagDAOImpl implements ISocialTagDAO{
 	public List<SocialTagDTO> showSelectedTagList(int seq) {
 		return template.selectList("SocialTag.showSelectedTagList",seq);
 	}
+
+	@Override
+	public int updateSocialTag(SocialTagDTO dto) {
+		return template.update("SocialTag.updateSocialTag",dto);
+	}
+
+	@Override
+	public int deleteSocialTag(int seq) {
+		return template.delete("SocialTag.deleteSocialTag",seq);
+	}
+
+	@Override
+	public int getSocialTagcurrval() {
+		return template.selectOne("SocialTag.getSocialTagcurrval");
+	}
 }

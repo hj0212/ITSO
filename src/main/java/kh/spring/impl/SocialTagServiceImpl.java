@@ -23,4 +23,19 @@ public class SocialTagServiceImpl implements ISocialTagService{
 	public List<SocialTagDTO> showSelectedTagList(int seq) {
 		return this.dao.showSelectedTagList(seq);
 	}
+
+	@Override
+	public int updateSocialTag(SocialTagDTO dto) {
+		return this.dao.updateSocialTag(dto);
+	}
+
+	@Override
+	public int deleteSocialTag(int seq) {
+		return this.dao.deleteSocialTag(seq);
+	}
+
+	@Override
+	public int getSocialTagcurrval() {
+		return this.dao.getSocialTagcurrval();
+	}
 }
