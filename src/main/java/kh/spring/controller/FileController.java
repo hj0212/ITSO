@@ -104,9 +104,7 @@ public class FileController {
 		}catch(NotLoginException le) {
 			mav.setViewName("login.jsp");
 		}catch(Exception e) {
-			List<SocialBoardDTO> result = this.bservice.showSocialBoardList();
-			mav.addObject("socialList",result);
-			mav.setViewName("main3.jsp");
+			
 		}
 		return mav;
 	}

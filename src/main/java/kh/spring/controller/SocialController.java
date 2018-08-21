@@ -560,7 +560,7 @@ public class SocialController {
 				service.deleteSocialBoard(seq);
 				System.out.println("삭제 성공!!");
 			}
-			mav.setViewName("main.go");
+			mav.setViewName("redirect:main.go");
 		}catch(Exception e) {
 			e.printStackTrace();
 			mav.setViewName("redirect:readSocial.go?seq="+seq);

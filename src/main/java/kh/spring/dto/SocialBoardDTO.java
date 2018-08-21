@@ -145,11 +145,6 @@ public class SocialBoardDTO {
 	public int getAge() {
 		return age;
 	}
-
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
 	
 	public void setAge(int age) {
 		this.age = age;
