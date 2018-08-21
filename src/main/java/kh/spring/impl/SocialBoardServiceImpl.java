@@ -35,8 +35,8 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
-	public int deleteSocialBoard(SocialBoardDTO sdto) {
-		return this.dao.deleteSocialBoard(sdto);
+	public int deleteSocialBoard(int seq) {
+		return this.dao.deleteSocialBoard(seq);
 	}
 	
 	@Override
@@ -115,6 +115,10 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.getCollectionData(dto);
 	}
 
+	@Override
+	public int selectSocialWriter(int seq) {
+		return this.dao.selectSocialWriter(seq);
+	}
 	@Override
 	public int insertCollectionContent(SocialBoardDTO dto) {
 		return this.dao.insertCollectionContent(dto);

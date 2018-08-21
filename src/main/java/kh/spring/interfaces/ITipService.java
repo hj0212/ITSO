@@ -36,6 +36,9 @@ public interface ITipService {
 
 	public List<TipCommentDTO> getCommentsFromTip(int seq);
 
+	public int deleteSpecificTip(int tipSeq);
+
+
 
 
 }

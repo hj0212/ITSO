@@ -67,6 +67,32 @@ img {
 	<script>
 		window.onload = function() {
 
+			// 			tip delete btn proc
+
+			$("#tipDeleteBtn").click(function(){
+				
+				var tipSeq = document
+				.getElementById("tip_seq").innerHTML;
+			
+				console.log(tipSeq);
+				
+				$.ajax({
+					url:"deleteSpecificTip.tip",
+					data:{"tipSeq" : tipSeq},
+					type:"get",
+					success:function(){
+						alert("success");
+						location.replace("tipBoardMainPage.tip");
+					},error:function(){
+						alert("error");
+					}
+				})
+				
+				
+			})
+			
+			
+			
 			// 		tip comment proc
 			$("#insertTipCommentBtn")
 					.click(
@@ -94,6 +120,7 @@ img {
 											async : true,
 											success : function() {
 												alert("success");
+												location.reload();
 											},
 											error : function() {
 												alert("failure");
@@ -103,7 +130,6 @@ img {
 
 							});
 
-			
 			var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
 
 			console.log(tipSeqForLike);
@@ -126,7 +152,7 @@ img {
 								+ this.textStatus + "," + this.jqXHR);
 						console.log("좋아요  + 1");
 
-						alert("좋아요 표시를 하였습니다!")
+						alert("좋아요!")
 
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
@@ -186,35 +212,33 @@ img {
 	<div class="container mt-4">
 		<table id="comment">
 			<tbody>
-			<c:forEach items="${tipComments}" var="tipComments">
-					
-				<tr>
-					<td><img class="avatar rounded-circle z-depth-1-half mr-3"
-						src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-					</td>
-					
-					<td>
-						<div>
-							<a href="#">${tipComments.name}</a>
-						</div>
-						
-						<div>${tipComments.tip_comment_contents}</div>
-<!-- 						<div id=comment> -->
-<!-- 							0 <a href="#">▲</a>· reply · flag · 6 months ago -->
-<!-- 						</div> -->
-					</td>
-					<td>
-					${tipComments.tip_comment_time}
-					</td>
-				</tr>
-		</c:forEach>
+				<c:forEach items="${tipComments}" var="tipComments">
+
+					<tr>
+						<td><img class="avatar rounded-circle z-depth-1-half mr-3"
+							src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+						</td>
+
+						<td>
+							<div>
+								<a href="#">${tipComments.name}</a>
+							</div>
+
+							<div>${tipComments.tip_comment_contents}</div> <!-- 						<div id=comment> -->
+							<!-- 							0 <a href="#">▲</a>· reply · flag · 6 months ago -->
+							<!-- 						</div> -->
+						</td>
+						<td>${tipComments.tip_comment_time}</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>
 
 	<!-- To write reply -->
 	<div class="mt-4 container">
-		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents"></textarea>
+		<textarea class="form-control" name="tip_comment_contents"
+			id="tip_comment_contents"></textarea>
 		<input type="hidden" class="form-control"
 			value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
 		<button id="insertTipCommentBtn" type="button"
@@ -227,7 +251,10 @@ img {
 	<div id=btns>
 		<button class="btn btn-itso"
 			onclick="javascript:location.replace('tipBoardMainPage.tip')">돌아가기</button>
+
 		<!-- location.replace = history.back() + refresh() -->
+		<button id="tipDeleteBtn" class="btn btn-itso">지우기</button>
+
 	</div>
 
 

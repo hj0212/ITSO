@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,10 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -23,6 +28,8 @@ import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.dto.SocialTagDTO;
+import kh.spring.exception.NotLoginException;
+import kh.spring.exception.NotWriterException;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
@@ -196,25 +203,27 @@ public class SocialController {
 	
 	@Transactional
 	@RequestMapping("/readSocial.go")
-	public ModelAndView gogo(HttpServletRequest request) {
+	public ModelAndView readSocial(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		ObjectMapper om = new ObjectMapper();
+		long dummy = System.currentTimeMillis();
 		// json에 넣을 순번
 		int i = 0;
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
+		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
-		
+		System.out.println(dto.getSocial_date());
 		// image_db -> {} -> 0 : {}, 1 : {}
 		ObjectNode infoNode = om.createObjectNode();
 		// 각 태그
 		ObjectNode objNodeNumber = om.createObjectNode();
 		
 		if(list.size() == 0) {
-			mav.addObject("marerdata","{}");
+			mav.addObject("markerdata","{}");
 			mav.addObject("dataflag","false");
 		} else {
 			for(SocialTagDTO tag : list) {
@@ -272,7 +281,10 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("content",dto);
+		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());
+		mav.addObject("dummy",dummy);
 		mav.setViewName("styleShareBoard.jsp");
 		return mav;
 	}
@@ -280,64 +292,286 @@ public class SocialController {
 
 	@Transactional
 	@RequestMapping("/insertSocial.go")
-	public void test(HttpServletRequest request) throws IOException {
+	public ModelAndView insertSocial(HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
+		MemberDTO mdto;
 		
-		String title = request.getParameter("stylename");
-		String content = request.getParameter("stylecontent");
-		//String writer = 글쓴이
-		String gender = request.getParameter("gender");
-		int age = Integer.parseInt(request.getParameter("age"));
-		String photo = request.getParameter("imageinfo");
-
-		SocialBoardDTO dto = new SocialBoardDTO(title, content, 0, photo, gender, age);
-		System.out.println(dto.getSocial_title());
-		System.out.println(dto.getSocial_contents());
-		System.out.println(dto.getSocial_writer());
-		System.out.println(dto.getPhoto());
-		System.out.println(dto.getGender());
-		System.out.println(dto.getAge());
-		
-		// 글 작성
-		service.insertSocialBoard(dto);
-		
-		// 작성된 글 번호
-		int social_seq = service.getSocialBoardcurrval();
-
-		// 태그 정보
-		String taginfo = request.getParameter("taginfo");
-
-		if(taginfo.equals("{}")) {
-			System.out.println("태그가 없음 : 파일만 저장");
-		}else {
-			ObjectMapper om = new ObjectMapper();
-			om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-			SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
-
-			for(int i = 0; i < myObjects.length; i++) {
-				String tag_name = myObjects[i].getName();
-				String tag_brand = myObjects[i].getBrand();
-				String tag_store = myObjects[i].getStore();
-				String tag_url = myObjects[i].getUrl();
-				String tag_lat = myObjects[i].getCoords().getLat();
-				String tag_along = myObjects[i].getCoords().getAlong();
-				String tag_category = myObjects[i].getCategory();
-				
-				
-				if(!tag_url.startsWith("http://")) {
-					myObjects[i].setUrl("http://"+myObjects[i].getUrl());
-					tag_url = myObjects[i].getUrl();
-				}
-				System.out.println(tag_url);
-				SocialTagDTO stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
-				tagService.insertSocialTag(stdto);
+		try {
+			if(request.getSession().getAttribute("user") == null) {
+				throw new NotLoginException();
 			}
 			
+			mdto = (MemberDTO)request.getSession().getAttribute("user");
+			
+			String title = request.getParameter("stylename");
+			String content = request.getParameter("stylecontent");
+			int writer = mdto.getSeq();
+			String gender = request.getParameter("gender");
+			int age = Integer.parseInt(request.getParameter("age"));
+			String photo = request.getParameter("imageinfo");
+			
+			if(title == null) {
+				title = "제목 없음";
+			}
+			
+			if(content == null) {
+				content = "내용 없음";
+			}
+
+			SocialBoardDTO dto = new SocialBoardDTO(title, content, writer, photo, gender, age);
+			
+			// 글 작성
+			service.insertSocialBoard(dto);
+			
+			// 작성된 글 번호
+			int social_seq = service.getSocialBoardcurrval();
+
+			// 태그 정보
+			String taginfo = request.getParameter("taginfo");
+
+			if(taginfo.equals("{}")) {
+				System.out.println("태그가 없음 : 파일만 저장");
+			}else {
+				ObjectMapper om = new ObjectMapper();
+				om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+				SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
+
+				for(int i = 0; i < myObjects.length; i++) {
+					String tag_name = myObjects[i].getName();
+					String tag_brand = myObjects[i].getBrand();
+					String tag_store = myObjects[i].getStore();
+					String tag_url = myObjects[i].getUrl();
+					String tag_lat = myObjects[i].getCoords().getLat();
+					String tag_along = myObjects[i].getCoords().getAlong();
+					String tag_category = myObjects[i].getCategory();
+					
+					
+					if(!tag_url.startsWith("http://")) {
+						myObjects[i].setUrl("http://"+myObjects[i].getUrl());
+						tag_url = myObjects[i].getUrl();
+					}
+					
+					SocialTagDTO stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
+					tagService.insertSocialTag(stdto);
+				}
+				
+			}
+			mav.setViewName("redirect:main.go");
+		}catch(NotLoginException nl) {
+			mav.setViewName("redirect:login.jsp");
 		}
 		
-//		mav.setViewName("readSocial.jsp");
-//		return mav;
+		return mav;
 	}
 	
+	@Transactional
+	@RequestMapping("/modifySocial.go")
+	public ModelAndView modifySocial(HttpServletRequest request) throws IOException {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO mdto;
+		int social_seq = Integer.parseInt(request.getParameter("seq"));
+		
+		try {
+			// 로그인 되어 있는지 판단
+			if(request.getSession().getAttribute("user") == null) {
+				throw new LoginException();
+			}
+			
+			ObjectMapper om = new ObjectMapper();
+			mav.addObject("seq",social_seq);
+			
+			SocialBoardDTO sbdto = service.selectSocialBoard(social_seq);
+			
+			mdto = (MemberDTO)request.getSession().getAttribute("user");
+			
+			// 로그인한 사용자와 글 작성자가 같은지 판단 해야함...
+			if(!(mdto.getSeq() == sbdto.getSocial_writer())) {
+				throw new NotWriterException();
+			}
+			
+			int i = 0;
+			long dummy = System.currentTimeMillis();
+			
+			mav.addObject("sbdto",sbdto);
+			
+			List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
+			
+			ObjectNode infoNode = om.createObjectNode();
+			// 각 태그
+			ObjectNode objNodeNumber = om.createObjectNode();
+			
+			if(list.size() == 0) {
+				mav.addObject("markerdata", "{}");
+				mav.addObject("dataflag","false");
+			}else {
+				for(SocialTagDTO tag : list) {
+					// tag 하나당 넣어야 하는 객체
+					ObjectNode objNode = om.createObjectNode();
+					// 좌표를 넣을 객체
+					ObjectNode objNodeCoords = om.createObjectNode();
+					objNode.put("name", tag.getTag_name());
+					
+					objNode.put("brand", tag.getTag_brand());
+					objNode.put("store", tag.getTag_store());
+					objNode.put("url", tag.getTag_store());
+					objNode.put("category", tag.getTag_category());
+					objNode.put("key", tag.getTag_seq());
+					
+					// 좌표
+					objNodeCoords.put("lat", Double.parseDouble(tag.getTag_lat()));
+					objNodeCoords.put("along", Double.parseDouble(tag.getTag_along()));
+					
+					objNode.put("coords", objNodeCoords);
+					
+					objNodeNumber.put(i++ +"", objNode);
+				}
+				
+				// canvas 객체 추가
+				ObjectNode canvas = om.createObjectNode();
+				canvas.put("src", "upload/social/"+sbdto.getPhoto());
+				canvas.put("width", 500);
+				canvas.put("height", 500);
+				
+				objNodeNumber.put("canvas", canvas);
+				infoNode.put("image_db", objNodeNumber);
+				
+				String json = "";
+				try {
+					json = om.writeValueAsString(infoNode);
+				} catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+				
+				mav.addObject("list",list);
+				mav.addObject("markerdata", json);
+				mav.addObject("dataflag","true");
+			}
+			
+			mav.addObject("dummy", dummy);
+			mav.setViewName("modifySocial.jsp");
+			
+		}catch(Exception e) {
+			mav.setViewName("redirect:readSocial.go?seq="+social_seq);
+		}
+		return mav;
+	}
 	
+	@Transactional
+	@RequestMapping("/modifySocialProc.go")
+	public ModelAndView modifySocialProc(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		MemberDTO mdto;
+		int social_seq = Integer.parseInt(request.getParameter("seq"));
+		
+		try {
+			if(request.getSession().getAttribute("user") == null) {
+				throw new NotLoginException();
+			}
+			
+			mdto = (MemberDTO)request.getSession().getAttribute("user");
+			
+			String title = request.getParameter("stylename");
+			String content = request.getParameter("stylecontent");
+			int writer = mdto.getSeq();
+			String gender = request.getParameter("gender");
+			int age = Integer.parseInt(request.getParameter("age"));
+			String photo = request.getParameter("imageinfo");
+			SocialBoardDTO dto = new SocialBoardDTO(social_seq,title,content,0,photo,gender,age);
+			
+			// 글 수정
+			service.updateSocialBoard(dto);
+			
+			// 태그 정보
+			String taginfo = request.getParameter("taginfo");
+			//System.out.println(taginfo);
+			
+			if(taginfo.equals("{}")) {
+				System.out.println("태그가 없음 : 파일만 저장");
+			} else {
+				ObjectMapper om = new ObjectMapper();
+				om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+				SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
+				
+				for(int i = 0; i < myObjects.length; i++) {
+					String tag_name = myObjects[i].getName();
+					String tag_brand = myObjects[i].getBrand();
+					String tag_store = myObjects[i].getStore();
+					String tag_url = myObjects[i].getUrl();
+					String tag_lat = myObjects[i].getCoords().getLat();
+					String tag_along = myObjects[i].getCoords().getAlong();
+					String tag_category = myObjects[i].getCategory();
+					String tag_key = myObjects[i].getKey();
+					
+					if(tag_store == null) {
+						tag_store = "";
+					}
+					
+					if(tag_category == null) {
+						tag_category = "";
+					}
+					
+					if(tag_url == null) {
+						tag_url = "";
+					}
+					
+					if(!tag_url.startsWith("http://")) {
+						myObjects[i].setUrl("http://"+myObjects[i].getUrl());
+						tag_url = myObjects[i].getUrl();
+					}
+					
+					SocialTagDTO stdto;
+					if(myObjects[i].getKey().equals("un")) {
+						stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
+						tagService.insertSocialTag(stdto);
+						myObjects[i].setKey(tagService.getSocialTagcurrval()+"");
+					}else {
+						stdto = new SocialTagDTO(Integer.parseInt(tag_key),social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
+						tagService.updateSocialTag(stdto);
+					}
+				}
+				
+				List<SocialTagDTO> tagList = tagService.showSelectedTagList(social_seq);
+				
+				for(int i = 0; i < myObjects.length; i++) {
+					for(int j = 0; j < tagList.size(); j++) {
+						if(tagList.get(j).getTag_seq() == Integer.parseInt(myObjects[i].getKey())) {
+							tagList.remove(tagList.get(j));
+						}
+					}
+				}
+				
+				for(SocialTagDTO tagdto : tagList) {
+					tagService.deleteSocialTag(tagdto.getTag_seq());
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		mav.setViewName("redirect:readSocial.go?seq="+social_seq);
+		return mav;
+	}
+	
+	@RequestMapping("/deleteSocial.go")
+	public ModelAndView deleteSocial(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int seq = Integer.parseInt(request.getParameter("seq"));
+		
+		try {
+			int writer = service.selectSocialWriter(seq);
+			if(request.getSession().getAttribute("user") == null) {
+				throw new NotLoginException();
+			}
+			
+			if(writer == ((MemberDTO)request.getSession().getAttribute("user")).getSeq()) {
+				service.deleteSocialBoard(seq);
+				System.out.println("삭제 성공!!");
+			}
+			mav.setViewName("redirect:main.go");
+		}catch(Exception e) {
+			e.printStackTrace();
+			mav.setViewName("redirect:readSocial.go?seq="+seq);
+		}
+		return mav;
+	}
 }

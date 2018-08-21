@@ -91,5 +91,11 @@ public class TipServiceImpl implements ITipService {
 		return this.dao.getCommentsFromTip(seq);
 	}
 
+	@Override
+	public int deleteSpecificTip(int tipSeq) {
+
+		return this.dao.deleteSpecificTip(tipSeq);
+	}
+
 
 }

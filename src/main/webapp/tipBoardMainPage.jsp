@@ -293,6 +293,7 @@ margin-bottom:60px;
 
 			<button class="btn btn-itso"
 				onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
+		
 		</div>
 
 	</div>

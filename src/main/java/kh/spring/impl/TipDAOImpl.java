@@ -91,5 +91,10 @@ public class TipDAOImpl implements ITipDAO {
 		return template.selectList("TipComment.getCommentsFromTip",seq);
 	}
 
+	@Override
+	public int deleteSpecificTip(int tipSeq) {
+		return template.delete("TipBoard.deleteSpecificTip",tipSeq);
+	}
+
 
 }

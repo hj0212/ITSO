@@ -27,7 +27,8 @@ public interface ISocialBoardDAO {
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
-	public int deleteSocialBoard(SocialBoardDTO sdto);
+	public int deleteSocialBoard(int seq);
+	public int selectSocialWriter(int seq);
 	
 	//���ƿ� select insert delete
 	public int selectGoodCount(GoodDTO gdto);
