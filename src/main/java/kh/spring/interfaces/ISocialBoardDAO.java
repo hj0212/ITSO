@@ -22,10 +22,13 @@ public interface ISocialBoardDAO {
 	public List<SocialBoardDTO> selectCollectionContent(SocialBoardDTO dto);
 	public SocialBoardDTO selectSocialBoard(int seq);
 	public int insertCollection(CollectionDTO dto);
+	public int deleteCollection(CollectionDTO dto);
+	public int updateCollection(CollectionDTO dto);
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
-	public int deleteSocialBoard(SocialBoardDTO sdto);
+	public int deleteSocialBoard(int seq);
+	public int selectSocialWriter(int seq);
 	
 	//���ƿ� select insert delete
 	public int selectGoodCount(GoodDTO gdto);

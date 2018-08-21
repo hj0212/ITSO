@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -116,7 +116,7 @@ body {
 	box-shadow: none !important;
 }
 
-.dropdown-menu :hover {
+.btn-group .dropdown-menu :hover {
 	background-color: black;
 	color: white;
 }
@@ -137,7 +137,7 @@ body {
 	margin-left: 3px;
 }
 
-.dropdown-toggle {
+button.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
 #MOVE_TOP_BTN {
@@ -183,13 +183,11 @@ body {
 					console.log("들어옴"+data),
 					font.html(data)
 					
-					
 				}
-				
-				
 			});
 			
 		});
+		
 		$(function() {
 			$(window).scroll(function() {
 				if ($(this).scrollTop() > 500) {
@@ -212,8 +210,6 @@ body {
 
 <body>
 	<%@include file="navi.jsp"%>
-
-
 
 
 	<!-- Grid row -->
@@ -268,10 +264,12 @@ body {
 							<a class="dropdown-item flex-center droptxt2"
 								href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full view</a> <a
 								class="dropdown-item flex-center droptxt2"
-								href="main.go?main=tumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Tumbnail view</a>
+								href="main.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Thumbnail view</a>
 						</div>
 					</div>
 				</div>
+			</div>
+			</div>
 		</section>
 		<a id="MOVE_TOP_BTN" href="#">TOP</a>
 
@@ -359,7 +357,7 @@ body {
 		</c:choose>
 
 
-		<!-- 오른쪽 추천 fallow  -->
+		<!-- 오른쪽 추천 follow  -->
 		<div id="rightfix" class="right-fixed">
 			<ul class="list-unstyled">
 				<li class="media"><img class="d-flex mr-3 rounded-circle"

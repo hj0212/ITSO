@@ -2,6 +2,7 @@ package kh.spring.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class MemberController {
 	}
 
 	@RequestMapping("/mypage.go")
-	public ModelAndView goMypage(HttpSession session) {
+	public ModelAndView goMypage(HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		try {
 			List<SocialBoardDTO> socialList = this.sservice.getMySocialList((MemberDTO)session.getAttribute("user"));
@@ -72,10 +73,19 @@ public class MemberController {
 			mav.addObject("photoList", photoList);
 			mav.addObject("followerList", followerList);
 			mav.addObject("followingList", followingList);
-		}catch(NullPointerException e) {
+		}catch(Exception e) {
 			System.out.println("로그인x");
+			mav.setViewName("login.go");
+			return mav;
 		}
-		mav.setViewName("mypage.jsp");
+		
+		if(request.getParameter("view") == null) {
+			mav.setViewName("mypage.jsp");
+		} else if(request.getParameter("view").equals("collection")) {
+			mav.setViewName("mypage.jsp?view=collection");
+		} else {
+			mav.setViewName("mypage.jsp");
+		}
 		return mav;
 	}
 
@@ -96,15 +106,10 @@ public class MemberController {
 		return "myinfo.go";
 	}
 	
-	@RequestMapping("/followUser.do")
-	public @ResponseBody int tipWriteProc(int following_seq, HttpSession session) {
-		System.out.println("여기");
-		FollowDTO dto = new FollowDTO();
-		dto.setFollowing_seq(following_seq);
-		dto.setUser_seq(((MemberDTO)session.getAttribute("user")).getSeq());
-		System.out.println(dto.getUser_seq()+":"+dto.getFollowing_seq());
-		int result = mservice.insertFollowData(dto);
-		return result;
+	@RequestMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:login.go";
 	}
 	
 	private void followCheck(List<MemberDTO> followerList, List<MemberDTO> followingList) {

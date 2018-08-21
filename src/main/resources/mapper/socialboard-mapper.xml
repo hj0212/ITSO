@@ -8,12 +8,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND|OR ">
 		<if test="age gt 0">
 			<!-- 연령순 -->
-			social_age=#{age}
+			age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
 
-			and social_gender = #{gender}
+			and gender = #{gender}
 			
 		</if>		
 		</trim>
@@ -24,10 +24,10 @@
 		select s.*,sg.count count from social s,(select social_seq,count(*) count from social_good GROUP by social_seq)sg where s.SOCIAL_SEQ = sg.social_seq
 		
 			<if test="age gt 0">
-			 	and s.SOCIAL_AGE= #{age}
+			 	and s.AGE= #{age}
 			</if>
 			<if test="gender !=null and gender !='g'.toString()">
-				and s.SOCIAL_GENDER=#{gender}
+				and s.GENDER=#{gender}
 			</if> 
 		ORDER by count desc
 	</select>
@@ -35,27 +35,32 @@
 	<select id="showSocialFollowBoardList" resultType="sdto">
 	select s.*from(select following_seq from follow where USER_SEQ =#{social_seq})f,SOCIAL s where f.following_seq = s.SOCIAL_WRITER
 		<if test="age gt 0">
-			and s.SOCIAL_AGE=#{age}
+			and s.AGE=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString()">
-			and s.SOCIAL_GENDER=#{gender}
+			and s.GENDER=#{gender}
 		</if>
 		order by s.social_date desc
 	</select>
 	
 	<insert id="insertSocialBoard" parameterType="sdto">
-		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{social_gender},#{social_age})
+		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{gender},#{age})
 	</insert>
 	
 	<select id="selectSocialBoard" parameterType="int" resultType="sdto">
 		select * from social where social_seq = #{0}
 	</select>
 	
-	<select id="updateSocialBoard" parameterType="sdto">
-		
+	<update id="updateSocialBoard" parameterType="sdto">
+		update social set social_title = #{social_title}, social_contents = #{social_contents}, gender = #{gender}, age = #{age} where social_seq = #{social_seq}	
+	</update>
+	
+	<select id="deleteSocialBoard" parameterType="int">
+	 	delete from social where social_seq=#{0}
 	</select>
-	<select id="deleteSocialBoard" parameterType="sdto">
-	 	delete from social where social_seq=#{social_seq}
+	
+	<select id="selectSocialWriter" parameterType="int" resultType="java.lang.Integer">
+		select social_writer from social where social_seq = #{0}
 	</select>
 	
 	<select id="getMySocialList" parameterType ="dto" resultType="sdto">
@@ -66,6 +71,9 @@
 		select social_seq.currval from dual
 	</select>
 	
+	<select id="getCollectionSocialList" resultType="sdto">
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, to_char(s.social_date, 'YYYY/MM/DD') social_date,  s.photo, s.gender, s.age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+	</select>
 	
 	<!--좋아요 select insert delete -->
 	<select id="selectGoodCount" resultType="int" >
