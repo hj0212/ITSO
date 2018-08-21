@@ -104,7 +104,7 @@ body {
 .thirdSection .row .gridPhoto .photoContainer {
 	visibility: hidden;
 }
-
+/* hover */
 .thirdSection .row .gridPhoto:hover .photoContainerHover {
 	visibility: visible;
 	z-index: 41;
@@ -236,6 +236,14 @@ a#MOVE_TOP_BTN {
 	border: 3px solid #21FCFF;
 	margin-left: 1px;
 }
+
+.btn-group {
+	margin-left: 3px;
+}
+
+.dropdown-toggle {
+	border: 1px solid #e9e9e9;
+}
 </style>
 </head>
 
@@ -258,27 +266,57 @@ a#MOVE_TOP_BTN {
 
 		<!-- 메인인트로종료 -->
 
+
 		<!-- 드랍박스메뉴시작 -->
-
-
-
-
 		<section class="secondSection col-md-12">
 		<div class="container">
+
 			<div class="btn-group">
 				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-					data-toggle="dropdown" aria-haspopup="true" aria=expanded="false">Full
-					view</button>
-				<div class="dropdown-menu" name="menu">
-					<a class="dropdown-item flex-center droptxt2" href="main.go"
-						value="Full
-						view">Full view</a> <a
-						class="dropdown-item flex-center droptxt2" href="main.go"
-						value="Thumbnail">Thumbnail view</a>
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+					id="gender">${gender}</button>
+
+				<div class="dropdown-menu">
+					<a class="dropdown-item flex-center droptxt2"
+						href="main.go?gender=g&age=${pAge }&feed=${feed}">무관 </a> <a
+						class="dropdown-item flex-center droptxt2"
+						href="main.go?gender=m&age=${pAge}&main=${main}&feed=${feed}">남성</a> <a
+						class="dropdown-item flex-center droptxt2"
+						href="main.go?gender=f&age=${pAge }&main=${main}&feed=${feed}">여성</a>
 				</div>
-			</div>
-		</div>
+				<div class="btn-group">
+					<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+						id="age">${age}</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item flex-center droptxt2"
+							href="main.go?age=0&gender=${pGender }&main=${main}&feed=${feed}">모든연령 </a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=10&gender=${pGender }&main=${main}&feed=${feed}">10대</a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=20&gender=${pGender }&main=${main}&feed=${feed}">20대</a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=30&gender=${pGender }&main=${main}&feed=${feed}">30대</a> <a
+							class="dropdown-item flex-center droptxt2"
+							href="main.go?age=40&gender=${pGender }&main=${main}&feed=${feed}">40대</a>
+					</div>
+					<div class="btn-group">
+						<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Full
+							view</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full view</a> <a
+								class="dropdown-item flex-center droptxt2"
+								href="main.go?main=tumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Tumbnail view</a>
+						</div>
+					</div>
+				</div>
 		</section>
+
+
+
+
 
 		<!-- 드랍박스메뉴종료 -->
 
@@ -560,6 +598,7 @@ a#MOVE_TOP_BTN {
 		$("#saveModal").show();
 	});
 </script>
+
 
 
 </html>

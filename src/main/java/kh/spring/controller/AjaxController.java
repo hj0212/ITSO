@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
@@ -24,6 +26,9 @@ public class AjaxController {
 	private IMemberService service;
 	@Autowired
 	private ISocialBoardService sservice;
+	
+	@Autowired
+	private ISocialBoardService sbService;
 	
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
@@ -49,6 +54,28 @@ public class AjaxController {
 		}
 		return msg;
 	}
+	
+	@RequestMapping("/mainHeart.ajax")
+	public @ResponseBody int mainHeart(int social_seq,HttpServletResponse response,HttpSession session) {				
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		GoodDTO gdto = new GoodDTO(social_seq,user_seq);
+		
+		int goodCount = sbService.selectGoodCount(gdto);
+		System.out.println(goodCount);
+			
+		if(goodCount>0) {
+			int delete = sbService.deleteGoodCount(gdto);
+		}else {
+			int insert = sbService.insertGoodCount(gdto);
+		}
+		
+		int count = sbService.allGoodCount(gdto);
+		
+		System.out.println(social_seq);
+		System.out.println(user_seq);
+		return count;
+	}
+	
 	
 	@RequestMapping("/saveCollection.ajax")
 	public @ResponseBody String saveCollection(int collection_seq, int social_seq, HttpSession session) {

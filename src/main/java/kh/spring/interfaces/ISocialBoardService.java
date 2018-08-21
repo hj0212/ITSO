@@ -3,12 +3,14 @@ package kh.spring.interfaces;
 import java.util.List;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 
 public interface ISocialBoardService {
-	public List<SocialBoardDTO> showSocialBoardList();
-	public List<SocialBoardDTO> getSocialList(MemberDTO dto);
+	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto);//최신
+	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto);//인기
+	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto);//팔로잉
 	public List<CollectionDTO> getCollectionList(MemberDTO dto);
 	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto);
 	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto);
@@ -23,4 +25,10 @@ public interface ISocialBoardService {
 	public int updateSocialBoard(SocialBoardDTO sdto);
 	public int deleteSocialBoard(SocialBoardDTO sdto);
 	
+	//醫뗭븘�슂
+	public int selectGoodCount(GoodDTO gdto);
+	public int insertGoodCount(GoodDTO gdto);
+	public int deleteGoodCount(GoodDTO gdto);
+	public int allGoodCount(GoodDTO gdto);
+	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto);
 }

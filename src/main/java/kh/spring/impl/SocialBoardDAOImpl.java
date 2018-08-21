@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.ISocialBoardDAO;
@@ -17,8 +18,9 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	private SqlSessionTemplate template;
 
 	@Override
-	public List<SocialBoardDTO> showSocialBoardList() {
-		return template.selectList("SocialBoard.showSocialBoardList");
+	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto) {
+
+		return template.selectList("SocialBoard.showSocialBoardList",sdto);
 	}
 
 	@Override
@@ -89,6 +91,53 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	@Override
 	public int insertCollection(CollectionDTO dto) {
 		return template.insert("Collection.insertCollection", dto);
+	}
+	
+	
+	//���ƿ� 
+	@Override
+	public int selectGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return template.selectOne("SocialBoard.selectGoodCount", gdto);
+	}
+
+	@Override
+	public int insertGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return template.insert("SocialBoard.insertGoodCount",gdto);
+	}
+
+	@Override
+	public int deleteGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return template.delete("SocialBoard.deleteGoodCount",gdto);
+	}
+
+	@Override
+	public int allGoodCount(GoodDTO gdto) {
+		// TODO Auto-generated method stub
+		return template.selectOne("SocialBoard.allGoodCount",gdto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
+		return template.selectList("SocialBoard.getMyGoodSocialList", dto);
+	}
+
+	
+	
+	//인기
+	@Override
+	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		System.out.println("2");
+		return template.selectList("SocialBoard.showSocialHotBoardList",sdto);
+	}
+	//팔로잉
+	@Override
+	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
+		// TODO Auto-generated method stub
+		return template.selectList("SocialBoard.showSocialFollowBoardList",sdto);
 	}
 
 }
