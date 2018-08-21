@@ -10,6 +10,15 @@ public class StyleBoardCommentDTO {
 	
 	public StyleBoardCommentDTO() {	}
 
+	
+	@Override
+	public String toString() {
+		return "StyleBoardCommentDTO [styling_comment_seq=" + styling_comment_seq + ", styling_seq=" + styling_seq
+				+ ", user_seq=" + user_seq + ", styling_comment_time=" + styling_comment_time
+				+ ", styling_comment_contents=" + styling_comment_contents + "]";
+	}
+
+
 	public StyleBoardCommentDTO(int styling_comment_seq, int styling_seq, int user_seq, String styling_comment_time,
 			String styling_comment_contents) {
 		super();

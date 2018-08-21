@@ -11,6 +11,10 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Style-Share | ITSO</title>
 
+<!-- JQuery -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -189,27 +193,34 @@
 											<tbody>
 												<c:choose>
 													<c:when test="${fn:length(result1) >0 }">
+														
 														<c:forEach items="${result1}" var="commentList">
 															<tr>
-																<td>
-																<img
+																<td><img
 																	class="avatar rounded-circle z-depth-1-half mr-3"
 																	src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
 																	<!-- src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"> -->
 																</td>
 																<td>
 																	<div>
-																		<a href="#">${commentList.user_seq }</a> <a href="#">@${commentList.user_seq }</a>																		
-																		<a href="styleCommentdelete.go?styling_comment_seq=${commentList.styling_comment_seq}">X</a>																		
+																		<a href="#">${commentList.user_seq }</a> <a href="#">@${commentList.user_seq }</a>
+																		<button id="deleteComment_${commentList.styling_comment_seq}" class="deleteComment">X</button>
+																		<!-- <button id="deleteComment(${commentList.styling_comment_seq})">X</button> -->
+																		<!-- <a href="styleCommentdelete.go?styling_comment_seq=${commentList.styling_comment_seq}">X</a> -->
+																		<input type="text" id="commentSeq" value="${commentList.styling_comment_seq}">
+																		
 																	</div>
 																	<div>${commentList.styling_comment_contents }</div>
 																	<div id=comment>
-																		0 <a href="#">▲</a>· reply · flag · ${commentList.styling_comment_time }
+																		0 <a href="#">▲</a>· reply · flag ·
+																		${commentList.styling_comment_time }
 																	</div>
 
 																</td>
 															</tr>
 														</c:forEach>
+													
+													
 													</c:when>
 													<c:otherwise>
 														<tr>
@@ -230,7 +241,8 @@
 								<div class="container mt-4">
 									<div class="form-group">
 										<textarea class="form-control rounded-0"
-											id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기" name="styling_comment_contents"></textarea>
+											id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"
+											name="styling_comment_contents"></textarea>
 
 										<!-- Default inline 1-->
 
@@ -265,7 +277,7 @@
 												id="defaultInline3">
 										</div>
 
-										<button class="btn btn-grey btn-sm">쓰기</button>
+										<button class="btn btn-grey btn-sm" id="insertComment">쓰기</button>
 									</div>
 								</div>
 							</form>
@@ -444,9 +456,7 @@
 
 
 
-	<!-- JQuery -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
@@ -460,6 +470,31 @@
 		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		crossorigin="anonymous"></script>
 </body>
+
+<script>	
+	
+		$(".deleteComment").click(function(){
+			//alert("안녕");
+			var styling_comment_seq = document.getElementById("commentSeq").value;
+			
+			console.log(styling_comment_seq);
+			alert(styling_comment_seq);
+			$.ajax({
+				url:"styleCommentdelete.go",
+				data :{"styling_comment_seq" : styling_comment_seq },
+				type: "POST",
+				success:function(){
+					alert("삭제성공");
+					location.replace("");
+				},error:function(){
+					alert("삭제실패");
+				}
+			})
+		})		
+	
+	
+	
+</script>
 
 
 </html>

@@ -32,7 +32,7 @@ public class StyleController {
 		//멤버dto에서 사진 가져올것, 서비스에 해당 유저정보 보여주는거 작성해야함.
 		//List<MemberDTO> result2 = this.mservice.
 		System.out.println("스타일보드" +result);
-		System.out.println("스타일보드코멘트" +result1);
+		System.out.println("스타일보드코멘트" +result1.toString());
 		
 		
 		ModelAndView mav = new ModelAndView();
@@ -65,6 +65,5 @@ public class StyleController {
 		return mav;
 	}
 	
-
 
 }

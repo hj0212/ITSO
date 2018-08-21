@@ -3,7 +3,7 @@
 
 <mapper namespace="SocialBoardComment">
 	<select id="showStyleComment" resultType="sbcdto">
-		select users.photo, styling_comment.user_seq, styling_comment.styling_comment_time, styling_comment.styling_comment_contents from users inner join styling_comment on users.seq = styling_comment.user_seq
+		select users.photo, styling_comment.styling_comment_seq, styling_comment.user_seq, styling_comment.styling_comment_time, styling_comment.styling_comment_contents from users inner join styling_comment on users.seq = styling_comment.user_seq
 	</select>
 	
 	<select id="insertStyleComment" parameterType="sbcdto">
