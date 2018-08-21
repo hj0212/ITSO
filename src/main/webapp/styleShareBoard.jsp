@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="utf8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       <!DOCTYPE html>
     <html lang="en">
@@ -8,9 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-	   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-	   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-	   <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
 	   <title> Style-Share | ITSO</title>
 		<style>
             #wrapper {
@@ -119,6 +115,16 @@
             /* #comment {
                 border: 1px solid #e6e6e6;
             } */
+            
+            #write-btn {
+            	margin-right : 0px;
+            }
+            
+            #comment-container {
+            	white-space: nowrap; 
+            	overflow: hidden;
+   				text-overflow: ellipsis; 
+            }
         </style>
     </head>
 
@@ -127,7 +133,7 @@
 
 
 
-
+	<%@include file="navi.jsp"%>
     <div id="wrapper" class="row">
 
         <div id="left-side" class="col">
@@ -217,84 +223,28 @@
 							</div>
 						</div>
 
-						<div class="container mt-4">
-                            <table id="comment">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <img class="avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <a href="#">Risovic N.</a>
-                                                <a href="#">@risovic</a>
-                                            </div>
-                                            <div>
-                                                Nice dress, color, and the vibe
-                                            </div>
-                                            <div id=comment>
-                                                0
-                                                <a href="#">▲</a>· reply · flag · 6 months ago
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <div class="comment-child">
-                                                        <img class="ml-4 avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-                                                    </div>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <div>
-                                                        <a href="#">Alex X.</a>
-                                                        <a href="">@Alex</a>
-                                                    </div>
-                                                    <div>How sweet of her. </div>
-
-                                                    <div id=comment>
-                                                        2
-                                                        <a href="#">▲</a· reply>· flag · 6 months ago
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="comment-child">
-                                                        <img class="ml-4 avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-                                                    </div>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <div>
-                                                        <a href="#">Lauren A.</a>
-                                                        <a href="">@Lauren</a>
-                                                    </div>
-                                                    <div>I envy her body ratio </div>
-
-                                                    <div id=comment>
-                                                        5
-                                                        <a href="#">▲</a>· reply· flag · 6 months ago
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                    </tr>
-
-                                </tbody>
-
-
-                            </table>
+						<div class="container mt-4" id="comment-container">
+                            <table id="comment" cellpadding="5">
+								<tr>
+									<td>
+										<img class="avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+									</td>
+									<td>
+										<div>
+											<a href="#">Risovic N.</a>
+										</div>
+										<div>
+											<span class="user-comment">
+												안녕하세요 친구들
+											</span>
+										</div>
+										<div>
+											<span class="comment-date"> 2018-08-21 16:28:39.0 <span><i class="fa fa-times" aria-hidden="true"></i></span></span>
+										</div>
+									</td>
+								</tr>
+							</table>
                         </div>
-
-
                     </div>
                 </div>
 
@@ -303,41 +253,13 @@
                     <div class="container mt-4">
                         <div class="form-group">
                             <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"></textarea>
-
-                            <!-- Default inline 1-->
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label class="custom-control-label" for="defaultInline1">페이스북</label>
-                            </div>
-
-                            <!-- Default inline 2-->
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label class="custom-control-label" for="defaultInline2">카카오톡</label>
-                            </div>
-
-                            <!-- Default inline 3-->
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline3">
-                                <label class="custom-control-label" for="defaultInline3">인스타그램</label>
-                            </div>
-
-                            <!-- Default inline 3-->
-                            <div class="ml-4 custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline3">
-                            </div>
-
-                            <button class="btn btn-grey btn-sm">쓰기</button>
+                        </div>
+                        <div class="text-right">
+                            <button class="btn btn-grey btn-sm" id="write-btn">쓰기</button>
                         </div>
                     </div>
                 </form>
-
-
-
             </div>
-
         </div>
 
         <!-- user info -->
@@ -438,6 +360,9 @@
 
 
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+   	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+   	<script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
     <script>
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
@@ -467,7 +392,6 @@
 	            	$j(".clothesinfo")[index].style.backgroundColor = "white";
 	        	});
         	};
-
         });
     </script>
     <c:if test="${sessionScope.user.seq == content.social_writer}">

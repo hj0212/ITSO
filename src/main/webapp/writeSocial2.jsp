@@ -6,9 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="jquery.easypin.js"></script>
     <title>Document</title>
     <style>
         @font-face {
@@ -69,7 +66,8 @@
     </style>
 </head>
 <body>
-    <div>네비게이션으로 넣을곳!</div>
+    <!-- navi -->
+	<%@include file="navi.jsp"%>
     <div class="container">
         <form id="submitInfo" method="post" action="insertSocial.go">
             <div class="row" name="top">
@@ -173,6 +171,9 @@
 			<div style="width: 100%; text-align: center;">{[name]}</div>
 		</div>
     </div>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
   	<script>	
 		var $j = jQuery.noConflict();
 	    var $instance = $j('.pin').easypin({
