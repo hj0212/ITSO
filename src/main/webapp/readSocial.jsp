@@ -23,51 +23,6 @@
         .image-containers {
             display: block;
         }
-
-        .clothes-info::after {
-            content : "";
-            position: absolute;
-            top : 100%;
-            left : 5px;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color  : gray transparent transparent transparent;
-        }
-
-        .clothes-info {
-            background-color: gray;
-            opacity: 0.8;
-            margin-bottom: 10px;
-            width: 200px;
-            height: auto;
-            text-align: center;
-            color : white;
-        }
-
-        .clothes-header {
-            font-size: 14px;
-            border-bottom: 1px solid white;
-            margin : 10px 5px;
-        }
-
-        .clothes-header .clothes-name, .clothes-header .clothes-url {
-            display: inline-block;
-        }
-        
-        .clothes-header .clothes-name {
-            color : white;
-        }
-
-        .clothes-body {
-            font-size : 12px;
-            margin-top: 0px;
-            margin-bottom: 10px;
-        }
-
-        .clothes-body .brand, .clothes-body .store{
-            display: inline-block;
-        }
         
         .pin-containers img {
         	object-fit : contain;
@@ -91,26 +46,6 @@
 
     <div style="display:none;" easypin-tpl>
         <popover>
-            <div class="clothes-info">
-                <div class="clothes-header">
-                    <a href="http://www.naver.com">
-                        <div class="clothes-name">
-                            {[name]}
-                        </div>
-                        <div class="clothes-url">
-                            <i class="fas fa-external-link-alt"></i>
-                        </div>
-                    </a>
-                </div>
-                <div class="clothes-body">
-                    <div class="brand">
-                        {[brand]} 
-                    </div>
-                    <div class="store">
-                        {[store]}
-                    </div>
-                </div>
-            </div>
         </popover>
 
         <marker>

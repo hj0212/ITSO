@@ -5,7 +5,6 @@ public class FollowDTO {
 	private int user_seq;
 	private int following_seq;
 	
-	
 	public FollowDTO() {
 		super();
 	}

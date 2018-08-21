@@ -2,6 +2,7 @@ package kh.spring.interfaces;
 
 import java.util.List;
 
+import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
 
@@ -27,5 +28,13 @@ public interface ITipDAO {
 	public int tipArticleLikeProc(int seq);
 
 	public List<TipGoodDTO> getTipLikeCounts(int seq);
+
+	public List<TipDTO> getUpvotingArticles();
+
+	public int insertTipCommentProc(TipCommentDTO dto);
+
+	public List<TipCommentDTO> getCommentsFromTip(int seq);
+
+	public int deleteSpecificTip(int tipSeq);
 
 }

@@ -35,6 +35,7 @@ nav {
 	background: white;
 	color: #1B0946;
 }
+
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-dark" id="nav1">
@@ -79,7 +80,7 @@ nav {
 					aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="mypage.go">마이페이지</a> <a
 						class="dropdown-item" href="#">Another action</a> <a
-						class="dropdown-item" href="#">Something else here</a>
+						class="dropdown-item" href="logout.do">로그아웃</a>
 				</div></li>
 		</ul>
 	</div>
@@ -92,9 +93,9 @@ nav {
 	</button>
 	<div class="collapse navbar-collapse" id="navbar2">
 		<ul class="navbar-nav mr-auto hide">
-			<li class="nav-item"><a class="nav-link" href="main.go">인기 </a></li>
-			<li class="nav-item"><a class="nav-link" href="main.go">최신</a></li>
-			<li class="nav-item"><a class="nav-link" href="main.go">팔로잉</a></li>
+			<li class="nav-item"><a class="nav-link" href="main.go?feed=new" >최신</a></li>
+			<li class="nav-item"><a class="nav-link" href="main.go?feed=hot">인기</a></li>
+			<li class="nav-item"><a class="nav-link" href="main.go?feed=following">팔로잉</a></li>
 		</ul>
 
         <ul class="navbar-nav mr-auto hide">
