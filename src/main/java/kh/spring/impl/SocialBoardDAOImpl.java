@@ -34,8 +34,8 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	}
 
 	@Override
-	public int deleteSocialBoard(SocialBoardDTO sdto) {
-		return template.delete("SocialBoard.deleteSocialBoard", sdto);
+	public int deleteSocialBoard(int seq) {
+		return template.delete("SocialBoard.deleteSocialBoard", seq);
 	}
 	
 	@Override
@@ -140,4 +140,8 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.selectList("SocialBoard.showSocialFollowBoardList",sdto);
 	}
 
+	@Override
+	public int selectSocialWriter(int seq) {
+		return template.selectOne("SocialBoard.selectSocialWriter", seq);
+	}
 }

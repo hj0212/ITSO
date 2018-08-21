@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,12 +17,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SocialBoardDTO;
+import kh.spring.exception.NotLoginException;
 import kh.spring.interfaces.IFileService;
+import kh.spring.interfaces.ISocialBoardService;
 
 @Controller
 public class FileController {
 	@Autowired
 	private IFileService service;
+	@Autowired
+	private ISocialBoardService bservice;
 
 
 	@RequestMapping("/editProfileImg.do")
@@ -63,46 +69,47 @@ public class FileController {
 		System.out.println("저기");
 		return "redirect:myinfo.go";
 	}
-	
 
 	@RequestMapping("/uploadSocialImg.sns")
 	public ModelAndView uploadSocialImg(@RequestParam("file") MultipartFile uploadfile, HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		String path = request.getSession().getServletContext().getRealPath("/")+"upload/social";
-		System.out.println(path);
-
-		if(uploadfile != null) {
-			File file = new File(path);
-
-			String ofileName = uploadfile.getOriginalFilename();
-			String sfileName = "";
-			if (ofileName != null && !ofileName.equals("")) {
-				if(file.exists()) {
-					sfileName = System.currentTimeMillis() + "_" + ofileName;
-					System.out.println("sfileName : " + sfileName);
-				}
+		try {
+			if(session.getAttribute("user") == null) {
+				throw new NotLoginException();
 			}
+			
+			String path = request.getSession().getServletContext().getRealPath("/")+"upload/social";
 
-			try {
+			if(uploadfile != null) {
+				File file = new File(path);
+
+				String ofileName = uploadfile.getOriginalFilename();
+				String sfileName = "";
+				if (ofileName != null && !ofileName.equals("")) {
+					if(file.exists()) {
+						sfileName = System.currentTimeMillis() + "_" + ofileName;
+						//System.out.println("sfileName : " + sfileName);
+					}
+				}
+
 				byte[] data = uploadfile.getBytes();
 				FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
 				fos.write(data);
 				fos.close();
-				System.out.println("마지막");
 
 				mav.addObject("path",path);
 				mav.addObject("sfileName", sfileName);
 				mav.setViewName("writeSocial2.jsp");
-			}catch(FileNotFoundException e) {
-				mav.setViewName("writeSocial.jsp");
-			}catch (IOException e1) {
-				e1.printStackTrace();
 			}
+		}catch(NotLoginException le) {
+			mav.setViewName("login.jsp");
+		}catch(Exception e) {
+			List<SocialBoardDTO> result = this.bservice.showSocialBoardList();
+			mav.addObject("socialList",result);
+			mav.setViewName("main3.jsp");
 		}
-		
 		return mav;
 	}
-	
 }
 
 

@@ -144,34 +144,18 @@
             </div>
         </form>
         
-      	<div class="easy-modal" style="display: none;" modal-position="free">
-			<form>
-				<div class="tag-notification">EDIT ITEM TAG</div>
-				<div class="required">
-					<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
-				</div>
-				<div class="required">
-					<input type="text" class="form-control" name="brand" placeholder="브랜드" />
-				</div>
-				<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
-				<input type="text" class="form-control" name="url" placeholder="URL" />
-				<select name="category" id="category" class="form-control">
-					<option value="not" disabled selected>카테고리 선택</option>
-					<option value="accessory">액세서리</option>
-					<option value="top">상의</option>
-					<option value="bottom">하의</option>
-					<option value="outer">아우터</option>
-					<option value="shoes">신발</option>
-					<option value="bag">가방</option>
-				</select>
-				<br />
-				<button type="button" class="btn btn-primary easy-submit">Save Content</button>
-			</form>
-		</div>
+  	<div class="easy-modal" style="display:none;" modal-position="free">
+        <form>
+            <h3>type name of hero</h3>
+            <input type="text" class="form-control" name="content" placeholder="type" />
+            <br />
+            <button type="button" class="btn btn-primary easy-submit">Save Content</button>
+        </form>
+    </div>
 
-		<div style="display: none;" width="130" shadow="true" popover>
-			<div style="width: 100%; text-align: center;">{[name]}</div>
-		</div>
+    <div style="display:none;" width="130" shadow="true" popover>
+        <div style="width:100%;text-align:center;">{[content]}</div>
+    </div>
     </div>
   	<script>	
 		var $j = jQuery.noConflict();
@@ -240,16 +224,6 @@
 
 	        document.getElementById("taginfo").value = JSON.stringify(clothesInformation);
 	       	document.getElementById("submitInfo").submit();
-	    }
-	    
-	    window.onload = function() {
-	        if(!window.location.hash) {
-				var v = document.getElementById("imgstyle").style.opacity;
-		        if(v === "0") {
-		            window.location = window.location + '#loaded';
-		            window.location.reload();
-		        }
-	        }
 	    }
 	</script>
     <!-- Font Awesome -->

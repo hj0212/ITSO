@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script type="text/javascript" src="jquery.easypin.js"></script>
     <title>Document</title>
@@ -71,11 +71,11 @@
 <body>
     <div>네비게이션으로 넣을곳!</div>
     <div class="container">
-        <form id="submitInfo" method="post" action="insertSocial.go">
+        <form id="submitInfo" method="post" action="modifySocialProc.go?seq=${sbdto.social_seq}">
             <div class="row" name="top">
                 <div class="col-sm-12">
                     <div class="md-form form-lg">
-                        <input type="text" id="stylename" name="stylename" maxlength="80" class="form-control form-control-lg">
+                        <input type="text" id="stylename" name="stylename" maxlength="80" class="form-control form-control-lg" value="${sbdto.social_title}">
                         <label for="stylename">스타일 제목을 정해주세요.</label>
                     </div>
                 </div>
@@ -83,13 +83,13 @@
                     <div class="md-form form-lg">
                         <input type="text" id="ipdisabled" class="form-control form-control-lg" disabled>
                         <label for="ipdisabled" class="disabled">공유하고 싶은 아이템에 태그를 달아주세요</label>
-                        <img class="pin" src="upload/social/${sfileName}" alt="photo" id="imgstyle" easypin-id="image_db"/>
+                        <img class="mpin" src="upload/social/${sbdto.photo}?${dummy}" alt="photo" id="imgstyle" easypin-id="image_db"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="md-form form-lg">
                         <i class="fas fa-pencil-alt"></i>
-                        <textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent" maxlength="166"></textarea>
+                        <textarea type="text" id="textareaPrefix" class="form-control md-textarea" rows="3" name="stylecontent" maxlength="166">${sbdto.social_contents}</textarea>
                         <label for="textareaPrefix">스타일을 소개해 주세요.</label>
                     </div>
                 </div>
@@ -102,36 +102,36 @@
                 <div class="col-sm-12">
                     <span>1.성별</span>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="genderGroup1" name="gender" value="m" checked>
+                        <input type="radio" class="custom-control-input" id="genderGroup1" name="gender" value="m" ${sbdto.gender == 'm' ? 'checked' : ''}>
                         <label class="custom-control-label" for="genderGroup1">남</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="genderGroup2" name="gender" value="f">
+                        <input type="radio" class="custom-control-input" id="genderGroup2" name="gender" value="f" ${sbdto.gender == 'f' ? 'checked' : ''}>
                         <label class="custom-control-label" for="genderGroup2">여</label>
                     </div>
                     <div class="custom-control custom-radio ml-2 mb-3">
-                        <input type="radio" class="custom-control-input" id="genderGroup3" name="gender" value="g">
+                        <input type="radio" class="custom-control-input" id="genderGroup3" name="gender" value="g" ${sbdto.gender == 'g' ? 'checked' : ''}>
                         <label class="custom-control-label" for="genderGroup3">무관</label>
                     </div>
                     <span class="">2.나이</span>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup1" name="age" value="10" checked>
+                        <input type="radio" class="custom-control-input" id="ageGroup1" name="age" value="10" ${sbdto.age == '10' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup1">10대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup2" name="age" value="20">
+                        <input type="radio" class="custom-control-input" id="ageGroup2" name="age" value="20" ${sbdto.age == '20' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup2">20대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup3" name="age" value="30">
+                        <input type="radio" class="custom-control-input" id="ageGroup3" name="age" value="30" ${sbdto.age == '30' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup3">30대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input type="radio" class="custom-control-input" id="ageGroup4" name="age" value="40">
+                        <input type="radio" class="custom-control-input" id="ageGroup4" name="age" value="40" ${sbdto.age == '40' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup4">40대</label>
                     </div>
                     <div class="custom-control custom-radio ml-2 mb-3">
-                        <input type="radio" class="custom-control-input" id="ageGroup5" name="age" value="0">
+                        <input type="radio" class="custom-control-input" id="ageGroup5" name="age" value="0" ${sbdto.age == '0' ? 'checked' : ''}>
                         <label class="custom-control-label" for="ageGroup5">모든 연령</label>
                     </div>
                 </div>
@@ -140,7 +140,7 @@
                 <a href="#top" class="btn btn-deep-purple ml-auto"><i class="fas fa-arrow-up"></i></a>
 
                 <input type="text" name="taginfo" readonly style="display:none" id="taginfo">
-				<input type="text" name="imageinfo" readonly style="display:none" id="imageinfo" value="${sfileName}">
+				<input type="text" name="imageinfo" readonly style="display:none" id="imageinfo" value="${sbdto.photo}">
             </div>
         </form>
         
@@ -175,7 +175,8 @@
     </div>
   	<script>	
 		var $j = jQuery.noConflict();
-	    var $instance = $j('.pin').easypin({
+	    var $instance = $j('.mpin').easypin({
+	    	init : ${markerdata},
 	        modalWidth: 300,
 	        done: function (element) {
 	            if ($j('input[name="content"]', element).val() != '') {
