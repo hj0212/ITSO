@@ -1,5 +1,4 @@
 (function($){
-
 	$.fn.easypin = function(options) {
 
 		options = options || {};
@@ -459,9 +458,9 @@
                 cc = false;
                 var markerInstance = e.currentTarget;
                 var lat = $(markerInstance).attr($.fn.easypin.config('xAttribute'));
-                var long = $(markerInstance).attr($.fn.easypin.config('yAttribute'));
+                var along = $(markerInstance).attr($.fn.easypin.config('yAttribute'));
 
-                dataUpdate(parentId, markerIndex, {coords: {lat: lat, long: long}});
+                dataUpdate(parentId, markerIndex, {coords: {lat: lat, along: along}});
 
                 $(parentElement).unbind('mousemove');
             });
@@ -887,7 +886,7 @@
     var calculatePinRate = function(data, pinWidth, markerWidth, pinHeight, markerHeight) {
         return {
             left: (parseInt(data.coords.lat)/pinWidth)*100,
-            top: ((parseInt(data.coords.long)-(markerHeight))/pinHeight)*100,
+            top: ((parseInt(data.coords.along)-(markerHeight))/pinHeight)*100,
         };
     };
 
@@ -1232,7 +1231,7 @@
 			.click(function() {
 
                 var lat = $(markerContainer).attr($.fn.easypin.defaults.xAttribute);
-                var long = $(markerContainer).attr($.fn.easypin.defaults.yAttribute);
+                var along = $(markerContainer).attr($.fn.easypin.defaults.yAttribute);
                 var ImgWidth = $(markerContainer).attr($.fn.easypin.defaults.widthAttribute);
                 var ImgHeight = $(markerContainer).attr($.fn.easypin.defaults.heightAttribute);
                 var markerIndex = $(markerContainer).attr('data-index');
@@ -1271,7 +1270,7 @@
                     data['coords'] = new Object();
 
                     data.coords['lat'] = lat;
-                    data.coords['long'] = long;
+                    data.coords['along'] = along;
                     data.coords['canvas'] = new Object();
                     data.coords.canvas['src'] = $(targetImage).attr('src');
                     data.coords.canvas['width'] = ImgWidth;
@@ -1895,13 +1894,13 @@
                 var imageWidth = parseInt(initData[imgIndex].canvas.width);
                 var imageHeight = parseInt(initData[imgIndex].canvas.height);
                 var lat = parseInt(initData[imgIndex][i].coords.lat);
-                var long = parseInt(initData[imgIndex][i].coords.long);
+                var along = parseInt(initData[imgIndex][i].coords.along);
                 // set cursor position coordinate
                 var imagePositionY = targetImage.offset().top - (config.dashWidth-posYBalance);
                 var imagePositionX = targetImage.offset().left - (config.dashWidth-posXBalance);
 
                 var clickPosX = lat;//(lat-imagePositionX);
-                var clickPosY = long;//(long-imagePositionY);
+                var clickPosY = along;//(along-imagePositionY);
                 // get marker half size (width/height)
                 var markerWidthHalf = (config.markerWidth/2);
                 var markerHeightHalf = (config.markerHeight/2);

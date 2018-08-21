@@ -44,18 +44,23 @@
 	</select>
 	
 	<insert id="insertSocialBoard" parameterType="sdto">
-		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{social_gender},#{social_age})
+		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{gender},#{age})
 	</insert>
 	
 	<select id="selectSocialBoard" parameterType="int" resultType="sdto">
 		select * from social where social_seq = #{0}
 	</select>
 	
-	<select id="updateSocialBoard" parameterType="sdto">
-		
+	<update id="updateSocialBoard" parameterType="sdto">
+		update social set social_title = #{social_title}, social_contents = #{social_contents}, gender = #{gender}, age = #{age} where social_seq = #{social_seq}	
+	</update>
+	
+	<select id="deleteSocialBoard" parameterType="int">
+	 	delete from social where social_seq=#{0}
 	</select>
-	<select id="deleteSocialBoard" parameterType="sdto">
-	 	delete from social where social_seq=#{social_seq}
+	
+	<select id="selectSocialWriter" parameterType="int" resultType="java.lang.Integer">
+		select social_writer from social where social_seq = #{0}
 	</select>
 	
 	<select id="getMySocialList" parameterType ="dto" resultType="sdto">
@@ -66,6 +71,9 @@
 		select social_seq.currval from dual
 	</select>
 	
+	<select id="getCollectionSocialList" resultType="sdto">
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, to_char(s.social_date, 'YYYY/MM/DD') social_date,  s.photo, s.gender, s.age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+	</select>
 	
 	<!--좋아요 select insert delete -->
 	<select id="selectGoodCount" resultType="int" >
