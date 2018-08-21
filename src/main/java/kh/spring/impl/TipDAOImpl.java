@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
 import kh.spring.interfaces.ITipDAO;
@@ -77,6 +78,17 @@ public class TipDAOImpl implements ITipDAO {
 	@Override
 	public List<TipDTO> getUpvotingArticles() {
 		return template.selectList("TipBoard.getUpvotingArticles");
+	}
+
+	@Override
+	public int insertTipCommentProc(TipCommentDTO dto) {
+		
+		return template.insert("TipComment.insertTipCommentProc",dto);
+	}
+
+	@Override
+	public List<TipCommentDTO> getCommentsFromTip(int seq) {
+		return template.selectList("TipComment.getCommentsFromTip",seq);
 	}
 
 

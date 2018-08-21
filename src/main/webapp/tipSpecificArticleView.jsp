@@ -67,9 +67,46 @@ img {
 	<script>
 		window.onload = function() {
 
-			var tipSeq = document.getElementById("tip_seq").innerHTML;
+			// 		tip comment proc
+			$("#insertTipCommentBtn")
+					.click(
+							function() {
 
-			console.log(tipSeq);
+								var data = JSON
+										.stringify({
+											tip_seq : document
+													.getElementById("tip_seq").innerHTML,
+											user_seq : document
+													.getElementById("user_seq").value,
+											tip_comment_contents : document
+													.getElementById("tip_comment_contents").value,
+										});
+
+								console.log(data);
+
+								$
+										.ajax({
+											url : "insertTipCommentProc.tip",
+											type : "post",
+											data : data,
+											dataType : "json",
+											contentType : "application/json;charset=UTF-8",
+											async : true,
+											success : function() {
+												alert("success");
+											},
+											error : function() {
+												alert("failure");
+											}
+
+										})
+
+							});
+
+			
+			var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
+
+			console.log(tipSeqForLike);
 
 			var i = 0;
 
@@ -82,15 +119,15 @@ img {
 					url : "tipArticleLikeProc.tip",
 					method : "GET",
 					data : {
-						"tipSeq" : tipSeq
+						"tipSeq" : tipSeqForLike
 					},
 					success : function(data, textStatus, jqXHR) {
 						console.log(this.data + "," + this.url + ","
 								+ this.textStatus + "," + this.jqXHR);
 						console.log("좋아요  + 1");
-						
+
 						alert("좋아요 표시를 하였습니다!")
-						
+
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
 						console.log(this.textStatus + "," + this.jqXHR + ","
@@ -110,19 +147,19 @@ img {
 
 
 	<!-- body -->
-	<table class="container-fluid">
+	<table class="container">
 		<c:forEach items="${tipContent}" var="tipContent">
-			<tr class="container">
-				<td><div id="tip_seq" class="container">${tipContent.tip_seq}</div></td>
-				<td><div class="container">
-						<h1>${tipContent.tip_title}</h1>
-					</div></td>
-				<td><div class="container">${tipContent.category}</div></td>
-				<td><div class="container">${tipContent.tip_viewcount}</div></td>
-				<td><div class="container">${tipContent.tip_writer}</div></td>
+			<tr>
+				<td>
+					<h1>${tipContent.tip_title}</h1>
 			</tr>
 			<tr>
-				<td colspan=5><div class="container">${tipContent.tip_contents}</div></td>
+				<td><p id="tip_seq">${tipContent.tip_seq}</p></td>
+				<td>${tipContent.category}${tipContent.tip_viewcount}
+					${tipContent.tip_writer}</td>
+			</tr>
+			<tr>
+				<td><div class="container">${tipContent.tip_contents}</div></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -132,10 +169,10 @@ img {
 
 	<div id=reaction>
 		<button id="like-btn" class="btn white btn-sm">
-<%-- 			<c:forEach items="${tipLikeCounts}" var="tipLikeCounts"> --%>
-				<i class=" fa fa-heart red-text" aria-hidden="true"></i>
-<%-- 				${tipLikeCounts.tip_good_seq} --%>
-<%-- 			</c:forEach> --%>
+			<%-- 			<c:forEach items="${tipLikeCounts}" var="tipLikeCounts"> --%>
+			<i class=" fa fa-heart red-text" aria-hidden="true"></i>
+			<%-- 				${tipLikeCounts.tip_good_seq} --%>
+			<%-- 			</c:forEach> --%>
 		</button>
 		<button class="btn white btn-sm">
 			<i class="fa fa-bomb black-text" aria-hidden="true"></i>
@@ -143,79 +180,50 @@ img {
 	</div>
 
 
+
+
 	<!-- comments -->
 	<div class="container mt-4">
 		<table id="comment">
 			<tbody>
+			<c:forEach items="${tipComments}" var="tipComments">
+					
 				<tr>
 					<td><img class="avatar rounded-circle z-depth-1-half mr-3"
 						src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
 					</td>
+					
 					<td>
 						<div>
-							<a href="#">Risovic N.</a> <a href="#">@risovic</a>
+							<a href="#">${tipComments.name}</a>
 						</div>
-						<div>Nice dress, color, and the vibe</div>
-						<div id=comment>
-							0 <a href="#">▲</a>· reply · flag · 6 months ago
-						</div>
-
+						
+						<div>${tipComments.tip_comment_contents}</div>
+<!-- 						<div id=comment> -->
+<!-- 							0 <a href="#">▲</a>· reply · flag · 6 months ago -->
+<!-- 						</div> -->
+					</td>
+					<td>
+					${tipComments.tip_comment_time}
 					</td>
 				</tr>
-
-
-				<tr>
-					<table>
-						<tr>
-							<td>
-								<div class="comment-child">
-									<img class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-										src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-								</div>
-							</td>
-							<td></td>
-							<td>
-								<div>
-									<a href="#">Alex X.</a> <a href="">@Alex</a>
-								</div>
-								<div>How sweet of her.</div>
-
-								<div id=comment>
-									2 <a href="#">▲</a>· reply>· flag · 6 months ago
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<td>
-								<div class="comment-child">
-									<img class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-										src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-								</div>
-							</td>
-							<td></td>
-							<td>
-								<div>
-									<a href="#">Lauren A.</a> <a href="">@Lauren</a>
-								</div>
-								<div>I envy her body ratio</div>
-
-								<div id=comment>
-									5 <a href="#">▲</a>· reply· flag · 6 months ago
-								</div>
-							</td>
-						</tr>
-					</table>
-				</tr>
-
+		</c:forEach>
 			</tbody>
-
-
 		</table>
+	</div>
+
+	<!-- To write reply -->
+	<div class="mt-4 container">
+		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents"></textarea>
+		<input type="hidden" class="form-control"
+			value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
+		<button id="insertTipCommentBtn" type="button"
+			class="btn btn-sm btn-itso">댓글 쓰기</button>
 	</div>
 
 
 
+	<!-- like btn -->
 	<div id=btns>
 		<button class="btn btn-itso"
 			onclick="javascript:location.replace('tipBoardMainPage.tip')">돌아가기</button>
