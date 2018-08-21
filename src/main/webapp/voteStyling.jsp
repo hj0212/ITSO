@@ -23,6 +23,10 @@
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
 	rel="stylesheet">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
 <!--   ---------CDN 모음 끝------------------------------------------  -->
 
 <style>
@@ -88,19 +92,18 @@ input[type="file"] {
 
 
 <body>
+	<%@include file="navi.jsp"%>
 	<div id="wrapper" class="container-fluid col-md-8">
-		<div class="row">
-			<p>여기는 네비 인클루드</p>
-		</div>
+
 		<script>
 			var count = 1;
 		</script>
-
-		<form method="post" action="voteStyle.style" id="voteform"
+		<div class="row my-2"></div>
+		<form method="post" action="insertStylingVote.style" id="voteform"
 			enctype="multipart/form-data">
-			<div class="row" name="top">
+			<div class="row z-depth-3 hoverable" id="toprow">
 				<h4>투표주제</h4>
-				<div class="md-form form-lg col-md-12 px-0 file-upload mt-0">
+				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<input type="text" id="votetitleid" name="styling_vote_title"
 						class="form-control form-control-lg col-md-9 float-right">
 					<label for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
@@ -110,7 +113,7 @@ input[type="file"] {
 						<img class="d-flex file-upload-image" src="" alt="사진 없음"
 							id="voteitemimg"> <input type="file" name="imgfilename0"
 							id="imgfile0" onchange="readURL(this);"
-							class="file-upload-input form-control z-depth-3 hoverable"
+							class="file-upload-input form-control"
 							accept="image/*" />
 					</div>
 				</div>
@@ -120,7 +123,7 @@ input[type="file"] {
 			<div class="row">
 				<h4 class="mb-0">투표항목</h4>
 				<a class="btn btn-outline-indigo btn-sm waves-effect px-0 py-0"
-					id="addvotebtn"> <i class="fa fa-plus i-indigo fa-2x"
+					id="addvotebtn"> <i class="fa fa-plus i-indigo fa-1x"
 					aria-hidden="true"></i>
 				</a>
 				<div class="md-form form-lg col-md-12 mt-0">
@@ -129,18 +132,17 @@ input[type="file"] {
 							<tr>
 								<th scope="col">seq</th>
 								<th scope="col">img</th>
-
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<th scope="row"></th>
+						<tbody id="itemlist">
+							<tr class="z-depth-3 hoverable">
+								<th scope="row">1</th>
 								<td>
 									<div class="media">
 										<div class="media-img">
 											<img class="d-flex mr-3 selimg" src="" alt="후보사진"> <input
-												type="file" name="imgfilename" id="imgfile"
-												class="file-upload-input form-control z-depth-3 hoverable filesel"
+												type="file" name="imgfilename" id="imgfile1"
+												class="file-upload-input form-control filesel"
 												onchange="readURL(this);" accept="image/*">
 										</div>
 
@@ -154,58 +156,62 @@ input[type="file"] {
 												aria-hidden="true"></i>
 											</a> <a class="delvotebtn"> <i
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
-											</a>
-											<br>
-											<input type="text" id="voteitemtext"
-												class="form-control form-control-lg" readonly
-												disabled="disabled"> <label for="voteitemtext"
-												class="ml-3">아이템의 특징을 간단히 적어주세요.</label>
+											</a><br>
+											<div class="md-form form-sm">
+												<input type="text" id="vitemtext" class="form-control">
+												<label for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
+											</div>
 										</div>
-										
-									
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-
-
-					<!-- <div>
-						<input type="file" name="file" id="imgfile1"
-							class="file-upload-input form-control z-depth-3 hoverable imgsel"
-							onchange="readURL(this);" accept="image/*" />
-						<button type="button" id="addimgbtn"
-							class="btn btn-outline-indigo btn-sm wave-effect">이미지
-							첨부하기</button>
-					</div> -->
-
 				</div>
 			</div>
 
+
 			<div class="row">
-				<div class="md-form form-lg col-md-12">
-					<input type="text" id="cate" class="form-control form-control-lg"
-						readOnly placeholder="종료방법">
-				</div>
+
+				<!-- <input type="text" id="cate" class="form-control form-control-lg"
+						readOnly placeholder="종료방법"> -->
+				<h4>종료방법</h4>
+
 				<span class="col-md-12"></span>
 				<!-- Group of default radios - option 1 -->
-				<div class="custom-control custom-radio col-md-12 ml-5">
+				<!-- 	<div class="col-md-12 ml-5"> -->
+				<div class="col custom-control custom-radio col-md-3  ml-2">
 					<input type="radio" class="custom-control-input"
-						id="defaultGroupExample1" name="groupOfDefaultRadios"> <label
-						class="custom-control-label" for="defaultGroupExample1">기간</label>
+						id="defaultGroupExample1"> <label
+						class="custom-control-label" for="defaultGroupExample1">기간</label><i
+						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
-				<div class="custom-control custom-radio col-md-12 ml-5">
+				<div class="col">
+					<input type="text" id="datepicker" name="styling_vote_term"
+						class="form-control form-control-sm col-md-4">
+				</div>
+			</div>
+			<!-- </div> -->
+			<div class="row" id="voterrow">
+				<div class="col custom-control custom-radio col-md-3  ml-2">
 					<input type="radio" class="custom-control-input"
-						id="defaultGroupExample2" name="groupOfDefaultRadios"> <label
-						class="custom-control-label" for="defaultGroupExample2">참여자수</label>
+						id="defaultGroupExample2" name="styling_vote_number"> <label
+						class="custom-control-label" for="defaultGroupExample2">참여자수:</label>
+
 				</div>
-				<div class="custom-control custom-radio col-md-12 ml-5">
+				<div class="col">
+					<input type="text" class="form-control form-control-sm col-md-4"
+						id="votenum">
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="custom-control custom-radio col-md-12 ml-2">
 					<input type="radio" class="custom-control-input"
 						id="defaultGroupExample3" name="groupOfDefaultRadios"> <label
 						class="custom-control-label" for="defaultGroupExample3">종료
 						없음</label>
 				</div>
-
 			</div>
 			<div class="row my-2"></div>
 
@@ -214,8 +220,8 @@ input[type="file"] {
 			</div>
 
 			<div class="row">
-				<button class="btn btn-deep-purple">itso?</button>
-				<a href="#top" class="btn btn-deep-purple ml-auto"><i
+				<button class="btn btn-indigo" type="submit">itso?</button>
+				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
 			</div>
 		</form>
@@ -234,11 +240,15 @@ input[type="file"] {
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 
+	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		document.oncontextmenu = function(e) {
 			return false;
 		};
-		var count = 1;
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
@@ -248,8 +258,8 @@ input[type="file"] {
 			console.log(input.files[0].name);
 			var inputId = input.id;
 			console.log(document.getElementById(inputId));
-			var imageId = document.getElementById(inputId).parentElement.children[1];
-			/* 	 console.log(document.getElementById(imageId)); ->null나옴 */
+			var imageId = document.getElementById(inputId).parentElement.children[0];
+
 			console.log(imageId);
 			var imagesrc = imageId.src;
 			console.log(imagesrc);
@@ -269,40 +279,65 @@ input[type="file"] {
 				removeUpload();
 			}
 		}
-
+		count = 1;
 		$("#addvotebtn")
 				.on(
 						"click",
 						function() {
+							if(count<6){
 							count++;
-
-							$('#voteul')
+							console.log(count);
+							$('#itemlist')
 									.append(
-											'<div class="media"> <div class="media-head">
-													+ '<img class="d-flex mr-3 selimg" src="" alt="후보사진">'
+											'<tr class="z-depth-3 hoverable"><th scope="row">'
+													+ count
+													+ '</th>'
+													+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 													+ '<input type="file" name="imgfilename" id="imgfile'
-													+ '" class="file-upload-input form-control z-depth-3 hoverable imgsel"'
-													+ '	onchange="readURL(this);" accept="image/*" /> </div>'
+													+ count
+													+ '" class="file-upload-input form-control filesel"'
+													+ 'onchange="readURL(this);" accept="image/*"></div>'
 													+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
 													+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
 													+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
-													+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a></div><li>');
+													+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
+													+ '<div class="md-form form-sm"><input type="text" id="itemtext'+count+'" class="form-control"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
+													+ '</div></div></div></td></tr>');
+							}else if(count==6){alert("투표 항목은 6개까지 추가할 수 있습니다.")}
 						})
 
 		$(document).on('click', '.delvotebtn', function() {
-			$(this).closest("li").remove();
+			var wraptr = $(this).closest("tr");
+			$(this).closest("tr").remove();
 			count--;
+			/* var arr = wraptr.nextAll('tr').children('th');
+			for(i=0 i<arr.size i++){
+				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜
+			} */
 		})
 
 		$(document).on('click', '.upvotebtn', function() {
-			var wrapper = $(this).closest('li');
-			wrapper.insertBefore(wrapper.prev());
+			var wraptr = $(this).closest('tr');
+			var wrapprev = $(this).closest('tr').prev('tr');
+			var number = parseInt($(this).closest('td').siblings('th').text());
+			wraptr.insertBefore(wraptr.prev());
+			if (number > 1) {
+				wrapprev.children('th').text(number);
+				$(this).closest('td').siblings('th').text(number - 1);				
+			}
 		})
 
 		$(document).on('click', '.downvotebtn', function() {
+			var wraptr = $(this).closest('tr');
+			var wrapnext = $(this).closest('tr').next('tr');
+			var number = parseInt($(this).closest('td').siblings('th').text());
+			wraptr.insertAfter(wraptr.next());
+			wrapnext.children('th').text(number);
+			if(number<count){
+				$(this).closest('td').siblings('th').text(number + 1);	
+			}
 
-			var wrapper = $(this).closest('li');
-			wrapper.insertAfter(wrapper.next());
+
 		})
 	</script>
 

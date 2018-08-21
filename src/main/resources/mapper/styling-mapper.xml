@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Styling">
+
+	<insert id="insertSocialBoard" parameterType="svdto">
+		insert into styling_vote values(styling_vote_seq.nextval, #{styling_vote_title}, #{styling_vote_contents},
+		sysdate, #{styling_viewcount},#{styling_vote_term},styling_seq.nextval)
+	</insert>
+
+</mapper>
