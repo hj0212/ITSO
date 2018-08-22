@@ -23,4 +23,9 @@ public class SocialCommentServiceImpl implements ISocialCommentService{
 	public int insertSocialComment(SocialCommentDTO scdto) {
 		return this.dao.insertSocialComment(scdto);
 	}
+
+	@Override
+	public int deleteComment(int seq) {
+		return this.dao.deleteComment(seq);
+	}
 }

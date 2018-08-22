@@ -238,7 +238,7 @@
 										<div>
 											<span class="comment-date"> ${commentList.social_comment_time} 
 												<c:if test="${sessionScope.user.seq == commentList.user_seq}">
-													<span><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+													<span><a href="deleteComment.go?comment_seq=${commentList.social_comment_seq}&social_seq=${commentList.social_seq}"><i class="fa fa-times" aria-hidden="true"></i></a></span>
 												</c:if>
 											</span>
 										</div>
@@ -469,7 +469,7 @@
    				html += '			<div>';
    				html += '				<span class="comment-date">${commentList.social_comment_time}';
    				html += '					<c:if test="${sessionScope.user.seq == commentList.user_seq}">';
-   				html += '						<span><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+   				html += '						<span><a href="deleteComment.go?comment_seq=${commentList.social_comment_seq}&social_seq=${commentList.social_seq}"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
    				html += '					</c:if>';
    				html += '				</span>';
    				html += '			</div>';

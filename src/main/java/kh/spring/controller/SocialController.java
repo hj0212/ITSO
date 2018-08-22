@@ -608,4 +608,17 @@ public class SocialController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("/deleteComment.go")
+	public ModelAndView deleteComment(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+		int social_seq = Integer.parseInt(request.getParameter("social_seq"));
+		
+		int result = this.comService.deleteComment(comment_seq);
+		
+		mav.setViewName("readSocial.go?seq="+social_seq);
+		return mav;
+	}
+	
 }

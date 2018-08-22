@@ -23,4 +23,9 @@ public class SocialCommentDAOImpl implements ISocialCommentDAO{
 	public int insertSocialComment(SocialCommentDTO scdto) {
 		return this.template.insert("SocialComment.insertSocialComment", scdto);
 	}
+
+	@Override
+	public int deleteComment(int seq) {
+		return this.template.delete("SocialComment.deleteComment", seq);
+	}
 }

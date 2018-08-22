@@ -9,4 +9,8 @@
 	<insert id="insertSocialComment" parameterType="scdto">
 		insert into social_comment values(social_comment_seq.nextval,#{social_seq},#{user_seq},sysdate,#{social_comment_contents})
 	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete social_comment where social_comment_seq = #{0}
+	</delete>
 </mapper>
