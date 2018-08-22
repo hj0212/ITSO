@@ -93,17 +93,25 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.insert("Collection.insertCollection", dto);
 	}
 	
+	@Override
+	public int deleteCollection(CollectionDTO dto) {
+		return template.delete("Collection.deleteCollection", dto);
+	}
+
+	@Override
+	public int updateCollection(CollectionDTO dto) {
+		return template.update("Collection.updateCollection", dto);
+	}
+	
 	
 	//���ƿ� 
 	@Override
 	public int selectGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return template.selectOne("SocialBoard.selectGoodCount", gdto);
 	}
 
 	@Override
 	public int insertGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return template.insert("SocialBoard.insertGoodCount",gdto);
 	}
 
@@ -129,14 +137,12 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	//인기
 	@Override
 	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
-		// TODO Auto-generated method stub
 		System.out.println("2");
 		return template.selectList("SocialBoard.showSocialHotBoardList",sdto);
 	}
 	//팔로잉
 	@Override
 	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
-		// TODO Auto-generated method stub
 		return template.selectList("SocialBoard.showSocialFollowBoardList",sdto);
 	}
 

@@ -52,7 +52,12 @@ public class MemberDAOImpl implements IMemberDAO{
 
 	@Override
 	public int insertFollowData(FollowDTO dto) {
-		return template.insert("Member.followUser",dto);
+		return template.insert("Member.insertFollow", dto);
+	}
+	
+	@Override
+	public int deleteFollowData(FollowDTO dto) {
+		return template.delete("Member.deleteFollow", dto);
 	}
 
 	@Override
@@ -64,7 +69,5 @@ public class MemberDAOImpl implements IMemberDAO{
 	public List<MemberDTO> getFollowingList(MemberDTO dto) {
 		return template.selectList("Member.selectFollowing", dto);
 	}
-
-	
 
 }

@@ -13,6 +13,7 @@ public interface IMemberService {
   public int deleteUserData(MemberDTO dto);
   public List<MemberDTO> emailExist(String email);
   public int insertFollowData(FollowDTO dto);
+  public int deleteFollowData(FollowDTO dto);
   public List<MemberDTO> getFollowerList(MemberDTO dto);
   public List<MemberDTO> getFollowingList(MemberDTO dto);
 }
