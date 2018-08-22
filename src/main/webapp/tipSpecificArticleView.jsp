@@ -69,30 +69,29 @@ img {
 
 			// 			tip delete btn proc
 
-			$("#tipDeleteBtn").click(function(){
-				
-				var tipSeq = document
-				.getElementById("tip_seq").innerHTML;
-			
+			$("#tipDeleteBtn").click(function() {
+
+				var tipSeq = document.getElementById("tip_seq").innerHTML;
+
 				console.log(tipSeq);
-				
+
 				$.ajax({
-					url:"deleteSpecificTip.tip",
-					data:{"tipSeq" : tipSeq},
-					type:"get",
-					success:function(){
+					url : "deleteSpecificTip.tip",
+					data : {
+						"tipSeq" : tipSeq
+					},
+					type : "get",
+					success : function() {
 						alert("success");
 						location.replace("tipBoardMainPage.tip");
-					},error:function(){
+					},
+					error : function() {
 						alert("error");
 					}
 				})
-				
-				
+
 			})
-			
-			
-			
+
 			// 		tip comment proc
 			$("#insertTipCommentBtn")
 					.click(
@@ -131,28 +130,38 @@ img {
 							});
 
 			var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
-
-			console.log(tipSeqForLike);
+			var tipLikingUser = document.getElementById("user_seq").value;
 
 			var i = 0;
 
 			document.getElementById("like-btn").onclick = function() {
 
 				console.log("like btn clicked! " + ++i);
+				if (tipLikingUser == "") {
+					tipLikingUser = 0;
+				}
+				console.log(tipSeqForLike + ":" + tipLikingUser);
 
 				$.ajax({
 
 					url : "tipArticleLikeProc.tip",
-					method : "GET",
+					method : "post",
 					data : {
-						"tipSeq" : tipSeqForLike
+						"tipSeq" : tipSeqForLike,
+						"tipLikingUser" : tipLikingUser
 					},
 					success : function(data, textStatus, jqXHR) {
-						console.log(this.data + "," + this.url + ","
-								+ this.textStatus + "," + this.jqXHR);
-						console.log("좋아요  + 1");
+						console.log("[" + data + "]");
 
-						alert("좋아요!")
+						if (data == 9) {
+							alert("좋아요는 한번만 할 수 있습니다.");
+
+						} else if (data == 1) {
+							console.log("좋아요  + 1");
+							alert("좋아요!")
+						} else {
+							alert("좋아요 에러 발생!");
+						};
 
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
@@ -224,9 +233,7 @@ img {
 								<a href="#">${tipComments.name}</a>
 							</div>
 
-							<div>${tipComments.tip_comment_contents}</div> <!-- 						<div id=comment> -->
-							<!-- 							0 <a href="#">▲</a>· reply · flag · 6 months ago -->
-							<!-- 						</div> -->
+							<div>${tipComments.tip_comment_contents}</div>
 						</td>
 						<td>${tipComments.tip_comment_time}</td>
 					</tr>

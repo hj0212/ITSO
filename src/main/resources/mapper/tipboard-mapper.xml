@@ -29,14 +29,16 @@
 	</insert>
 
 
-<!-- tip delete sql -->
+	<!-- tip delete sql -->
 	<delete id="deleteSpecificTip" parameterType="TipDTO">
-	{	call
-	declare 
-	begin
+		{ call
+		declare
+		begin
 		delete from tip_comment where tip_seq = #{tip_seq};
-		delete from tip_good where tip_seq=#{tip_seq};
-		delete from tip where tip_seq = #{tip_seq};
+		delete from
+		tip_good where tip_seq=#{tip_seq};
+		delete from tip where tip_seq =
+		#{tip_seq};
 		end }
 	</delete>
 
@@ -65,9 +67,12 @@
 
 	<select id="getBusinessTipData" parameterType="TipDTO"
 		resultMap="TipDTOResultMap">
-		select * from users u, tip t left outer join (select tip_seq, count(*)
-		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
-		tg.tip_seq where t.tip_writer=u.seq and t.category='직장생활' order by
+		select * from users u, tip t left outer join (select
+		tip_seq, count(*)
+		tip_like_count from tip_good group by tip_seq) tg on
+		t.tip_seq =
+		tg.tip_seq where t.tip_writer=u.seq and t.category='직장생활'
+		order by
 		t.TIP_SEQ desc
 	</select>
 
@@ -93,12 +98,15 @@
 
 	<!-- tip board viewcount +1 proc -->
 	<update id="viewCountPlus" parameterType="TipDTO">
-		update tip set tip_viewcount = tip_viewcount+1 where tip_seq=#{seq}
+		update tip set
+		tip_viewcount = tip_viewcount+1 where tip_seq=#{seq}
 	</update>
 
 	<!-- tipArticle Like +1 Proc -->
-	<insert id="tipArticleLikeProc" parameterType="TipDTO">
-		insert into tip_good values(TIP_GOOD_SEQ.NEXTVAL,#{seq},0)
+	<insert id="tipArticleLikeProc" parameterType="HashMap">
+		insert into
+		tip_good
+		values(TIP_GOOD_SEQ.NEXTVAL,#{seq},#{tipLikingUser,jdbcType=INTEGER,javaType=Integer})
 	</insert>
 
 </mapper>
