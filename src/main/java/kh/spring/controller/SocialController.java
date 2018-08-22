@@ -121,10 +121,10 @@ public class SocialController {
 		String feed=null;
 		try {
 			feed = request.getParameter("feed");
-			System.out.println(feed);
+//			System.out.println(feed);
 			if(feed.equals("new")) { //최신
 				result= this.service.showSocialBoardList(sdto);
-				System.out.println("1");
+			//	System.out.println("1");
 				
 			}else if(feed.equals("hot")) {//인기
 				result = this.service.showSocialHotBoardList(sdto);
@@ -132,12 +132,12 @@ public class SocialController {
 			
 			}else if(feed.equals("following")) { //팔로잉
 				result =this.service.showSocialFollowBoardList(sdto);
-				System.out.println("3");
+				//System.out.println("3");
 
 			}
 		}catch(Exception ea) {
 			result = this.service.showSocialBoardList(sdto);
-			System.out.println("10");
+			//System.out.println("10");
 			feed="new";
 		}
 
@@ -169,6 +169,9 @@ public class SocialController {
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
+			for(SocialBoardDTO sdd : goodList) {
+			System.out.println(sdd);
+			}
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
@@ -216,7 +219,7 @@ public class SocialController {
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
-		System.out.println(dto.getSocial_date());
+		/*System.out.println(dto.getSocial_date());*/
 		// image_db -> {} -> 0 : {}, 1 : {}
 		ObjectNode infoNode = om.createObjectNode();
 		// 각 태그
