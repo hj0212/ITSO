@@ -1,7 +1,10 @@
 package kh.spring.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -71,8 +74,11 @@ public class TipDAOImpl implements ITipDAO {
 	}
 
 	@Override
-	public int tipArticleLikeProc(int seq) {
-		return template.update("TipBoard.tipArticleLikeProc",seq);
+	public int tipArticleLikeProc(int seq, int tipLikingUser) {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("seq", seq);
+		map.put("tipLikingUser", tipLikingUser);
+		return template.insert("TipBoard.tipArticleLikeProc", map);
 	}
 	
 	@Override
@@ -96,5 +102,12 @@ public class TipDAOImpl implements ITipDAO {
 		return template.delete("TipBoard.deleteSpecificTip",tipSeq);
 	}
 
+	@Override
+	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("tipSeq",tipSeq);
+		map.put("tipLikingUser", tipLikingUser);
+		return template.selectList("TipGood.isThisLikeWhetherFirst",map);
+	}
 
 }

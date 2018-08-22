@@ -47,11 +47,6 @@ public class TipServiceImpl implements ITipService {
 		return this.dao.getSpecificTipView(seq);
 	}
 
-	@Override
-	public int deleteTipData(TipDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int updateTipData(TipDTO dto) {
@@ -72,8 +67,8 @@ public class TipServiceImpl implements ITipService {
 	}
 
 	@Override
-	public int tipArticleLikeProc(int seq) {
-		return this.dao.tipArticleLikeProc(seq);
+	public int tipArticleLikeProc(int seq, int tipLikingUser) {
+		return this.dao.tipArticleLikeProc(seq , tipLikingUser);
 	}
 
 	@Override
@@ -95,6 +90,11 @@ public class TipServiceImpl implements ITipService {
 	public int deleteSpecificTip(int tipSeq) {
 
 		return this.dao.deleteSpecificTip(tipSeq);
+	}
+
+	@Override
+	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser) {
+		return this.dao.isThisLikeWhetherFirst(tipSeq,tipLikingUser);
 	}
 
 
