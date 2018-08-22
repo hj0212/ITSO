@@ -3,9 +3,9 @@
 
 <mapper namespace="Styling">
 
-	<insert id="insertSocialBoard" parameterType="svdto">
+	<insert id="insertStylingVote" parameterType="svdto">
 		insert into styling_vote values(styling_vote_seq.nextval, #{styling_vote_title}, #{styling_vote_contents},
-		sysdate, #{styling_viewcount},#{styling_vote_term},styling_seq.nextval)
+		#{styling_writer},sysdate,#{styling_viewcount},#{styling_end},#{styling_endterm},#{styling_voternum}
 	</insert>
 
 </mapper>
