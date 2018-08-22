@@ -27,10 +27,12 @@ import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.SocialCommentDTO;
 import kh.spring.dto.SocialTagDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.exception.NotWriterException;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.ISocialCommentService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
 
@@ -40,6 +42,8 @@ public class SocialController {
 	private ISocialBoardService service;
 	@Autowired 
 	ISocialTagService tagService;
+	@Autowired
+	ISocialCommentService comService;
 
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session,HttpServletRequest request) {
@@ -205,6 +209,8 @@ public class SocialController {
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
+		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
+		
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int social_seq = dto.getSocial_seq();
@@ -274,6 +280,7 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("commentList",commentList);
 		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());

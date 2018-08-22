@@ -225,24 +225,28 @@
 
 						<div class="container mt-4" id="comment-container">
                             <table id="comment" cellpadding="5">
+                            	<c:forEach var="commentList" items="${commentList}">
 								<tr>
 									<td>
-										<img class="avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+										<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/${commentList.photo}">
 									</td>
 									<td>
 										<div>
-											<a href="#">Risovic N.</a>
+											<a href="#">${commentList.name}</a>
 										</div>
 										<div>
 											<span class="user-comment">
-												안녕하세요 친구들
+												${commentList.social_comment_contents}
 											</span>
 										</div>
 										<div>
-											<span class="comment-date"> 2018-08-21 16:28:39.0 <span><i class="fa fa-times" aria-hidden="true"></i></span></span>
+											<span class="comment-date"> ${commentList.social_comment_time}  ${commentList.social_comment_seq} ${commentList.user_seq} ${sessionScope.user.seq}
+												<span><i class="fa fa-times" aria-hidden="true"></i></span>
+											</span>
 										</div>
 									</td>
-								</tr>
+								</tr>                            	
+                            	</c:forEach>
 							</table>
                         </div>
                     </div>

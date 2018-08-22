@@ -104,7 +104,7 @@ public class FileController {
 		}catch(NotLoginException le) {
 			mav.setViewName("login.jsp");
 		}catch(Exception e) {
-			
+			mav.setViewName("writeSocial.jsp");
 		}
 		return mav;
 	}
