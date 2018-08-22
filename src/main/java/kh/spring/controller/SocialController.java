@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
@@ -580,5 +582,30 @@ public class SocialController {
 			mav.setViewName("redirect:readSocial.go?seq="+seq);
 		}
 		return mav;
+	}
+	
+	@RequestMapping("/procSocialComment.go")
+	public void procSocialComment(HttpServletRequest request, HttpServletResponse response) {
+		int social_seq = Integer.parseInt(request.getParameter("seq"));
+		
+		try {
+			int writer = Integer.parseInt(request.getParameter("writer"));
+			String comment = request.getParameter("comment");
+			SocialCommentDTO scdto = new SocialCommentDTO(social_seq, writer, comment);
+			int result = this.comService.insertSocialComment(scdto);
+			
+			List<SocialCommentDTO> commentList = comService.showCommentList(social_seq);
+			for(SocialCommentDTO dto : commentList) {
+				System.out.println(dto.getSocial_comment_contents());
+			}
+			
+			ObjectMapper om = new ObjectMapper();
+			ObjectNode on = om.createObjectNode();
+			on.put("result", 1);
+			request.setAttribute("commentList", commentList);			
+			response.getWriter().println(on);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

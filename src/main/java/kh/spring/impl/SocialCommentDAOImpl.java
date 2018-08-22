@@ -18,4 +18,9 @@ public class SocialCommentDAOImpl implements ISocialCommentDAO{
 	public List<SocialCommentDTO> showCommentList(int seq) {
 		return this.template.selectList("SocialComment.showCommentList", seq);
 	}
+
+	@Override
+	public int insertSocialComment(SocialCommentDTO scdto) {
+		return this.template.insert("SocialComment.insertSocialComment", scdto);
+	}
 }

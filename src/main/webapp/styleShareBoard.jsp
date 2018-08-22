@@ -116,10 +116,6 @@
                 border: 1px solid #e6e6e6;
             } */
             
-            #write-btn {
-            	margin-right : 0px;
-            }
-            
             #comment-container {
             	white-space: nowrap; 
             	overflow: hidden;
@@ -240,8 +236,10 @@
 											</span>
 										</div>
 										<div>
-											<span class="comment-date"> ${commentList.social_comment_time}  ${commentList.social_comment_seq} ${commentList.user_seq} ${sessionScope.user.seq}
-												<span><i class="fa fa-times" aria-hidden="true"></i></span>
+											<span class="comment-date"> ${commentList.social_comment_time} 
+												<c:if test="${sessionScope.user.seq == commentList.user_seq}">
+													<span><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+												</c:if>
 											</span>
 										</div>
 									</td>
@@ -253,16 +251,14 @@
                 </div>
 
                 <!-- reply -->
-                <form action="" method="post">
-                    <div class="container mt-4">
-                        <div class="form-group">
-                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"></textarea>
-                        </div>
-                        <div class="text-right">
-                            <button class="btn btn-grey btn-sm" id="write-btn">쓰기</button>
-                        </div>
+                <div class="container mt-4">
+                    <div class="form-group">
+                        <textarea class="form-control rounded-0" id="commentarea" rows="3" placeholder="로그인이 필요합니다." maxlength="166"></textarea>
                     </div>
-                </form>
+                    <div class="text-right">
+                        <input type="button" class="btn btn-grey btn-sm" id="write-comment" value="쓰기" disabled="disabled"></button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -397,19 +393,20 @@
 	        	});
         	};
         });
+        
     </script>
     <c:if test="${sessionScope.user.seq == content.social_writer}">
    	<script>
         document.getElementById("modify").onclick = function() {
         	location.href = "modifySocial.go?seq="+${content.social_seq};
-        }
+        };
         
        	document.getElementById("delete").onclick = function() {
        		let delcheck = confirm("글을 삭제하시겠습니까?");
        		if(delcheck) {
 	       		location.href = "deleteSocial.go?seq="+${content.social_seq};
        		}
-       	}    	
+       	};   	
    	</script>
     </c:if>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -421,6 +418,70 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <c:if test="${!empty sessionScope.user.seq}">
+    <script>
+    	$(document).ready(function(){
+    		$("#commentarea").attr("placeholder","댓글 쓰기");
+    		$("#write-comment").attr("disabled",false);
+    		
+    		$("#write-comment").click(function(){
+    			var blank_pattern = /^\s+|\s+$/g;
+    			if($("#commentarea").val().replace(blank_pattern,"") == ""){
+    				alert("내용을 입력해주세요!");
+    			}else{
+    				$.ajax({
+    					url : "procSocialComment.go",
+    					dataType : "JSON",
+    					method : "post",
+    					data : {
+    						comment : $("#commentarea").val(),
+    						writer : "${sessionScope.user.seq}",
+    						seq : "${content.social_seq}"
+    					},
+    					
+    					success : function(data){
+    						console.log(data.result);
+    						console.log(data.result == 1);
+    						if(data.result == 1) {
+    							location.reload();
+    						}
+    					}
+    				});
+    			}
+    		});
+    		
+    		function showComment() {
+    			let html = '<table id="comment" cellpadding="5">';
+   				html += '<c:forEach var="commentList" items="${commentList}">';
+   				html += '	<tr>';
+   				html += '		<td>';
+   				html += '			<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/${commentList.photo}">';
+   				html += '		</td>';
+   				html += '		<td>';
+   				html += '			<div>';
+   				html += '				<a href="#">${commentList.name}</a>';
+   				html += '			</div>';
+   				html += ' 			<div>';
+   				html += '           	<span class="user-comment">';
+   				html += '					${commentList.social_comment_contents}';
+   				html += '				</span>';
+   				html += '			</div>';
+   				html += '			<div>';
+   				html += '				<span class="comment-date">${commentList.social_comment_time}';
+   				html += '					<c:if test="${sessionScope.user.seq == commentList.user_seq}">';
+   				html += '						<span><a href="#"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+   				html += '					</c:if>';
+   				html += '				</span>';
+   				html += '			</div>';
+   				html += '		</td>';
+   				html += '	</tr>';
+   				html += '</c:forEach>';
+    			html += '</table>';
+    			$("#comment-container").html(html);
+    		}
+    	});
+    </script>
+    </c:if>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->

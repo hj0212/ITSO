@@ -6,4 +6,5 @@ import kh.spring.dto.SocialCommentDTO;
 
 public interface ISocialCommentService {
 	public List<SocialCommentDTO> showCommentList(int seq);
+	public int insertSocialComment(SocialCommentDTO scdto);
 }

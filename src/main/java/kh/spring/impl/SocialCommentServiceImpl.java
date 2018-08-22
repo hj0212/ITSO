@@ -16,6 +16,11 @@ public class SocialCommentServiceImpl implements ISocialCommentService{
 	
 	@Override
 	public List<SocialCommentDTO> showCommentList(int seq) {
-		return dao.showCommentList(seq);
+		return this.dao.showCommentList(seq);
+	}
+
+	@Override
+	public int insertSocialComment(SocialCommentDTO scdto) {
+		return this.dao.insertSocialComment(scdto);
 	}
 }
