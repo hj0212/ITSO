@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.interfaces.IMemberDAO;
 
@@ -22,6 +23,11 @@ public class MemberDAOImpl implements IMemberDAO{
 
 /*		System.out.println("pw" + dto.getPw());
 		return template.selectList("selectData",dto);*/
+	}
+	
+	@Override
+	public List<MemberDTO> getUserData(MemberDTO dto) {
+		return template.selectList("Member.selectUserData", dto);
 	}
 
 	@Override
@@ -42,6 +48,26 @@ public class MemberDAOImpl implements IMemberDAO{
 	@Override
 	public List<MemberDTO> emailExist(String email) {
 		return template.selectList("Member.emailExist",email);
+	}
+
+	@Override
+	public int insertFollowData(FollowDTO dto) {
+		return template.insert("Member.insertFollow", dto);
+	}
+	
+	@Override
+	public int deleteFollowData(FollowDTO dto) {
+		return template.delete("Member.deleteFollow", dto);
+	}
+
+	@Override
+	public List<MemberDTO> getFollowerList(MemberDTO dto) {
+		return template.selectList("Member.selectFollower", dto);
+	}
+
+	@Override
+	public List<MemberDTO> getFollowingList(MemberDTO dto) {
+		return template.selectList("Member.selectFollowing", dto);
 	}
 
 }

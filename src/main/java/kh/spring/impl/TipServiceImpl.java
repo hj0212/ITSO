@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
+import kh.spring.dto.TipGoodDTO;
 import kh.spring.interfaces.ITipService;
 
 @Service
@@ -45,16 +47,54 @@ public class TipServiceImpl implements ITipService {
 		return this.dao.getSpecificTipView(seq);
 	}
 
-	@Override
-	public int deleteTipData(TipDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int updateTipData(TipDTO dto) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<TipGoodDTO> getTipLikeCounts(int seq) {
+		// TODO Auto-generated method stub
+		return this.dao.getTipLikeCounts(seq);
+	}
+
+	@Override
+	public int viewCountPlus(int seq) {
+		// TODO Auto-generated method stub
+		return this.dao.viewCountPlus(seq);
+	}
+
+	@Override
+	public int tipArticleLikeProc(int seq, int tipLikingUser) {
+		return this.dao.tipArticleLikeProc(seq , tipLikingUser);
+	}
+
+	@Override
+	public List<TipDTO> getUpvotingArticles() {
+		return this.dao.getUpvotingArticles();
+	}
+
+	@Override
+	public int insertTipCommentProc(TipCommentDTO dto) {
+		return this.dao.insertTipCommentProc(dto);
+	}
+
+	@Override
+	public List<TipCommentDTO> getCommentsFromTip(int seq) {
+		return this.dao.getCommentsFromTip(seq);
+	}
+
+	@Override
+	public int deleteSpecificTip(int tipSeq) {
+
+		return this.dao.deleteSpecificTip(tipSeq);
+	}
+
+	@Override
+	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser) {
+		return this.dao.isThisLikeWhetherFirst(tipSeq,tipLikingUser);
 	}
 
 
