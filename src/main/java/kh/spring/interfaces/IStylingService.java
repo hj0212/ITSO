@@ -1,5 +1,8 @@
 package kh.spring.interfaces;
 
-public interface IStylingService {
+import kh.spring.dto.StylingVoteDTO;
 
+public interface IStylingService {
+	
+	public int insertStylingVote(StylingVoteDTO svdto);
 }

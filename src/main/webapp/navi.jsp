@@ -38,7 +38,7 @@ nav {
 
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark" id="nav1">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="nav1">
 	<a class="navbar-brand" href="#"><img id="logo" alt=""
 		src="resources/images/logo_white_no.png"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -85,7 +85,7 @@ nav {
 		</ul>
 	</div>
 </nav>
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark" id="nav2">
+<nav class="mb-1 navbar navbar-expand-lg navbar-dark fixed-top" id="nav2">
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbar2" aria-controls="navbar2" aria-expanded="false"
 		aria-label="Toggle navigation">

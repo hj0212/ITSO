@@ -93,6 +93,7 @@ input[type="file"] {
 
 <body>
 	<%@include file="navi.jsp"%>
+	<div class="row my-5"></div>
 	<div id="wrapper" class="container-fluid col-md-8">
 
 		<script>
@@ -104,17 +105,24 @@ input[type="file"] {
 			<div class="row z-depth-3 hoverable" id="toprow">
 				<h4>투표주제</h4>
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
-					<input type="text" id="votetitleid" name="styling_vote_title"
-						class="form-control form-control-lg col-md-9 float-right">
-					<label for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
-						id="votelabel">투표 주제를 입력해주세요.</label>
+					<div class="md-form form-md form-group">
+						<input type="text" id="votetitleid" name="styling_title"
+							class="form-control col-md-9 float-right"> <label
+							for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
+							id="votelabel">투표 주제를 입력해주세요.</label>
+					</div>
+					<div class="md-form form-md form-group">
+						<input type="text" id="votecontentsid"
+							name="styling_contents"
+							class="form-control col-md-9 float-right"
+							placeholder="내용을 입력해주세요.">
+					</div>
 					<div class="media-body image-upload-wrap form-group"
 						id="voteitemdiv">
 						<img class="d-flex file-upload-image" src="" alt="사진 없음"
-							id="voteitemimg"> <input type="file" name="imgfilename0"
+							id="voteitemimg"> <input type="file" name="votetitleimgfile"
 							id="imgfile0" onchange="readURL(this);"
-							class="file-upload-input form-control"
-							accept="image/*" />
+							class="file-upload-input form-control" accept="image/*" />
 					</div>
 				</div>
 			</div>
@@ -141,7 +149,7 @@ input[type="file"] {
 									<div class="media">
 										<div class="media-img">
 											<img class="d-flex mr-3 selimg" src="" alt="후보사진"> <input
-												type="file" name="imgfilename" id="imgfile1"
+												type="file" name="voteimgfile[]" id="imgfile1"
 												class="file-upload-input form-control filesel"
 												onchange="readURL(this);" accept="image/*">
 										</div>
@@ -158,7 +166,7 @@ input[type="file"] {
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
-												<input type="text" id="vitemtext" class="form-control">
+												<input type="text" id="vitemtext" class="form-control" name="vote_item_contents">
 												<label for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
 											</div>
 										</div>
@@ -182,12 +190,12 @@ input[type="file"] {
 				<!-- 	<div class="col-md-12 ml-5"> -->
 				<div class="col custom-control custom-radio col-md-3  ml-2">
 					<input type="radio" class="custom-control-input"
-						id="defaultGroupExample1"> <label
-						class="custom-control-label" for="defaultGroupExample1">기간</label><i
+						name="styling_endsel" id="defaultGroupExample1" value="1">
+					<label class="custom-control-label" for="defaultGroupExample1">기간</label><i
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="styling_vote_term"
+					<input type="text" id="datepicker" name="styling_endterm" disabled
 						class="form-control form-control-sm col-md-4">
 				</div>
 			</div>
@@ -195,24 +203,25 @@ input[type="file"] {
 			<div class="row" id="voterrow">
 				<div class="col custom-control custom-radio col-md-3  ml-2">
 					<input type="radio" class="custom-control-input"
-						id="defaultGroupExample2" name="styling_vote_number"> <label
-						class="custom-control-label" for="defaultGroupExample2">참여자수:</label>
+						id="defaultGroupExample2" name="styling_endsel" value="2">
+					<label class="custom-control-label" for="defaultGroupExample2">참여자수:</label>
 
 				</div>
 				<div class="col">
 					<input type="text" class="form-control form-control-sm col-md-4"
-						id="votenum">
+						readOnly id="votenum" placeholder="명" name="styling_voternum">
 				</div>
 
 			</div>
 			<div class="row">
 				<div class="custom-control custom-radio col-md-12 ml-2">
 					<input type="radio" class="custom-control-input"
-						id="defaultGroupExample3" name="groupOfDefaultRadios"> <label
-						class="custom-control-label" for="defaultGroupExample3">종료
+						id="defaultGroupExample3" name="styling_endsel" value="3">
+					<label class="custom-control-label" for="defaultGroupExample3">종료
 						없음</label>
 				</div>
 			</div>
+			<input type="hidden" name="styling_end" id="radioresult">
 			<div class="row my-2"></div>
 
 			<div class="row">
@@ -220,7 +229,7 @@ input[type="file"] {
 			</div>
 
 			<div class="row">
-				<button class="btn btn-indigo" type="submit">itso?</button>
+				<button class="btn btn-indigo" type="button" id="itsobtn">itso?</button>
 				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
 			</div>
@@ -245,10 +254,8 @@ input[type="file"] {
 		document.oncontextmenu = function(e) {
 			return false;
 		};
-		$(function() {
-			$("#datepicker").datepicker();
-		});
-
+		
+		
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
@@ -284,26 +291,28 @@ input[type="file"] {
 				.on(
 						"click",
 						function() {
-							if(count<6){
-							count++;
-							console.log(count);
-							$('#itemlist')
-									.append(
-											'<tr class="z-depth-3 hoverable"><th scope="row">'
-													+ count
-													+ '</th>'
-													+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
-													+ '<input type="file" name="imgfilename" id="imgfile'
-													+ count
-													+ '" class="file-upload-input form-control filesel"'
-													+ 'onchange="readURL(this);" accept="image/*"></div>'
-													+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
-													+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
-													+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
-													+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
-													+ '<div class="md-form form-sm"><input type="text" id="itemtext'+count+'" class="form-control"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
-													+ '</div></div></div></td></tr>');
-							}else if(count==6){alert("투표 항목은 6개까지 추가할 수 있습니다.")}
+							if (count < 6) {
+								count++;
+								console.log(count);
+								$('#itemlist')
+										.append(
+												'<tr class="z-depth-3 hoverable"><th scope="row">'
+														+ count
+														+ '</th>'
+														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
+														+ '<input type="file" name="voteimgfile[]" id="imgfile'
+														+ count
+														+ '" class="file-upload-input form-control filesel"'
+														+ 'onchange="readURL(this);" accept="image/*"></div>'
+														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
+														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
+														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
+														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
+														+ '<div class="md-form form-sm"><input type="text" id="itemtext'+count+'" class="form-control"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
+														+ '</div></div></div></td></tr>');
+							} else if (count == 6) {
+								alert("투표 항목은 6개까지 추가할 수 있습니다.")
+							}
 						})
 
 		$(document).on('click', '.delvotebtn', function() {
@@ -323,7 +332,7 @@ input[type="file"] {
 			wraptr.insertBefore(wraptr.prev());
 			if (number > 1) {
 				wrapprev.children('th').text(number);
-				$(this).closest('td').siblings('th').text(number - 1);				
+				$(this).closest('td').siblings('th').text(number - 1);
 			}
 		})
 
@@ -333,11 +342,34 @@ input[type="file"] {
 			var number = parseInt($(this).closest('td').siblings('th').text());
 			wraptr.insertAfter(wraptr.next());
 			wrapnext.children('th').text(number);
-			if(number<count){
-				$(this).closest('td').siblings('th').text(number + 1);	
+			if (number < count) {
+				$(this).closest('td').siblings('th').text(number + 1);
 			}
 
+		})
 
+		$(document).on('click', '.custom-control-input', function() {
+			if ($(this).val() == 2) {
+				$('#votenum').attr('readOnly', false);
+				$("#datepicker").attr('disabled',true);
+			} else if ($(this).val() == 1) {
+				$('#votenum').attr('readOnly', true);
+				$("#datepicker").attr('disabled',false);
+				$(function() {
+					$("#datepicker").datepicker();
+				});
+			}else{
+				$('#votenum').attr('readOnly', true);
+				$("#datepicker").attr('disabled',true);
+			}
+		})
+		
+		$('#itsobtn').click(function(){
+			var radioval = $('input[name = "styling_endsel"]:checked').val();
+			console.log(radioval);
+			$('#radioresult').val(radioval);
+			console.log($('input[name = "styling_end"]').val());
+			$('#voteform').submit();
 		})
 	</script>
 
