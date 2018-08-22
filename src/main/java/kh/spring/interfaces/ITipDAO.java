@@ -25,8 +25,6 @@ public interface ITipDAO {
 
 	public int viewCountPlus(int seq);
 
-	public int tipArticleLikeProc(int seq);
-
 	public List<TipGoodDTO> getTipLikeCounts(int seq);
 
 	public List<TipDTO> getUpvotingArticles();
@@ -36,5 +34,9 @@ public interface ITipDAO {
 	public List<TipCommentDTO> getCommentsFromTip(int seq);
 
 	public int deleteSpecificTip(int tipSeq);
+
+	public int tipArticleLikeProc(int seq, int tipLikingUser);
+
+	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser);
 
 }
