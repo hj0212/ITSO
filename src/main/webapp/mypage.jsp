@@ -231,15 +231,15 @@ table .profilearea {
 										<a href="#" class="btn  btn-indigo"
 											style="background-color: black;"><i class="fa fa-plus">follow</i></a>
 										<!--share-->
-										<!--instagram-->
+										<!--kakao-->
 										<button type="button"
 											class="btn-floating btn-sm btn-is share "
-											style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-											<i class="fab fa-instagram"></i>
+											style="float: right; background-color: #ffff00; color: gray; border: 0px; margin-left: 10px; border-radius: 5x;" onclick="sendLink()">
+											<i class="fab fa-kaggle"></i>
 										</button>
 										<!--twitter-->
 										<button type="button" class="btn-floating btn-sm btn-tw share"
-											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
+											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;" onclick="twittergo()">
 											<i class="fab fa-twitter"></i>
 										</button>
 										<!--facebook-->
@@ -284,12 +284,12 @@ table .profilearea {
 										</button>
 										<!--twitter-->
 										<button type="button" class="btn-floating btn-sm btn-tw share"
-											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
+											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;" onclick="window.open('https://twitter.com/share','','width=700, height=400'); return false;", title="트위터 공유">
 											<i class="fab fa-twitter"></i>
 										</button>
 										<!--facebook-->
 										<button type="button" class="btn-floating btn-sm btn-fb share"
-											style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
+											style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;" onclick="getURL()">
 											<i class="fab fa-facebook-f"></i>
 										</button>
 									</div>
@@ -391,4 +391,38 @@ table .profilearea {
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+	 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	
+	<script>
+	
+	var newURL = window.location.protocol +  window.location.host +  window.location.pathname;
+	
+	function getURL(){
+		var newURL = window.location.protocol + "/" + window.location.host + "/" + window.location.pathname;
+		console.log(newURL);
+		alert(newURL);		
+	}
+	//트위터 공유
+	function twittergo(url,text){
+		var url = window.location.protocol +  window.location.host +  window.location.pathname;
+		var text = "글제목오는곳";
+		console.log(url);
+		window.open("https://twitter.com/intent/tweet?text=" + text + "&url=" + url, "", "width=700, height=400");
+	}
+	
+	 Kakao.init('6f7ebead2317edc298ae9592c2996720');
+	 function sendLink() {
+		 Kakao.Link.sendCustom({
+		        templateId: 11850,
+		        templateArgs: {
+		          'title': '제목 영역입니다.',
+		          'description': '설명 영역입니다.',	
+		          'url': '${newURL}'
+		        }
+		      });
+	    }
+	
+	
+	
+	</script>
 </html>
