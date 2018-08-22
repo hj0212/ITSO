@@ -5,4 +5,5 @@ import kh.spring.dto.StylingVoteDTO;
 public interface IStylingService {
 	
 	public int insertStylingVote(StylingVoteDTO svdto);
+	public int selectStylingSeq();
 }

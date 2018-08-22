@@ -18,6 +18,12 @@ public class StylingServiceImpl implements IStylingService{
 		int insertresult = sdao.insertStylingVote(svdto);
 		return insertresult;
 	}
+
+	@Override
+	public int selectStylingSeq() {
+		int seqresult = sdao.selectStylingSeq();
+		return seqresult;
+	}
 	
 	
 }

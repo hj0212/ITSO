@@ -35,35 +35,8 @@ public class StylingController {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO user =(MemberDTO)session.getAttribute("user");				
 		/*svdto.setStyling_writer(user.getSeq());*/
-
-		int insertResult =styservice.insertStylingVote(svdto);
-		/*List<StylingVoteItemDTO> svitemdtos = (List<StylingVoteItemDTO>) svitemdto;*/
-		/*System.out.println(svitemdtos.size());*/
-
-		//사진파일 업로드-후보
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
 
-		if(uploadfiles.size() != 0) {
-			File file = new File(path);
-			for(MultipartFile uploadfile: uploadfiles) {			
-				String ofileName = uploadfile.getOriginalFilename();
-				String sfileName = "";
-				if (ofileName != null && !ofileName.equals("")) {
-					if(file.exists()) {
-						sfileName = System.currentTimeMillis() + "_" + ofileName;
-						/*System.out.println("sfileName : " + sfileName);*/					
-					}
-				}
-				try {
-					byte[] data = uploadfile.getBytes();
-					FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
-					fos.write(data);
-					fos.close();	
-				}catch(Exception e) {
-
-				}
-			}
-		}
 		//사진파일 업로드-주제
 		if(titlefile != null) {
 			File file2 = new File(path);
@@ -88,7 +61,35 @@ public class StylingController {
 			}
 		}
 
+		int insertResult =styservice.insertStylingVote(svdto);
+		/*List<StylingVoteItemDTO> svitemdtos = (List<StylingVoteItemDTO>) svitemdto;*/
+		/*System.out.println(svitemdtos.size());*/
+		int stylingseq = styservice.selectStylingSeq()-1;
+		/*System.out.println(stylingseq);*/
+		
+		//------------------------------------voteItem insert
+		//사진파일 업로드-후보
+		if(uploadfiles.size() != 0) {
+			File file = new File(path);
+			for(MultipartFile uploadfile: uploadfiles) {			
+				String ofileName = uploadfile.getOriginalFilename();
+				String sfileName = "";
+				if (ofileName != null && !ofileName.equals("")) {
+					if(file.exists()) {
+						sfileName = System.currentTimeMillis() + "_" + ofileName;
+						/*System.out.println("sfileName : " + sfileName);*/					
+					}
+				}
+				try {
+					byte[] data = uploadfile.getBytes();
+					FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
+					fos.write(data);
+					fos.close();	
+				}catch(Exception e) {
 
+				}
+			}
+		}
 		mav.addObject("result",insertResult);
 		mav.setViewName("stylingBoard.jsp");
 		return mav;
