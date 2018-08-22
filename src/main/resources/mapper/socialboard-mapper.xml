@@ -4,11 +4,10 @@
 <mapper namespace="SocialBoard">
 	<!--최신  -->
 	<select id="showSocialBoardList" resultType="sdto">
-		select * from social 
-		<trim prefix="WHERE" prefixOverrides="AND|OR ">
+		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq		
 		<if test="age gt 0">
 			<!-- 연령순 -->
-			age=#{age}
+			and age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
@@ -16,7 +15,6 @@
 			and gender = #{gender}
 			
 		</if>		
-		</trim>
 		order by social_date desc
 	</select>
 	

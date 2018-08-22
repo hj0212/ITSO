@@ -30,6 +30,7 @@ import kh.spring.dto.SocialBoardDTO;
 import kh.spring.dto.SocialTagDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.exception.NotWriterException;
+import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
@@ -38,6 +39,10 @@ import kh.spring.jsonobject.SocialTag;
 public class SocialController {
 	@Autowired
 	private ISocialBoardService service;
+	
+	@Autowired
+	private IMemberService mService;
+	
 	@Autowired 
 	ISocialTagService tagService;
 
@@ -144,14 +149,21 @@ public class SocialController {
 
 
 		List<Integer> ggdto = new ArrayList<>();
+		List<MemberDTO> mdto = new ArrayList<>();
+		
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
+			MemberDTO mom =  new MemberDTO(sdd.getSocial_seq()); 
 			ggdto.add(this.service.allGoodCount(gdto)) ;
-
+			mdto.addAll( this.mService.getUserData(mom));
 			/*System.out.println(ggdto);*/
-
 		}
-
+		 
+		
+		for(MemberDTO ddt : mdto) {
+			System.out.println(ddt.getName());
+		}
+		
 		
 		List<Integer> goodCount = new ArrayList<>();
 		for(SocialBoardDTO sdd : result) {
@@ -169,9 +181,7 @@ public class SocialController {
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
-			for(SocialBoardDTO sdd : goodList) {
-			System.out.println(sdd);
-			}
+			
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {

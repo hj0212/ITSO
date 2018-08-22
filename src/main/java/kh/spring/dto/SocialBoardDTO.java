@@ -13,6 +13,9 @@ public class SocialBoardDTO {
 	private String photo;
 	private String gender;
 	private int age;
+	private String user_photo;
+	private String userState;
+	
 	
 	public SocialBoardDTO() {}
 
@@ -149,4 +152,21 @@ public class SocialBoardDTO {
 	public void setAge(int age) {
 		this.age = age;
 	}
+
+	public String getUser_photo() {
+		return user_photo;
+	}
+
+	public void setUser_photo(String user_photo) {
+		this.user_photo = user_photo;
+	}
+
+	public String getUserState() {
+		return userState;
+	}
+
+	public void setUserState(String userState) {
+		this.userState = userState;
+	}
+	
 }

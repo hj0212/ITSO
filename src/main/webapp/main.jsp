@@ -142,6 +142,24 @@ button.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
 
+#sidefooter {
+	width: 300px;
+	bottom: 0px;
+	right: 50px;
+	position: fixed;
+	border-top: 2px solid black;
+	display: none;
+}
+
+#sidefooter p {
+	font-style: oblique;
+}
+
+#sidefooter p a {
+	font-style: oblique;
+	color: black;
+}
+
 #MOVE_TOP_BTN {
 	position: fixed;
 	right: 5%;
@@ -152,6 +170,10 @@ button.dropdown-toggle {
 	background-color: black;
 	color: white;
 	text-align: center;
+}
+
+.writerName:hover {
+	color: aqua;
 }
 </style>
 <script>
@@ -192,9 +214,13 @@ button.dropdown-toggle {
 			$(window).scroll(function() {
 				if ($(this).scrollTop() > 500) {
 					$('#MOVE_TOP_BTN').fadeIn();
+
+					$('#sidefooter').fadeIn();
 				} else {
 					$('#MOVE_TOP_BTN').fadeOut();
+					$('#sidefooter').fadeOut();
 				}
+				
 			});
 
 			$("#MOVE_TOP_BTN").click(function() {
@@ -296,19 +322,23 @@ button.dropdown-toggle {
 								<div class="card-body">
 									<!--Title-->
 									<ul class="list-unstyled">
-										<li class="media align-middle" ><img
+										<li class="media align-middle"><img
 											class="d-flex mr-3 rounded-circle "
-											src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-											alt="Generic placeholder image" style="width: 60px;height: 60px">
+											src="/upload/profile/${list.user_photo}"
+											style="width: 50px; height: 50px; margin-top: 10px">
 											<div class="media-body" style="margin: 0px auto">
+													
+												<a class="writer-a"><b class="writerName"
+													style="font-size: 20px;">${list.writerName}</b></a>
 
-												<a ><b style="font-size: 30px;">${list.social_writer}</b></a>
+												
+											<span>${list.userState}</span>	
 
-												<!-- <script type="text/javascript">
+											</div> <!-- <script type="text/javascript">
 										console
 												.log("${goodCount[status.count]}");
 									</script> -->
-
+											<div>
 												<c:set var="loop_flag" value="false" />
 												<c:choose>
 													<c:when test="${empty goodList }">
@@ -316,6 +346,8 @@ button.dropdown-toggle {
 															aria-hidden="true" style="float: right; font-size: 25px;"
 															value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
 														</font></i>
+
+
 													</c:when>
 													<c:otherwise>
 														<c:forEach items="${goodList }" var="good"
@@ -326,7 +358,7 @@ button.dropdown-toggle {
 																	<c:when test="${good.social_seq == list.social_seq }">
 																		<i class="fa fa-heart red-text heart"
 																			aria-hidden="true"
-																			style="float: right; font-size: 25px;"
+																			style="float: right; font-size: 25px; margin-top: 25px;"
 																			value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
 																		</font></i>
 
@@ -336,9 +368,10 @@ button.dropdown-toggle {
 																		<c:if test="${gstatus.last }">
 																			<i class="fa fa-heart-o red-text heart"
 																				aria-hidden="true"
-																				style="float: right; font-size: 25px;"
+																				style="float: right; font-size: 25px; margin-top: 20px;"
 																				value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
 																			</font></i>
+																			<font>${list.userState }</font>
 
 																		</c:if>
 																	</c:otherwise>
@@ -347,8 +380,8 @@ button.dropdown-toggle {
 
 														</c:forEach>
 													</c:otherwise>
-												</c:choose>
 
+												</c:choose>
 											</div></li>
 									</ul>
 
@@ -356,11 +389,16 @@ button.dropdown-toggle {
 
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
-									<a href="#" class="btn  btn-indigo"
-										style="background-color: black;"><i class="fa fa-plus">
-											follow</i></a> <a href="#" class="btn  btn-indigo"
-										style="background-color: black;"><i class="fa fa-upload">
-											SAVE</i></a>
+									<button type="button" class="btn btn-indigo"
+										style="background-color: black;">
+										<i class="fa fa-plus"> <span
+											style="font-family: 'NanumbarunpenR';">팔로우</span></i>
+									</button>
+									<button type="button" class="btn btn-indigo"
+										style="background-color: black; font-family: 'NanumbarunpenR';">
+										<i class="fa fa-upload"> <span
+											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
+									</button>
 									<!--share-->
 									<!--instagram-->
 									<button type="button" class="btn-floating btn-sm btn-is share "
@@ -430,7 +468,14 @@ button.dropdown-toggle {
 
 					</div></li>
 			</ul>
-
+			<!--side footer -->
+			<div id="sidefooter">
+				<p>©2018 ItSo. All rights reserved.</p>
+				<p>
+					<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
+					<a href="#">advertise</a>· <a href="#">legal</a>
+				</p>
+			</div>
 
 
 		</div>
