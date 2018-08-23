@@ -12,6 +12,7 @@ public class StylingVoteDTO {
 	private String styling_endterm;
 	private int styling_voternum;
 	private String photo;
+	private String styling_writername;
 
 	
 	public StylingVoteDTO() {}
@@ -130,5 +131,15 @@ public class StylingVoteDTO {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+
+	public String getStyling_writername() {
+		return styling_writername;
+	}
+
+	public void setStyling_writername(String styling_writername) {
+		this.styling_writername = styling_writername;
+	}
+	
+	
 	
 }

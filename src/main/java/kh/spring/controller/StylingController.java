@@ -2,6 +2,7 @@ package kh.spring.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +28,32 @@ public class StylingController {
 
 	@Autowired
 	private IStylingService styservice;
+	
+	@RequestMapping("/stylingBoard.style")
+	public ModelAndView goStylingBoard(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<StylingVoteDTO> votes = styservice.selectStylingBoard();
+		
+		mav.addObject("svdtos",votes);
+		mav.setViewName("stylingBoard.jsp");
+		return mav;
+	}
+	
+	@RequestMapping("/readStylingVote.style")
+	public ModelAndView goStylingBoard(HttpSession session, @RequestParam int styling_vote_seq) {
+		ModelAndView mav = new ModelAndView();
+		
+		
+		StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
+		
+		
+		mav.addObject("votedto",votedto);
+		mav.setViewName("readStylingVote.jsp");
+		return mav;
+	}
 
 	@RequestMapping("/insertStylingVote.style")
-	public ModelAndView insertStylingVote(HttpSession session, StylingVoteDTO svdto, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile) {
+	public ModelAndView insertStylingVote(HttpSession session, StylingVoteDTO svdto, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_contents[]")List<String> itemconts) {
 		/*		System.out.println(svdto.getStyling_end());
 		System.out.println(svdto.getStyling_title());*/		
 		ModelAndView mav = new ModelAndView();
@@ -66,9 +90,11 @@ public class StylingController {
 		/*System.out.println(svitemdtos.size());*/
 		int stylingseq = styservice.selectStylingSeq()-1;
 		/*System.out.println(stylingseq);*/
-		
+			
 		//------------------------------------voteItem insert
 		//사진파일 업로드-후보
+		List<String> itemfilenames = new ArrayList<>();
+		int insertitem =0;
 		if(uploadfiles.size() != 0) {
 			File file = new File(path);
 			for(MultipartFile uploadfile: uploadfiles) {			
@@ -77,6 +103,7 @@ public class StylingController {
 				if (ofileName != null && !ofileName.equals("")) {
 					if(file.exists()) {
 						sfileName = System.currentTimeMillis() + "_" + ofileName;
+						itemfilenames.add(sfileName);
 						/*System.out.println("sfileName : " + sfileName);*/					
 					}
 				}
@@ -90,8 +117,18 @@ public class StylingController {
 				}
 			}
 		}
+		System.out.println(itemconts.size()+"개가 왔다 왔어!");
+		for(int i=0; i<itemconts.size(); i++) {
+			StylingVoteItemDTO svitemdto = new StylingVoteItemDTO();
+			svitemdto.setStyling_vote_seq(stylingseq);
+			svitemdto.setStyling_vote_item_contents(itemconts.get(i));
+			svitemdto.setStyling_vote_item_photo(itemfilenames.get(i));
+			styservice.insertStylingVoteItem(svitemdto);
+			insertitem+=1;
+		}
+				
 		mav.addObject("result",insertResult);
-		mav.setViewName("stylingBoard.jsp");
+		mav.setViewName("stylingBoard.style");
 		return mav;
 
 	}

@@ -70,11 +70,6 @@ input[type="file"] {
 	border: 0px;
 }
 
-#voteitemimg, .selimg {
-	width: 100px;
-	height: 100px;
-}
-
 .imgsel {
 	width: 70%;
 }
@@ -96,6 +91,9 @@ input[type="file"] {
 	text-align: center;
 }
 
+.media-img {
+	
+}
 </style>
 
 </head>
@@ -105,99 +103,84 @@ input[type="file"] {
 	<%@include file="navi.jsp"%>
 	<div class="row my-5"></div>
 	<div id="wrapper" class="container-fluid col-md-8">
-		<h4 class="">오늘 뭐 입지? <button class="btn btn-indigo btn-sm float-right" type="button" id="writevotebtn">글
-				쓰기</button></h4>
-		
+		<h4>
+			투표하기
+
+			<button class="btn btn-indigo btn-md float-right" type="button"
+				id="modibtn">글 수정</button>
+			<button class="btn btn-indigo btn-md float-right" type="button"
+				id="delbtn">글 삭제</button>
+			<button class="btn btn-indigo btn-md float-right" type="button"
+				id="votebtn">투표하기</button>
+		</h4>
+
 		<hr />
 		<div class="row my-2">
-			<c:choose>
-				<c:when test="${fn:length(svdtos) > 0}">
-
-					<c:forEach var="svdto" items="${svdtos}" varStatus="status">
-						<!-- Card -->
-						<div class="col-sm-3 px-1 mb-4">
-							<div class="card">
-								<!--Card image-->
-								<div class="view overlay view-cascade ">
-									<img class="card-img-top"
-										src="upload/stylingvote/${svdto.photo}" alt="titlephoto"
-										id="titleimg" /> <a href="#!">
-										<div class="mask rgba-white-slight"></div>
-									</a>
-								</div>
-
-								<!--Card content-->
-								<div class="card-body">
-
-									<!--Title-->
-									<h4 class="card-title">${svdto.styling_title}</h4>
-									<!--Text-->
-									<p class="card-text">
-										<a class="text-muted amber-text">${svdto.styling_writername}</a>
-										<a><i class="fa mr-2 fa-comment amber-text"
-											aria-hidden="true"></i>82</a> <a><i class="fa mr-2 fa-eye"
-											aria-hidden="true"></i>${svdto.styling_viewcount}</a> 
-									</p>
-									<p class='card-text'>		
-											<a class="text-muted amber-text">${svdto.styling_writedate}</a>
-									</p>
-									<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-									<button type="button" class="btn btn-light-blue btn-md gobtn">투표
-										하기</button>
-									<input type="hidden" value="${svdto.styling_vote_seq}">
-								</div>
-							</div>
-						</div>
-						<!-- Card -->
-
-					</c:forEach>
-
-
-					<!-- Card 한개..-->
-					<!-- 	<div class="card mb-4 col-sm-4">
-						Card image
-						<div class="view overlay">
-							<img class="card-img-top"
-								src="https://mdbootstrap.com/img/Photos/Others/images/14.jpg"
-								alt="Card image cap"> <a href="#!">
-								<div class="mask rgba-white-slight"></div>
-							</a>
-						</div>
-						Card content
-						<div class="card-body">
-
-							Title
-							<h4 class="card-title">Card title</h4>
-							Text
-							<p class="card-text">Some quick example text to build on the
-								card title and make up the bulk of the card's content.</p>
-							Provides extra visual weight and identifies the primary action in a set of buttons
-							<button type="button" class="btn btn-light-blue btn-md">Read
-								more</button>
-						</div>
-					</div>
-				 -->
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="3">게시글이 없습니다.</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
+			<div class="md-form form-lg col-4 mx-0">
+				<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
+					alt="사진 없음" id="votetitleimg">
+			</div>
+			<div class="md-form form-lg col-7 offset-md-5 mx-0">
+				<h4>${votedto.styling_title}</h4>
+				<p>${votedto.styling_contents}</p>
+			</div>
 		</div>
+
+
 		<div class="row my-2">
-			<!-- <button class="btn btn-indigo" type="button" id="writevotebtn">글
-				쓰기</button>
-			<a href="#top" class="btn btn-indigo ml-auto"></a> -->
+			<hr />
 		</div>
 		<div class="row">
-			<div class="md-form form-lg col-md-12 my-2"></div>
+			<div class="md-form form-lg col-md-12 my-2">
+				<table class="table table-borderless">
+					<thead>
+						<tr>
+							<th scope="col" style="width:20%">번호</th>
+							<th scope="col" style="width:80%">아이템 소개</th>
+						</tr>
+					</thead>
+					<tbody id="itemlist">			
+					
+						<tr class="">
+							<th scope="row">
+								<div class="custom-control custom-radio">
+									<input type="radio" class="custom-control-input"
+										id="defaultGroupExample1" name="groupOfDefaultRadios">
+									<span class="custom-control-label" for="defaultGroupExample1">
+										1</span><span>결과(%)</span>
+								</div>
+							</th>
+							<td>
+								<div class="media">
+									<div class="media-img col-5">
+										<img
+											class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
+											src="" alt="후보사진">
+									</div>
+
+									<div class="media-body image-upload-wrap form-group col-9"
+										id="btnsdiv">
+
+										<div class="md-form form-sm">
+											<p>아이템의 특징</p>
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+						
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">댓글..?</div>
+
+		<div class="col-md-2 offset-md-10">
+			<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1"
+				aria-hidden="true"></i></a>
 		</div>
 	</div>
-	<div class="col-md-2 offset-md-10">
-	<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1" aria-hidden="true"></i></a>
-	</div>
-
 	<!-- JQuery -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -222,9 +205,9 @@ input[type="file"] {
 
 		$('.gobtn').click(function() {
 			var seq = $(this).next('input').val();
-			location.href = "readStylingVote.style?styling_vote_seq=" + seq;
+			location.href = "readStylingVote.jsp?voteseq=" + seq;
 		})
-		
+
 		$(function() {
 			$(window).scroll(function() {
 				if ($(this).scrollTop() > 500) {
@@ -242,6 +225,5 @@ input[type="file"] {
 			});
 		});
 	</script>
-
 </body>
 </html>
