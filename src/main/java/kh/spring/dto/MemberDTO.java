@@ -23,6 +23,9 @@ public class MemberDTO {
 		this.name = name;
 		this.age = age;
 	}
+	public MemberDTO(int seq) {
+		this.seq = seq;
+	}
 	
 	public int getSeq() {
 		return seq;
