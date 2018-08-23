@@ -595,15 +595,26 @@ public class SocialController {
 			int result = this.comService.insertSocialComment(scdto);
 			
 			List<SocialCommentDTO> commentList = comService.showCommentList(social_seq);
+			ObjectMapper om = new ObjectMapper();
+			
+			ArrayNode array = om.createArrayNode();
+			
+			
 			for(SocialCommentDTO dto : commentList) {
-				System.out.println(dto.getSocial_comment_contents());
+				ObjectNode on = om.createObjectNode();
+				on.put("social_comment_seq", dto.getSocial_comment_seq());
+				on.put("social_seq",dto.getSocial_seq());
+				on.put("user_seq", dto.getUser_seq());
+				on.put("social_comment_contents", dto.getSocial_comment_contents());
+				on.put("social_comment_time", dto.getSocial_comment_time());
+				on.put("name", dto.getName());
+				on.put("photo", dto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
 			}
 			
-			ObjectMapper om = new ObjectMapper();
-			ObjectNode on = om.createObjectNode();
-			on.put("result", 1);
-			request.setAttribute("commentList", commentList);			
-			response.getWriter().println(on);
+			response.getWriter().println(array);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

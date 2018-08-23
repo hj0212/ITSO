@@ -440,43 +440,39 @@
     					},
     					
     					success : function(data){
-    						console.log(data.result);
-    						console.log(data.result == 1);
-    						if(data.result == 1) {
-    							location.reload();
-    						}
+    						console.log(data);
+    						showComment(data);
     					}
     				});
     			}
     		});
     		
-    		function showComment() {
+    		function showComment(data) {
     			let html = '<table id="comment" cellpadding="5">';
-   				html += '<c:forEach var="commentList" items="${commentList}">';
-   				html += '	<tr>';
-   				html += '		<td>';
-   				html += '			<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/${commentList.photo}">';
-   				html += '		</td>';
-   				html += '		<td>';
-   				html += '			<div>';
-   				html += '				<a href="#">${commentList.name}</a>';
-   				html += '			</div>';
-   				html += ' 			<div>';
-   				html += '           	<span class="user-comment">';
-   				html += '					${commentList.social_comment_contents}';
-   				html += '				</span>';
-   				html += '			</div>';
-   				html += '			<div>';
-   				html += '				<span class="comment-date">${commentList.social_comment_time}';
-   				html += '					<c:if test="${sessionScope.user.seq == commentList.user_seq}">';
-   				html += '						<span><a href="deleteComment.go?comment_seq=${commentList.social_comment_seq}&social_seq=${commentList.social_seq}"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
-   				html += '					</c:if>';
-   				html += '				</span>';
-   				html += '			</div>';
-   				html += '		</td>';
-   				html += '	</tr>';
-   				html += '</c:forEach>';
-    			html += '</table>';
+    			$.each(data, function(index,item){
+    				html += '<tr>';
+    				html += '	<td>';
+    				html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'">';
+    				html += '	</td>';
+    				html += '	<td>';
+    				html += '		<div>';
+    				html += '			<a href="#">' + item.name + '</a>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="user-comment">';
+    				html += 				item.social_comment_contents;
+    				html +=	'			</span>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="comment-date">'+item.social_comment_time;
+    				if(item.user_seq == item.writer){
+    					html += '			<span><a href=#><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+    				}
+    				html += '			</span>';
+    				html += '		</div>';
+    				html += '	</td>';
+    				html += ''
+    			});
     			$("#comment-container").html(html);
     		}
     	});
