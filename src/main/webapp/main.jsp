@@ -71,6 +71,12 @@ body {
 	}
 }
 
+@media ( max-width : 1100px) {
+	#MOVE_TOP_BTN {
+		visibility: hidden;
+	}
+}
+
 .avatar {
 	margin-bottom: 5px;
 }
@@ -143,12 +149,10 @@ button.dropdown-toggle {
 }
 
 #sidefooter {
-	width: 300px;
+	width: 100%;
 	bottom: 0px;
-	right: 50px;
-	position: fixed;
 	border-top: 2px solid black;
-	display: none;
+	text-align: center;
 }
 
 #sidefooter p {
@@ -174,6 +178,13 @@ button.dropdown-toggle {
 
 .writerName:hover {
 	color: aqua;
+}
+
+.btn-floating {
+	
+}
+.footer-brand{
+	width: 70px;
 }
 
 .hidden {
@@ -277,16 +288,22 @@ button.dropdown-toggle {
 
 		$(function() {
 			$(window).scroll(function() {
+				var scrolltop = $(window).scrollTop();
 				if ($(this).scrollTop() > 500) {
 					$('#MOVE_TOP_BTN').fadeIn();
-
-					$('#sidefooter').fadeIn();
 				} else {
 					$('#MOVE_TOP_BTN').fadeOut();
-					$('#sidefooter').fadeOut();
+
 				}
-				
+
+				if (scrolltop == $(document).height() - $(window).height()) {
+					$("#sidefooter").fadeIn();
+				} else {
+					$("#sidefooter").fadeOut();
+				}
 			});
+
+			출처: http: //palpit.tistory.com/360 [palpit's log-b]
 
 			$("#MOVE_TOP_BTN").click(function() {
 				$('html, body').animate({
@@ -420,12 +437,13 @@ button.dropdown-toggle {
 											src="/upload/profile/${list.user_photo}"
 											style="width: 50px; height: 50px; margin-top: 10px">
 											<div class="media-body" style="margin: 0px auto">
-													
 												<a class="writer-a"><b class="writerName"
-													style="font-size: 20px;">${list.writerName}</b></a>
+													style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;<font
+													color="gray">"${list.userState}"</font>
 
-												
-											<span>"${list.userState}"</span>	
+
+
+
 
 											</div> <!-- <script type="text/javascript">
 										console
@@ -464,7 +482,7 @@ button.dropdown-toggle {
 																				style="float: right; font-size: 25px; margin-top: 20px;"
 																				value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
 																			</font></i>
-																			<font>${list.userState }</font>
+
 
 																		</c:if>
 																	</c:otherwise>
@@ -710,18 +728,20 @@ button.dropdown-toggle {
 
 					</div></li>
 			</ul>
-			<!--side footer -->
-			<div id="sidefooter">
-				<p>©2018 ItSo. All rights reserved.</p>
-				<p>
-					<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
-					<a href="#">advertise</a>· <a href="#">legal</a>
-				</p>
-			</div>
-
 
 		</div>
+	
 	</div>
+		<!--side footer -->
+		<div id="sidefooter">
+			
+			<p><a class="footer-brand" href="#"><img id="logo" alt=""
+			src="resources/images/logo_black.png"></a>©2018 ItSo. All rights reserved.</p>
+			<p>
+				<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
+				<a href="#">advertise</a>· <a href="#">legal</a>
+			</p>
+		</div>
 	
 	<script>
 	$("#managebtn").on("click", function() {
