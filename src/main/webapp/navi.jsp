@@ -12,7 +12,7 @@
 }
 
 body {
-	font-family: 'NanumbarunpenR';
+	font-family: 'NanumbarunpenR' ;
 	margin: 0px;
 }
 
