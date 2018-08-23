@@ -166,7 +166,7 @@ input[type="file"] {
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
-												<input type="text" id="vitemtext" class="form-control" name="styling_vote_contents[]">
+												<input type="text" id="vitemtext" class="form-control" name="styling_vote_item_contents[]">
 												<label for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
 											</div>
 										</div>
@@ -306,7 +306,7 @@ input[type="file"] {
 														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
 														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
 														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
-														+ '<div class="md-form form-sm"><input type="text" id="itemtext'+count+'" class="form-control" name="styling_vote_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
+														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control" name="styling_vote_item_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
 														+ '</div></div></div></td></tr>');
 							} else if (count == 6) {
 								alert("투표 항목은 6개까지 추가할 수 있습니다.")
