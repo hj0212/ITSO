@@ -71,6 +71,12 @@ body {
 	}
 }
 
+@media ( max-width : 1100px) {
+	#MOVE_TOP_BTN {
+		visibility: hidden;
+	}
+}
+
 .avatar {
 	margin-bottom: 5px;
 }
@@ -175,6 +181,10 @@ button.dropdown-toggle {
 .writerName:hover {
 	color: aqua;
 }
+
+.btn-floating{
+	
+}
 </style>
 <script>
 	$(document).ready(function() {
@@ -220,7 +230,7 @@ button.dropdown-toggle {
 					$('#MOVE_TOP_BTN').fadeOut();
 					$('#sidefooter').fadeOut();
 				}
-				
+
 			});
 
 			$("#MOVE_TOP_BTN").click(function() {
@@ -230,30 +240,30 @@ button.dropdown-toggle {
 				return false;
 			});
 		});
-		
-		$(".followbtn").on('click', function () {
-		    var seq = $(this).siblings("#seq").val();
-		    var text = $(this).text();
-		    var btn = $(this);
-		    $.ajax({
-		        url: "followUser.ajax",
-		        type: "post",
-		        data: {
-		            seq: seq,
-		            text: text
-		        },
-		        success: function (response) {
-		            if (response != null) {
-		                console.log("DB success : " + response);
-		                btn.toggleClass("btn-itso");
-		                btn.toggleClass("btn-indigo");
-		                btn.html(response);
-		            }
-		        },
-		        error: function (response) {
-		            console.log("DB Failed")
-		        }
-		    });
+
+		$(".followbtn").on('click', function() {
+			var seq = $(this).siblings("#seq").val();
+			var text = $(this).text();
+			var btn = $(this);
+			$.ajax({
+				url : "followUser.ajax",
+				type : "post",
+				data : {
+					seq : seq,
+					text : text
+				},
+				success : function(response) {
+					if (response != null) {
+						console.log("DB success : " + response);
+						btn.toggleClass("btn-itso");
+						btn.toggleClass("btn-indigo");
+						btn.html(response);
+					}
+				},
+				error : function(response) {
+					console.log("DB Failed")
+				}
+			});
 		})
 	});
 </script>
@@ -352,12 +362,13 @@ button.dropdown-toggle {
 											src="/upload/profile/${list.user_photo}"
 											style="width: 50px; height: 50px; margin-top: 10px">
 											<div class="media-body" style="margin: 0px auto">
-													
 												<a class="writer-a"><b class="writerName"
-													style="font-size: 20px;">${list.writerName}</b></a>
+													style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;<font
+													color="gray">"${list.userState}"</font>
 
-												
-											<span>${list.userState}</span>	
+
+
+
 
 											</div> <!-- <script type="text/javascript">
 										console
@@ -396,7 +407,7 @@ button.dropdown-toggle {
 																				style="float: right; font-size: 25px; margin-top: 20px;"
 																				value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
 																			</font></i>
-																			<font>${list.userState }</font>
+
 
 																		</c:if>
 																	</c:otherwise>
@@ -414,48 +425,53 @@ button.dropdown-toggle {
 
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
-									<c:forEach var="flist" items="${followingList }">
-									<c:choose>
-									    <c:when test="${flist.seq eq list.social_writer}">
-									        <button type="button" class="btn btn-indigo followbtn"
-										style="black; font-family: 'NanumbarunpenR';">
-										<i class="fa fa-upload"> <span
-											style="font-family: 'NanumbarunpenR';">팔로우</span></i>
-										</button>
-									    </c:when>
-									    <c:otherwise>
-									        <button type="button" class="btn btn-itso followbtn"
-										style="font-family: 'NanumbarunpenR';">
-										<i class="fa fa-upload"> <span
-											style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
-									</button>
-									    </c:otherwise>
-									</c:choose>	
+									<div id="all-btn">
+										<c:forEach var="flist" items="${followingList }">
+											<c:choose>
+												<c:when test="${flist.seq eq list.social_writer}">
+													<button type="button" class="btn btn-indigo followbtn"
+														style="font-family: 'NanumbarunpenR';">
+														<i class="fa fa-upload"> <span
+															style="font-family: 'NanumbarunpenR';">팔로우</span></i>
+													</button>
+												</c:when>
+												<c:otherwise>
+													<button type="button" class="btn btn-itso followbtn"
+														style="font-family: 'NanumbarunpenR';">
+														<i class="fa fa-upload"> <span
+															style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
+													</button>
+												</c:otherwise>
+											</c:choose>
 
-									
-									</c:forEach>
-									
-									<button type="button" class="btn btn-indigo"
-										style="background-color: black; font-family: 'NanumbarunpenR';">
-										<i class="fa fa-upload"> <span
-											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
-									</button>
-									<!--share-->
-									<!--instagram-->
-									<button type="button" class="btn-floating btn-sm btn-is share "
-										style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-										<i class="fa fa-instagram"></i>
-									</button>
-									<!--twitter-->
-									<button type="button" class="btn-floating btn-sm btn-tw share"
-										style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
-										<i class="fa fa-twitter"></i>
-									</button>
-									<!--facebook-->
-									<button type="button" class="btn-floating btn-sm btn-fb share"
-										style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
-										<i class="fa fa-facebook-f"></i>
-									</button>
+
+										</c:forEach>
+
+										<button type="button" class="btn btn-indigo"
+											style="background-color: black; font-family: 'NanumbarunpenR';">
+											<i class="fa fa-upload"> <span
+												style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
+										</button>
+										<!--share-->
+										<div id="share-btn">
+										<!--instagram-->
+										<button type="button"
+											class="btn-floating btn-sm btn-is share "
+											style=" float:right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
+											<i class="fa fa-instagram"></i>
+										</button>
+										<!--twitter-->
+										<button type="button" class="btn-floating btn-sm btn-tw share"
+											style="float:right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
+											<i class="fa fa-twitter"></i>
+										</button>
+										<!--facebook-->
+										<button type="button" class="btn-floating btn-sm btn-fb share "
+											style="float:right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
+											<i class="fa fa-facebook-f"></i>
+										</button>
+										</div>
+									</div>
 								</div>
 							</div>
 							<!--/.Card-->
