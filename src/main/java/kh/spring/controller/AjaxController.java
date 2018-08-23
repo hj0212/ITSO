@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -131,10 +132,11 @@ public class AjaxController {
 	}
 	
 	@RequestMapping("/followUser.ajax")
-	public @ResponseBody String followProc(int seq, String text, HttpSession session) {
+	public @ResponseBody String followProc(int seq, String text, HttpSession session, HttpServletResponse resp) {
 		System.out.println("여기");
 		FollowDTO dto = new FollowDTO();
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+
 		if(text.equals("팔로우")) {
 			dto.setUser_seq(user_seq);
 			dto.setFollowing_seq(seq);
