@@ -291,11 +291,11 @@
                     	<c:forEach var="item" items="${list}">
                     	    <div class="clothesinfo">
                     	    <li class="mb-2">
-  	                            <div>${item.tag_name}</div>
+  	                            <div><a href=${item.tag_url} target="_blank">${item.tag_name}</a></div>
 	                            <div>
-	                                <a href=${item.tag_url} target="_blank">${item.tag_brand}</a>
+	                                <a href="#">${item.tag_brand}</a>
 	                                <c:if test="${!empty item.tag_store }">
-		                                <a href="">in ${item.tag_store}</a>
+		                                <a href="#">in ${item.tag_store}</a>
 	                                </c:if>
 	                            </div>
                         	</li>
@@ -466,13 +466,14 @@
     				html += '		<div>';
     				html += '			<span class="comment-date">'+item.social_comment_time;
     				if(item.user_seq == item.writer){
-    					html += '			<span><a href=#><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+    					html += '			<span><a href="deleteComment.go?comment_seq='+item.social_comment_seq + '&social_seq=' + item.social_seq +'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
     				}
     				html += '			</span>';
     				html += '		</div>';
     				html += '	</td>';
     				html += ''
     			});
+    			$("#commentarea").val("");
     			$("#comment-container").html(html);
     		}
     	});

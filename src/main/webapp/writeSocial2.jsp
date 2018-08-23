@@ -247,8 +247,10 @@
 	        if(!window.location.hash) {
 				var v = document.getElementById("imgstyle").style.opacity;
 		        if(v === "0") {
-		            window.location = window.location + '#loaded';
-		            window.location.reload();
+		            setTimeout(function(){
+		            	window.location = window.location + '#loaded';
+			            window.location.reload();
+		            },1000);
 		        }
 	        }
 	    }
