@@ -112,7 +112,7 @@ public class MemberController {
 		return "redirect:login.go";
 	}
 	
-	private void followCheck(List<MemberDTO> followerList, List<MemberDTO> followingList) {
+	public static void followCheck(List<MemberDTO> followerList, List<MemberDTO> followingList) {
 		for(MemberDTO followertmp : followerList) {
 			for(MemberDTO followingtmp : followingList) {
 				if(followertmp.getSeq() == followingtmp.getSeq()) {

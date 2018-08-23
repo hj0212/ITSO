@@ -178,9 +178,13 @@ public class SocialController {
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
+			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
+			
+			
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
+			mav.addObject("followingList", followingList);
 			
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/

@@ -230,6 +230,31 @@ button.dropdown-toggle {
 				return false;
 			});
 		});
+		
+		$(".followbtn").on('click', function () {
+		    var seq = $(this).siblings("#seq").val();
+		    var text = $(this).text();
+		    var btn = $(this);
+		    $.ajax({
+		        url: "followUser.ajax",
+		        type: "post",
+		        data: {
+		            seq: seq,
+		            text: text
+		        },
+		        success: function (response) {
+		            if (response != null) {
+		                console.log("DB success : " + response);
+		                btn.toggleClass("btn-itso");
+		                btn.toggleClass("btn-indigo");
+		                btn.html(response);
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
+		    });
+		})
 	});
 </script>
 </head>
@@ -389,11 +414,27 @@ button.dropdown-toggle {
 
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
-									<button type="button" class="btn btn-indigo"
-										style="background-color: black;">
-										<i class="fa fa-plus"> <span
+									<c:forEach var="flist" items="${followingList }">
+									<c:choose>
+									    <c:when test="${flist.seq eq list.social_writer}">
+									        <button type="button" class="btn btn-indigo followbtn"
+										style="black; font-family: 'NanumbarunpenR';">
+										<i class="fa fa-upload"> <span
 											style="font-family: 'NanumbarunpenR';">팔로우</span></i>
+										</button>
+									    </c:when>
+									    <c:otherwise>
+									        <button type="button" class="btn btn-itso followbtn"
+										style="font-family: 'NanumbarunpenR';">
+										<i class="fa fa-upload"> <span
+											style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
 									</button>
+									    </c:otherwise>
+									</c:choose>	
+
+									
+									</c:forEach>
+									
 									<button type="button" class="btn btn-indigo"
 										style="background-color: black; font-family: 'NanumbarunpenR';">
 										<i class="fa fa-upload"> <span
