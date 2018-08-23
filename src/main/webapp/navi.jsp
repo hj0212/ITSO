@@ -182,6 +182,12 @@ nav {
             </div>
             <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
         </form> -->
+        <form class="form-inline lg-form form-lg" style="width: 600px;">
+			<input class="form-control form-control-sm mr-3 w-75" type="text"
+				placeholder="Search" aria-label="Search" id="searchinput">
+			<i id="searchIcon" class="fa fa-search" aria-hidden="true" style="color: white;"></i>
+		</form>
+        
 		<ul class="navbar-nav ml-auto nav-flex-icons">
 			<li class="nav-item" id="searchli"><a
 				class="nav-link waves-effect waves-light" id="searchshow"> <i
