@@ -1,14 +1,15 @@
 package kh.spring.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kh.spring.dto.SocialBoardDTO;
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
 import kh.spring.interfaces.IStylingService;
+
 
 @Service
 public class StylingServiceImpl implements IStylingService{
@@ -44,6 +45,18 @@ public class StylingServiceImpl implements IStylingService{
 	public StylingVoteDTO selectStylingVote(int styling_vote_seq) {
 		StylingVoteDTO dto = sdao.selectStylingVote(styling_vote_seq);
 		return dto;
+	}
+
+	@Override
+	public List<StylingVoteItemDTO> selectStylingVoteItem(int styling_vote_seq) {
+		List<StylingVoteItemDTO> voteitems= sdao.selectStylingVoteItem(styling_vote_seq);
+		return voteitems;
+	}
+
+	@Override
+	public int selectDidVote(int seq,int styling_vote_seq) {
+		int result = sdao.selectDidVote(seq,styling_vote_seq);
+		return result;
 	}
 
 

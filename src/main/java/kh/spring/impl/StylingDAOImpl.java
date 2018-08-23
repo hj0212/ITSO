@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
 import kh.spring.interfaces.IStylingDAO;
+import kh.spring.jsonobject.StylingParam;
 
 @Repository
 public class StylingDAOImpl implements IStylingDAO{
@@ -41,6 +42,17 @@ public class StylingDAOImpl implements IStylingDAO{
 	@Override
 	public StylingVoteDTO selectStylingVote(int styling_vote_seq) {
 		return template.selectOne("Styling.selectStylingVote",styling_vote_seq);
+	}
+
+	@Override
+	public List<StylingVoteItemDTO> selectStylingVoteItem(int styling_vote_seq) {
+		return template.selectList("Styling.selectStylingVoteItem",styling_vote_seq);
+	}
+
+	@Override
+	public int selectDidVote(int seq,int styling_vote_seq) {
+		StylingParam param = new StylingParam(seq,styling_vote_seq);
+		return template.selectOne("Styling.selectDidVote",param);
 	}
 	
 }

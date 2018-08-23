@@ -105,13 +105,24 @@ input[type="file"] {
 	<div id="wrapper" class="container-fluid col-md-8">
 		<h4>
 			투표하기
-
+			<c:choose>
+			<c:when test="${sessionScope.user.seq eq votedto.styling_writer}">
 			<button class="btn btn-indigo btn-md float-right" type="button"
 				id="modibtn">글 수정</button>
 			<button class="btn btn-indigo btn-md float-right" type="button"
 				id="delbtn">글 삭제</button>
+			</c:when>
+			</c:choose>
+			<c:choose>
+			<c:when test="${didVote} eq 0">
 			<button class="btn btn-indigo btn-md float-right" type="button"
 				id="votebtn">투표하기</button>
+				</c:when>
+				<c:otherwise>
+				<button class="btn btn-indigo btn-md float-right" type="button"
+				id="votebtn" disabled>투표완료</button>
+				</c:otherwise>
+				</c:choose>
 		</h4>
 
 		<hr />
@@ -140,14 +151,14 @@ input[type="file"] {
 						</tr>
 					</thead>
 					<tbody id="itemlist">			
-					
+					<c:forEach var=svitemdto items="${voteitems}">
 						<tr class="">
 							<th scope="row">
 								<div class="custom-control custom-radio">
 									<input type="radio" class="custom-control-input"
 										id="defaultGroupExample1" name="groupOfDefaultRadios">
 									<span class="custom-control-label" for="defaultGroupExample1">
-										1</span><span>결과(%)</span>
+										${svitemdto.styling_vote_item_seq}</span><span>결과(%)</span>
 								</div>
 							</th>
 							<td>
@@ -155,20 +166,20 @@ input[type="file"] {
 									<div class="media-img col-5">
 										<img
 											class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
-											src="" alt="후보사진">
+											src="upload/stylingvote/${svitemdto.styling_vote_item_photo}" alt="후보사진">
 									</div>
 
 									<div class="media-body image-upload-wrap form-group col-9"
 										id="btnsdiv">
 
 										<div class="md-form form-sm">
-											<p>아이템의 특징</p>
+											<p>${svitemdto.styling_vote_item_contents}</p>
 										</div>
 									</div>
 								</div>
 							</td>
 						</tr>
-						
+					</c:forEach>	
 						
 					</tbody>
 				</table>

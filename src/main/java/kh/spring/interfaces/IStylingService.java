@@ -12,4 +12,6 @@ public interface IStylingService {
 	public int insertStylingVoteItem(StylingVoteItemDTO svitemdto);
 	public List<StylingVoteDTO>selectStylingBoard();
 	public StylingVoteDTO selectStylingVote(int styling_vote_seq);
+	public List<StylingVoteItemDTO> selectStylingVoteItem(int styling_vote_seq);
+	public int selectDidVote(int seq, int styling_vote_seq);
 }

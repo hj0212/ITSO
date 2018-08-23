@@ -29,6 +29,14 @@
 	select *  from styling_vote where styling_vote_seq = #{styling_vote_seq}
 	</select>
 	
+	<select id="selectStylingVoteItem" parameterType="int" resultType="svitemdto">
+	<!-- select * from (select s.styling_vote_seq, s.styling_title, s.styling_contents, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end, s.styling_endterm,s.styling_voternum, s.photo, si.styling_vote_item_seq, si.styling_vote_item_contents,si.styling_vote_item_photo from styling_vote s, styling_vote_item si where s.styling_vote_seq=si.styling_vote_seq)selvote where styling_vote_seq = #{styling_vote_seq} -->
+	select *  from styling_vote_item where styling_vote_seq = #{styling_vote_seq}
+	</select>
+	
+	<select id="selectDidVote" parameterType="sparam" resultType="int">
+		select count(*) from styling_vote_user where styling_vote_seq= #{styling_vote_seq} and user_seq=#{seq}
+	</select>
 	
 
 </mapper>
