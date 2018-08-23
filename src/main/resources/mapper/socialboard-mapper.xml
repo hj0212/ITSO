@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SocialBoard">
+	<!--최신  -->
+	<select id="showSocialBoardList" resultType="sdto">
+		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq		
+		<if test="age gt 0">
+			<!-- 연령순 -->
+			and age=#{age}
+		</if>
+		<if test="gender !=null and gender !='g'.toString() ">
+			<!--성별  -->
+
+			and gender = #{gender}
+			
+		</if>		
+		order by social_date desc
+	</select>
+	
+	<select id="showSocialHotBoardList" resultType="sdto">
+		select s.*,sg.count count from social s,(select social_seq,count(*) count from social_good GROUP by social_seq)sg where s.SOCIAL_SEQ = sg.social_seq
+		
+			<if test="age gt 0">
+			 	and s.AGE= #{age}
+			</if>
+			<if test="gender !=null and gender !='g'.toString()">
+				and s.GENDER=#{gender}
+			</if> 
+		ORDER by count desc
+	</select>
+	
+	<select id="showSocialFollowBoardList" resultType="sdto">
+	select s.*from(select following_seq from follow where USER_SEQ =#{social_seq})f,SOCIAL s where f.following_seq = s.SOCIAL_WRITER
+		<if test="age gt 0">
+			and s.AGE=#{age}
+		</if>
+		<if test="gender !=null and gender !='g'.toString()">
+			and s.GENDER=#{gender}
+		</if>
+		order by s.social_date desc
+	</select>
+	
+	<insert id="insertSocialBoard" parameterType="sdto">
+		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{gender},#{age})
+	</insert>
+	
+	<select id="selectSocialBoard" parameterType="int" resultType="sdto">
+		select * from social where social_seq = #{0}
+	</select>
+	
+	<update id="updateSocialBoard" parameterType="sdto">
+		update social set social_title = #{social_title}, social_contents = #{social_contents}, gender = #{gender}, age = #{age} where social_seq = #{social_seq}	
+	</update>
+	
+	<select id="deleteSocialBoard" parameterType="int">
+	 	delete from social where social_seq=#{0}
+	</select>
+	
+	<select id="selectSocialWriter" parameterType="int" resultType="java.lang.Integer">
+		select social_writer from social where social_seq = #{0}
+	</select>
+	
+	<select id="getMySocialList" parameterType ="dto" resultType="sdto">
+		select s.*, u.name social_writerName from social s, users u where s.social_writer = u.seq and s.social_writer=#{seq} order by social_date desc
+	</select>
+	
+	<select id="getSocialBoardcurrval" resultType="int">
+		select social_seq.currval from dual
+	</select>
+	
+	<select id="getCollectionSocialList" resultType="sdto">
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, to_char(s.social_date, 'YYYY/MM/DD') social_date,  s.photo, s.gender, s.age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+	</select>
+	
+	<!--좋아요 select insert delete -->
+	<select id="selectGoodCount" resultType="int" >
+		select count(*) from social_good where user_seq=#{user_seq} and social_seq=#{social_seq}
+	</select>
+	<insert id="insertGoodCount" >
+		insert into social_good values(social_good_seq.nextval,#{social_seq},#{user_seq})
+	</insert>
+	<delete id="deleteGoodCount" >
+		delete from social_good where user_seq=#{user_seq} and social_seq=#{social_seq}
+	</delete>
+	<select id="allGoodCount" resultType="int" >
+		select count(*) from social_good where social_seq =#{social_seq}
+	</select>
+	<select id="getMyGoodSocialList" resultType="sdto">
+		select social_seq from social_good where user_seq = #{seq}
+	</select>
+	
+</mapper>

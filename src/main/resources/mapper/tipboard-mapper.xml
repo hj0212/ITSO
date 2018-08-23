@@ -4,19 +4,109 @@
 
 <mapper namespace="TipBoard">
 
-<resultMap type="TipDTO" id="TipDTOResultMap">
+	<resultMap type="TipDTO" id="TipDTOResultMap">
+		<result property="tip_seq" column="tip_seq" jdbcType="INTEGER"
+			javaType="java.lang.Integer" />
+		<result property="tip_title" column="tip_title" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="tip_contents" column="tip_contents" jdbcType="CLOB"
+			javaType="java.lang.String" />
+		<result property="tip_writer" column="tip_writer" jdbcType="INTEGER"
+			javaType="java.lang.Integer" />
+		<!-- <result property="tip_date" column="tip_date" jdbcType="DATE" javaType="java.util.Date"/> -->
+		<result property="tip_viewcount" column="tip_viewcount"
+			jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="category" column="category" jdbcType="VARCHAR"
+			javaType="java.lang.String" />
+		<result property="tip_like_count" column="tip_like_count"
+			jdbcType="INTEGER" javaType="java.lang.Integer" />
+	</resultMap>
 
-<result property="tip_title" column="tip_title" jdbcType="VARCHAR" javaType="java.lang.String"/>
-<result property="tip_contents" column="tip_contents" jdbcType="CLOB" javaType="java.lang.String" />
-<result property="tip_writer" column="tip_writer" jdbcType="INTEGER" javaType="java.lang.Integer"/>
-<!-- <result property="tip_date" column="tip_date" jdbcType="DATE" javaType="java.util.Date"/> -->
-<result property="tip_viewcount" column="tip_viewcount" jdbcType="VARCHAR" javaType="java.lang.String"/>
-<result property="category" column="category" jdbcType="VARCHAR" javaType="java.lang.String"/>
-</resultMap>
+	<!-- 글쓰기 sql -->
+	<insert id="insertData" parameterType="TipDTO">
+		insert into TIP
+		values(TIP_SEQ.NEXTVAL,#{tip_title},#{tip_contents},#{tip_writer},sysdate,#{tip_viewcount},#{category})
+	</insert>
 
 
-<insert id="insertData" parameterType="TipDTO">
-insert into TIP values(TIP_SEQ.NEXTVAL,#{tip_title},#{tip_contents},#{tip_writer},sysdate,#{tip_viewcount},#{category})
-</insert>
+	<!-- tip delete sql -->
+	<delete id="deleteSpecificTip" parameterType="TipDTO">
+		{ call
+		declare
+		begin
+		delete from tip_comment where tip_seq = #{tip_seq};
+		delete from
+		tip_good where tip_seq=#{tip_seq};
+		delete from tip where tip_seq =
+		#{tip_seq};
+		end }
+	</delete>
+
+	<!-- tip articles get sql -->
+	<select id="getBeautyTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
+		select * from users u, tip t left outer join (select tip_seq, count(*)
+		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
+		tg.tip_seq where t.tip_writer=u.seq and t.category='뷰티' order by
+		t.TIP_SEQ desc
+	</select>
+
+	<select id="getDietTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
+		select * from users u, tip t left outer join (select tip_seq, count(*)
+		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
+		tg.tip_seq where t.tip_writer=u.seq and t.category='다이어트' order by
+		t.TIP_SEQ desc
+	</select>
+
+	<select id="getFashionTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
+		select * from users u, tip t left outer join (select tip_seq, count(*)
+		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
+		tg.tip_seq where t.tip_writer=u.seq and t.category='패션' order by
+		t.TIP_SEQ desc
+	</select>
+
+
+	<select id="getBusinessTipData" parameterType="TipDTO"
+		resultMap="TipDTOResultMap">
+		select * from users u, tip t left outer join (select
+		tip_seq, count(*)
+		tip_like_count from tip_good group by tip_seq) tg on
+		t.tip_seq =
+		tg.tip_seq where t.tip_writer=u.seq and t.category='직장생활'
+		order by
+		t.TIP_SEQ desc
+	</select>
+
+	<!-- getToBeUpvotingArticles 50>tip_like_count>15 -->
+	<select id="getUpvotingArticles" parameterType="TipDTO"
+		resultMap="TipDTOResultMap">
+		<!-- select * from tip t left outer join (select tip_seq, count(*) tip_like_count 
+			from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq where <![CDATA[ 
+			(tg.tip_like_count>15) and (tg.tip_like_count<50) ]]>order by tg.tip_like_count 
+			desc -->
+		select * from users u, tip t left outer join (select tip_seq, count(*)
+		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
+		tg.tip_seq where u.seq = t.tip_writer and <![CDATA[ (tg.tip_like_count>15) and (tg.tip_like_count<50) ]]>
+		order by tg.tip_like_count desc
+	</select>
+
+
+	<!-- specific article get sql by #{tip_seq} number -->
+	<select id="getSpecificTipView" parameterType="TipDTO"
+		resultMap="TipDTOResultMap">
+		select * from Tip where tip_seq=#{seq}
+	</select>
+
+	<!-- tip board viewcount +1 proc -->
+	<update id="viewCountPlus" parameterType="TipDTO">
+		update tip set
+		tip_viewcount = tip_viewcount+1 where tip_seq=#{seq}
+	</update>
+
+	<!-- tipArticle Like +1 Proc -->
+	<insert id="tipArticleLikeProc" parameterType="HashMap">
+		insert into
+		tip_good
+		values(TIP_GOOD_SEQ.NEXTVAL,#{seq},#{tipLikingUser,jdbcType=INTEGER,javaType=Integer})
+	</insert>
 
 </mapper>
