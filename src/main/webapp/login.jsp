@@ -131,6 +131,8 @@ body, html {
 #cancel:hover {
 	border: 2px solid #feff19;
 }
+
+
 </style>
 <script>
 $(document).ready(function () {
@@ -246,13 +248,14 @@ $(document).ready(function () {
         $("#userform").attr("action", "login.do");
         $("#userform").submit();
     });
+    
 
 });
 
 </script>
 </head>
 <body>
-
+		
 	<!--back ground-->
 	<div class="bg view overlay">
 		<!--  <div class="">-->
