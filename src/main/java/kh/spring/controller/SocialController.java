@@ -199,7 +199,6 @@ public class SocialController {
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
 			mav.addObject("socialList",result);
-
 		}
 		return mav;
 	}
