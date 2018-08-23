@@ -149,12 +149,10 @@ button.dropdown-toggle {
 }
 
 #sidefooter {
-	width: 300px;
+	width: 100%;
 	bottom: 0px;
-	right: 50px;
-	position: fixed;
 	border-top: 2px solid black;
-	display: none;
+	text-align: center;
 }
 
 #sidefooter p {
@@ -182,8 +180,11 @@ button.dropdown-toggle {
 	color: aqua;
 }
 
-.btn-floating{
+.btn-floating {
 	
+}
+.footer-brand{
+	width: 70px;
 }
 </style>
 <script>
@@ -222,16 +223,22 @@ button.dropdown-toggle {
 
 		$(function() {
 			$(window).scroll(function() {
+				var scrolltop = $(window).scrollTop();
 				if ($(this).scrollTop() > 500) {
 					$('#MOVE_TOP_BTN').fadeIn();
-
-					$('#sidefooter').fadeIn();
 				} else {
 					$('#MOVE_TOP_BTN').fadeOut();
-					$('#sidefooter').fadeOut();
+
 				}
 
+				if (scrolltop == $(document).height() - $(window).height()) {
+					$("#sidefooter").fadeIn();
+				} else {
+					$("#sidefooter").fadeOut();
+				}
 			});
+
+			출처: http: //palpit.tistory.com/360 [palpit's log-b]
 
 			$("#MOVE_TOP_BTN").click(function() {
 				$('html, body').animate({
@@ -454,22 +461,24 @@ button.dropdown-toggle {
 										</button>
 										<!--share-->
 										<div id="share-btn">
-										<!--instagram-->
-										<button type="button"
-											class="btn-floating btn-sm btn-is share "
-											style=" float:right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-											<i class="fa fa-instagram"></i>
-										</button>
-										<!--twitter-->
-										<button type="button" class="btn-floating btn-sm btn-tw share"
-											style="float:right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
-											<i class="fa fa-twitter"></i>
-										</button>
-										<!--facebook-->
-										<button type="button" class="btn-floating btn-sm btn-fb share "
-											style="float:right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
-											<i class="fa fa-facebook-f"></i>
-										</button>
+											<!--instagram-->
+											<button type="button"
+												class="btn-floating btn-sm btn-is share "
+												style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
+												<i class="fa fa-instagram"></i>
+											</button>
+											<!--twitter-->
+											<button type="button"
+												class="btn-floating btn-sm btn-tw share"
+												style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
+												<i class="fa fa-twitter"></i>
+											</button>
+											<!--facebook-->
+											<button type="button"
+												class="btn-floating btn-sm btn-fb share "
+												style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
+												<i class="fa fa-facebook-f"></i>
+											</button>
 										</div>
 									</div>
 								</div>
@@ -525,18 +534,20 @@ button.dropdown-toggle {
 
 					</div></li>
 			</ul>
-			<!--side footer -->
-			<div id="sidefooter">
-				<p>©2018 ItSo. All rights reserved.</p>
-				<p>
-					<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
-					<a href="#">advertise</a>· <a href="#">legal</a>
-				</p>
-			</div>
-
 
 		</div>
+	
 	</div>
+		<!--side footer -->
+		<div id="sidefooter">
+			
+			<p><a class="footer-brand" href="#"><img id="logo" alt=""
+			src="resources/images/logo_black.png"></a>©2018 ItSo. All rights reserved.</p>
+			<p>
+				<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
+				<a href="#">advertise</a>· <a href="#">legal</a>
+			</p>
+		</div>
 </body>
 <!-- JQuery -->
 <script type="text/javascript"
