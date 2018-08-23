@@ -133,26 +133,24 @@ public class AjaxController {
 	
 	@RequestMapping("/followUser.ajax")
 	public @ResponseBody String followProc(int seq, String text, HttpSession session, HttpServletResponse resp) {
-		System.out.println("여기");
 		FollowDTO dto = new FollowDTO();
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 
-		if(text.equals("팔로우")) {
-			dto.setUser_seq(user_seq);
-			dto.setFollowing_seq(seq);
-			int result = service.insertFollowData(dto);
-			String resultmsg = result>0?"팔로우성공":"팔로우실패";
-			System.out.println(resultmsg);
-			return "언팔로우";
-		} else {
-			dto.setUser_seq(user_seq);
-			dto.setFollowing_seq(seq);
-			int result = service.deleteFollowData(dto);
-			String resultmsg = result>0?"언팔로우성공":"언팔로우실패";
-			System.out.println(resultmsg);
-			return "팔로우";
-		}
+		dto.setUser_seq(user_seq);
+		dto.setFollowing_seq(seq);
 		
+		System.out.println("text:" + text);
+		String resultmsg = "";
+		if(text.contains("언팔로우")) {
+			int result = service.deleteFollowData(dto);
+			resultmsg = result>0?"언팔로우성공":"언팔로우실패";
+			System.out.println(resultmsg);
+		} else {
+			int result = service.insertFollowData(dto);
+			resultmsg = result>0?"팔로우성공":"팔로우실패";
+			System.out.println(resultmsg);
+		}
+		return resultmsg;
 	}
 	
 	
