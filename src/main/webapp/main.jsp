@@ -536,8 +536,9 @@ button.dropdown-toggle {
 									
 									
 									<input type="hidden" value="${list.social_writer }" class="writerseq"/>
+									<input type="hidden" value="${list.social_seq }" class="socialseq"/>
 									<button type="button" class="btn btn-indigo savebtn" data-toggle="modal" data-target="#saveModal">
-										<i class="fa fa-upload" value="${list.social_seq }"> <span
+										<i class="fa fa-upload" > <span
 											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
 									</button>
 									<!--share-->
@@ -750,7 +751,7 @@ button.dropdown-toggle {
 	
 	social_seq = 0;
 	$('.savebtn').on("click", function() {
-		social_seq=$(this).find(".fa").val();
+		social_seq=$(this).siblings(".socialseq").val();
 		console.log(social_seq);
 	})
 
@@ -797,6 +798,10 @@ button.dropdown-toggle {
 
 	$("#createModal").on('show.bs.modal', function() {
 		$("#saveModal").hide();
+	});
+	
+	$("#createModal").on('hidden.bs.modal', function() {
+		$("#saveModal").show();
 	});
 	
 	</script>
