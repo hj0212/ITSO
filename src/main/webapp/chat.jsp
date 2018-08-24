@@ -15,7 +15,6 @@
 <title>JSP</title>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/sockjs.js"/>"></script>
 
 <script type="text/javascript">
 
@@ -23,64 +22,38 @@
 
         $("#sendBtn").click(function() {
 
-            sendMessage();
+            send_Message();
 
         });
 
+    
+
+    var ws="";
+	function send_Message() {
+		ws = new WebSocket("ws://localhost:8080/echo/websocket");
+		ws.onopen = function(event) {
+			onOpen(event);
+		};
+		ws.onmessage = function(event) {
+			onMessage(event)
+		};
+		ws.onerror = function(event) {
+			onError(event);
+		};
+	}
+		function onOpen(event){
+			console.log("onOpen");
+			ws.send($("#message").val());
+		}
+		function onMessage(event){
+			$("body").html(event);
+			console.log("돌아왔어");
+		}
+		function onError(event){
+			console.log("에러입니다");
+		}
+	
     });
-
-    var sock;
-
-    //웸소켓을 지정한 url로 연결한다.
-
-    sock = new SockJS("<c:url value="/echo"/>");
-
-
-    //자바스크립트 안에 function을 집어넣을 수 있음.
-
-    //데이터가 나한테 전달되읐을 때 자동으로 실행되는 function
-
-    sock.onmessage = onMessage;
-
-
-    //데이터를 끊고싶을때 실행하는 메소드
-
-    sock.onclose = onClose;
-
-
-    /* sock.onopen = function(){
-
-        sock.send($("#message").val());
-
-    }; */
-
-    function sendMessage() {
-
-        /*소켓으로 보내겠다.  */
-
-        sock.send($("#message").val());
-
-    }
-
-    //evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
-
-    function onMessage(evt) {
-
-        var data = evt.data;
-
-        $("#data").append(data + "<br/>");
-
-        //sock.close();
-
-    }
-
-
-    function onClose(evt) {
-
-        $("#data").append("연결 끊김");
-
-    }
-
 </script>
 
 </head>
