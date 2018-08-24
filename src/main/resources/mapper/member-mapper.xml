@@ -6,7 +6,7 @@
 		select * from users where email=#{email} and pw=#{pw}
 	</select>
 	<insert id="insertData" parameterType="dto" >
-		insert into users values(users_seq.nextval,#{email},#{pw},#{name},#{g_email,jdbcType=VARCHAR},#{g_name,jdbcType=VARCHAR},#{part},SYSDATE,#{withdrawal},#{photo},#{block},#{state},#{age})
+		insert into users values(users_seq.nextval,#{email},#{pw},#{name},#{g_email,jdbcType=VARCHAR},#{g_name,jdbcType=VARCHAR},#{part},SYSDATE,#{withdrawal},#{photo},#{block},#{state},#{age}, #{gender})
 	</insert>
 	<update id="updateData" parameterType="dto">
 		update users set pw=#{pw}, name=#{name}, state=#{state}, age=#{age} where seq=#{seq}

@@ -12,7 +12,7 @@
 }
 
 body {
-	font-family: 'NanumbarunpenR' ;
+	font-family: 'NanumbarunpenR';
 	margin: 0px;
 }
 
@@ -37,11 +37,11 @@ nav {
 }
 
 /* 알림 */
-
 .notification-heading {
 	height: 30px;
 	line-height: 30px;
 }
+
 .notification-heading .heading-left {
 	text-align: left;
 	padding-left: 20px;
@@ -73,41 +73,42 @@ nav {
 	font-size: 15px;
 }
 
-@media (max-width: 575px) {
+@media ( max-width : 575px) {
 	.notification-info {
 		border-radius: 5px;
 		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 		color: #27303d;
 		min-width: 300px;
-	    top: 200px;
-	    right: auto;
-	    left: 150px;
-	    transform: translate(-50%, 0);
-	    position: absolute;
-	    box-sizing: border-box;
-	    display: none;
-	    background-color: #fff;
+		top: 200px;
+		right: auto;
+		left: 150px;
+		transform: translate(-50%, 0);
+		position: absolute;
+		box-sizing: border-box;
+		display: none;
+		background-color: #fff;
 		z-index: 1000;
 	}
 }
 
-@media (min-width: 576px) {
+@media ( min-width : 576px) {
 	.notification-info {
 		border-radius: 5px;
 		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 		color: #27303d;
 		min-width: 300px;
-	    top: 61px;
-	    right: 0;
-	    left: auto;
-	    transform: translate(-50%, 0);
-	    position: absolute;
-	    box-sizing: border-box;
-	    display: none;
-	    background-color: #fff;
+		top: 61px;
+		right: 0;
+		left: auto;
+		transform: translate(-50%, 0);
+		position: absolute;
+		box-sizing: border-box;
+		display: none;
+		background-color: #fff;
 		z-index: 1000;
 	}
 }
+
 .notification-item:hover {
 	background: #e9e9e9;
 }
@@ -116,43 +117,53 @@ nav {
 	text-align: center;
 }
 
-@media (min-width: 400px) {
-    .navbar-expand-ssm {
-        -ms-flex-flow: row nowrap;
-        flex-flow: row nowrap;
-        -ms-flex-pack: start;
-        justify-content: flex-start;
-    }
-    .navbar-expand-ssm .navbar-nav {
-        -ms-flex-direction: row;
-        flex-direction: row;
-    }
-    .navbar-expand-ssm .navbar-nav .dropdown-menu {
-        position: absolute;
-    }
-    .navbar-expand-ssm .navbar-nav .nav-link {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-    }
-    .navbar-expand-ssm > .container,
-    .navbar-expand-ssm > .container-fluid {
-        -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
-    }
-    .navbar-expand-ssm .navbar-collapse {
-        display: -ms-flexbox !important;
-        display: flex !important;
-        -ms-flex-preferred-size: auto;
-        flex-basis: auto;
-    }
-    .navbar-expand-ssm .navbar-toggler {
-        display: none;
-    }
+@media ( min-width : 400px) {
+	.navbar-expand-ssm {
+		-ms-flex-flow: row nowrap;
+		flex-flow: row nowrap;
+		-ms-flex-pack: start;
+		justify-content: flex-start;
+	}
+	.navbar-expand-ssm .navbar-nav {
+		-ms-flex-direction: row;
+		flex-direction: row;
+	}
+	.navbar-expand-ssm .navbar-nav .dropdown-menu {
+		position: absolute;
+	}
+	.navbar-expand-ssm .navbar-nav .nav-link {
+		padding-right: 0.5rem;
+		padding-left: 0.5rem;
+	}
+	.navbar-expand-ssm>.container, .navbar-expand-ssm>.container-fluid {
+		-ms-flex-wrap: nowrap;
+		flex-wrap: nowrap;
+	}
+	.navbar-expand-ssm .navbar-collapse {
+		display: -ms-flexbox !important;
+		display: flex !important;
+		-ms-flex-preferred-size: auto;
+		flex-basis: auto;
+	}
+	.navbar-expand-ssm .navbar-toggler {
+		display: none;
+	}
+	@media ( min-width : 768px) {
+		#searchinput {
+			margin: 0px auto;
+			display: inline;
+		}
+	}
+	#searchIcon {
+		size: 30px;
+		cursor: pointer;
+		position: inherit;
+	}
 }
 </style>
 
 <nav class="navbar navbar-expand-sm navbar-dark" id="nav1">
-	<a class="navbar-brand" href="#"><img id="logo" alt=""
+	<a class="navbar-brand" href="main.go"><img id="logo" alt=""
 		src="resources/images/logo_white_no.png"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbar1" aria-controls="navbar1" aria-expanded="false"
@@ -171,7 +182,17 @@ nav {
             </div>
             <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
         </form> -->
+        <form class="form-inline lg-form form-lg" style="width: 600px;">
+			<input class="form-control form-control-sm mr-3 w-75" type="text"
+				placeholder="Search" aria-label="Search" id="searchinput">
+			<i id="searchIcon" class="fa fa-search" aria-hidden="true" style="color: white;"></i>
+		</form>
+        
 		<ul class="navbar-nav ml-auto nav-flex-icons">
+			<li class="nav-item" id="searchli"><a
+				class="nav-link waves-effect waves-light" id="searchshow"> <i
+					class="fa fa-search"></i>검색
+			</a></li>
 			<li class="nav-item" id="tooltip"><a
 				class="nav-link waves-effect waves-light"> <i class="fa fa-bell"></i>
 					알림
@@ -295,7 +316,27 @@ nav {
 				$("#navbar2 > ul:nth-of-type(2)").hide();
 			}
 		}
-	})
+	});
+
+	$("#searchIcon").hide();
+	$("#searchinput").hide();
+
+	$("#searchshow").click(function() {
+		$("#searchIcon").toggle();
+		$("#searchinput").toggle();
+
+	});
+
+	$("#searchIcon").click(function() {
+		var input = $("#searchinput").val();
+		if (input == "") {
+			$("#searchIcon").toggle("fast");
+			$("#searchinput").toggle("slow");
+
+		} else {
+			console.log("search");
+		}
+	});
 
 	function toggleTooltip() {
 		let contents = document.getElementById("notification-info");
@@ -307,5 +348,4 @@ nav {
 	}
 	let toggle = document.getElementById("tooltip");
 	toggle.addEventListener("click", toggleTooltip, false);
-	
 </script>
