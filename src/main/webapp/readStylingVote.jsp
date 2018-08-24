@@ -104,7 +104,7 @@ input[type="file"] {
 	<div class="row my-5"></div>
 	<div id="wrapper" class="container-fluid col-md-8">
 		<h4>
-			투표하기
+			투표
 			<script>
 				console.log("${sessionScope.user.seq}");
 			</script>
@@ -140,7 +140,7 @@ input[type="file"] {
 		<div class="row my-2">
 			<div class="md-form form-lg col-4 mx-0">
 				<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
-					alt="사진 없음" id="votetitleimg">
+					alt="사진 없음" id="votetitleimg" style="width:100%">
 			</div>
 			<div class="md-form form-lg col-7 offset-md-5 mx-0">
 				<h4>투표주제: ${votedto.styling_title}</h4>
@@ -263,6 +263,17 @@ input[type="file"] {
 			}else if(voteval == null){
 				alert("투표할 항목을 선택해 주세요.");
 			}		
+		});
+		
+		$('#delbtn').click(function(){
+			var delvote =confirm("글을 삭제하시겠습니까?");
+			if(delvote){
+				location.href="deleteStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}";
+			}
+		})
+		
+		$('#modibtn').click(function(){
+			location.href="modifyStylingVote.go?styling_vote_seq=${votedto.styling_vote_seq}";
 		})
 
 		$(function() {

@@ -37,6 +37,7 @@ public class StylingDAOImpl implements IStylingDAO{
 
 	@Override
 	public List<StylingVoteDTO> selectStylingBoard() {
+		System.out.println("콘은 온다");
 		return template.selectList("Styling.selectStylingBoard");
 	}
 
@@ -59,6 +60,16 @@ public class StylingDAOImpl implements IStylingDAO{
 	@Override
 	public int doStylingVote(StylingVoteUserDTO votedto) {
 		return template.insert("Styling.doStylingVote",votedto);
+	}
+
+	@Override
+	public int deleteStylingVote(int styling_vote_seq) {
+		return template.update("Styling.deleteStylingVote",styling_vote_seq);
+	}
+
+	@Override
+	public int modifyStylingVote(int styling_vote_seq) {
+		return template.update("Styling.modifyStylingVote",styling_vote_seq);
 	}
 	
 }

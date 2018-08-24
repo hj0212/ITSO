@@ -16,4 +16,6 @@ public interface IStylingService {
 	public List<StylingVoteItemDTO> selectStylingVoteItem(int styling_vote_seq);
 	public int selectDidVote(int seq, int styling_vote_seq);
 	public int doStylingVote(StylingVoteUserDTO votedto);
+	public int deleteStylingVote(int styling_vote_seq);
+	public int modifyStylingVote(int styling_vote_seq);
 }

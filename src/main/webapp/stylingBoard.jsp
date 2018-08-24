@@ -143,7 +143,7 @@ input[type="file"] {
 									</p>
 									<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 									<button type="button" class="btn btn-light-blue btn-md gobtn">투표
-										하기</button>
+										보기</button>
 									<input type="hidden" value="${svdto.styling_vote_seq}">
 								</div>
 							</div>
@@ -217,7 +217,7 @@ input[type="file"] {
 		};
 
 		$('#writevotebtn').click(function() {
-			location.href = "voteStyling.jsp"
+			location.href = "voteStyling.go"
 		})
 
 		$('.gobtn').click(function() {

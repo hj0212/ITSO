@@ -66,5 +66,17 @@ public class StylingServiceImpl implements IStylingService{
 		return result;
 	}
 
+	@Override
+	public int deleteStylingVote(int styling_vote_seq) {
+		int delresult = sdao.deleteStylingVote(styling_vote_seq);
+		return delresult;
+	}
+
+	@Override
+	public int modifyStylingVote(int styling_vote_seq) {
+		int modiresult = sdao.modifyStylingVote(styling_vote_seq);
+		return modiresult;
+	}
+
 
 }

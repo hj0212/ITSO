@@ -39,11 +39,22 @@ public class StylingController {
 		mav.setViewName("stylingBoard.jsp");
 		return mav;
 	}
+	@RequestMapping("/voteStyling.go")
+	public String govoteStyling(HttpSession session) {	
+		String addr = "";
+		try {
+			int seq=((MemberDTO)session.getAttribute("user")).getSeq();
+			addr = "redirect:voteStyling.jsp";			
+		}catch(Exception e) {
+			addr="redirect:login.go";
+		}
+		return addr;
+	}
 	
 	@RequestMapping("/readStylingVote.style")
 	public ModelAndView goStylingBoard(HttpSession session, @RequestParam int styling_vote_seq) {
 		ModelAndView mav = new ModelAndView();
-			
+		try {	
 		StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
 		List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
 		int seq=((MemberDTO)session.getAttribute("user")).getSeq();
@@ -55,17 +66,61 @@ public class StylingController {
 		mav.addObject("voteitems",svitemdtos);
 		mav.addObject("votedto",votedto);
 		mav.setViewName("readStylingVote.jsp");
+		}catch(Exception e) {
+			mav.setViewName("login.go");
+		}
 		return mav;
 	}
 	
-
+	@RequestMapping("/modifyStylingVote.go")
+	public ModelAndView gomodifyStylingVote(HttpSession session, @RequestParam int styling_vote_seq) {
+		ModelAndView mav = new ModelAndView();
+		
+		StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
+		List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
+		
+		
+		mav.addObject("voteitems",svitemdtos);
+		mav.addObject("votedto",votedto);
+		mav.setViewName("modiStylingVote.jsp");
+		return mav;
+	}
+	
+	
+	
+	@RequestMapping("/deleteStylingVote.style")
+	public ModelAndView deleteStylingVote(HttpSession session, @RequestParam int styling_vote_seq) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(styling_vote_seq);
+		int delresult = styservice.deleteStylingVote(styling_vote_seq);
+		
+		mav.addObject("delresult",delresult);	
+		mav.setViewName("stylingBoard.style");
+		return mav;
+	}
+	
+	/*@RequestMapping("/modifyStylingVote.style")
+	public ModelAndView modifyStylingVote(HttpSession session, @RequestParam int styling_vote_seq) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(styling_vote_seq+"번 글 수정 Ctrl");
+		int modiresul = styservice.modifyStylingVote(styling_vote_seq);
+		
+		mav.addObject("modiresult",modiresult);	
+		mav.setViewName("readStylingVote.style?styling_vote_seq="+ styling_vote_seq);
+		return mav;
+	}*/
+	
 	@RequestMapping("/insertStylingVote.style")
-	public ModelAndView insertStylingVote(HttpSession session, StylingVoteDTO svdto, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts) {
+	public ModelAndView insertStylingVote(HttpSession session, StylingVoteDTO svdto, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
 		/*		System.out.println(svdto.getStyling_end());
 		System.out.println(svdto.getStyling_title());*/		
+		
 		ModelAndView mav = new ModelAndView();
-		MemberDTO user =(MemberDTO)session.getAttribute("user");				
+		try {
+		MemberDTO user =(MemberDTO)session.getAttribute("user");
+		svdto.setStyling_writeip(req.getRemoteAddr());
 		svdto.setStyling_writer(user.getSeq());
+		
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
 
 		//사진파일 업로드-주제
@@ -79,7 +134,7 @@ public class StylingController {
 					sfileName = System.currentTimeMillis() + "_" + ofileName;
 					/*System.out.println("sfileName : " + sfileName);*/		
 					svdto.setPhoto(sfileName);
-					System.out.println("성공인가");
+					/*System.out.println("성공인가");*/
 				}
 			}
 			try {
@@ -124,7 +179,7 @@ public class StylingController {
 				}
 			}
 		}
-		System.out.println(itemconts.size()+"개가 왔다 왔어!");
+		/*System.out.println(itemconts.size()+"개가 왔다 왔어!");*/
 		for(int i=0; i<itemconts.size(); i++) {
 			StylingVoteItemDTO svitemdto = new StylingVoteItemDTO();
 			svitemdto.setStyling_vote_seq(stylingseq);
@@ -133,9 +188,11 @@ public class StylingController {
 			styservice.insertStylingVoteItem(svitemdto);
 			insertitem+=1;
 		}
-				
 		mav.addObject("result",insertResult);
 		mav.setViewName("stylingBoard.style");
+		}catch(Exception e) {
+			mav.setViewName("login.go");
+		}
 		return mav;
 
 	}
