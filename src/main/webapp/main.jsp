@@ -747,14 +747,23 @@ button.dropdown-toggle {
 		social_seq=$(this).siblings(".socialseq").val();
 		console.log(social_seq);
 		
-		/* 여기 하는중 */
-		for(var i=1; i<5; i++) {
-			var collection_socialseq = $(".collectionItem:nth-of-type("+i+")").find(".socialseq").val();
-			console.log("검사 : " + social_seq + ":" + collection_socialseq );
-			if(social_seq == collection_socialseq) {
-				$(".collectionItem:nth-of-type("+i+")").addClass("active");
-				break;
+		var clistsize = "${fn:length(collectionList)}";
+		
+		for(var i=1; i<=clistsize; i++) {
+			var cursor = $(".collectionItem:nth-of-type("+i+")");
+			var plistsize = cursor.find(".collectionPhotoItem").length;
+			
+			for(var j=1; j<=plistsize; j++) {
+				collection_socialseq = $(".collectionPhotoItem:nth-of-type("+j+")").find(".socialseq").val();
+				console.log("검사 : "+ j+ ":" + social_seq + ":" + collection_socialseq ); 
+				if(social_seq == collection_socialseq) {
+					cursor.addClass("active");
+					console.log("true");
+					break;
+				}
 			}
+			
+			
 		}
 	})
 
@@ -775,7 +784,7 @@ button.dropdown-toggle {
 	        },
 	        success:function(data){
 	        	console.log("ajax: " + data.photo +"," + data.social_seq)
-		        if(data.photo != null) {
+		        /* if(data.photo != null) {
 		        	console.log("여기");
 		          $(this).find(".collectionPhoto").append('<div class="collectionPhotoItem">'
 		          +'<img src="/upload/social/'+data.photo+'"> <input type="hidden" class="socialseq" value="'+data.social_seq+'">'
@@ -784,8 +793,13 @@ button.dropdown-toggle {
 		        	cursor.find(".collectionPhoto:last").attr("display", "none");
 		        }
 	        	}
-	        	cursor.addClass("active");
+	        	cursor.addClass("active"); */
+	        },
+	        error: function (response) {
+	            console.log("DB Failed")
 	        }
+	        
+	        
 	     });
 	 
 	})
