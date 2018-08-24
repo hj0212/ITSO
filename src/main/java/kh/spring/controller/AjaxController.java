@@ -80,7 +80,7 @@ public class AjaxController {
 	
 	
 	@RequestMapping("/saveCollection.ajax")
-	public @ResponseBody String saveCollection(int collection_seq, int social_seq, HttpSession session) {
+	public @ResponseBody Object saveCollection(int collection_seq, int social_seq, HttpSession session) {
 		System.out.println("ajax:"+collection_seq+":"+social_seq);
 		SocialBoardDTO dto = new SocialBoardDTO();
 		dto.setCollection_seq(collection_seq);
@@ -88,17 +88,17 @@ public class AjaxController {
 		
 		List<SocialBoardDTO> list = sservice.selectCollectionContent(dto);	// 테이블에 있는지
 		
-		String msg;
+		SocialBoardDTO result = null;
 		if(list.size() > 0) {
 			int delete = sservice.deleteCollectionContent(dto);
 			System.out.println(delete>0?"delete성공":"delete실패");
-			msg="delete";
+			result = dto;
 		}else {
 			int insert = sservice.insertCollectionContent(dto);
 			System.out.println(insert>0?"insert성공":"insert실패");
-			msg="insert";
+			result = sservice.selectSocialBoard(social_seq);
 		}
-		return msg;
+		return result;
 	}
 	
 	@RequestMapping("/createCollection.ajax")

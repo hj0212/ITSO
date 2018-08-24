@@ -303,8 +303,6 @@ button.dropdown-toggle {
 				}
 			});
 
-			출처: http: //palpit.tistory.com/360 [palpit's log-b]
-
 			$("#MOVE_TOP_BTN").click(function() {
 				$('html, body').animate({
 					scrollTop : 0
@@ -610,27 +608,22 @@ button.dropdown-toggle {
 											<input type="hidden" class="collectionseq" value="${clist.collection_seq }"/>
 											<div class="collectionPhoto">
 
-												<c:set var="check" value="true" />
 												<c:set var="num" value="0" />
 
 												<c:forEach items="${photoList }" var="plist"
 													varStatus="status">
 													<c:choose>
-														<c:when test="${check eq true }">
-															<c:if
-																test="${plist.collection_seq == clist.collection_seq }">
+														<c:when test="${num < 4 }">
+															<c:if test="${plist.collection_seq == clist.collection_seq }">
 																<c:set var="num" value="${num+1 }" />
 																
 																<div class="collectionPhotoItem"><img src="/upload/social/${plist.photo }"
 																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
-																<c:if test="${num == 4 || status.last}">
-																	<c:set var="check" value="false" />
-																</c:if>
 															</c:if>
 														</c:when>
 														<c:otherwise>
-
-
+															<div class="collectionPhotoItem" style="display:none;"><img src="/upload/social/${plist.photo }"
+																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
 														</c:otherwise>
 													</c:choose>
 
@@ -753,14 +746,26 @@ button.dropdown-toggle {
 	$('.savebtn').on("click", function() {
 		social_seq=$(this).siblings(".socialseq").val();
 		console.log(social_seq);
+		
+		/* 여기 하는중 */
+		for(var i=1; i<5; i++) {
+			var collection_socialseq = $(".collectionItem:nth-of-type("+i+")").find(".socialseq").val();
+			console.log("검사 : " + social_seq + ":" + collection_socialseq );
+			if(social_seq == collection_socialseq) {
+				$(".collectionItem:nth-of-type("+i+")").addClass("active");
+				break;
+			}
+		}
 	})
 
 	$("#collectionarea").on("click", ".collectionItem", function() {
-		$(this).toggleClass('active');
+		var cursor = $(this);
+		cursor.toggleClass('active');
 		var collection_seq =$(this).children(".collectionseq").val();
 		console.log("collection_seq: " + collection_seq);
-		
 		console.log("social_seq: "+social_seq);
+		
+		var num = $(this).find(".collectionPhotoItem").length;
 		$.ajax({
 	        url:"saveCollection.ajax",
 	        type:"post",
@@ -769,7 +774,17 @@ button.dropdown-toggle {
 	          social_seq:social_seq
 	        },
 	        success:function(data){
-	          console.log("들어옴:"+data);
+	        	console.log("ajax: " + data.photo +"," + data.social_seq)
+		        if(data.photo != null) {
+		        	console.log("여기");
+		          $(this).find(".collectionPhoto").append('<div class="collectionPhotoItem">'
+		          +'<img src="/upload/social/'+data.photo+'"> <input type="hidden" class="socialseq" value="'+data.social_seq+'">'
+		          +'</div>');
+		        if(num > 4) {
+		        	cursor.find(".collectionPhoto:last").attr("display", "none");
+		        }
+	        	}
+	        	cursor.addClass("active");
 	        }
 	     });
 	 
@@ -804,11 +819,20 @@ button.dropdown-toggle {
 		$("#saveModal").show();
 	});
 	
+	$("#saveModal").on('show.bs.modal', function() {
+		
+		
+		
+	});
+	
+	$("#saveModal").on('hidden.bs.modal', function() {
+		console.log("닫힘");
+		$(".collectionItem").removeClass("active");
+	});
+	
 	</script>
 </body>
-<!-- JQuery -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
