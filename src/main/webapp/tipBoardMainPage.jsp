@@ -95,8 +95,13 @@ table {
 
 <body>
 
+
+
+
 	<!-- navi -->
 	<%@include file="navi.jsp"%>
+
+<button class="btn btn-itso" onclick="javascript:location.href='goAdminPageWithAllAnalysisData.adm'">관리자 페이지</button>
 
 
 	<div id="wrapper" class="container-fluid col-md-8">
