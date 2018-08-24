@@ -31,7 +31,7 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = mservice.loginExist(dto);
 		if(result.size()>0) {
-			session.setMaxInactiveInterval(60*60);
+			session.setMaxInactiveInterval(120*120);
 			MemberDTO user = result.get(0);
 			session.setAttribute("user", user);
 		}

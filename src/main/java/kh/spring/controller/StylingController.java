@@ -46,16 +46,18 @@ public class StylingController {
 			
 		StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
 		List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
-		System.out.println("컨트롤러는 오냐");
-		/*int seq=((MemberDTO)session.getAttribute("user")).getSeq();*/
-		int seq =1;
+		int seq=((MemberDTO)session.getAttribute("user")).getSeq();
+		
 		int didvote = styservice.selectDidVote(seq,styling_vote_seq);
+		System.out.println("투표했냐"+didvote);
+		
 		mav.addObject("didVote",didvote);
 		mav.addObject("voteitems",svitemdtos);
 		mav.addObject("votedto",votedto);
 		mav.setViewName("readStylingVote.jsp");
 		return mav;
 	}
+	
 
 	@RequestMapping("/insertStylingVote.style")
 	public ModelAndView insertStylingVote(HttpSession session, StylingVoteDTO svdto, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts) {
@@ -63,7 +65,7 @@ public class StylingController {
 		System.out.println(svdto.getStyling_title());*/		
 		ModelAndView mav = new ModelAndView();
 		MemberDTO user =(MemberDTO)session.getAttribute("user");				
-		/*svdto.setStyling_writer(user.getSeq());*/
+		svdto.setStyling_writer(user.getSeq());
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
 
 		//사진파일 업로드-주제

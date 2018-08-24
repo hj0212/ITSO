@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
+import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IStylingDAO;
 import kh.spring.jsonobject.StylingParam;
 
@@ -53,6 +54,11 @@ public class StylingDAOImpl implements IStylingDAO{
 	public int selectDidVote(int seq,int styling_vote_seq) {
 		StylingParam param = new StylingParam(seq,styling_vote_seq);
 		return template.selectOne("Styling.selectDidVote",param);
+	}
+
+	@Override
+	public int doStylingVote(StylingVoteUserDTO votedto) {
+		return template.insert("Styling.doStylingVote",votedto);
 	}
 	
 }

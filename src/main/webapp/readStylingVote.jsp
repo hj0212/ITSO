@@ -105,25 +105,36 @@ input[type="file"] {
 	<div id="wrapper" class="container-fluid col-md-8">
 		<h4>
 			투표하기
-			<c:choose>
-			<c:when test="${sessionScope.user.seq eq votedto.styling_writer}">
-			<button class="btn btn-indigo btn-md float-right" type="button"
-				id="modibtn">글 수정</button>
-			<button class="btn btn-indigo btn-md float-right" type="button"
-				id="delbtn">글 삭제</button>
-			</c:when>
-			</c:choose>
-			<c:choose>
-			<c:when test="${didVote} eq 0">
-			<button class="btn btn-indigo btn-md float-right" type="button"
-				id="votebtn">투표하기</button>
-				</c:when>
-				<c:otherwise>
+			<script>
+				console.log("${sessionScope.user.seq}");
+			</script>
+			<script>
+				console.log("${votedto.styling_writer}");
+			</script>
+			<script>
+				console.log("투표여부:${didVote}");
+			</script>
+
+			<c:if test="${sessionScope.user.seq eq votedto.styling_writer}">
 				<button class="btn btn-indigo btn-md float-right" type="button"
-				id="votebtn" disabled>투표완료</button>
-				</c:otherwise>
-				</c:choose>
+					id="modibtn">글 수정</button>
+				<button class="btn btn-indigo btn-md float-right" type="button"
+					id="delbtn">글 삭제</button>
+			</c:if>
+
+			<c:choose>	
+				<c:when test="${didVote eq 0}">
+					<button class="btn btn-indigo btn-md float-right" type="button"
+						id="votebtn">투표하기</button>
+				</c:when>
+				<c:when test="${didVote >= 1}">
+					<button class="btn btn-indigo btn-md float-right" type="button"
+						id="votebtn" disabled>투표완료</button>
+				</c:when>				
+			</c:choose>
 		</h4>
+		<input type="hidden" id="sequenceId"
+			value="${votedto.styling_vote_seq}">
 
 		<hr />
 		<div class="row my-2">
@@ -132,8 +143,9 @@ input[type="file"] {
 					alt="사진 없음" id="votetitleimg">
 			</div>
 			<div class="md-form form-lg col-7 offset-md-5 mx-0">
-				<h4>${votedto.styling_title}</h4>
-				<p>${votedto.styling_contents}</p>
+				<h4>투표주제: ${votedto.styling_title}</h4>
+				<h6>작성자: ${votedto.styling_writername}</h6>
+				<p>" ${votedto.styling_contents} "</p>
 			</div>
 		</div>
 
@@ -146,41 +158,50 @@ input[type="file"] {
 				<table class="table table-borderless">
 					<thead>
 						<tr>
-							<th scope="col" style="width:20%">번호</th>
-							<th scope="col" style="width:80%">아이템 소개</th>
+							<th scope="col" style="width: 10%">번호</th>
+							<th scope="col" style="width: 70%">아이템 소개</th>
+							<th scope="col" style="width: 20%">결과</th>
 						</tr>
 					</thead>
-					<tbody id="itemlist">			
-					<c:forEach var="svitemdto" items="${voteitems}">
-						<tr>
-							<th scope="row">
-								<div class="custom-control custom-radio">
-									<input type="radio" class="custom-control-input"
-										id="defaultGroupExample1" name="groupOfDefaultRadios">
-									<span class="custom-control-label" for="defaultGroupExample1">
-										${svitemdto.styling_vote_item_seq}</span><span>결과(%)</span>
-								</div>
-							</th>
-							<td>
-								<div class="media">
-									<div class="media-img col-5">
-										<img
-											class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
-											style="width:90%" src="upload/stylingvote/${svitemdto.styling_vote_item_photo}" alt="후보사진">
+					<tbody id="itemlist">
+						<c:forEach var="svitemdto" items="${voteitems}" varStatus="status">
+							<tr> 
+								<th scope="row">
+									<div class="custom-control custom-radio" id="test${status.index}">
+										<input type="radio" class="custom-control-input"
+											id="defaultGroupExample${status.index}"
+											name="styling_votesel"
+											value="${svitemdto.styling_vote_item_seq}"> <span class="custom-control"
+											for="test${status.index}">
+											결과()
+										</span> <label
+											class="custom-control-label"
+											for="defaultGroupExample${status.index}" >
+										</label>
 									</div>
+								</th>
+								<td>
+									<div class="media">
+										<div class="media-img col-5">
+											<img
+												class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
+												style="width: 90%"
+												src="upload/stylingvote/${svitemdto.styling_vote_item_photo}"
+												alt="후보사진">
+										</div>
 
-									<div class="media-body image-upload-wrap form-group col-5"
-										id="btnsdiv">
+										<div class="media-body image-upload-wrap form-group col-5"
+											id="btnsdiv">
 
-										<div class="md-form form-sm">
-											<p>${svitemdto.styling_vote_item_contents}</p>
+											<div class="md-form form-sm">
+												<p>${svitemdto.styling_vote_item_contents}</p>
+											</div>
 										</div>
 									</div>
-								</div>
-							</td>
-						</tr>
-					</c:forEach>	
-						
+								</td>
+							</tr>
+						</c:forEach>
+
 					</tbody>
 				</table>
 			</div>
@@ -210,13 +231,38 @@ input[type="file"] {
 			return false;
 		};
 
-		$('#writevotebtn').click(function() {
-			location.href = "voteStyling.jsp"
-		})
-
-		$('.gobtn').click(function() {
+		/* $('.gobtn').click(function() {
 			var seq = $(this).next('input').val();
 			location.href = "readStylingVote.jsp?voteseq=" + seq;
+		}) */
+
+		$('#votebtn').click(function() {
+			
+			if(${sessionScope.user.seq == null}){
+				location.href="login.go";
+			}
+			var voteval = $('input[name ="styling_votesel"]:checked').val();
+			console.log("후보선택 : "+voteval);
+			if(voteval !=null){
+				$.ajax({
+					method : "POST",
+					url : "doStylingVote.ajax",			
+					data : {
+						value : voteval,
+						styling_vote_seq : $('#sequenceId').val()
+					},
+					error : function() {
+						alert("다시 시도해 주세요");
+					},
+					success : function(data) {
+						console.log("AJAX 투표 성공");
+						$('#votebtn').attr("disabled", true);
+						$('#votebtn').text("투표 완료");
+					}
+				});
+			}else if(voteval == null){
+				alert("투표할 항목을 선택해 주세요.");
+			}		
 		})
 
 		$(function() {

@@ -7,29 +7,29 @@
 		insert into
 		styling_vote values(styling_vote_seq.nextval, #{styling_title},
 		#{styling_contents},
-		1,sysdate,#{styling_viewcount},#{styling_end},#{styling_endterm,jdbcType=DATE},#{styling_voternum,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR})
+		#{styling_writer},sysdate,#{styling_viewcount},#{styling_end},#{styling_endterm,jdbcType=DATE},#{styling_voternum,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR})
 	</insert>
 
 	<select id="selectStylingSeq" resultType="int">
 		select styling_vote_seq.nextval from dual
 	</select>
 
-	<insert id="insertStylingVoteItem" parameterType="svitemdto">
+	<insert id="insertStylingVoteItem" parameterType="svitemDTO">
 		insert into styling_vote_item
 		values(#{styling_vote_seq},styling_vote_item_seq.nextval,
 		#{styling_vote_item_contents}, #{styling_vote_item_photo})
 	</insert>
 	
-	<select id="selectStylingBoard" resultType="svdto">
+	<select id="selectStylingBoard" resultType="svDTO">
 	select s.styling_vote_seq, s.styling_title, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s,users u where s.styling_writer = u.seq order by styling_writedate desc
 	</select>
 	
-	<select id="selectStylingVote" parameterType="int" resultType="svdto">
+	<select id="selectStylingVote" parameterType="int" resultType="svDTO">
 	<!-- select * from (select s.styling_vote_seq, s.styling_title, s.styling_contents, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end, s.styling_endterm,s.styling_voternum, s.photo, si.styling_vote_item_seq, si.styling_vote_item_contents,si.styling_vote_item_photo from styling_vote s, styling_vote_item si where s.styling_vote_seq=si.styling_vote_seq)selvote where styling_vote_seq = #{styling_vote_seq} -->
-	select *  from styling_vote where styling_vote_seq = #{styling_vote_seq}
+	select s.styling_vote_seq, s.styling_title, s.styling_contents, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s,users u where s.styling_writer = u.seq and s.styling_vote_seq = #{styling_vote_seq}
 	</select>
 	
-	<select id="selectStylingVoteItem" parameterType="int" resultType="svitemdto">
+	<select id="selectStylingVoteItem" parameterType="int" resultType="svitemDTO">
 	<!-- select * from (select s.styling_vote_seq, s.styling_title, s.styling_contents, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end, s.styling_endterm,s.styling_voternum, s.photo, si.styling_vote_item_seq, si.styling_vote_item_contents,si.styling_vote_item_photo from styling_vote s, styling_vote_item si where s.styling_vote_seq=si.styling_vote_seq)selvote where styling_vote_seq = #{styling_vote_seq} -->
 	select *  from styling_vote_item where styling_vote_seq = #{styling_vote_seq}
 	</select>
@@ -38,5 +38,10 @@
 		select count(*) from styling_vote_user where styling_vote_seq= #{styling_vote_seq} and user_seq=#{seq}
 	</select>
 	
+	<insert id="doStylingVote" parameterType="svuserDTO">
+		insert into styling_vote_user
+		values(#{styling_vote_seq},
+		#{user_seq}, #{vote_value})
+	</insert>
 
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
+import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IStylingService;
 
 
@@ -56,6 +57,12 @@ public class StylingServiceImpl implements IStylingService{
 	@Override
 	public int selectDidVote(int seq,int styling_vote_seq) {
 		int result = sdao.selectDidVote(seq,styling_vote_seq);
+		return result;
+	}
+
+	@Override
+	public int doStylingVote(StylingVoteUserDTO votedto) {
+		int result = sdao.doStylingVote(votedto);
 		return result;
 	}
 

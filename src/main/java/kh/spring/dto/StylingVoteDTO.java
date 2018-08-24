@@ -19,7 +19,7 @@ public class StylingVoteDTO {
 
 	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
 			String styling_writedate, int styling_viewcount, int styling_end, String styling_endterm,
-			int styling_voternum, String photo) {
+			int styling_voternum, String photo, String styling_writername) {
 		super();
 		this.styling_vote_seq = styling_vote_seq;
 		this.styling_title = styling_title;
@@ -31,7 +31,9 @@ public class StylingVoteDTO {
 		this.styling_endterm = styling_endterm;
 		this.styling_voternum = styling_voternum;
 		this.photo = photo;
+		this.styling_writername = styling_writername;
 	}
+
 
 	public int getStyling_vote_seq() {
 		return styling_vote_seq;

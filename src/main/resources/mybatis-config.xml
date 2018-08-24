@@ -9,7 +9,7 @@
 		<typeAlias type="kh.spring.dto.SocialBoardDTO" alias="sdto"/>	
 		<typeAlias type="kh.spring.dto.GoodDTO" alias="gdto"/>
 		<typeAlias type="kh.spring.dto.CollectionDTO" alias="CollectionDTO"/>
-		<typeAlias type="kh.spring.dto.StylingVoteDTO" alias="svdto"/>	
+		<typeAlias type="kh.spring.dto.StylingVoteDTO" alias="svDTO"/>	
 		<typeAlias type="kh.spring.dto.StylingVoteItemDTO" alias="svitemDTO"/>
 		<typeAlias type="kh.spring.dto.StylingVoteUserDTO" alias="svuserDTO"/>	
 		<typeAlias type="kh.spring.jsonobject.StylingParam" alias="sparam"/>

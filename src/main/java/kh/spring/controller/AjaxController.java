@@ -18,8 +18,10 @@ import kh.spring.dto.FollowDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.IStylingService;
 
 @Controller
 public class AjaxController {
@@ -30,6 +32,9 @@ public class AjaxController {
 	
 	@Autowired
 	private ISocialBoardService sbService;
+	
+	@Autowired
+	private IStylingService styservice; 
 	
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
@@ -150,8 +155,21 @@ public class AjaxController {
 			System.out.println(resultmsg);
 			return "팔로우";
 		}
-		
 	}
+	
+	@RequestMapping("/doStylingVote.ajax")
+	public @ResponseBody void doStylingVote(HttpSession session, int value, int styling_vote_seq) {
+		System.out.println("투표ajax실행시작-------------------");
+		StylingVoteUserDTO votedto = new StylingVoteUserDTO();
+		
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		votedto.setUser_seq(user_seq);
+		votedto.setVote_value(value);
+		votedto.setStyling_vote_seq(styling_vote_seq);
+		
+		int voteresult = styservice.doStylingVote(votedto);
+	}
+	
 	
 	
 }
