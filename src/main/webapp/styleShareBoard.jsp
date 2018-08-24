@@ -371,6 +371,7 @@
    	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
    	<script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
     <script>
+    	document.title = "${content.social_title}";
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
         	if("${dataflag}" === "true"){
