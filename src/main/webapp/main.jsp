@@ -6,12 +6,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="og:url" content="http://news.naver.com/main/read.nhn?oid=001&sid1=101&aid=0009814769&mid=shm&mode=LSD&nh=20180116081307">
+<meta property="og:title" content="테스트 뉴스">
+<meta property="og:image" content="http://imgnews.naver.net/image/001/2018/01/16/AKR20180115146300002_01_i_20180116084056132.jpg?type=w540">
+<meta property="og:description" content="네이버 뉴스를 테스트로 해보았습니다.">
+
 <title>It So</title>
 <!-- jquery  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -220,7 +228,7 @@ button.dropdown-toggle {
 					$('#MOVE_TOP_BTN').fadeOut();
 					$('#sidefooter').fadeOut();
 				}
-				
+
 			});
 
 			$("#MOVE_TOP_BTN").click(function() {
@@ -230,30 +238,30 @@ button.dropdown-toggle {
 				return false;
 			});
 		});
-		
-		$(".followbtn").on('click', function () {
-		    var seq = $(this).siblings("#seq").val();
-		    var text = $(this).text();
-		    var btn = $(this);
-		    $.ajax({
-		        url: "followUser.ajax",
-		        type: "post",
-		        data: {
-		            seq: seq,
-		            text: text
-		        },
-		        success: function (response) {
-		            if (response != null) {
-		                console.log("DB success : " + response);
-		                btn.toggleClass("btn-itso");
-		                btn.toggleClass("btn-indigo");
-		                btn.html(response);
-		            }
-		        },
-		        error: function (response) {
-		            console.log("DB Failed")
-		        }
-		    });
+
+		$(".followbtn").on('click', function() {
+			var seq = $(this).siblings("#seq").val();
+			var text = $(this).text();
+			var btn = $(this);
+			$.ajax({
+				url : "followUser.ajax",
+				type : "post",
+				data : {
+					seq : seq,
+					text : text
+				},
+				success : function(response) {
+					if (response != null) {
+						console.log("DB success : " + response);
+						btn.toggleClass("btn-itso");
+						btn.toggleClass("btn-indigo");
+						btn.html(response);
+					}
+				},
+				error : function(response) {
+					console.log("DB Failed")
+				}
+			});
 		})
 	});
 </script>
@@ -352,12 +360,9 @@ button.dropdown-toggle {
 											src="/upload/profile/${list.user_photo}"
 											style="width: 50px; height: 50px; margin-top: 10px">
 											<div class="media-body" style="margin: 0px auto">
-													
-												<a class="writer-a"><b class="writerName"
-													style="font-size: 20px;">${list.writerName}</b></a>
 
-												
-											<span>${list.userState}</span>	
+												<a class="writer-a"><b class="writerName"
+													style="font-size: 20px;">${list.writerName}</b></a> <span>${list.userState}</span>
 
 											</div> <!-- <script type="text/javascript">
 										console
@@ -413,48 +418,49 @@ button.dropdown-toggle {
 
 
 									<!--Text-->
-									<p class="card-text">${list.social_title}</p>
+									<p class="card-text" id="socialTitle">${list.social_title}</p>
 									<c:forEach var="flist" items="${followingList }">
-									<c:choose>
-									    <c:when test="${flist.seq eq list.social_writer}">
-									        <button type="button" class="btn btn-indigo followbtn"
-										style="black; font-family: 'NanumbarunpenR';">
-										<i class="fa fa-upload"> <span
-											style="font-family: 'NanumbarunpenR';">팔로우</span></i>
-										</button>
-									    </c:when>
-									    <c:otherwise>
-									        <button type="button" class="btn btn-itso followbtn"
-										style="font-family: 'NanumbarunpenR';">
-										<i class="fa fa-upload"> <span
-											style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
-									</button>
-									    </c:otherwise>
-									</c:choose>	
+										<c:choose>
+											<c:when test="${flist.seq eq list.social_writer}">
+												<button type="button" class="btn btn-indigo followbtn"
+													style="font-family: 'NanumbarunpenR';">
+													<i class="fa fa-upload"> <span
+														style="font-family: 'NanumbarunpenR';">팔로우</span></i>
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-itso followbtn"
+													style="font-family: 'NanumbarunpenR';">
+													<i class="fa fa-upload"> <span
+														style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
+												</button>
+											</c:otherwise>
+										</c:choose>
 
-									
+
 									</c:forEach>
-									
+
 									<button type="button" class="btn btn-indigo"
 										style="background-color: black; font-family: 'NanumbarunpenR';">
 										<i class="fa fa-upload"> <span
 											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
 									</button>
 									<!--share-->
-									<!--instagram-->
-									<button type="button" class="btn-floating btn-sm btn-is share "
-										style="float: right; background-color: #ea4c89; color: white; border: 0px; margin-left: 10px; border-radius: 10px;">
-										<i class="fa fa-instagram"></i>
-									</button>
+									<!--kakao-->
+									<button type="button"
+											class="btn-floating btn-sm btn-is share "
+											style="float: right; background-color: #ffff00; color: gray; border: 0px; margin-left: 10px; border-radius: 5x;" id="kakao-link-btn" onclick="kakaogo()">
+											<i class="fab fa-kaggle"></i>
+										</button>
 									<!--twitter-->
 									<button type="button" class="btn-floating btn-sm btn-tw share"
-										style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;">
-										<i class="fa fa-twitter"></i>
+										style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;" onclick="twittergo()">
+										<i class="fab fa-twitter"></i>
 									</button>
 									<!--facebook-->
 									<button type="button" class="btn-floating btn-sm btn-fb share"
-										style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;">
-										<i class="fa fa-facebook-f"></i>
+										style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;"  onclick="facebookgo()">
+										<i class="fab fa-facebook"></i>
 									</button>
 								</div>
 							</div>
@@ -534,5 +540,94 @@ button.dropdown-toggle {
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+
+<!-- 카카오api -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- 페이스북api -->
+<script>
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id))
+			return;
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+	
+	var newURL = window.location.protocol + window.location.host
+			+ window.location.pathname;
+	var titletext = '${list.social_title}';
+	
+	console.log("<c:out value='${param.mode}'/>");
+
+	var mode = "<c:out value='${list.social_title}'/>";
+
+		
+	
+	//트위터 공유 
+	function twittergo(url, text) {
+		var url = window.location.protocol + window.location.host
+				+ window.location.pathname;
+		var text = document.title;		
+		
+		console.log(text);
+		console.log(titletext);	
+		
+		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="
+				+ url, "", "width=700, height=400");
+	}
+
+	//카카오톡공유 
+	Kakao.init('6f7ebead2317edc298ae9592c2996720');
+	function kakaogo() {
+		Kakao.Link.createDefaultButton({
+			container : '#kakao-link-btn',
+			objectType : 'feed',
+			content : {
+				title : document.title,
+				description : '내용, 주로 해시태그',
+				imageUrl : document.images[0].src, //이미지 주소 올곳
+				link : {
+					webUrl : document.location.href,
+					mobileWebUrl : document.location.href
+				}
+			},
+			social : {
+				likeCount : 999999
+			//좋아요우 올곳
+			},
+			buttons : [ {
+				title : '웹에서보기',
+				link : {
+					mobileWebUrl : document.location.href,
+					webUrl : document.location.href
+				}
+			} ]
+		});
+	}
+
+	//페이스북
+	function facebookgo() {
+		//var url =  window.location.host + window.location.pathname;
+		var url = 'http://192.168.20.35/controller/main.go'
+		var encodeUrl = encodeURIComponent(url);
+		var facebook = 'https://www.facebook.com/sharer/sharer.php?u=';
+		var link = facebook + encodeUrl;
+		window.open(link, "", "width=700, height=400");
+
+	}
+	
+	//메타태그 변경
+	function metago(){
+		
+	}
+</script>
+
+
+
 
 </html>

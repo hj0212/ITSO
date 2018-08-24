@@ -4,6 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="og:url"
+	content="http://news.naver.com/main/read.nhn?oid=001&sid1=101&aid=0009814769&mid=shm&mode=LSD&nh=20180116081307">
+<meta property="og:title" content="테스트 뉴스">
+<meta property="og:image"
+	content="http://imgnews.naver.net/image/001/2018/01/16/AKR20180115146300002_01_i_20180116084056132.jpg?type=w540">
+<meta property="og:description" content="네이버 뉴스를 테스트로 해보았습니다.">
 <title>It So</title>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- Font Awesome -->
@@ -131,127 +138,127 @@ body, html {
 #cancel:hover {
 	border: 2px solid #feff19;
 }
-
-
 </style>
 <script>
-$(document).ready(function () {
-    $(".sign").hide();
+	$(document)
+			.ready(
+					function() {
+						$(".sign").hide();
 
-    $("#signup").click(function () {
-        $(".sign").show("slow");
-        $("#login").hide();
-        $(".login").hide();
-        $(".form-control").val("");
-    });
+						$("#signup").click(function() {
+							$(".sign").show("slow");
+							$("#login").hide();
+							$(".login").hide();
+							$(".form-control").val("");
+						});
 
-    $("#cancel").click(function () {
-        $("#login").show();
-        $(".sign").hide();
-        $(".login").show();
-        $(".form-control").val("");
-    });
-    /*input regex*/
-    /*email*/
-    document.getElementById("inputIconEx1").onblur = function () {
-        var email = $("#inputIconEx1").val();
+						$("#cancel").click(function() {
+							$("#login").show();
+							$(".sign").hide();
+							$(".login").show();
+							$(".form-control").val("");
+						});
+						/*input regex*/
+						/*email*/
+						document.getElementById("inputIconEx1").onblur = function() {
+							var email = $("#inputIconEx1").val();
 
-        if (!emailCheck(email)) {
-            $("#inputIconEx1").val("");
-            console.log("emali형식이 맞지않습니다");
-        }
+							if (!emailCheck(email)) {
+								$("#inputIconEx1").val("");
+								console.log("emali형식이 맞지않습니다");
+							}
 
-        function emailCheck(email) {
-            var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-            return regex.test(email);
-        }
-    };
+							function emailCheck(email) {
+								var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+								return regex.test(email);
+							}
+						};
 
-    /*ajax */
-    document.getElementById("email").onblur = function () {
-        var email = $("#email").val();
-        if (!emailCheck(email)) {
-            $("#email").val("");
-            console.log("emali형식이 맞지않습니다");
-        }
+						/*ajax */
+						document.getElementById("email").onblur = function() {
+							var email = $("#email").val();
+							if (!emailCheck(email)) {
+								$("#email").val("");
+								console.log("emali형식이 맞지않습니다");
+							}
 
-        function emailCheck(email) {
-            var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-            return regex.test(email);
-        }
+							function emailCheck(email) {
+								var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+								return regex.test(email);
+							}
 
-        console.log(email);
-        $.ajax({
-            url: "emailcheck.ajax",
-            type: "post",
-            data: {
-                email: email
-            },
-            success: function (data) {
-                console.log("들어옴" + data),
-                    $("#emailIcon").attr("class", data);
-                iconColor(data);
-            }
-        });
-    };
+							console.log(email);
+							$.ajax({
+								url : "emailcheck.ajax",
+								type : "post",
+								data : {
+									email : email
+								},
+								success : function(data) {
+									console.log("들어옴" + data), $("#emailIcon")
+											.attr("class", data);
+									iconColor(data);
+								}
+							});
+						};
 
-    function iconColor(data) {
-        console.log(data + "1");
-        if (data.indexOf("fa-close") > -1) {
-            console.log(data + "2");
-            $("#email").val("");
-            $("#email").focus();
-            $("#emailIcon").css("color", "red");
-        } else {
-            $("#emailIcon").css("color", "green");
-        }
-    }
+						function iconColor(data) {
+							console.log(data + "1");
+							if (data.indexOf("fa-close") > -1) {
+								console.log(data + "2");
+								$("#email").val("");
+								$("#email").focus();
+								$("#emailIcon").css("color", "red");
+							} else {
+								$("#emailIcon").css("color", "green");
+							}
+						}
 
-    /*password*/
-    $("#inputValidationEx2")
-        .keypress(
-            function () {
-                var password = $(
-                        "#inputValidationEx2")
-                    .val();
+						/*password*/
+						$("#inputValidationEx2")
+								.keypress(
+										function() {
+											var password = $(
+													"#inputValidationEx2")
+													.val();
 
-                if (blank(password)) {
-                    console.log(password);
-                    var regex = /\s/g;
-                    document
-                        .getElementById("inputValidationEx2").value = document
-                        .getElementById("inputValidationEx2").value
-                        .replace(regex, "");
-                };
+											if (blank(password)) {
+												console.log(password);
+												var regex = /\s/g;
+												document
+														.getElementById("inputValidationEx2").value = document
+														.getElementById("inputValidationEx2").value
+														.replace(regex, "");
+											}
+											;
 
-                function blank(password) {
-                    var regex = /\s/g;
-                    return regex.test(password);
-                };
-            });
+											function blank(password) {
+												var regex = /\s/g;
+												return regex.test(password);
+											}
+											;
+										});
 
-    /*login button click event*/
- /*    $("#signin").on('click', function () {
-        $("userform").attr("action", "signin.do");
-    });
- */
-    $("#signin").click(function(){
-    	$("#userform").attr("action","signin.do");
-    	$("#userform").submit();
-    });
- 
-    $("#login").click(function () {
-        $("#userform").attr("action", "login.do");
-        $("#userform").submit();
-    });
-    
+						/*login button click event*/
+						/*    $("#signin").on('click', function () {
+						       $("userform").attr("action", "signin.do");
+						   });
+						 */
+						$("#signin").click(function() {
+							$("#userform").attr("action", "signin.do");
+							$("#userform").submit();
+						});
 
-});
+						$("#login").click(function() {
+							$("#userform").attr("action", "login.do");
+							$("#userform").submit();
+						});
 
+					});
 </script>
 </head>
 <body>
-		
+
 	<!--back ground-->
 	<div class="bg view overlay">
 		<!--  <div class="">-->
@@ -323,8 +330,8 @@ $(document).ready(function () {
 							name="login">User Login</button>
 						<button type="button" class="btn login" id="signup" name="signup">Sign
 							UP</button>
-							
-							<button type="button" class="btn sign" id="signin" name="signin">Sign
+
+						<button type="button" class="btn sign" id="signin" name="signin">Sign
 							in</button>
 						<button class="btn sign" id="cancel" type="button">Cancel</button>
 					</div>
@@ -374,5 +381,6 @@ $(document).ready(function () {
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+
 
 </html>

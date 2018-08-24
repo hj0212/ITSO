@@ -230,6 +230,7 @@ public class SocialController {
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
 		String[] writeDate = dto.getSocial_date().toString().split("-");
+
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
@@ -297,6 +298,8 @@ public class SocialController {
 			mav.addObject("markerdata", json);
 			mav.addObject("dataflag","true");
 		}
+		
+		
 		
 		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
