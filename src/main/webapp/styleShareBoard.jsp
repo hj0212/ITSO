@@ -75,9 +75,16 @@
                 width: 64px;
             }
 
-            #wrapper a,
-            a:hover {
+            #wrapper a {
                 color: black;
+            }
+            
+            #social_contents a {
+            	color : dodgerblue;
+            }
+            
+            #social_contents a:hover {
+            	color : black;
             }
 
             #right-side {
@@ -208,7 +215,7 @@
 
 							<!-- user-context -->
 
-							<div class=container>
+							<div class=container id="social_contents">
 								${content.social_contents}
 							</div>
 							<div style="float:right;">
@@ -440,7 +447,6 @@
     					},
     					
     					success : function(data){
-    						console.log(data);
     						showComment(data);
     					}
     				});

@@ -15,14 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -53,8 +49,10 @@ public class SocialController {
 	
 	@Autowired 
 	ISocialTagService tagService;
+	
 	@Autowired
 	ISocialCommentService comService;
+	
 	@Autowired
 	ISocialHashTagService shtService;
 
@@ -241,8 +239,17 @@ public class SocialController {
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
-		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
 		
+		String contents = dto.getSocial_contents();
+		
+		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+		Matcher m = p.matcher(contents);
+		
+		contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?word="+"$2'>"+"$1"+"</a>");
+		dto.setSocial_contents(contents);
+		
+		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
+
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int social_seq = dto.getSocial_seq();
@@ -517,6 +524,33 @@ public class SocialController {
 			String photo = request.getParameter("imageinfo");
 			SocialBoardDTO dto = new SocialBoardDTO(social_seq,title,content,0,photo,gender,age);
 			
+			// 기존에 있던 태그 리스트
+			List<SocialHashTagDTO> oList = this.shtService.selectHashTag(social_seq);
+			
+			// 새로 들어온 해시태그 리스트
+			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+			Matcher m = p.matcher(content);
+			
+			List<SocialHashTagDTO> nList = new ArrayList<SocialHashTagDTO>();
+			while(m.find()) {
+				SocialHashTagDTO nidto = new SocialHashTagDTO(social_seq,writer,m.group(1));
+				nList.add(nidto);
+			}
+			
+			// 새로 들어온 해시태그 뽑아오기
+			for(int i = 0; i < oList.size(); i++) {
+				for(int j = 0; j < nList.size(); j++) {
+					if(oList.get(i).getSocial_hash_tag_contents().equals(nList.get(j).getSocial_hash_tag_contents())) {
+						nList.remove(nList.get(j));
+					}
+				}
+			}
+			
+			for(SocialHashTagDTO ndto : nList) {
+				int tagiresult = this.shtService.insertHashTag(ndto);
+			}
+			
+			
 			// 글 수정
 			service.updateSocialBoard(dto);
 			
@@ -682,14 +716,12 @@ public class SocialController {
 		return mav;
 	}
 	
-	@RequestMapping("/test2.go")
-	public ModelAndView test2(HttpServletRequest request) {
+	@RequestMapping("searchTag.go")
+	public ModelAndView searchTag(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		String word = request.getParameter("word");
 		System.out.println(word);
-		
-		mav.setViewName("redirect:Test.jsp");
+		mav.setViewName("searchTag.jsp");
 		return mav;
 	}
-		
 }
