@@ -7,12 +7,12 @@
 		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq		
 		<if test="age gt 0">
 			<!-- 연령순 -->
-			and age=#{age}
+			and s.age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
 
-			and gender = #{gender}
+			and s.gender = #{gender}
 			
 		</if>		
 		order by social_date desc

@@ -87,14 +87,14 @@ public class AjaxController {
 		dto.setSocial_seq(social_seq);
 		
 		List<SocialBoardDTO> list = sservice.selectCollectionContent(dto);	// 테이블에 있는지
-		
+		System.out.println(list.size());
 		SocialBoardDTO result = null;
 		if(list.size() > 0) {
 			int delete = sservice.deleteCollectionContent(dto);
 			System.out.println(delete>0?"delete성공":"delete실패");
-			result = dto;
 		}else {
 			int insert = sservice.insertCollectionContent(dto);
+			System.out.println("결과: " + insert);
 			System.out.println(insert>0?"insert성공":"insert실패");
 			result = sservice.selectSocialBoard(social_seq);
 		}
