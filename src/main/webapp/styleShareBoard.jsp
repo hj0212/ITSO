@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="utf8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       <!DOCTYPE html>
     <html lang="en">
@@ -8,9 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-	   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-	   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-	   <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
 	   <title> Style-Share | ITSO</title>
 		<style>
             #wrapper {
@@ -119,6 +115,12 @@
             /* #comment {
                 border: 1px solid #e6e6e6;
             } */
+            
+            #comment-container {
+            	white-space: nowrap; 
+            	overflow: hidden;
+   				text-overflow: ellipsis; 
+            }
         </style>
     </head>
 
@@ -127,7 +129,7 @@
 
 
 
-
+	<%@include file="navi.jsp"%>
     <div id="wrapper" class="row">
 
         <div id="left-side" class="col">
@@ -217,127 +219,47 @@
 							</div>
 						</div>
 
-						<div class="container mt-4">
-                            <table id="comment">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <img class="avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-                                        </td>
-                                        <td>
-                                            <div>
-                                                <a href="#">Risovic N.</a>
-                                                <a href="#">@risovic</a>
-                                            </div>
-                                            <div>
-                                                Nice dress, color, and the vibe
-                                            </div>
-                                            <div id=comment>
-                                                0
-                                                <a href="#">▲</a>· reply · flag · 6 months ago
-                                            </div>
-
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <div class="comment-child">
-                                                        <img class="ml-4 avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-                                                    </div>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <div>
-                                                        <a href="#">Alex X.</a>
-                                                        <a href="">@Alex</a>
-                                                    </div>
-                                                    <div>How sweet of her. </div>
-
-                                                    <div id=comment>
-                                                        2
-                                                        <a href="#">▲</a· reply>· flag · 6 months ago
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>
-                                                    <div class="comment-child">
-                                                        <img class="ml-4 avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-                                                    </div>
-                                                </td>
-                                                <td></td>
-                                                <td>
-                                                    <div>
-                                                        <a href="#">Lauren A.</a>
-                                                        <a href="">@Lauren</a>
-                                                    </div>
-                                                    <div>I envy her body ratio </div>
-
-                                                    <div id=comment>
-                                                        5
-                                                        <a href="#">▲</a>· reply· flag · 6 months ago
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </table>
-
-                                    </tr>
-
-                                </tbody>
-
-
-                            </table>
+						<div class="container mt-4" id="comment-container">
+                            <table id="comment" cellpadding="5">
+                            	<c:forEach var="commentList" items="${commentList}">
+								<tr>
+									<td>
+										<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/${commentList.photo}">
+									</td>
+									<td>
+										<div>
+											<a href="#">${commentList.name}</a>
+										</div>
+										<div>
+											<span class="user-comment">
+												${commentList.social_comment_contents}
+											</span>
+										</div>
+										<div>
+											<span class="comment-date"> ${commentList.social_comment_time} 
+												<c:if test="${sessionScope.user.seq == commentList.user_seq}">
+													<span><a href="deleteComment.go?comment_seq=${commentList.social_comment_seq}&social_seq=${commentList.social_seq}"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+												</c:if>
+											</span>
+										</div>
+									</td>
+								</tr>                            	
+                            	</c:forEach>
+							</table>
                         </div>
-
-
                     </div>
                 </div>
 
                 <!-- reply -->
-                <form action="" method="post">
-                    <div class="container mt-4">
-                        <div class="form-group">
-                            <textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"></textarea>
-
-                            <!-- Default inline 1-->
-
-                            <div class="custom-control custom-checkbox custom-control-inline">
-
-                                <input type="checkbox" class="custom-control-input" id="defaultInline1">
-                                <label class="custom-control-label" for="defaultInline1">페이스북</label>
-                            </div>
-
-                            <!-- Default inline 2-->
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline2">
-                                <label class="custom-control-label" for="defaultInline2">카카오톡</label>
-                            </div>
-
-                            <!-- Default inline 3-->
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline3">
-                                <label class="custom-control-label" for="defaultInline3">인스타그램</label>
-                            </div>
-
-                            <!-- Default inline 3-->
-                            <div class="ml-4 custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="defaultInline3">
-                            </div>
-
-                            <button class="btn btn-grey btn-sm">쓰기</button>
-                        </div>
+                <div class="container mt-4">
+                    <div class="form-group">
+                        <textarea class="form-control rounded-0" id="commentarea" rows="3" placeholder="로그인이 필요합니다." maxlength="166"></textarea>
                     </div>
-                </form>
-
-
-
+                    <div class="text-right">
+                        <input type="button" class="btn btn-grey btn-sm" id="write-comment" value="쓰기" disabled="disabled"></button>
+                    </div>
+                </div>
             </div>
-
         </div>
 
         <!-- user info -->
@@ -369,11 +291,11 @@
                     	<c:forEach var="item" items="${list}">
                     	    <div class="clothesinfo">
                     	    <li class="mb-2">
-  	                            <div>${item.tag_name}</div>
+  	                            <div><a href=${item.tag_url} target="_blank">${item.tag_name}</a></div>
 	                            <div>
-	                                <a href=${item.tag_url} target="_blank">${item.tag_brand}</a>
+	                                <a href="#">${item.tag_brand}</a>
 	                                <c:if test="${!empty item.tag_store }">
-		                                <a href="">in ${item.tag_store}</a>
+		                                <a href="#">in ${item.tag_store}</a>
 	                                </c:if>
 	                            </div>
                         	</li>
@@ -438,6 +360,9 @@
 
 
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+   	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+   	<script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
     <script>
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
@@ -467,21 +392,21 @@
 	            	$j(".clothesinfo")[index].style.backgroundColor = "white";
 	        	});
         	};
-
         });
+        
     </script>
     <c:if test="${sessionScope.user.seq == content.social_writer}">
    	<script>
         document.getElementById("modify").onclick = function() {
         	location.href = "modifySocial.go?seq="+${content.social_seq};
-        }
+        };
         
        	document.getElementById("delete").onclick = function() {
        		let delcheck = confirm("글을 삭제하시겠습니까?");
        		if(delcheck) {
 	       		location.href = "deleteSocial.go?seq="+${content.social_seq};
        		}
-       	}    	
+       	};   	
    	</script>
     </c:if>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -493,6 +418,67 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <c:if test="${!empty sessionScope.user.seq}">
+    <script>
+    	$(document).ready(function(){
+    		$("#commentarea").attr("placeholder","댓글 쓰기");
+    		$("#write-comment").attr("disabled",false);
+    		
+    		$("#write-comment").click(function(){
+    			var blank_pattern = /^\s+|\s+$/g;
+    			if($("#commentarea").val().replace(blank_pattern,"") == ""){
+    				alert("내용을 입력해주세요!");
+    			}else{
+    				$.ajax({
+    					url : "procSocialComment.go",
+    					dataType : "JSON",
+    					method : "post",
+    					data : {
+    						comment : $("#commentarea").val(),
+    						writer : "${sessionScope.user.seq}",
+    						seq : "${content.social_seq}"
+    					},
+    					
+    					success : function(data){
+    						console.log(data);
+    						showComment(data);
+    					}
+    				});
+    			}
+    		});
+    		
+    		function showComment(data) {
+    			let html = '<table id="comment" cellpadding="5">';
+    			$.each(data, function(index,item){
+    				html += '<tr>';
+    				html += '	<td>';
+    				html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'">';
+    				html += '	</td>';
+    				html += '	<td>';
+    				html += '		<div>';
+    				html += '			<a href="#">' + item.name + '</a>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="user-comment">';
+    				html += 				item.social_comment_contents;
+    				html +=	'			</span>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="comment-date">'+item.social_comment_time;
+    				if(item.user_seq == item.writer){
+    					html += '			<span><a href="deleteComment.go?comment_seq='+item.social_comment_seq + '&social_seq=' + item.social_seq +'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+    				}
+    				html += '			</span>';
+    				html += '		</div>';
+    				html += '	</td>';
+    				html += ''
+    			});
+    			$("#commentarea").val("");
+    			$("#comment-container").html(html);
+    		}
+    	});
+    </script>
+    </c:if>
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->

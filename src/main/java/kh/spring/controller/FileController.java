@@ -102,9 +102,11 @@ public class FileController {
 				mav.setViewName("writeSocial2.jsp");
 			}
 		}catch(NotLoginException le) {
+			le.printStackTrace();
 			mav.setViewName("login.jsp");
 		}catch(Exception e) {
-			
+			e.printStackTrace();
+			mav.setViewName("writeSocial.jsp");
 		}
 		return mav;
 	}

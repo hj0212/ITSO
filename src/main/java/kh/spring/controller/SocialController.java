@@ -3,9 +3,12 @@ package kh.spring.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +24,22 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.SocialCommentDTO;
+import kh.spring.dto.SocialHashTagDTO;
 import kh.spring.dto.SocialTagDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.exception.NotWriterException;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.ISocialCommentService;
+import kh.spring.interfaces.ISocialHashTagService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
 
@@ -45,6 +53,10 @@ public class SocialController {
 	
 	@Autowired 
 	ISocialTagService tagService;
+	@Autowired
+	ISocialCommentService comService;
+	@Autowired
+	ISocialHashTagService shtService;
 
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session,HttpServletRequest request) {
@@ -228,11 +240,12 @@ public class SocialController {
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
+		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
+		
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
-		/*System.out.println(dto.getSocial_date());*/
 		// image_db -> {} -> 0 : {}, 1 : {}
 		ObjectNode infoNode = om.createObjectNode();
 		// 각 태그
@@ -297,6 +310,7 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("commentList",commentList);
 		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());
@@ -341,6 +355,14 @@ public class SocialController {
 			
 			// 작성된 글 번호
 			int social_seq = service.getSocialBoardcurrval();
+			
+			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+			Matcher m = p.matcher(content);
+			
+			while(m.find()) {
+				SocialHashTagDTO shtdto = new SocialHashTagDTO(social_seq,writer,m.group(1));
+				int result = this.shtService.insertHashTag(shtdto);
+			}
 
 			// 태그 정보
 			String taginfo = request.getParameter("taginfo");
@@ -590,4 +612,83 @@ public class SocialController {
 		}
 		return mav;
 	}
+	
+	@RequestMapping("/procSocialComment.go")
+	public void procSocialComment(HttpServletRequest request, HttpServletResponse response) {
+		int social_seq = Integer.parseInt(request.getParameter("seq"));
+		
+		try {
+			int writer = Integer.parseInt(request.getParameter("writer"));
+			String comment = request.getParameter("comment");
+			SocialCommentDTO scdto = new SocialCommentDTO(social_seq, writer, comment);
+			int result = this.comService.insertSocialComment(scdto);
+			
+			List<SocialCommentDTO> commentList = comService.showCommentList(social_seq);
+			ObjectMapper om = new ObjectMapper();
+			
+			ArrayNode array = om.createArrayNode();
+			
+			
+			for(SocialCommentDTO dto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("social_comment_seq", dto.getSocial_comment_seq());
+				on.put("social_seq",dto.getSocial_seq());
+				on.put("user_seq", dto.getUser_seq());
+				on.put("social_comment_contents", dto.getSocial_comment_contents());
+				on.put("social_comment_time", dto.getSocial_comment_time());
+				on.put("name", dto.getName());
+				on.put("photo", dto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/deleteComment.go")
+	public ModelAndView deleteComment(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+		int social_seq = Integer.parseInt(request.getParameter("social_seq"));
+		
+		int result = this.comService.deleteComment(comment_seq);
+		
+		mav.setViewName("redirect:readSocial.go?seq="+social_seq);
+		return mav;
+	}
+	
+	@RequestMapping("/test.go")
+	public ModelAndView test(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String contents = request.getParameter("contents");
+		
+		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+		Matcher m = p.matcher(contents);
+		
+		while(m.find()) {
+			System.out.println(m.group(1));
+		}
+		
+		contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='test2.go?word="+"$2'>"+"$1"+"</a>");
+		System.out.println(contents);
+		
+		request.setAttribute("contents", contents);
+		mav.setViewName("Test.jsp");
+		return mav;
+	}
+	
+	@RequestMapping("/test2.go")
+	public ModelAndView test2(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String word = request.getParameter("word");
+		System.out.println(word);
+		
+		mav.setViewName("redirect:Test.jsp");
+		return mav;
+	}
+		
 }

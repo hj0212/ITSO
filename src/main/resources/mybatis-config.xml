@@ -9,8 +9,10 @@
 		<typeAlias type="kh.spring.dto.SocialBoardDTO" alias="sdto"/>	
 		<typeAlias type="kh.spring.dto.GoodDTO" alias="gdto"/>
 		<typeAlias type="kh.spring.dto.CollectionDTO" alias="CollectionDTO"/>
-		<typeAlias type="kh.spring.dto.SocialTagDTO" alias="stdto"/>	
+		<typeAlias type="kh.spring.dto.SocialTagDTO" alias="stdto"/>
+		<typeAlias type="kh.spring.dto.SocialCommentDTO" alias="scdto"/>
 		<typeAlias type="kh.spring.dto.FollowDTO" alias="FollowDTO"/>	
+		<typeAlias type="kh.spring.dto.SocialHashTagDTO" alias="shtdto"/>
 	</typeAliases>
 </configuration>
 
