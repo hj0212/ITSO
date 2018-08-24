@@ -151,8 +151,8 @@ input[type="file"] {
 						</tr>
 					</thead>
 					<tbody id="itemlist">			
-					<c:forEach var=svitemdto items="${voteitems}">
-						<tr class="">
+					<c:forEach var="svitemdto" items="${voteitems}">
+						<tr>
 							<th scope="row">
 								<div class="custom-control custom-radio">
 									<input type="radio" class="custom-control-input"
@@ -166,10 +166,10 @@ input[type="file"] {
 									<div class="media-img col-5">
 										<img
 											class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
-											src="upload/stylingvote/${svitemdto.styling_vote_item_photo}" alt="후보사진">
+											style="width:90%" src="upload/stylingvote/${svitemdto.styling_vote_item_photo}" alt="후보사진">
 									</div>
 
-									<div class="media-body image-upload-wrap form-group col-9"
+									<div class="media-body image-upload-wrap form-group col-5"
 										id="btnsdiv">
 
 										<div class="md-form form-sm">

@@ -46,7 +46,9 @@ public class StylingController {
 			
 		StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
 		List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
-		int seq=((MemberDTO)session.getAttribute("user")).getSeq();
+		System.out.println("컨트롤러는 오냐");
+		/*int seq=((MemberDTO)session.getAttribute("user")).getSeq();*/
+		int seq =1;
 		int didvote = styservice.selectDidVote(seq,styling_vote_seq);
 		mav.addObject("didVote",didvote);
 		mav.addObject("voteitems",svitemdtos);
