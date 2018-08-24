@@ -59,7 +59,8 @@ public class TipController {
 		List<TipDTO> businessTipData = service.getBusinessTipData();
 		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
-
+		
+		
 		if (beautyTipData != null) {
 			System.out.println(beautyTipData.toString());
 

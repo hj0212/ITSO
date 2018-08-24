@@ -10,7 +10,8 @@
 <!-- jquery  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -140,6 +141,25 @@ body {
 button.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
+
+#sidefooter {
+	width: 300px;
+	bottom: 0px;
+	right: 50px;
+	position: fixed;
+	border-top: 2px solid black;
+	display: none;
+}
+
+#sidefooter p {
+	font-style: oblique;
+}
+
+#sidefooter p a {
+	font-style: oblique;
+	color: black;
+}
+
 #MOVE_TOP_BTN {
 	position: fixed;
 	right: 5%;
@@ -151,50 +171,56 @@ button.dropdown-toggle {
 	color: white;
 	text-align: center;
 }
+
+.writerName:hover {
+	color: aqua;
+}
 </style>
 <script>
 	$(document).ready(function() {
-		
 
 		$(".heart").click(function() {
 			var heartVal = $(this).attr("class");
-				
-			if (heartVal =="fa fa-heart red-text heart") {
-				$(this).attr("class", "fa fa-heart-o red-text heart");		
+
+			if (heartVal == "fa fa-heart red-text heart") {
+				$(this).attr("class", "fa fa-heart-o red-text heart");
 			} else {
 				$(this).attr("class", "fa fa-heart red-text heart");
-				
+
 			}
 		});
 
-		$(".heart").on('click',function(){
+		$(".heart").on('click', function() {
 			var seq = $(this).attr("value");
-			var font =$(this).children('font');
+			var font = $(this).children('font');
 			console.log("숫자: " + $(this).children('font').html());
 			console.log(seq);
-			
+
 			$.ajax({
-				url:"mainHeart.ajax",
-				type:"post",
-				data:{
-					social_seq:seq
+				url : "mainHeart.ajax",
+				type : "post",
+				data : {
+					social_seq : seq
 				},
-				success:function(data){
-					console.log("들어옴"+data),
-					font.html(data)
-					
+				success : function(data) {
+					console.log("들어옴" + data), font.html(data)
+
 				}
 			});
-			
+
 		});
-		
+
 		$(function() {
 			$(window).scroll(function() {
 				if ($(this).scrollTop() > 500) {
 					$('#MOVE_TOP_BTN').fadeIn();
+
+					$('#sidefooter').fadeIn();
 				} else {
 					$('#MOVE_TOP_BTN').fadeOut();
+					$('#sidefooter').fadeOut();
 				}
+				
 			});
 
 			$("#MOVE_TOP_BTN").click(function() {
@@ -204,6 +230,31 @@ button.dropdown-toggle {
 				return false;
 			});
 		});
+		
+		$(".followbtn").on('click', function () {
+		    var seq = $(this).siblings("#seq").val();
+		    var text = $(this).text();
+		    var btn = $(this);
+		    $.ajax({
+		        url: "followUser.ajax",
+		        type: "post",
+		        data: {
+		            seq: seq,
+		            text: text
+		        },
+		        success: function (response) {
+		            if (response != null) {
+		                console.log("DB success : " + response);
+		                btn.toggleClass("btn-itso");
+		                btn.toggleClass("btn-indigo");
+		                btn.html(response);
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
+		    });
+		})
 	});
 </script>
 </head>
@@ -215,60 +266,61 @@ button.dropdown-toggle {
 	<!-- Grid row -->
 	<div id="card-group">
 		<section class="firstSection col-md-12">
-		<div class="mainIntro">
-			<p>
-				<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
-				the people you like to personalize you feed.
-			</p>
-		</div>
+			<div class="mainIntro">
+				<p>
+					<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
+					the people you like to personalize you feed.
+				</p>
+			</div>
 		</section>
 
 
 		<section class="secondSection col-md-12">
-		<div class="container">
+			<div class="container">
 
-			<div class="btn-group">
-				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-					id="gender">${gender}</button>
-
-				<div class="dropdown-menu">
-					<a class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=g&age=${pAge }&main=${main}&feed=${feed}">무관 </a> <a
-						class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=m&age=${pAge }&main=${main}&feed=${feed}">남성</a> <a
-						class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=f&age=${pAge }&main=${main}&feed=${feed}">여성</a>
-				</div>
 				<div class="btn-group">
 					<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						id="age">${age}</button>
+						id="gender">${gender}</button>
+
 					<div class="dropdown-menu">
 						<a class="dropdown-item flex-center droptxt2"
-							href="main.go?age=0&gender=${pGender }&main=${main}&feed=${feed}">모든연령 </a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=10&gender=${pGender }&main=${main}&feed=${feed}">10대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=20&gender=${pGender }&main=${main}&feed=${feed}">20대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=30&gender=${pGender }&main=${main}&feed=${feed}">30대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=40&gender=${pGender }&main=${main}&feed=${feed}">40대</a>
+							href="main.go?gender=g&age=${pAge }&main=${main}&feed=${feed}">무관
+						</a> <a class="dropdown-item flex-center droptxt2"
+							href="main.go?gender=m&age=${pAge }&main=${main}&feed=${feed}">남성</a>
+						<a class="dropdown-item flex-center droptxt2"
+							href="main.go?gender=f&age=${pAge }&main=${main}&feed=${feed}">여성</a>
 					</div>
 					<div class="btn-group">
 						<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Full
-							view</button>
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+							id="age">${age}</button>
 						<div class="dropdown-menu">
 							<a class="dropdown-item flex-center droptxt2"
-								href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full view</a> <a
-								class="dropdown-item flex-center droptxt2"
-								href="main.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Thumbnail view</a>
+								href="main.go?age=0&gender=${pGender }&main=${main}&feed=${feed}">모든연령
+							</a> <a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=10&gender=${pGender }&main=${main}&feed=${feed}">10대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=20&gender=${pGender }&main=${main}&feed=${feed}">20대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=30&gender=${pGender }&main=${main}&feed=${feed}">30대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=40&gender=${pGender }&main=${main}&feed=${feed}">40대</a>
+						</div>
+						<div class="btn-group">
+							<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">Full view</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item flex-center droptxt2"
+									href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full
+									view</a> <a class="dropdown-item flex-center droptxt2"
+									href="main.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Thumbnail
+									view</a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 		</section>
 		<a id="MOVE_TOP_BTN" href="#">TOP</a>
@@ -294,36 +346,100 @@ button.dropdown-toggle {
 								<!--Card content-->
 								<div class="card-body">
 									<!--Title-->
-									<h4 class="card-title">
-										<a>${list.social_writer}</a>
-										<script type="text/javascript">
-											console.log("${goodCount[status.count]}");
-										</script>
-										
-										<c:set var="loop_flag" value="false"/>
-										<c:forEach items="${goodList }" var="good" varStatus="gstatus">
-										<c:if test="${loop_flag == false }">
-											<c:choose>
-												<c:when test="${good.social_seq == list.social_seq }">
-													<i	class="fa fa-heart red-text heart" aria-hidden="true"
-											style="float: right;" value="${list.social_seq}"><font color="black">${heart[status.index].toString()}</font></i>
-												<c:set var="loop_flag" value="true"/>
-												</c:when>
-												<c:otherwise>
-													<c:if test="${gstatus.last }">
-														<i	class="fa fa-heart-o red-text heart" aria-hidden="true"
-											style="float: right;" value="${list.social_seq}"><font color="black">${heart[status.index].toString()}</font></i>
-													</c:if>
-												</c:otherwise>
-											</c:choose>
-										</c:if>
-										</c:forEach>
-										
-									</h4>
+									<ul class="list-unstyled">
+										<li class="media align-middle"><img
+											class="d-flex mr-3 rounded-circle "
+											src="/upload/profile/${list.user_photo}"
+											style="width: 50px; height: 50px; margin-top: 10px">
+											<div class="media-body" style="margin: 0px auto">
+													
+												<a class="writer-a"><b class="writerName"
+													style="font-size: 20px;">${list.writerName}</b></a>
+
+												
+											<span>${list.userState}</span>	
+
+											</div> <!-- <script type="text/javascript">
+										console
+												.log("${goodCount[status.count]}");
+									</script> -->
+											<div>
+												<c:set var="loop_flag" value="false" />
+												<c:choose>
+													<c:when test="${empty goodList }">
+														<i class="fa fa-heart-o red-text heart "
+															aria-hidden="true" style="float: right; font-size: 25px;"
+															value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+														</font></i>
+
+
+													</c:when>
+													<c:otherwise>
+														<c:forEach items="${goodList }" var="good"
+															varStatus="gstatus">
+
+															<c:if test="${loop_flag == false }">
+																<c:choose>
+																	<c:when test="${good.social_seq == list.social_seq }">
+																		<i class="fa fa-heart red-text heart"
+																			aria-hidden="true"
+																			style="float: right; font-size: 25px; margin-top: 25px;"
+																			value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+																		</font></i>
+
+																		<c:set var="loop_flag" value="true" />
+																	</c:when>
+																	<c:otherwise>
+																		<c:if test="${gstatus.last }">
+																			<i class="fa fa-heart-o red-text heart"
+																				aria-hidden="true"
+																				style="float: right; font-size: 25px; margin-top: 20px;"
+																				value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+																			</font></i>
+																			<font>${list.userState }</font>
+
+																		</c:if>
+																	</c:otherwise>
+																</c:choose>
+															</c:if>
+
+														</c:forEach>
+													</c:otherwise>
+
+												</c:choose>
+											</div></li>
+									</ul>
+
+
+
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
-									<a href="#" class="btn  btn-indigo"
-										style="background-color: black;"><i class="fa fa-plus">follow</i></a>
+									<c:forEach var="flist" items="${followingList }">
+									<c:choose>
+									    <c:when test="${flist.seq eq list.social_writer}">
+									        <button type="button" class="btn btn-indigo followbtn"
+										style="black; font-family: 'NanumbarunpenR';">
+										<i class="fa fa-upload"> <span
+											style="font-family: 'NanumbarunpenR';">팔로우</span></i>
+										</button>
+									    </c:when>
+									    <c:otherwise>
+									        <button type="button" class="btn btn-itso followbtn"
+										style="font-family: 'NanumbarunpenR';">
+										<i class="fa fa-upload"> <span
+											style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
+									</button>
+									    </c:otherwise>
+									</c:choose>	
+
+									
+									</c:forEach>
+									
+									<button type="button" class="btn btn-indigo"
+										style="background-color: black; font-family: 'NanumbarunpenR';">
+										<i class="fa fa-upload"> <span
+											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
+									</button>
 									<!--share-->
 									<!--instagram-->
 									<button type="button" class="btn-floating btn-sm btn-is share "
@@ -393,7 +509,14 @@ button.dropdown-toggle {
 
 					</div></li>
 			</ul>
-
+			<!--side footer -->
+			<div id="sidefooter">
+				<p>©2018 ItSo. All rights reserved.</p>
+				<p>
+					<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
+					<a href="#">advertise</a>· <a href="#">legal</a>
+				</p>
+			</div>
 
 
 		</div>

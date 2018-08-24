@@ -36,6 +36,7 @@ import kh.spring.dto.SocialHashTagDTO;
 import kh.spring.dto.SocialTagDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.exception.NotWriterException;
+import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.ISocialCommentService;
 import kh.spring.interfaces.ISocialHashTagService;
@@ -46,6 +47,10 @@ import kh.spring.jsonobject.SocialTag;
 public class SocialController {
 	@Autowired
 	private ISocialBoardService service;
+	
+	@Autowired
+	private IMemberService mService;
+	
 	@Autowired 
 	ISocialTagService tagService;
 	@Autowired
@@ -133,10 +138,10 @@ public class SocialController {
 		String feed=null;
 		try {
 			feed = request.getParameter("feed");
-			System.out.println(feed);
+//			System.out.println(feed);
 			if(feed.equals("new")) { //최신
 				result= this.service.showSocialBoardList(sdto);
-				System.out.println("1");
+			//	System.out.println("1");
 				
 			}else if(feed.equals("hot")) {//인기
 				result = this.service.showSocialHotBoardList(sdto);
@@ -144,26 +149,33 @@ public class SocialController {
 			
 			}else if(feed.equals("following")) { //팔로잉
 				result =this.service.showSocialFollowBoardList(sdto);
-				System.out.println("3");
+				//System.out.println("3");
 
 			}
 		}catch(Exception ea) {
 			result = this.service.showSocialBoardList(sdto);
-			System.out.println("10");
+			//System.out.println("10");
 			feed="new";
 		}
 
 
 
 		List<Integer> ggdto = new ArrayList<>();
+		List<MemberDTO> mdto = new ArrayList<>();
+		
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
+			MemberDTO mom =  new MemberDTO(sdd.getSocial_seq()); 
 			ggdto.add(this.service.allGoodCount(gdto)) ;
-
+			mdto.addAll( this.mService.getUserData(mom));
 			/*System.out.println(ggdto);*/
-
 		}
-
+		 
+		
+		for(MemberDTO ddt : mdto) {
+			System.out.println(ddt.getName());
+		}
+		
 		
 		List<Integer> goodCount = new ArrayList<>();
 		for(SocialBoardDTO sdd : result) {
@@ -178,9 +190,14 @@ public class SocialController {
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
+			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
+			
+			
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
+			mav.addObject("followingList", followingList);
+			
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {

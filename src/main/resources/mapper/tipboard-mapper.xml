@@ -20,6 +20,9 @@
 			javaType="java.lang.String" />
 		<result property="tip_like_count" column="tip_like_count"
 			jdbcType="INTEGER" javaType="java.lang.Integer" />
+		<result property="tip_comment_count" column="tip_comment_count"
+			jdbcType="INTEGER" javaType="java.lang.Integer" />
+					
 	</resultMap>
 
 	<!-- 글쓰기 sql -->
@@ -44,48 +47,79 @@
 
 	<!-- tip articles get sql -->
 	<select id="getBeautyTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-		select * from users u, tip t left outer join (select tip_seq, count(*)
-		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
-		tg.tip_seq where t.tip_writer=u.seq and t.category='뷰티' order by
-		t.TIP_SEQ desc
+	
+select t.*, tg.tip_like_count, tc.tip_comment_count, u.name from 
+users u,
+tip t 
+left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq 
+left outer join (select tip_seq, count(*) tip_comment_count from tip_comment group by tip_seq) tc on t.tip_seq = tc.tip_seq
+
+where t.category = '뷰티'
+and u.SEQ = t.tip_writer
+order by t.tip_seq desc
+
 	</select>
 
 	<select id="getDietTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-		select * from users u, tip t left outer join (select tip_seq, count(*)
-		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
-		tg.tip_seq where t.tip_writer=u.seq and t.category='다이어트' order by
-		t.TIP_SEQ desc
+select t.*, tg.tip_like_count, tc.tip_comment_count, u.name from 
+users u,
+tip t 
+left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq 
+left outer join (select tip_seq, count(*) tip_comment_count from tip_comment group by tip_seq) tc on t.tip_seq = tc.tip_seq
+
+where t.category = '다이어트'
+and u.SEQ = t.tip_writer
+order by t.tip_seq desc
 	</select>
 
 	<select id="getFashionTipData" parameterType="TipDTO" resultMap="TipDTOResultMap">
-		select * from users u, tip t left outer join (select tip_seq, count(*)
-		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
-		tg.tip_seq where t.tip_writer=u.seq and t.category='패션' order by
-		t.TIP_SEQ desc
+		select t.*, tg.tip_like_count, tc.tip_comment_count, u.name from 
+users u,
+tip t 
+left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq 
+left outer join (select tip_seq, count(*) tip_comment_count from tip_comment group by tip_seq) tc on t.tip_seq = tc.tip_seq
+
+where t.category = '패션'
+and u.SEQ = t.tip_writer
+order by t.tip_seq desc
 	</select>
 
 
 	<select id="getBusinessTipData" parameterType="TipDTO"
 		resultMap="TipDTOResultMap">
-		select * from users u, tip t left outer join (select
-		tip_seq, count(*)
-		tip_like_count from tip_good group by tip_seq) tg on
-		t.tip_seq =
-		tg.tip_seq where t.tip_writer=u.seq and t.category='직장생활'
-		order by
-		t.TIP_SEQ desc
+select t.*, tg.tip_like_count, tc.tip_comment_count, u.name from 
+users u,
+tip t 
+left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq 
+left outer join (select tip_seq, count(*) tip_comment_count from tip_comment group by tip_seq) tc on t.tip_seq = tc.tip_seq
+
+where t.category = '직장생활'
+and u.SEQ = t.tip_writer
+order by t.tip_seq desc
+
+
+
+<!-- 		select * from users u, tip t left outer join (select -->
+<!-- 		tip_seq, count(*) -->
+<!-- 		tip_like_count from tip_good group by tip_seq) tg on -->
+<!-- 		t.tip_seq = -->
+<!-- 		tg.tip_seq where t.tip_writer=u.seq and t.category='직장생활' -->
+<!-- 		order by -->
+<!-- 		t.TIP_SEQ desc -->
 	</select>
 
 	<!-- getToBeUpvotingArticles 50>tip_like_count>15 -->
 	<select id="getUpvotingArticles" parameterType="TipDTO"
 		resultMap="TipDTOResultMap">
-		<!-- select * from tip t left outer join (select tip_seq, count(*) tip_like_count 
-			from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq where <![CDATA[ 
-			(tg.tip_like_count>15) and (tg.tip_like_count<50) ]]>order by tg.tip_like_count 
-			desc -->
-		select * from users u, tip t left outer join (select tip_seq, count(*)
-		tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
-		tg.tip_seq where u.seq = t.tip_writer and <![CDATA[ (tg.tip_like_count>15) and (tg.tip_like_count<50) ]]>
+			
+			
+		select * from users u, 
+		tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq =
+		tg.tip_seq 
+		
+		where u.seq = t.tip_writer 
+		and 
+		<![CDATA[ (tg.tip_like_count>15) and (tg.tip_like_count<50) ]]>
 		order by tg.tip_like_count desc
 	</select>
 

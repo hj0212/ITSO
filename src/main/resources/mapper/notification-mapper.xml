@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Notification">
+	<insert id="insertNotification">
+		
+	</insert>
+	<update id="readNotification">
+		update notification set noti_read = 'n' where noti_seq = #{noti_seq}
+	</update>
+
+</mapper>
