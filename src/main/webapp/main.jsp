@@ -10,7 +10,8 @@
 <!-- jquery  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -67,6 +68,12 @@ body {
 @media ( max-width : 1100px) {
 	#rightfix {
 		display: none;
+	}
+}
+
+@media ( max-width : 1100px) {
+	#MOVE_TOP_BTN {
+		visibility: hidden;
 	}
 }
 
@@ -140,6 +147,23 @@ body {
 button.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
+
+#sidefooter {
+	width: 100%;
+	bottom: 0px;
+	border-top: 2px solid black;
+	text-align: center;
+}
+
+#sidefooter p {
+	font-style: oblique;
+}
+
+#sidefooter p a {
+	font-style: oblique;
+	color: black;
+}
+
 #MOVE_TOP_BTN {
 	position: fixed;
 	right: 5%;
@@ -151,49 +175,131 @@ button.dropdown-toggle {
 	color: white;
 	text-align: center;
 }
+
+.writerName:hover {
+	color: aqua;
+}
+
+.btn-floating {
+	
+}
+.footer-brand{
+	width: 70px;
+}
+
+.hidden {
+	display: none;
+}
+
+.show {
+	display: block;
+}
+
+/* ---------------- 모달 스타일 ------------------*/
+#collectionarea {
+	text-align: center;
+	overflow: auto;
+	-ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+	display:none;
+}
+@media ( max-width : 575px) {
+	.collectionItem {
+		width: 80%;
+	}
+}
+@media ( min-width : 576px) and (max-width: 991px) {
+	.collectionItem {
+		width: 50%;
+		float: left;
+	}
+}
+@media ( min-width : 991px) {
+	.collectionItem {
+		width: 30%;
+	}
+}
+.collectionItem {
+	display: inline-block;
+	margin: 0 auto 10px auto !important;
+	background: white;
+	height: 236px;
+}
+.collectionItem:hover {
+	transform: scale(1.05);
+	transition: all 0.1s ease-in-out;
+}
+.collectionPhoto {
+	height: 100%;
+	padding-left: 5px;
+}
+.collectionPhotoItem {
+	float:left;
+	display: inline;
+	padding: 1px;
+}
+.collectionPhotoItem img {
+	width: 105px;
+}
+.active {
+	border: 3px solid #21FCFF;
+	margin-left: 1px;
+}
+
+.btn-group {
+	margin-left: 3px;
+}
 </style>
 <script>
 	$(document).ready(function() {
-		
 
 		$(".heart").click(function() {
 			var heartVal = $(this).attr("class");
-				
-			if (heartVal =="fa fa-heart red-text heart") {
-				$(this).attr("class", "fa fa-heart-o red-text heart");		
+
+			if (heartVal == "fa fa-heart red-text heart") {
+				$(this).attr("class", "fa fa-heart-o red-text heart");
 			} else {
 				$(this).attr("class", "fa fa-heart red-text heart");
-				
+
 			}
 		});
 
-		$(".heart").on('click',function(){
+		$(".heart").on('click', function() {
 			var seq = $(this).attr("value");
-			var font =$(this).children('font');
+			var font = $(this).children('font');
 			console.log("숫자: " + $(this).children('font').html());
 			console.log(seq);
-			
+
 			$.ajax({
-				url:"mainHeart.ajax",
-				type:"post",
-				data:{
-					social_seq:seq
+				url : "mainHeart.ajax",
+				type : "post",
+				data : {
+					social_seq : seq
 				},
-				success:function(data){
-					console.log("들어옴"+data),
-					font.html(data)
-					
+				success : function(data) {
+					console.log("들어옴" + data), font.html(data)
+
 				}
 			});
-			
+
 		});
-		
+
 		$(function() {
 			$(window).scroll(function() {
+				var scrolltop = $(window).scrollTop();
 				if ($(this).scrollTop() > 500) {
 					$('#MOVE_TOP_BTN').fadeIn();
 				} else {
 					$('#MOVE_TOP_BTN').fadeOut();
+
+				}
+
+				if (scrolltop == $(document).height() - $(window).height()) {
+					$("#sidefooter").fadeIn();
+				} else {
+					$("#sidefooter").fadeOut();
 				}
 			});
 
@@ -204,6 +310,34 @@ button.dropdown-toggle {
 				return false;
 			});
 		});
+		
+		$(".followbtn").on('click', function () {
+		    var seq = $(this).siblings('.writerseq').val();
+		    var text = $(this).find('.show').text();
+		    console.log("text: " + text);
+		    var btn = $(".writerseq[value='"+seq+"']").siblings("button.followbtn");
+		    var span = btn.find('span');
+		    $.ajax({
+		        url: "followUser.ajax",
+		        type: "post",
+		        data: {
+		            seq: seq,
+		            text: text
+		        },
+		        success: function (response) {
+		            if (response != null) {
+		                console.log("DB success : " + response);
+		                btn.toggleClass("btn-itso");
+		                btn.toggleClass("btn-indigo");
+		                span.toggleClass("hidden");
+		                span.toggleClass("show");
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
+		    });
+		})
 	});
 </script>
 </head>
@@ -215,60 +349,61 @@ button.dropdown-toggle {
 	<!-- Grid row -->
 	<div id="card-group">
 		<section class="firstSection col-md-12">
-		<div class="mainIntro">
-			<p>
-				<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
-				the people you like to personalize you feed.
-			</p>
-		</div>
+			<div class="mainIntro">
+				<p>
+					<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
+					the people you like to personalize you feed.
+				</p>
+			</div>
 		</section>
 
 
 		<section class="secondSection col-md-12">
-		<div class="container">
+			<div class="container">
 
-			<div class="btn-group">
-				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-					id="gender">${gender}</button>
-
-				<div class="dropdown-menu">
-					<a class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=g&age=${pAge }&main=${main}&feed=${feed}">무관 </a> <a
-						class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=m&age=${pAge }&main=${main}&feed=${feed}">남성</a> <a
-						class="dropdown-item flex-center droptxt2"
-						href="main.go?gender=f&age=${pAge }&main=${main}&feed=${feed}">여성</a>
-				</div>
 				<div class="btn-group">
 					<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						id="age">${age}</button>
+						id="gender">${gender}</button>
+
 					<div class="dropdown-menu">
 						<a class="dropdown-item flex-center droptxt2"
-							href="main.go?age=0&gender=${pGender }&main=${main}&feed=${feed}">모든연령 </a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=10&gender=${pGender }&main=${main}&feed=${feed}">10대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=20&gender=${pGender }&main=${main}&feed=${feed}">20대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=30&gender=${pGender }&main=${main}&feed=${feed}">30대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="main.go?age=40&gender=${pGender }&main=${main}&feed=${feed}">40대</a>
+							href="main.go?gender=g&age=${pAge }&main=${main}&feed=${feed}">무관
+						</a> <a class="dropdown-item flex-center droptxt2"
+							href="main.go?gender=m&age=${pAge }&main=${main}&feed=${feed}">남성</a>
+						<a class="dropdown-item flex-center droptxt2"
+							href="main.go?gender=f&age=${pAge }&main=${main}&feed=${feed}">여성</a>
 					</div>
 					<div class="btn-group">
 						<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Full
-							view</button>
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+							id="age">${age}</button>
 						<div class="dropdown-menu">
 							<a class="dropdown-item flex-center droptxt2"
-								href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full view</a> <a
-								class="dropdown-item flex-center droptxt2"
-								href="main.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Thumbnail view</a>
+								href="main.go?age=0&gender=${pGender }&main=${main}&feed=${feed}">모든연령
+							</a> <a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=10&gender=${pGender }&main=${main}&feed=${feed}">10대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=20&gender=${pGender }&main=${main}&feed=${feed}">20대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=30&gender=${pGender }&main=${main}&feed=${feed}">30대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=40&gender=${pGender }&main=${main}&feed=${feed}">40대</a>
+						</div>
+						<div class="btn-group">
+							<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">Full view</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item flex-center droptxt2"
+									href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Full
+									view</a> <a class="dropdown-item flex-center droptxt2"
+									href="main.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}">Thumbnail
+									view</a>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 		</section>
 		<a id="MOVE_TOP_BTN" href="#">TOP</a>
@@ -294,36 +429,116 @@ button.dropdown-toggle {
 								<!--Card content-->
 								<div class="card-body">
 									<!--Title-->
-									<h4 class="card-title">
-										<a>${list.social_writer}</a>
-										<script type="text/javascript">
-											console.log("${goodCount[status.count]}");
-										</script>
-										
-										<c:set var="loop_flag" value="false"/>
-										<c:forEach items="${goodList }" var="good" varStatus="gstatus">
-										<c:if test="${loop_flag == false }">
-											<c:choose>
-												<c:when test="${good.social_seq == list.social_seq }">
-													<i	class="fa fa-heart red-text heart" aria-hidden="true"
-											style="float: right;" value="${list.social_seq}"><font color="black">${heart[status.index].toString()}</font></i>
-												<c:set var="loop_flag" value="true"/>
-												</c:when>
-												<c:otherwise>
-													<c:if test="${gstatus.last }">
-														<i	class="fa fa-heart-o red-text heart" aria-hidden="true"
-											style="float: right;" value="${list.social_seq}"><font color="black">${heart[status.index].toString()}</font></i>
-													</c:if>
-												</c:otherwise>
-											</c:choose>
-										</c:if>
-										</c:forEach>
-										
-									</h4>
+									<ul class="list-unstyled">
+										<li class="media align-middle"><img
+											class="d-flex mr-3 rounded-circle "
+											src="/upload/profile/${list.user_photo}"
+											style="width: 50px; height: 50px; margin-top: 10px">
+											<div class="media-body" style="margin: 0px auto">
+												<a class="writer-a"><b class="writerName"
+													style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;<font
+													color="gray">"${list.userState}"</font>
+
+
+
+
+
+											</div> <!-- <script type="text/javascript">
+										console
+												.log("${goodCount[status.count]}");
+									</script> -->
+											<div class="goodarea">
+												<c:set var="loop_flag" value="false" />
+												<c:choose>
+													<c:when test="${empty goodList }">
+														<i class="fa fa-heart-o red-text heart "
+															aria-hidden="true" style="float: right; font-size: 25px;"
+															value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+														</font></i>
+
+
+													</c:when>
+													<c:otherwise>
+														<c:forEach items="${goodList }" var="good"
+															varStatus="gstatus">
+
+															<c:if test="${loop_flag == false }">
+																<c:choose>
+																	<c:when test="${good.social_seq == list.social_seq }">
+																		<i class="fa fa-heart red-text heart"
+																			aria-hidden="true"
+																			style="float: right; font-size: 25px; margin-top: 25px;"
+																			value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+																		</font></i>
+
+																		<c:set var="loop_flag" value="true" />
+																	</c:when>
+																	<c:otherwise>
+																		<c:if test="${gstatus.last }">
+																			<i class="fa fa-heart-o red-text heart"
+																				aria-hidden="true"
+																				style="float: right; font-size: 25px; margin-top: 20px;"
+																				value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+																			</font></i>
+
+
+																		</c:if>
+																	</c:otherwise>
+																</c:choose>
+															</c:if>
+
+														</c:forEach>
+													</c:otherwise>
+
+												</c:choose>
+											</div></li>
+									</ul>
+
+
+
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
-									<a href="#" class="btn  btn-indigo"
-										style="background-color: black;"><i class="fa fa-plus">follow</i></a>
+									<c:choose>
+									<c:when test="${!empty followingList }">
+									<c:forEach var="flist" items="${followingList }">
+									<c:choose>
+										<c:when test="${list.social_writer eq sessionScope.user.seq}">
+									        
+									    </c:when>
+									    <c:otherwise>
+									    	<c:choose>
+									    		<c:when test="${flist.seq eq list.social_writer}">
+									        <button type="button" class="btn btn-itso followbtn">
+												<span class="unfollow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
+												<span class="follow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
+											</button>
+									    </c:when>
+									    <c:otherwise>
+									        <button type="button" class="btn btn-indigo followbtn">
+												<span class="follow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
+												<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
+											</button>
+									    </c:otherwise>
+									    	</c:choose>									    
+									    </c:otherwise>
+									</c:choose>	
+									</c:forEach>
+									</c:when>
+									<c:otherwise>
+									<button type="button" class="btn btn-indigo followbtn">
+										<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
+										<span class="follow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
+									</button>
+									</c:otherwise>
+									</c:choose>
+									
+									
+									<input type="hidden" value="${list.social_writer }" class="writerseq"/>
+									<input type="hidden" value="${list.social_seq }" class="socialseq"/>
+									<button type="button" class="btn btn-indigo savebtn" data-toggle="modal" data-target="#saveModal">
+										<i class="fa fa-upload" > <span
+											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
+									</button>
 									<!--share-->
 									<!--instagram-->
 									<button type="button" class="btn-floating btn-sm btn-is share "
@@ -355,6 +570,120 @@ button.dropdown-toggle {
 				</tr>
 			</c:otherwise>
 		</c:choose>
+		
+		<!-- saveModal -->
+		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead mb-0">컬렉션으로 저장하기</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<!--Body-->
+					<div class="modal-body">
+						<div id="modalbtnarea">
+							<button class="btn btn-itso" data-toggle="modal"
+								data-target="#createModal">
+								<i class="fa fa-plus"></i> 컬렉션 생성
+							</button>
+							<button class="btn btn-indigo" id="managebtn"> 컬렉션 관리 </button>
+						</div>
+
+						<c:choose>
+							<c:when test="${not empty collectionList }">
+								<div id="collectionarea" class="mt-2">
+									<c:set var="num" value="0"></c:set>
+									<c:forEach items="${collectionList}" var="clist">
+									
+										<div class="collectionItem z-depth-1 mt-2">									
+											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
+											<h6>${clist.collection_contents }</h6>
+											<input type="hidden" class="collectionseq" value="${clist.collection_seq }"/>
+											<div class="collectionPhoto">
+
+												<c:set var="num" value="0" />
+
+												<c:forEach items="${photoList }" var="plist"
+													varStatus="status">
+													<c:choose>
+														<c:when test="${num < 4 }">
+															<c:if test="${plist.collection_seq == clist.collection_seq }">
+																<c:set var="num" value="${num+1 }" />
+																
+																<div class="collectionPhotoItem"><img src="/upload/social/${plist.photo }"
+																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
+															</c:if>
+														</c:when>
+														<c:otherwise>
+															<div class="collectionPhotoItem" style="display:none;"><img src="/upload/social/${plist.photo }"
+																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
+														</c:otherwise>
+													</c:choose>
+
+												</c:forEach>
+											</div>
+											<h6 class="mb-0" style="height: 19px;"></h6>
+										</div>
+									</c:forEach>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+
+
+		<!-- createModal -->
+		<div class="modal fade" id="createModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead mb-0">컬렉션 생성</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<!--Body-->
+					<div class="modal-body">
+						<div class="md-form">
+							<input type="text" id="inputMD" class="form-control" name="collection_title" maxlength="30"> <label
+								for="inputMD">컬렉션 이름</label>
+						</div>
+						<div class="md-form mt-1">
+							<textarea type="text" id="form7" class="md-textarea form-control"
+								rows="3"  name="collection_contents"></textarea>
+							<label for="form7">컬렉션 상세 설명</label>
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<button class="btn btn-itso" data-toggle="modal"
+							data-target="#modal" id="createcolbtn">생성</button>
+						<button class="btn btn-outline-itso waves-effect"
+							data-dismiss="modal">취소</button>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
 
 
 		<!-- 오른쪽 추천 follow  -->
@@ -394,14 +723,116 @@ button.dropdown-toggle {
 					</div></li>
 			</ul>
 
-
-
 		</div>
+	
 	</div>
+		<!--side footer -->
+		<div id="sidefooter">
+			
+			<p><a class="footer-brand" href="#"><img id="logo" alt=""
+			src="resources/images/logo_black.png"></a>©2018 ItSo. All rights reserved.</p>
+			<p>
+				<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
+				<a href="#">advertise</a>· <a href="#">legal</a>
+			</p>
+		</div>
+	
+	<script>
+	$("#managebtn").on("click", function() {
+		window.open('mypage.go?view=collection', '_blank');
+	})
+	
+	social_seq = 0;
+	$('.savebtn').on("click", function() {
+		social_seq=$(this).siblings(".socialseq").val();
+		console.log(social_seq);
+		
+		/* 여기 하는중 */
+		for(var i=1; i<5; i++) {
+			var collection_socialseq = $(".collectionItem:nth-of-type("+i+")").find(".socialseq").val();
+			console.log("검사 : " + social_seq + ":" + collection_socialseq );
+			if(social_seq == collection_socialseq) {
+				$(".collectionItem:nth-of-type("+i+")").addClass("active");
+				break;
+			}
+		}
+	})
+
+	$("#collectionarea").on("click", ".collectionItem", function() {
+		var cursor = $(this);
+		cursor.toggleClass('active');
+		var collection_seq =$(this).children(".collectionseq").val();
+		console.log("collection_seq: " + collection_seq);
+		console.log("social_seq: "+social_seq);
+		
+		var num = $(this).find(".collectionPhotoItem").length;
+		$.ajax({
+	        url:"saveCollection.ajax",
+	        type:"post",
+	        data:{
+	          collection_seq:collection_seq,
+	          social_seq:social_seq
+	        },
+	        success:function(data){
+	        	console.log("ajax: " + data.photo +"," + data.social_seq)
+		        if(data.photo != null) {
+		        	console.log("여기");
+		          $(this).find(".collectionPhoto").append('<div class="collectionPhotoItem">'
+		          +'<img src="/upload/social/'+data.photo+'"> <input type="hidden" class="socialseq" value="'+data.social_seq+'">'
+		          +'</div>');
+		        if(num > 4) {
+		        	cursor.find(".collectionPhoto:last").attr("display", "none");
+		        }
+	        	}
+	        	cursor.addClass("active");
+	        }
+	     });
+	 
+	})
+	
+	$("#createcolbtn").on('click', function() {
+		var collection_title = $("input[name='collection_title']").val();
+		var collection_contents = $("textarea[name='collection_contents']").val();
+		
+		$.ajax({
+	        url:"createCollection.ajax",
+	        type:"post",
+	        data:{
+	          collection_title:collection_title,
+	          collection_contents:collection_contents
+	        },
+	        success:function(data){
+	          console.log("생성");
+	          $("input[name='collection_title']").val("");
+	          $("textarea[name='collection_contents']").val("");
+	          $("#createModal").hide();
+	          $("#saveModal").show();
+	        }
+	    });
+	});
+
+	$("#createModal").on('show.bs.modal', function() {
+		$("#saveModal").hide();
+	});
+	
+	$("#createModal").on('hidden.bs.modal', function() {
+		$("#saveModal").show();
+	});
+	
+	$("#saveModal").on('show.bs.modal', function() {
+		
+		
+		
+	});
+	
+	$("#saveModal").on('hidden.bs.modal', function() {
+		console.log("닫힘");
+		$(".collectionItem").removeClass("active");
+	});
+	
+	</script>
 </body>
-<!-- JQuery -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

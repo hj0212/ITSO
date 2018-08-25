@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,7 +85,7 @@ public class AjaxController {
 	
 	
 	@RequestMapping("/saveCollection.ajax")
-	public @ResponseBody String saveCollection(int collection_seq, int social_seq, HttpSession session) {
+	public @ResponseBody Object saveCollection(int collection_seq, int social_seq, HttpSession session) {
 		System.out.println("ajax:"+collection_seq+":"+social_seq);
 		SocialBoardDTO dto = new SocialBoardDTO();
 		dto.setCollection_seq(collection_seq);
@@ -92,17 +93,17 @@ public class AjaxController {
 		
 		List<SocialBoardDTO> list = sservice.selectCollectionContent(dto);	// 테이블에 있는지
 		
-		String msg;
+		SocialBoardDTO result = null;
 		if(list.size() > 0) {
 			int delete = sservice.deleteCollectionContent(dto);
 			System.out.println(delete>0?"delete성공":"delete실패");
-			msg="delete";
+			result = dto;
 		}else {
 			int insert = sservice.insertCollectionContent(dto);
 			System.out.println(insert>0?"insert성공":"insert실패");
-			msg="insert";
+			result = sservice.selectSocialBoard(social_seq);
 		}
-		return msg;
+		return result;
 	}
 	
 	@RequestMapping("/createCollection.ajax")
@@ -136,25 +137,25 @@ public class AjaxController {
 	}
 	
 	@RequestMapping("/followUser.ajax")
-	public @ResponseBody String followProc(int seq, String text, HttpSession session) {
-		System.out.println("여기");
+	public @ResponseBody String followProc(int seq, String text, HttpSession session, HttpServletResponse resp) {
 		FollowDTO dto = new FollowDTO();
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
-		if(text.equals("팔로우")) {
-			dto.setUser_seq(user_seq);
-			dto.setFollowing_seq(seq);
-			int result = service.insertFollowData(dto);
-			String resultmsg = result>0?"팔로우성공":"팔로우실패";
-			System.out.println(resultmsg);
-			return "언팔로우";
-		} else {
-			dto.setUser_seq(user_seq);
-			dto.setFollowing_seq(seq);
+
+		dto.setUser_seq(user_seq);
+		dto.setFollowing_seq(seq);
+		
+		System.out.println("text:" + text);
+		String resultmsg = "";
+		if(text.contains("언팔로우")) {
 			int result = service.deleteFollowData(dto);
-			String resultmsg = result>0?"언팔로우성공":"언팔로우실패";
+			resultmsg = result>0?"언팔로우성공":"언팔로우실패";
 			System.out.println(resultmsg);
-			return "팔로우";
+		} else {
+			int result = service.insertFollowData(dto);
+			resultmsg = result>0?"팔로우성공":"팔로우실패";
+			System.out.println(resultmsg);
 		}
+		return resultmsg;
 	}
 	
 	@RequestMapping("/doStylingVote.ajax")
