@@ -217,7 +217,13 @@ input[type="file"] {
 		};
 
 		$('#writevotebtn').click(function() {
-			location.href = "voteStyling.go"
+			console.log(${sessionScope.user.seq});
+			if(${sessionScope.user.seq}){
+				location.href = "voteStyling.go";
+			}else{
+				location.href="login.go";
+			}
+			
 		})
 
 		$('.gobtn').click(function() {

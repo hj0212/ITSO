@@ -120,6 +120,7 @@ public class StylingController {
 		MemberDTO user =(MemberDTO)session.getAttribute("user");
 		svdto.setStyling_writeip(req.getRemoteAddr());
 		svdto.setStyling_writer(user.getSeq());
+		System.out.println(user.getSeq());
 		
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
 
@@ -155,7 +156,7 @@ public class StylingController {
 			
 		//------------------------------------voteItem insert
 		//사진파일 업로드-후보
-		List<String> itemfilenames = new ArrayList();
+		List<String> itemfilenames = new ArrayList<String>();
 		int insertitem =0;
 		if(uploadfiles.size() != 0) {
 			File file = new File(path);
@@ -186,11 +187,12 @@ public class StylingController {
 			svitemdto.setStyling_vote_item_contents(itemconts.get(i));
 			svitemdto.setStyling_vote_item_photo(itemfilenames.get(i));
 			styservice.insertStylingVoteItem(svitemdto);
-			insertitem+=1;
+			insertitem += 1;
 		}
 		mav.addObject("result",insertResult);
 		mav.setViewName("stylingBoard.style");
 		}catch(Exception e) {
+			e.printStackTrace();;
 			mav.setViewName("login.go");
 		}
 		return mav;
