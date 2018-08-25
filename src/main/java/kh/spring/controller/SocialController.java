@@ -148,8 +148,8 @@ public class SocialController {
 
 
 
-		List<Integer> ggdto = new ArrayList<>();
-		List<MemberDTO> mdto = new ArrayList<>();
+		List<Integer> ggdto = new ArrayList<Integer>();
+		List<MemberDTO> mdto = new ArrayList<MemberDTO>();
 		
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
@@ -165,7 +165,7 @@ public class SocialController {
 		}
 		
 		
-		List<Integer> goodCount = new ArrayList<>();
+		List<Integer> goodCount = new ArrayList<Integer>();
 		for(SocialBoardDTO sdd : result) {
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq(),user_seq);
 			goodCount.add(this.service.selectGoodCount(gdto));

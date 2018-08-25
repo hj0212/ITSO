@@ -217,14 +217,14 @@ input[type="file"] {
 		};
 
 		$('#writevotebtn').click(function() {
-			console.log(${sessionScope.user.seq});
-			if(${sessionScope.user.seq}){
+			
+			if("${sessionScope.user.seq ne null}"){
 				location.href = "voteStyling.go";
 			}else{
 				location.href="login.go";
 			}
 			
-		})
+		});
 
 		$('.gobtn').click(function() {
 			var seq = $(this).next('input').val();

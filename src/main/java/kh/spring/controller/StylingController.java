@@ -115,10 +115,12 @@ public class StylingController {
 		/*		System.out.println(svdto.getStyling_end());
 		System.out.println(svdto.getStyling_title());*/		
 		
+		System.out.println("인서트 컨트롤러");
 		ModelAndView mav = new ModelAndView();
 		try {
 		MemberDTO user =(MemberDTO)session.getAttribute("user");
 		svdto.setStyling_writeip(req.getRemoteAddr());
+		System.out.println(req.getRemoteAddr());
 		svdto.setStyling_writer(user.getSeq());
 		System.out.println(user.getSeq());
 		

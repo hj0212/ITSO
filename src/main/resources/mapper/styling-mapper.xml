@@ -5,9 +5,7 @@
 
 	<insert id="insertStylingVote" parameterType="svdto">
 		insert into
-		styling_vote values(styling_vote_seq.nextval, #{styling_title},
-		#{styling_contents},
-		#{styling_writer},sysdate,#{styling_viewcount},#{styling_end},#{styling_endterm,jdbcType=DATE},#{styling_voternum,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{styling_writeip,jdbcType=VARCHAR},'n',sysdate)
+		styling_vote values(styling_vote_seq.nextval, #{styling_title},#{styling_contents},#{styling_writer},to_date(sysdate,'NLS_DATE_LANGUAGE=AMERICAN'),#{styling_viewcount},#{styling_end},#{styling_endterm,jdbcType=DATE},#{styling_voternum,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{styling_writeip,jdbcType=VARCHAR},'n',to_date(sysdate,'NLS_DATE_LANGUAGE=AMERICAN'))
 	</insert>
 
 	<select id="selectStylingSeq" resultType="int">
