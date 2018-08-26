@@ -73,5 +73,13 @@ public class StylingDAOImpl implements IStylingDAO{
 		
 		return template.update("Styling.modifyStylingVote",svdto);
 	}
+
+	@Override
+	public int updateStylingViewcount(int styling_vote_seq) {
+		System.out.println("dao 들어옴/ 변수 :" + styling_vote_seq);
+		int resul= template.update("Styling.updateStylingViewcount",styling_vote_seq);
+		System.out.println(resul);
+		return resul;
+	}
 	
 }

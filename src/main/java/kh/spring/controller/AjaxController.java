@@ -12,6 +12,7 @@ import javax.xml.ws.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kh.spring.dto.CollectionDTO;
@@ -171,6 +172,10 @@ public class AjaxController {
 		int voteresult = styservice.doStylingVote(votedto);
 	}
 	
-	
-	
+	@RequestMapping("/updateStylingViewcount.ajax")
+	public @ResponseBody void updateStylingViewcount(HttpSession session, @RequestParam int styling_vote_seq) {
+		System.out.println(styling_vote_seq+"번글 조회수 up-------------------");
+		int result = styservice.updateStylingViewcount(styling_vote_seq);
+		System.out.println("ajax 조회수 up 완료");
+	}
 }

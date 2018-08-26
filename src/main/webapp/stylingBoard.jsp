@@ -135,7 +135,7 @@ input[type="file"] {
 									<p class="card-text">
 										<a class="text-muted amber-text">${svdto.styling_writername}</a>
 										<a><i class="fa mr-2 fa-comment amber-text"
-											aria-hidden="true"></i>82</a> <a><i class="fa mr-2 fa-eye"
+											aria-hidden="true"></i>0</a> <a><i class="fa mr-2 fa-eye"
 											aria-hidden="true"></i>${svdto.styling_viewcount}</a> 
 									</p>
 									<p class='card-text'>		
@@ -228,6 +228,19 @@ input[type="file"] {
 
 		$('.gobtn').click(function() {
 			var seq = $(this).next('input').val();
+			$.ajax({
+				method : "POST",
+				url : "updateStylingViewcount.ajax",			
+				data : {				
+					styling_vote_seq:seq
+				},
+				error : function() {
+					alert("다시 시도해 주세요");
+				},
+				success : function(data) {
+					console.log("AJAX 조회수 up");
+				}
+			});
 			location.href = "readStylingVote.style?styling_vote_seq=" + seq;
 		})
 		

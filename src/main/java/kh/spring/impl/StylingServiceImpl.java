@@ -78,5 +78,13 @@ public class StylingServiceImpl implements IStylingService{
 		return modiresult;
 	}
 
+	@Override
+	public int updateStylingViewcount(int styling_vote_seq) {
+		int result = sdao.updateStylingViewcount(styling_vote_seq);
+		System.out.println("조회수 +1완료");
+		return result;
+		
+	}
+
 
 }

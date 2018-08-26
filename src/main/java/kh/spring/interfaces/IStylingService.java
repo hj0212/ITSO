@@ -18,5 +18,6 @@ public interface IStylingService {
 	public int doStylingVote(StylingVoteUserDTO votedto);
 	public int deleteStylingVote(int styling_vote_seq);
 	public int modifyStylingVote(StylingVoteDTO svdto);
+	public int updateStylingViewcount(int styling_vote_seq);
 	
 }
