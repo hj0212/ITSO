@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
+import kh.spring.dto.StylingVoteResultDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.interfaces.IStylingService;
 
@@ -53,25 +54,44 @@ public class StylingController {
 	}
 	@Transactional
 	@RequestMapping("/readStylingVote.style")
-	public ModelAndView goStylingBoard(HttpSession session, @RequestParam int styling_vote_seq) {
+	public ModelAndView goStylingBoard(HttpSession session, @RequestParam(value="styling_vote_seq") int styling_vote_seq) {
 		ModelAndView mav = new ModelAndView();
 		try {	
 			/*int result =styservice.updateStylingViewcount(styling_vote_seq);
 			System.out.println(result);
 */
-			StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);		
+			StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
+			System.out.println("votedto까지 생성완료");
 			List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
-
-
+			System.out.println(svitemdtos.size()+"개의 voteItemdto 생성완료");
+			
+			List<StylingVoteResultDTO> resultdtos =styservice.getStylingVoteResult(styling_vote_seq);
+			if(resultdtos.size()==0) {
+				System.out.println(resultdtos.size()+"개의 투표결과가 컨트롤러 는 무사히..지나감");
+				for(int i=0; i<svitemdtos.size();i++) {
+					StylingVoteResultDTO dto = new StylingVoteResultDTO();
+					dto.setEachrate((double)0);			
+					resultdtos.add(dto);
+				}
+			}else if(resultdtos.size()<svitemdtos.size()) {
+				for(int i=0; i< svitemdtos.size()-resultdtos.size();i++) {}
+				StylingVoteResultDTO dto = new StylingVoteResultDTO();
+				dto.setEachrate((double)0);			
+				resultdtos.add(dto);
+			}
+			
 			int seq=((MemberDTO)session.getAttribute("user")).getSeq();		
 			int didvote = styservice.selectDidVote(seq,styling_vote_seq);		
 			System.out.println(styling_vote_seq +"번글 투표했냐"+didvote);
-
 			/*List<StylingVoteResultDTO>styservice.selectVoteResult(styling_vote_seq);*/
 
 			mav.addObject("didVote",didvote);
 			mav.addObject("voteitems",svitemdtos);
 			mav.addObject("votedto",votedto);
+			mav.addObject("voteresults",resultdtos);
+			System.out.println(resultdtos.get(0).getEachrate());
+			System.out.println(resultdtos.size()+"개의 투표결과가 컨트롤러 는 무사히..지나감");
+			
 			mav.setViewName("readStylingVote.jsp");
 		}catch(Exception e) {
 			e.printStackTrace();

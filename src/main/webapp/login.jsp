@@ -209,7 +209,8 @@ $(document).ready(function () {
 
     /*password*/
     $("#inputValidationEx2")
-        .keypress(
+     
+    .keypress(
             function () {
                 var password = $(
                         "#inputValidationEx2")

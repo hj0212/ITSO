@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> --%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -165,8 +167,10 @@ input[type="file"] {
 					</thead>
 					<tbody id="itemlist">
 						<c:forEach var="svitemdto" items="${voteitems}" varStatus="status">
+							
+							
 							<tr>
-								<th scope="col" s>
+								<th scope="col">
 									<div class="custom-control custom-radio"
 										id="test${status.index}">
 										<input type="radio" class="custom-control-input"
@@ -198,10 +202,11 @@ input[type="file"] {
 									</div>
 								</td>
 								<td>
+								
 									<div class="progress">
-										<div class="progress-bar" style="width:40%" role="progressbar" aria-valuenow="0"
+										<div class="progress-bar" style="width:${voteresults[status.index].eachrate}%" role="progressbar" aria-valuenow="0"
 											aria-valuemin="0" aria-valuemax="100"></div>
-									</div><a>결과(%)</a> <br>
+									</div><a>${voteresults[status.index].eachrate} %</a> <br>
 								</td>
 							</tr>
 						</c:forEach>
@@ -210,7 +215,7 @@ input[type="file"] {
 				</table>
 			</div>
 		</div>
-		<div class="row">댓글..?</div>
+		<div class="row">--</div>
 
 		<div class="col-md-2 offset-md-10">
 			<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1"
@@ -262,6 +267,8 @@ input[type="file"] {
 						console.log("AJAX 투표 성공");
 						$('#votebtn').attr("disabled", true);
 						$('#votebtn').text("투표 완료");
+						$('input[type="radio"]').attr("disabled",true);
+						location.href="readStylingVote.style?styling_vote_seq="+styling_vote_seq;
 					}
 				});
 			}else if(voteval == null){

@@ -4,6 +4,7 @@ import java.util.List;
 
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
+import kh.spring.dto.StylingVoteResultDTO;
 import kh.spring.dto.StylingVoteUserDTO;
 
 public interface IStylingDAO {
@@ -29,4 +30,6 @@ public interface IStylingDAO {
 	public int modifyStylingVote(StylingVoteDTO svdto);
 	
 	public int updateStylingViewcount(int styling_vote_seq);
+	
+	public List<StylingVoteResultDTO> getStylingVoteResult(int styling_vote_seq);
 }
