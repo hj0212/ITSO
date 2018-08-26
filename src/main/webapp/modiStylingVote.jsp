@@ -101,10 +101,10 @@ input[type="file"] {
 			var count = 1;
 		</script>
 		<div class="row my-2"></div>
-		<form method="post" action="insertStylingVote.style" id="voteform"
-			enctype="multipart/form-data">
+		<form method="post" action="modifyStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}" id="modiform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
 				<h4>투표주제</h4>
+			<input type="hidden" name="styling_vote_seq" value="${votedto.styling_vote_seq}">
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<div class="md-form form-md form-group">
 						<input type="text" id="votetitleid" name="styling_title"
@@ -121,9 +121,10 @@ input[type="file"] {
 					<div class="media-body image-upload-wrap form-group"
 						id="voteitemdiv">
 						<img class="d-flex file-upload-image" src="upload/stylingvote/${votedto.photo}" alt="사진 없음"
-							id="voteitemimg"> <input type="file" name="votetitleimgfile"
+							id="voteitemimg"> <input type="file" name="titlefile"
 							id="imgfile0" onchange="readURL(this);"
 							class="file-upload-input form-control" accept="image/*" />
+							<input type="hidden" name="photo" value="${votedto.photo}"/>
 					</div>
 				</div>
 			</div>
@@ -148,7 +149,7 @@ input[type="file"] {
 						<c:forEach var="item" items="${voteitems}">
 							<tr class="z-depth-3 hoverable">
 								<th scope="row">
-								<input type="text" name="styling_vote_seq" value="${item.styling_vote_item_seq}"></th>
+								<input type="text" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
 								<td>
 									<div class="media">
 										<div class="media-img">
@@ -374,7 +375,7 @@ input[type="file"] {
 			console.log(radioval);
 			$('#radioresult').val(radioval);
 			console.log($('input[name = "styling_end"]').val());
-			$('#voteform').submit();
+			$('#modiform').submit();
 		})
 		
 	</script>

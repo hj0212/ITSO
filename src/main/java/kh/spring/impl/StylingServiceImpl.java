@@ -73,8 +73,8 @@ public class StylingServiceImpl implements IStylingService{
 	}
 
 	@Override
-	public int modifyStylingVote(int styling_vote_seq) {
-		int modiresult = sdao.modifyStylingVote(styling_vote_seq);
+	public int modifyStylingVote(StylingVoteDTO svdto) {
+		int modiresult = sdao.modifyStylingVote(svdto);
 		return modiresult;
 	}
 

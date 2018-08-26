@@ -68,8 +68,10 @@ public class StylingDAOImpl implements IStylingDAO{
 	}
 
 	@Override
-	public int modifyStylingVote(int styling_vote_seq) {
-		return template.update("Styling.modifyStylingVote",styling_vote_seq);
+	public int modifyStylingVote(StylingVoteDTO svdto) {
+		System.out.println("수정사항"+svdto.getStyling_vote_seq()+"번글//제목:"+svdto.getStyling_title()+"/내용:"+svdto.getStyling_contents()+"/종료방법:"+svdto.getStyling_end()+"/추가사항"+svdto.getStyling_voternum());
+		
+		return template.update("Styling.modifyStylingVote",svdto);
 	}
 	
 }

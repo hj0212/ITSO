@@ -45,6 +45,9 @@
 		update styling_vote set styling_delete_flag = 'y' where styling_vote_seq= #{styling_vote_seq}
 	</update>
 	
+	<update id="modifyStylingVote" parameterType="svDTO">
+		update styling_vote set styling_title= #{styling_title}, styling_contents= #{styling_contents},styling_end=#{styling_end},styling_endterm=#{styling_endterm,jdbcType=DATE},styling_voternum=#{styling_voternum,jdbcType=INTEGER},photo=#{photo,jdbcType=VARCHAR},styling_lastdate=sysdate where styling_vote_seq=#{styling_vote_seq}
+	</update>
 	
 
 </mapper>

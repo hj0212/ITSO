@@ -57,10 +57,12 @@ public class StylingController {
 		try {	
 		StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
 		List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
-		int seq=((MemberDTO)session.getAttribute("user")).getSeq();
 		
-		int didvote = styservice.selectDidVote(seq,styling_vote_seq);
-		System.out.println("투표했냐"+didvote);
+		int seq=((MemberDTO)session.getAttribute("user")).getSeq();		
+		int didvote = styservice.selectDidVote(seq,styling_vote_seq);		
+		System.out.println(styling_vote_seq +"번글 투표했냐"+didvote);
+		
+		/*List<StylingVoteResultDTO>styservice.selectVoteResult(styling_vote_seq);*/
 		
 		mav.addObject("didVote",didvote);
 		mav.addObject("voteitems",svitemdtos);
@@ -99,16 +101,62 @@ public class StylingController {
 		return mav;
 	}
 	
-	/*@RequestMapping("/modifyStylingVote.style")
-	public ModelAndView modifyStylingVote(HttpSession session, @RequestParam int styling_vote_seq) {
+	@RequestMapping("/modifyStylingVote.style")
+	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(styling_vote_seq+"번 글 수정 Ctrl");
-		int modiresul = styservice.modifyStylingVote(styling_vote_seq);
 		
-		mav.addObject("modiresult",modiresult);	
-		mav.setViewName("readStylingVote.style?styling_vote_seq="+ styling_vote_seq);
+		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
+		System.out.println(styling_vote_seq+"번 글 수정 Ctrl");
+		System.out.println(svdto.getPhoto()+":이건 원래 있던 포토");
+		System.out.println(titlefile+":새로운 제목 사진");
+		if(titlefile.getOriginalFilename() == null ||titlefile.getOriginalFilename().equals("")) {
+			System.out.println("여기는 오나...파일 안바꼈을떄");
+			int modiresul = styservice.modifyStylingVote(svdto);
+			System.out.println(svdto.getPhoto());
+			System.out.println(modiresul+":수정 결과");
+			mav.addObject("modiresult",modiresul);
+		}
+		else {
+			File file2 = new File(path);
+			String ofileName = titlefile.getOriginalFilename();
+			
+			String sfileName = "";
+			if (ofileName != null && !ofileName.equals("")) {
+				if(file2.exists()) {
+					sfileName = System.currentTimeMillis() + "_" + ofileName;
+					/*System.out.println("sfileName : " + sfileName);*/		
+					svdto.setPhoto(sfileName);
+					System.out.println("성공인가");
+				}
+			}
+			try {
+				byte[] data = titlefile.getBytes();
+				FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
+				fos.write(data);
+				fos.close();	
+			}catch(Exception e) {
+
+			}
+			int modiresul = styservice.modifyStylingVote(svdto);
+			System.out.println("수정완료"+modiresul);
+			
+			
+		}
+		
+		mav.setViewName("readStylingVote.style?styling_vote_seq="+styling_vote_seq);
+		return mav;
+	}
+	/*@RequestMapping("/readStylingVote.go")
+	public ModelAndView goreadStylingVote(HttpSession session, int styling_vote_seq) {
+		ModelAndView mav = new ModelAndView();
+		System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
+		
+		
+		mav.addObject("styling_vote_seq",styling_vote_seq);
+		mav.setViewName("readStylingVote.style");
 		return mav;
 	}*/
+	
 	
 	@RequestMapping("/insertStylingVote.style")
 	public ModelAndView insertStylingVote(HttpSession session, StylingVoteDTO svdto, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
