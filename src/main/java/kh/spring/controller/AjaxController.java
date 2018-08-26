@@ -2,17 +2,20 @@ package kh.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
@@ -151,6 +154,41 @@ public class AjaxController {
 			System.out.println(resultmsg);
 		}
 		return resultmsg;
+	}
+	
+	@RequestMapping("/fbLogin.ajax")
+	public @ResponseBody String fbLogin(String data, HttpSession session) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, String> map = new HashMap<String, String>();
+		String returnstr;
+		try {
+			map = mapper.readValue(data, new TypeReference<Map<String, String>>(){});
+			
+			MemberDTO dto = new MemberDTO();
+			dto.setName(map.get("name"));
+			dto.setEmail(map.get("email"));
+			dto.setPart("facebook");
+			
+			List<MemberDTO> list = service.loginExist(dto);
+			
+			if(list.size()>0) {
+				System.out.println("페북 로그인 성공");
+				session.setMaxInactiveInterval(60*60);
+				MemberDTO user = list.get(0);
+				session.setAttribute("user", user);
+				returnstr = "main.do";
+			} else {
+				int result = service.insertUserData(dto);
+				System.out.println(result>0?"페북 가입 성공":"페북 가입 실패");
+				returnstr = "login.go";
+			}
+			
+			return returnstr;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	
