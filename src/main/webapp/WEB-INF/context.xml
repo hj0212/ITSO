@@ -6,12 +6,22 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
-	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation=
+	"http://www.springframework.org/schema/websocket 
+	http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+	http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+
+
+
 
 	<context:component-scan base-package="kh.spring" />
 
@@ -31,9 +41,15 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+
 		<property name="url" value="jdbc:oracle:thin:@59.10.249.73:1521:XE" />
 		<property name="username" value="itso" />
 		<property name="password" value="itso" />
+
+<!-- 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" /> -->
+<!-- 		<property name="username" value="kh" /> -->
+<!-- 		<property name="password" value="kh" /> -->
+
 	</bean>
 
 	<bean id="transactionManager"

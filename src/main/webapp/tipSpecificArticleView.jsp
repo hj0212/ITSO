@@ -55,7 +55,26 @@ img {
 			</tr>
 			<tr>
 				<td><p id="tip_seq">${tipContent.tip_seq}</p></td>
-				<td>${tipContent.category}${tipContent.tip_viewcount}
+				<td><span id="this-article-category">${tipContent.category}<i id="category-icon"></i></span>
+				<script>
+				window.onload = function(){ 
+					var category = document.getElementById("this-article-category").innerHTML;
+					
+					console.log(category);
+					
+					if(category=="뷰티"){
+						category += "<i class='fa fa-paint-brush'></i>";
+					}else if(category=="다이어트"){
+						category += "<i class='fas fa-dumbbell'></i>";
+					}else if(category=="직장생활"){
+						category += "<i class='fas fa-user-tie'></i>";
+					}else if(category=="패션"){
+						category += "<i class='fas fa-tshirt'></i>";
+					}
+				}
+				</script>
+				
+				<i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}
 					${tipContent.tip_writer}</td>
 			</tr>
 			<tr>
@@ -70,9 +89,6 @@ img {
 			<i class=" fa fa-heart red-text" aria-hidden="true"></i>
 			<%-- 				${tipLikeCounts.tip_good_seq} --%>
 			<%-- 			</c:forEach> --%>
-		</button>
-		<button class="btn white btn-sm">
-			<i class="fa fa-bomb black-text" aria-hidden="true"></i>
 		</button>
 	</div>
 
