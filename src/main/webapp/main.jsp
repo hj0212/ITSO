@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -183,7 +187,8 @@ button.dropdown-toggle {
 .btn-floating {
 	
 }
-.footer-brand{
+
+.footer-brand {
 	width: 70px;
 }
 
@@ -203,46 +208,55 @@ button.dropdown-toggle {
 }
 
 ::-webkit-scrollbar {
-	display:none;
+	display: none;
 }
+
 @media ( max-width : 575px) {
 	.collectionItem {
 		width: 80%;
 	}
 }
+
 @media ( min-width : 576px) and (max-width: 991px) {
 	.collectionItem {
 		width: 50%;
 		float: left;
 	}
 }
+
 @media ( min-width : 991px) {
 	.collectionItem {
 		width: 30%;
 	}
 }
+
 .collectionItem {
 	display: inline-block;
 	margin: 0 auto 10px auto !important;
 	background: white;
 	height: 236px;
 }
+
 .collectionItem:hover {
 	transform: scale(1.05);
 	transition: all 0.1s ease-in-out;
 }
+
 .collectionPhoto {
 	height: 100%;
 	padding-left: 5px;
 }
+
 .collectionPhotoItem {
-	float:left;
+	float: left;
 	display: inline;
 	padding: 1px;
 }
+
 .collectionPhotoItem img {
 	width: 105px;
 }
+
 .active {
 	border: 3px solid #21FCFF;
 	margin-left: 1px;
@@ -253,96 +267,135 @@ button.dropdown-toggle {
 }
 </style>
 <script>
-	$(document).ready(function() {
+	$(document).ready(
+			function() {
 
-		$(".heart").click(function() {
-			var heartVal = $(this).attr("class");
+				$(".heart").click(function() {
+					var heartVal = $(this).attr("class");
 
-			if (heartVal == "fa fa-heart red-text heart") {
-				$(this).attr("class", "fa fa-heart-o red-text heart");
-			} else {
-				$(this).attr("class", "fa fa-heart red-text heart");
+					if (heartVal == "fa fa-heart red-text heart") {
+						$(this).attr("class", "fa fa-heart-o red-text heart");
+					} else {
+						$(this).attr("class", "fa fa-heart red-text heart");
 
-			}
-		});
+					}
+				});
 
-		$(".heart").on('click', function() {
-			var seq = $(this).attr("value");
-			var font = $(this).children('font');
-			console.log("숫자: " + $(this).children('font').html());
-			console.log(seq);
+				$(".heart").on('click', function() {
+					var seq = $(this).attr("value");
+					var font = $(this).children('font');
+					console.log("숫자: " + $(this).children('font').html());
+					console.log(seq);
 
-			$.ajax({
-				url : "mainHeart.ajax",
-				type : "post",
-				data : {
-					social_seq : seq
-				},
-				success : function(data) {
-					console.log("들어옴" + data), font.html(data)
+					$.ajax({
+						url : "mainHeart.ajax",
+						type : "post",
+						data : {
+							social_seq : seq
+						},
+						success : function(data) {
+							console.log("들어옴" + data), font.html(data)
 
-				}
+						}
+					});
+
+				});
+
+				$(function() {
+					$(window).scroll(
+							function() {
+								var scrolltop = $(window).scrollTop();
+								if ($(this).scrollTop() > 500) {
+									$('#MOVE_TOP_BTN').fadeIn();
+								} else {
+									$('#MOVE_TOP_BTN').fadeOut();
+
+								}
+
+								if (scrolltop == $(document).height()
+										- $(window).height()) {
+									$("#sidefooter").fadeIn();
+								} else {
+									$("#sidefooter").fadeOut();
+								}
+							});
+
+					$("#MOVE_TOP_BTN").click(function() {
+						$('html, body').animate({
+							scrollTop : 0
+						}, 400);
+						return false;
+					});
+				});
+
+				$(".followbtn").on(
+						'click',
+						function() {
+							var seq = $(this).siblings('.writerseq').val();
+							var text = $(this).find('.show').text();
+							console.log("text: " + text);
+							var btn = $(".writerseq[value='" + seq + "']")
+									.siblings("button.followbtn");
+							var span = btn.find('span');
+							$
+									.ajax({
+										url : "followUser.ajax",
+										type : "post",
+										data : {
+											seq : seq,
+											text : text
+										},
+										success : function(response) {
+											if (response != null) {
+												console.log("DB success : "
+														+ response);
+												btn.toggleClass("btn-itso");
+												btn.toggleClass("btn-indigo");
+												span.toggleClass("hidden");
+												span.toggleClass("show");
+											}
+										},
+										error : function(response) {
+											console.log("DB Failed")
+										}
+									});
+						})
 			});
-
-		});
-
-		$(function() {
-			$(window).scroll(function() {
-				var scrolltop = $(window).scrollTop();
-				if ($(this).scrollTop() > 500) {
-					$('#MOVE_TOP_BTN').fadeIn();
-				} else {
-					$('#MOVE_TOP_BTN').fadeOut();
-
-				}
-
-				if (scrolltop == $(document).height() - $(window).height()) {
-					$("#sidefooter").fadeIn();
-				} else {
-					$("#sidefooter").fadeOut();
-				}
-			});
-
-			$("#MOVE_TOP_BTN").click(function() {
-				$('html, body').animate({
-					scrollTop : 0
-				}, 400);
-				return false;
-			});
-		});
-		
-		$(".followbtn").on('click', function () {
-		    var seq = $(this).siblings('.writerseq').val();
-		    var text = $(this).find('.show').text();
-		    console.log("text: " + text);
-		    var btn = $(".writerseq[value='"+seq+"']").siblings("button.followbtn");
-		    var span = btn.find('span');
-		    $.ajax({
-		        url: "followUser.ajax",
-		        type: "post",
-		        data: {
-		            seq: seq,
-		            text: text
-		        },
-		        success: function (response) {
-		            if (response != null) {
-		                console.log("DB success : " + response);
-		                btn.toggleClass("btn-itso");
-		                btn.toggleClass("btn-indigo");
-		                span.toggleClass("hidden");
-		                span.toggleClass("show");
-		            }
-		        },
-		        error: function (response) {
-		            console.log("DB Failed")
-		        }
-		    });
-		})
-	});
 </script>
 </head>
 
 <body>
+	<script>
+		var ws = "";
+		function send_Message() {
+			websocket = new WebSocket("ws://localhost:8080/echo/websocket");
+			websocket.onopen = function(event) {
+				onOpen(event);
+			};
+			websocket.onmessage = function(event) {
+				onMessage(event)
+			};
+			websocket.onerror = function(event) {
+				onError(event);
+			};
+		}
+			function onOpen(event){
+				console.log("onOpen");
+				websocket.send("안녕");
+			}
+			function onMessage(event){
+				console.log("돌아왔어");
+			}
+			function onError(event){
+				console.log("에러입니다");
+			}
+		
+			   $(document).ready(function(){
+		    		send_Message();
+				    });
+	    		
+	</script>
+
 	<%@include file="navi.jsp"%>
 
 
@@ -499,44 +552,58 @@ button.dropdown-toggle {
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
 									<c:choose>
-									<c:when test="${!empty followingList }">
-									<c:forEach var="flist" items="${followingList }">
-									<c:choose>
-										<c:when test="${list.social_writer eq sessionScope.user.seq}">
-									        
-									    </c:when>
-									    <c:otherwise>
-									    	<c:choose>
-									    		<c:when test="${flist.seq eq list.social_writer}">
-									        <button type="button" class="btn btn-itso followbtn">
-												<span class="unfollow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
-												<span class="follow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
+										<c:when test="${!empty followingList }">
+											<c:forEach var="flist" items="${followingList }">
+												<c:choose>
+													<c:when
+														test="${list.social_writer eq sessionScope.user.seq}">
+
+													</c:when>
+													<c:otherwise>
+														<c:choose>
+															<c:when test="${flist.seq eq list.social_writer}">
+																<button type="button" class="btn btn-itso followbtn">
+																	<span class="unfollow show"
+																		style="font-family: 'NanumbarunpenR';"><i
+																		class="fa fa-check" /></i> 언팔로우</span> <span
+																		class="follow hidden"
+																		style="font-family: 'NanumbarunpenR';"><i
+																		class="fa fa-plus" /></i> 팔로우</span>
+																</button>
+															</c:when>
+															<c:otherwise>
+																<button type="button" class="btn btn-indigo followbtn">
+																	<span class="follow show"
+																		style="font-family: 'NanumbarunpenR';"><i
+																		class="fa fa-plus" /></i> 팔로우</span> <span
+																		class="unfollow hidden"
+																		style="font-family: 'NanumbarunpenR';"><i
+																		class="fa fa-check" /></i> 언팔로우</span>
+																</button>
+															</c:otherwise>
+														</c:choose>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-indigo followbtn">
+												<span class="unfollow hidden"
+													style="font-family: 'NanumbarunpenR';"><i
+													class="fa fa-check" /></i> 언팔로우</span> <span class="follow show"
+													style="font-family: 'NanumbarunpenR';"><i
+													class="fa fa-plus" /></i> 팔로우</span>
 											</button>
-									    </c:when>
-									    <c:otherwise>
-									        <button type="button" class="btn btn-indigo followbtn">
-												<span class="follow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
-												<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
-											</button>
-									    </c:otherwise>
-									    	</c:choose>									    
-									    </c:otherwise>
-									</c:choose>	
-									</c:forEach>
-									</c:when>
-									<c:otherwise>
-									<button type="button" class="btn btn-indigo followbtn">
-										<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
-										<span class="follow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
-									</button>
-									</c:otherwise>
+										</c:otherwise>
 									</c:choose>
-									
-									
-									<input type="hidden" value="${list.social_writer }" class="writerseq"/>
-									<input type="hidden" value="${list.social_seq }" class="socialseq"/>
-									<button type="button" class="btn btn-indigo savebtn" data-toggle="modal" data-target="#saveModal">
-										<i class="fa fa-upload" > <span
+
+
+									<input type="hidden" value="${list.social_writer }"
+										class="writerseq" /> <input type="hidden"
+										value="${list.social_seq }" class="socialseq" />
+									<button type="button" class="btn btn-indigo savebtn"
+										data-toggle="modal" data-target="#saveModal">
+										<i class="fa fa-upload"> <span
 											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
 									</button>
 									<!--share-->
@@ -570,7 +637,7 @@ button.dropdown-toggle {
 				</tr>
 			</c:otherwise>
 		</c:choose>
-		
+
 		<!-- saveModal -->
 		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -593,7 +660,7 @@ button.dropdown-toggle {
 								data-target="#createModal">
 								<i class="fa fa-plus"></i> 컬렉션 생성
 							</button>
-							<button class="btn btn-indigo" id="managebtn"> 컬렉션 관리 </button>
+							<button class="btn btn-indigo" id="managebtn">컬렉션 관리</button>
 						</div>
 
 						<c:choose>
@@ -601,11 +668,12 @@ button.dropdown-toggle {
 								<div id="collectionarea" class="mt-2">
 									<c:set var="num" value="0"></c:set>
 									<c:forEach items="${collectionList}" var="clist">
-									
-										<div class="collectionItem z-depth-1 mt-2">									
+
+										<div class="collectionItem z-depth-1 mt-2">
 											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
 											<h6>${clist.collection_contents }</h6>
-											<input type="hidden" class="collectionseq" value="${clist.collection_seq }"/>
+											<input type="hidden" class="collectionseq"
+												value="${clist.collection_seq }" />
 											<div class="collectionPhoto">
 
 												<c:set var="num" value="0" />
@@ -614,16 +682,23 @@ button.dropdown-toggle {
 													varStatus="status">
 													<c:choose>
 														<c:when test="${num < 4 }">
-															<c:if test="${plist.collection_seq == clist.collection_seq }">
+															<c:if
+																test="${plist.collection_seq == clist.collection_seq }">
 																<c:set var="num" value="${num+1 }" />
-																
-																<div class="collectionPhotoItem"><img src="/upload/social/${plist.photo }"
-																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
+
+																<div class="collectionPhotoItem">
+																	<img src="/upload/social/${plist.photo }" alt=""><input
+																		type="hidden" class="socialseq"
+																		value="${plist.social_seq }" />
+																</div>
 															</c:if>
 														</c:when>
 														<c:otherwise>
-															<div class="collectionPhotoItem" style="display:none;"><img src="/upload/social/${plist.photo }"
-																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
+															<div class="collectionPhotoItem" style="display: none;">
+																<img src="/upload/social/${plist.photo }" alt=""><input
+																	type="hidden" class="socialseq"
+																	value="${plist.social_seq }" />
+															</div>
 														</c:otherwise>
 													</c:choose>
 
@@ -663,12 +738,13 @@ button.dropdown-toggle {
 					<!--Body-->
 					<div class="modal-body">
 						<div class="md-form">
-							<input type="text" id="inputMD" class="form-control" name="collection_title" maxlength="30"> <label
+							<input type="text" id="inputMD" class="form-control"
+								name="collection_title" maxlength="30"> <label
 								for="inputMD">컬렉션 이름</label>
 						</div>
 						<div class="md-form mt-1">
 							<textarea type="text" id="form7" class="md-textarea form-control"
-								rows="3"  name="collection_contents"></textarea>
+								rows="3" name="collection_contents"></textarea>
 							<label for="form7">컬렉션 상세 설명</label>
 						</div>
 					</div>
@@ -724,19 +800,22 @@ button.dropdown-toggle {
 			</ul>
 
 		</div>
-	
+
 	</div>
-		<!--side footer -->
-		<div id="sidefooter">
-			
-			<p><a class="footer-brand" href="#"><img id="logo" alt=""
-			src="resources/images/logo_black.png"></a>©2018 ItSo. All rights reserved.</p>
-			<p>
-				<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
-				<a href="#">advertise</a>· <a href="#">legal</a>
-			</p>
-		</div>
-	
+	<!--side footer -->
+	<div id="sidefooter">
+
+		<p>
+			<a class="footer-brand" href="#"><img id="logo" alt=""
+				src="resources/images/logo_black.png"></a>©2018 ItSo. All rights
+			reserved.
+		</p>
+		<p>
+			<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
+			<a href="#">advertise</a>· <a href="#">legal</a>
+		</p>
+	</div>
+
 	<script>
 	$("#managebtn").on("click", function() {
 		window.open('mypage.go?view=collection', '_blank');
@@ -824,25 +903,109 @@ button.dropdown-toggle {
 	    });
 	});
 
-	$("#createModal").on('show.bs.modal', function() {
-		$("#saveModal").hide();
-	});
-	
-	$("#createModal").on('hidden.bs.modal', function() {
-		$("#saveModal").show();
-	});
-	
-	$("#saveModal").on('show.bs.modal', function() {
-		
-		
-		
-	});
-	
-	$("#saveModal").on('hidden.bs.modal', function() {
-		console.log("닫힘");
-		$(".collectionItem").removeClass("active");
-	});
-	
+					/* 여기 하는중 */
+					for (var i = 1; i < 5; i++) {
+						var collection_socialseq = $(
+								".collectionItem:nth-of-type(" + i + ")").find(
+								".socialseq").val();
+						console.log("검사 : " + social_seq + ":"
+								+ collection_socialseq);
+						if (social_seq == collection_socialseq) {
+							$(".collectionItem:nth-of-type(" + i + ")")
+									.addClass("active");
+							break;
+						}
+					}
+				})
+
+		$("#collectionarea")
+				.on(
+						"click",
+						".collectionItem",
+						function() {
+							var cursor = $(this);
+							cursor.toggleClass('active');
+							var collection_seq = $(this).children(
+									".collectionseq").val();
+							console.log("collection_seq: " + collection_seq);
+							console.log("social_seq: " + social_seq);
+
+							var num = $(this).find(".collectionPhotoItem").length;
+							$
+									.ajax({
+										url : "saveCollection.ajax",
+										type : "post",
+										data : {
+											collection_seq : collection_seq,
+											social_seq : social_seq
+										},
+										success : function(data) {
+											console.log("ajax: " + data.photo
+													+ "," + data.social_seq)
+											if (data.photo != null) {
+												console.log("여기");
+												$(this)
+														.find(
+																".collectionPhoto")
+														.append(
+																'<div class="collectionPhotoItem">'
+																		+ '<img src="/upload/social/'+data.photo+'"> <input type="hidden" class="socialseq" value="'+data.social_seq+'">'
+																		+ '</div>');
+												if (num > 4) {
+													cursor
+															.find(
+																	".collectionPhoto:last")
+															.attr("display",
+																	"none");
+												}
+											}
+											cursor.addClass("active");
+										}
+									});
+
+						})
+
+		$("#createcolbtn").on(
+				'click',
+				function() {
+					var collection_title = $("input[name='collection_title']")
+							.val();
+					var collection_contents = $(
+							"textarea[name='collection_contents']").val();
+
+					$.ajax({
+						url : "createCollection.ajax",
+						type : "post",
+						data : {
+							collection_title : collection_title,
+							collection_contents : collection_contents
+						},
+						success : function(data) {
+							console.log("생성");
+							$("input[name='collection_title']").val("");
+							$("textarea[name='collection_contents']").val("");
+							$("#createModal").hide();
+							$("#saveModal").show();
+						}
+					});
+				});
+
+		$("#createModal").on('show.bs.modal', function() {
+			$("#saveModal").hide();
+		});
+
+		$("#createModal").on('hidden.bs.modal', function() {
+			$("#saveModal").show();
+		});
+
+		$("#saveModal").on('show.bs.modal', function() {
+
+		});
+
+		$("#saveModal").on('hidden.bs.modal', function() {
+			console.log("닫힘");
+			$(".collectionItem").removeClass("active");
+		});
 	</script>
 </body>
 
