@@ -85,14 +85,14 @@ img {
 						<td>
 							<img class="avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
 						</td>
-
 						<td>
 							<div>
 								<a href="#">${tipComments.name}</a>
 							</div>
 							<div>${tipComments.tip_comment_contents}</div>
+							<div>${tipComments.tip_comment_time}</div>
 						</td>
-						<td>${tipComments.tip_comment_time}</td>
+						
 					</tr>
 				</c:forEach>
 			</tbody>
