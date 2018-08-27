@@ -106,13 +106,13 @@ input[type="file"] {
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<div class="md-form form-md form-group">
 						<input type="text" id="votetitleid" name="styling_title"
-							class="form-control col-md-9 float-right"> <label
+							class="form-control col-md-9 float-right" maxlength="50"> <label
 							for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
 							id="votelabel">투표 주제를 입력해주세요.</label>
 					</div>
 					<div class="md-form form-md form-group">
 						<input type="text" id="votecontentsid" name="styling_contents"
-							class="form-control col-md-9 float-right"
+							class="form-control col-md-9 float-right" maxlength="90"
 							placeholder="내용을 입력해주세요.">
 					</div>
 					<div class="media-body image-upload-wrap form-group"

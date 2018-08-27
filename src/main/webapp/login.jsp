@@ -347,6 +347,7 @@ $(document).ready(function () {
 
 				<!-- Text -->
 				<p class="card-text"></p>
+				
 
 				<!-- Facebook -->
 				<button type="button" class="btn-floating btn-lg btn-fb"
