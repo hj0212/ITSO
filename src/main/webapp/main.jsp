@@ -243,7 +243,7 @@ button.dropdown-toggle {
 .collectionPhotoItem img {
 	width: 105px;
 }
-.active {
+#saveModal .active {
 	border: 3px solid #21FCFF;
 	margin-left: 1px;
 }
