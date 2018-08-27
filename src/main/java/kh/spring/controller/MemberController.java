@@ -52,6 +52,11 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 
 		MemberDTO dto = new MemberDTO(mail,pw,name,age);
+		dto.setPart("home");
+		dto.setBlock("n");
+		dto.setState(" ");
+		dto.setPhoto("background.jpg");
+		dto.setWithdrawal("n");
 		int result = mservice.insertUserData(dto);
 		mav.addObject("result", result);
 		mav.setViewName("signinProc.jsp");

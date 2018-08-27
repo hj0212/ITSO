@@ -167,7 +167,14 @@ public class AjaxController {
 			MemberDTO dto = new MemberDTO();
 			dto.setName(map.get("name"));
 			dto.setEmail(map.get("email"));
+			dto.setPw(" ");
 			dto.setPart("facebook");
+			dto.setBlock("n");
+			dto.setState(" ");
+			dto.setPhoto("background.jpg");
+			dto.setWithdrawal("n");
+			dto.setAge(0);
+			
 			
 			List<MemberDTO> list = service.loginExist(dto);
 			

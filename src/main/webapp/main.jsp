@@ -784,16 +784,15 @@ button.dropdown-toggle {
 	        },
 	        success:function(data){
 	        	console.log("ajax: " + data.photo +"," + data.social_seq)
-		        /* if(data.photo != null) {
+		        if(data.photo != null) {
 		        	console.log("여기");
-		          $(this).find(".collectionPhoto").append('<div class="collectionPhotoItem">'
-		          +'<img src="/upload/social/'+data.photo+'"> <input type="hidden" class="socialseq" value="'+data.social_seq+'">'
-		          +'</div>');
-		        if(num > 4) {
-		        	cursor.find(".collectionPhoto:last").attr("display", "none");
-		        }
+			        $(this).find(".collectionPhoto").append('<div class="collectionPhotoItem active">'
+			          +'<img src="/upload/social/'+data.photo+'"> <input type="hidden" class="socialseq" value="'+data.social_seq+'">'
+			          +'</div>');
+		            if(num > 4) {
+		        		cursor.find(".collectionPhoto:last").attr("display", "none");
+		        	}
 	        	}
-	        	cursor.addClass("active"); */
 	        },
 	        error: function (response) {
 	            console.log("DB Failed")
