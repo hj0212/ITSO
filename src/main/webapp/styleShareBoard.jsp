@@ -7,11 +7,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta property="og:url"                content="document.location.href" />
-<meta property="og:type"               content="article" />
-<meta property="og:title"              content="${content.social_title}" />
-<meta property="og:description"        content="How much does culture influence creative thinking?" />
-<meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+<meta property="og:site_name" content="ITSO"/>
+<meta property="og:title" content="${content.social_title}"/>    
+<meta property="og:description" content="${content.social_contents}" />
+<meta property="article:author" content="${content.social_writer}" />
+<meta property="og:url" content="document.location.href" />
+<meta property="og:image" content="썸네일로 쓰일 이미지 주소" />
+
 <link href="https://fonts.googleapis.com/css?family=Montserrat"
 	rel="stylesheet">
 <script type="text/javascript"
@@ -187,6 +189,7 @@ body {
 								2 <i class="fa fa-comment-o"></i>
 							</div>
 							<div>
+							
 								<!--kakao-->
 								<button type="button" class="btn-floating btn-sm btn-is share "
 									style="float: right; background-color: #ffff00; color: gray; border: 0px; margin-left: 10px; border-radius: 5x;"
@@ -203,8 +206,10 @@ body {
 								<button type="button" class="btn-floating btn-sm btn-fb share"
 									style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;"
 									onclick="facebookgo()">
-									<i class="fab fa-facebook"></i>
-								</button>
+									<i class="fab fa-facebook-f"></i>
+								</button>								
+								
+
 							</div>
 
 						</header>
@@ -517,6 +522,7 @@ body {
 <!-- 카카오api -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- 페이스북api -->
+<div id="fb-root"></div>
 <script>
 	(function(d, s, id) {
 		var js, fjs = d.getElementsByTagName(s)[0];
@@ -549,11 +555,11 @@ body {
 		//var url = window.location.protocol + window.location.host				+ window.location.pathname;
 		var url=document.location.href;
 		var text = encodeURI('${content.social_title}');	
-		var wow = encodeURI('${goodCount.social_good_seq}');
-		
+		var wow = encodeURI('${goodCount.social_good_seq}');		
 		
 		console.log("와우에 오는 깃 : " + wow);
 		console.log("text에 오는 것: " + text);
+		console.log('${goodList.social_good_seq}');
 		
 		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="+ url, "", "width=700, height=400");
 	}
@@ -594,14 +600,14 @@ body {
 	//페이스북
 	function facebookgo() {
 		//var url =  window.location.host + window.location.pathname;
-		//var url = document.location.href;<-이거쓸것
-		var url = 'http://192.168.20.35/controller/main.go'//test용이라 주소 직접 입력해놓음
+		var url = document.location.href;
+		//var url = 'http://192.168.20.35/controller/main.go'//test용이라 주소 직접 입력해놓음
+		//var url ='http://192.168.20.35:8080/controller/readSocial.go?seq=186';
 		var encodeUrl = encodeURIComponent(url);
 		var facebook = 'https://www.facebook.com/sharer/sharer.php?u=';
 		var link = facebook + encodeUrl;
 		window.open(link, "", "width=700, height=400");
-	}
-	
+	}	
 	
 </script>
 
