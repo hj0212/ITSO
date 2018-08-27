@@ -5,14 +5,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.CollectionDTO;
-import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
@@ -24,6 +24,8 @@ public class MemberController {
 	private IMemberService mservice;
 	@Autowired
 	private ISocialBoardService sservice;
+	
+	protected static Logger log = LoggerFactory.getLogger("MemberController");
 
 	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO dto, HttpSession session) {
@@ -49,7 +51,7 @@ public class MemberController {
 			System.out.println(result.size());
 			mav.setViewName("loginProc.jsp");
 		}
-
+		log.debug("로그인");
 		return mav;
 
 	}
