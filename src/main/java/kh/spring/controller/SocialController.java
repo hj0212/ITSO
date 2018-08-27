@@ -3,6 +3,7 @@ package kh.spring.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -651,7 +652,7 @@ public class SocialController {
 		int social_seq = Integer.parseInt(request.getParameter("seq"));
 		
 		try {
-			int writer = Integer.parseInt(request.getParameter("writer"));
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 			String comment = request.getParameter("comment");
 			SocialCommentDTO scdto = new SocialCommentDTO(social_seq, writer, comment);
 			int result = this.comService.insertSocialComment(scdto);
@@ -683,15 +684,35 @@ public class SocialController {
 	}
 	
 	@RequestMapping("/deleteComment.go")
-	public ModelAndView deleteComment(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
-		int social_seq = Integer.parseInt(request.getParameter("social_seq"));
-		
-		int result = this.comService.deleteComment(comment_seq);
-		
-		mav.setViewName("redirect:readSocial.go?seq="+social_seq);
-		return mav;
+	public void deleteComment(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ObjectMapper om = new ObjectMapper();
+			int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+			int social_seq = Integer.parseInt(request.getParameter("social_seq"));
+			int result = this.comService.deleteComment(comment_seq);
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			
+			List<SocialCommentDTO> commentList = this.comService.showCommentList(social_seq);
+			ArrayNode array = om.createArrayNode();
+			
+			for(SocialCommentDTO dto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("social_comment_seq", dto.getSocial_comment_seq());
+				on.put("social_seq",dto.getSocial_seq());
+				on.put("user_seq", dto.getUser_seq());
+				on.put("social_comment_contents", dto.getSocial_comment_contents());
+				on.put("social_comment_time", dto.getSocial_comment_time());
+				on.put("name", dto.getName());
+				on.put("photo", dto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("/test.go")

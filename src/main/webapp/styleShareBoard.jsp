@@ -308,58 +308,6 @@
                     </ol>
                 </section>
 				</c:if>
-               
-                <div>
-                    <!-- you may like these users -->
-                    <div class="mt-4 mb-3">
-                        <strong> 당신이 좋아할만한 유저
-                        </strong>
-                    </div>
-
-                    <ol class="list-style-none">
-                        <li class="mt-3">
-                            <img class="vertical-align-none z-depth-1-half rounded-circle" alt="Primark" height="75" src="http://s3cdn-test-lookbooknu.netdna-ssl.com/files/users/small/6484472_image.jpg?1531857217">
-
-
-                            <ol class="info">
-                                <li class="ml-2">
-                                    <a href=#>김연아</a>
-                                </li>
-
-                                <li class="ml-2">18 항공승무원 부산</li>
-                                <li>
-                                    <button class="btn btn-elegant btn-sm">+ Fan</button>
-                                </li>
-                            </ol>
-                        </li>
-                        <li class="mt-3">
-                            <img class="vertical-align-none z-depth-1-half rounded-circle" alt="Zaful" height="75" src="http://s3cdn-test-lookbooknu.netdna-ssl.com/files/users/small/3348731_velvet_playsuit_seite_gesicht.jpg?1407499836"
-                                width="75">
-
-                            <ol class="info">
-                                <li class="ml-2">
-                                    <a href=#>안졸리나</a>
-                                </li>
-
-                                <li class="ml-2">23 수학과 서울</li>
-
-                                <li>
-                                    <button class="inline-block btn btn-elegant btn-sm">+ Fan</button>
-                                </li>
-                            </ol>
-
-
-                        </li>
-
-                    </ol>
-                    </li>
-                    </ul>
-
-
-                    </ol>
-                    </section>
-
-                </div>
         </div>
 
 
@@ -440,7 +388,6 @@
     					method : "post",
     					data : {
     						comment : $("#commentarea").val(),
-    						writer : "${sessionScope.user.seq}",
     						seq : "${content.social_seq}"
     					},
     					
@@ -488,7 +435,19 @@
     			let deleteCheck = confirm("댓글을 삭제 하시겠습니까?");
     			
     			if(deleteCheck) {
-    				location.href = 'deleteComment.go?comment_seq='+comment_seq+"&social_seq="+social_seq;
+    				$.ajax({
+    					url : "deleteComment.go",
+    					dataType : "JSON",
+    					method : "post",
+    					data : {
+    						comment_seq : comment_seq,
+    						social_seq : social_seq
+    					},
+    					
+    					success : function(data) {
+    						showComment(data);
+    					}
+    				});
     			}
     		})
     	});
@@ -499,5 +458,4 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 </body>
-
-    </html>
+</html>
