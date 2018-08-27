@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -127,12 +129,19 @@ public class TipController {
 	}
 
 	@RequestMapping("insertTipCommentProc.tip")
-	public @ResponseBody int insertTipCommentProc(@RequestBody TipCommentDTO dto) {
-		System.out.println(1);
-		System.out.println(dto.toString());
+	public void insertTipCommentProc(@RequestBody TipCommentDTO dto) {
+		try {
+			System.out.println(1);
+			System.out.println(dto.toString());
 
-		int result = service.insertTipCommentProc(dto);
-		return result;
+			int result = service.insertTipCommentProc(dto);
+			
+			ObjectMapper om = new ObjectMapper();
+			List<TipCommentDTO> commentList = service.getCommentsFromTip(dto.getTip_seq());
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping("deleteSpecificTip.tip")
@@ -142,7 +151,5 @@ public class TipController {
 		int result = service.deleteSpecificTip(tipSeq);
 		System.out.println(result);
 		return result;
-
 	}
-
 }
