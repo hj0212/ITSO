@@ -599,8 +599,8 @@ button.dropdown-toggle {
 									<c:forEach items="${collectionList}" var="clist">
 									
 										<div class="collectionItem z-depth-1 mt-2">									
-											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
-											<h6>${clist.collection_contents }</h6>
+											<h4 class="mt-1 mb-1 text-truncate">${clist.collection_title }</h4>
+											<h6 class="text-truncate">${clist.collection_contents }</h6>
 											<input type="hidden" class="collectionseq" value="${clist.collection_seq }"/>
 											<div class="collectionPhoto">
 
@@ -814,11 +814,20 @@ button.dropdown-toggle {
 	          collection_contents:collection_contents
 	        },
 	        success:function(data){
-	          console.log("생성");
+	          console.log("생성" + data);
+	          var dto = JSON.parse(data);
 	          $("input[name='collection_title']").val("");
 	          $("textarea[name='collection_contents']").val("");
 	          $("#createModal").hide();
+	          
+	          $("#collectionarea").append('<div class="collectionItem z-depth-1 mt-2">'									
+						+'<h4 class="mt-1 mb-1 text-truncate">'+dto.collection_title+'</h4>'
+						+'<h6 class="text-truncate">'+dto.collection_contents+'</h6>'
+						+'<input type="hidden" class="collectionseq" value="'+dto.collection_seq+'"/>'
+						+'<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+	          
 	          $("#saveModal").show();
+	          
 	        }
 	    });
 	});

@@ -103,6 +103,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.update("Collection.updateCollection", dto);
 	}
 	
+	@Override
+	public CollectionDTO getCollectionSeq(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionSeq", dto);
+	}
+	
 	
 	//���ƿ� 
 	@Override
@@ -150,4 +155,6 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	public int selectSocialWriter(int seq) {
 		return template.selectOne("SocialBoard.selectSocialWriter", seq);
 	}
+
+	
 }

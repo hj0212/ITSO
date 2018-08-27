@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -105,16 +107,27 @@ public class AjaxController {
 	}
 	
 	@RequestMapping("/createCollection.ajax")
-	public @ResponseBody void createCollection(String collection_title, String collection_contents, HttpSession session) {
+	public @ResponseBody String createCollection(String collection_title, String collection_contents, HttpSession session) {
 		int seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		CollectionDTO dto = new CollectionDTO();
 		dto.setCollection_title(collection_title);
 		dto.setCollection_contents(collection_contents);
-		dto.setWriter(seq);
+		dto.setCollection_writer(seq);
 		System.out.println(dto.getCollection_title()+":"+dto.getCollection_contents());
 		int result = sservice.insertCollection(dto);
 		String resultmsg = result>0?"생성성공":"생성실패";
 		System.out.println(resultmsg);
+		
+		dto = sservice.getCollectionSeq(dto);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonString="";
+		try {
+			jsonString = mapper.writeValueAsString(dto);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
 	}
 	
 	@RequestMapping("/removeCollection.ajax")
