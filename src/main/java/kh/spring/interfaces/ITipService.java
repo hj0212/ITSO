@@ -42,5 +42,5 @@ public interface ITipService {
 
 	public List<TipCommentDTO> getCommentsFromTip(int seq);
 
-	
+	public int deleteTipComment(int seq);
 }

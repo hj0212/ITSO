@@ -97,13 +97,13 @@ img {
 	</div>
 
 	<!-- comments -->
-	<div class="container mt-4">
+	<div class="container mt-4" id="comment-container">
 		<table id="comment">
 			<tbody>
 				<c:forEach items="${tipComments}" var="tipComments">
 					<tr>
 						<td>
-							<img class="avatar rounded-circle z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
+							<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/${tipComments.photo}">
 						</td>
 						<td>
 							<div>
@@ -112,7 +112,7 @@ img {
 							<div>${tipComments.tip_comment_contents}</div>
 							<div>${tipComments.tip_comment_time}
 								<c:if test="${sessionScope.user.seq == tipComments.user_seq}">
-									<span><a href="javascript:void(0)" data-seq="${commentList.social_comment_seq}" data-social="${commentList.social_seq}" class="delete"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+									<span><a href="javascript:void(0)" data-seq="${tipComments.tip_comment_seq}" data-tip="${tipComments.tip_seq}" class="delete"><i class="fa fa-times" aria-hidden="true"></i></a></span>
 								</c:if>
 							</div>
 						</td>
@@ -204,9 +204,54 @@ img {
 				let html = '<table id="comment">';
 				html += '<tbody>'
 				$.each(data, function(index, item){
-					html += '<tr>';
+					html +=	'<tr>';
+					html +=		'<td>';
+					html +=			'<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'"/>';
+					html +=		'</td>';
+					html +=		'<td>';
+					html +=			'<div>';
+					html +=				'<a href="#">'+item.name+'</a>';
+					html +=			'</div>';
+					html +=			'<div>'+item.tip_comment_contents+'</div>';
+					html +=			'<div>'+item.tip_comment_time;
+					if(item.user_seq == item.writer) {
+					html += '			<span><a href="javascript:void(0)" class="delete" data-seq="'+item.tip_comment_seq+'" data-tip="'+item.tip_seq+'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';	
+					}
+					html +=			'</div>';
+					html +=		'</td>';
+					html +=	'</tr>';
 				});
+				html += '</tbody>';
+				html += '</table>';
+				
+				$("#tip_comment_contents").val("");
+				$("#comment-container").html(html);
 			}
+			
+			$(document).on('click','.delete',function(){
+				let comment_seq = $(this).data("seq");
+				let tip_seq = $(this).data("tip");
+				
+				console.log(comment_seq + " : " + tip_seq);
+				
+				let deleteCheck = confirm("댓글을 삭제 하시겠습니까?");
+				
+				if(deleteCheck) {
+					$.ajax({
+						url : "deleteTipComment.tip",
+						dataType : "JSON",
+						method : "post",
+						data : {
+							comment_seq : comment_seq,
+							tip_seq : tip_seq
+						},
+						
+						success : function(data) {
+							showTipComment(data);
+						}
+					});
+				}
+			});
 	
 			var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
 			var tipLikingUser = document.getElementById("user_seq").value;

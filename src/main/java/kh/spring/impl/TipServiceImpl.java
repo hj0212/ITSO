@@ -97,5 +97,8 @@ public class TipServiceImpl implements ITipService {
 		return this.dao.isThisLikeWhetherFirst(tipSeq,tipLikingUser);
 	}
 
-
+	@Override
+	public int deleteTipComment(int seq) {
+		return this.dao.deleteTipComment(seq);
+	}
 }

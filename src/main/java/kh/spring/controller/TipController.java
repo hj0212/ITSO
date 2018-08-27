@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SocialCommentDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -173,4 +174,37 @@ public class TipController {
 		System.out.println(result);
 		return result;
 	}
+	
+	@RequestMapping("deleteTipComment.tip")
+	public void deleteTipComment(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ObjectMapper om = new ObjectMapper();
+			int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+			int tip_seq = Integer.parseInt(request.getParameter("tip_seq"));
+			int result = service.deleteTipComment(comment_seq);
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			
+			List<TipCommentDTO> commentList = service.getCommentsFromTip(tip_seq);
+			ArrayNode array = om.createArrayNode();
+			
+			for(TipCommentDTO tdto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("tip_comment_seq", tdto.getTip_comment_seq());
+				on.put("tip_seq", tdto.getTip_seq());
+				on.put("user_seq", tdto.getUser_seq());
+				on.put("tip_comment_contents", tdto.getTip_comment_contents());
+				on.put("tip_comment_time", tdto.getTip_comment_time());
+				on.put("name", tdto.getName());
+				on.put("photo", tdto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
