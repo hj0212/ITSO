@@ -152,7 +152,7 @@ nav {
 </style>
 
 <nav class="navbar navbar-expand-sm navbar-dark" id="nav1">
-	<a class="navbar-brand" href="#"><img id="logo" alt=""
+	<a class="navbar-brand" href="main.go"><img id="logo" alt=""
 		src="resources/images/logo_white_no.png"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbar1" aria-controls="navbar1" aria-expanded="false"

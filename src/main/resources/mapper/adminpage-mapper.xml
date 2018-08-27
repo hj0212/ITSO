@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="adminPageSQL">
+
+<!-- genders -->
 <select id="getFemaleUserCounts" resultType="java.lang.Integer">
 select count(gender) as femaleUsers from users where gender='f'
 </select>
@@ -9,5 +11,40 @@ select count(gender) as femaleUsers from users where gender='f'
 <select id="getMaleUserCounts" resultType="java.lang.Integer">
 select count(gender) as maleUsers from users where gender='m'
 </select>
+
+
+<!-- ages -->
+<select id="getTeenagersCounts" resultType="java.lang.Integer">
+select count(*) from users where 20>age and age>10
+</select>
+
+<select id="getTwentiesCounts" resultType="java.lang.Integer">
+select count(*) from users where 30>age and age>20
+</select>
+
+<select id="getThirtiesCounts" resultType="java.lang.Integer">
+select count(*) from users where 40>age and age>30
+</select>
+
+<select id="getFortiesCounts" resultType="java.lang.Integer">
+select count(*) from users where 50>age and age>40
+</select>
+
+
+<!-- getReportedUser -->
+<select id="getReportedUser" resultType="kh.spring.dto.AdminPageDTO">
+select user_seq, report_count,report_reason, name, email, create_date, block from reported_users ru, users u where ru.USER_SEQ = u.seq
+</select>
+
+<!-- user block -->
+<update id="specificUserblock">
+update users set block='y' where seq=#{userSeq}
+</update>
+
+<!-- isThisUserBlocked -->
+<select id="isThisUserBlocked" resultType="java.lang.String">
+select block from users where seq=#{userSeq}
+</select>
+
 
 </mapper>
