@@ -48,10 +48,10 @@ public class MemberController {
 	}
 
 	@RequestMapping("/signin.do")
-	public ModelAndView SigninProc(String mail,String pw, String name,int age) {
+	public ModelAndView SigninProc(String mail,String pw, String name,int age,String gender) {
 		ModelAndView mav = new ModelAndView();
 
-		MemberDTO dto = new MemberDTO(mail,pw,name,age);
+		MemberDTO dto = new MemberDTO(mail,pw,name,age,gender);
 		dto.setPart("home");
 		dto.setBlock("n");
 		dto.setState(" ");

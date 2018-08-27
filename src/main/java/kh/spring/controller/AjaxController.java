@@ -174,7 +174,7 @@ public class AjaxController {
 			dto.setPhoto("background.jpg");
 			dto.setWithdrawal("n");
 			dto.setAge(0);
-			
+			dto.setGender(" ");
 			
 			List<MemberDTO> list = service.loginExist(dto);
 			
@@ -183,11 +183,11 @@ public class AjaxController {
 				session.setMaxInactiveInterval(60*60);
 				MemberDTO user = list.get(0);
 				session.setAttribute("user", user);
-				returnstr = "main.do";
+				returnstr = "main.go";
 			} else {
 				int result = service.insertUserData(dto);
 				System.out.println(result>0?"페북 가입 성공":"페북 가입 실패");
-				returnstr = "login.go";
+				returnstr = "main.go";
 			}
 			
 			return returnstr;

@@ -243,6 +243,7 @@ public class SocialController {
 		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
 		
 		String[] writeDate = dto.getSocial_date().toString().split("-");
+
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
@@ -310,7 +311,8 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
-		mav.addObject("commentList",commentList);
+		
+		
 		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());
