@@ -220,7 +220,7 @@ button.dropdown-toggle {
 					$('#MOVE_TOP_BTN').fadeOut();
 					$('#sidefooter').fadeOut();
 				}
-				
+
 			});
 
 			$("#MOVE_TOP_BTN").click(function() {
@@ -230,30 +230,30 @@ button.dropdown-toggle {
 				return false;
 			});
 		});
-		
-		$(".followbtn").on('click', function () {
-		    var seq = $(this).siblings("#seq").val();
-		    var text = $(this).text();
-		    var btn = $(this);
-		    $.ajax({
-		        url: "followUser.ajax",
-		        type: "post",
-		        data: {
-		            seq: seq,
-		            text: text
-		        },
-		        success: function (response) {
-		            if (response != null) {
-		                console.log("DB success : " + response);
-		                btn.toggleClass("btn-itso");
-		                btn.toggleClass("btn-indigo");
-		                btn.html(response);
-		            }
-		        },
-		        error: function (response) {
-		            console.log("DB Failed")
-		        }
-		    });
+
+		$(".followbtn").on('click', function() {
+			var seq = $(this).siblings("#seq").val();
+			var text = $(this).text();
+			var btn = $(this);
+			$.ajax({
+				url : "followUser.ajax",
+				type : "post",
+				data : {
+					seq : seq,
+					text : text
+				},
+				success : function(response) {
+					if (response != null) {
+						console.log("DB success : " + response);
+						btn.toggleClass("btn-itso");
+						btn.toggleClass("btn-indigo");
+						btn.html(response);
+					}
+				},
+				error : function(response) {
+					console.log("DB Failed")
+				}
+			});
 		})
 	});
 </script>
@@ -352,12 +352,9 @@ button.dropdown-toggle {
 											src="/upload/profile/${list.user_photo}"
 											style="width: 50px; height: 50px; margin-top: 10px">
 											<div class="media-body" style="margin: 0px auto">
-													
-												<a class="writer-a"><b class="writerName"
-													style="font-size: 20px;">${list.writerName}</b></a>
 
-												
-											<span>${list.userState}</span>	
+												<a class="writer-a"><b class="writerName"
+													style="font-size: 20px;">${list.writerName}</b></a> <span>${list.userState}</span>
 
 											</div> <!-- <script type="text/javascript">
 										console
@@ -415,26 +412,26 @@ button.dropdown-toggle {
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
 									<c:forEach var="flist" items="${followingList }">
-									<c:choose>
-									    <c:when test="${flist.seq eq list.social_writer}">
-									        <button type="button" class="btn btn-indigo followbtn"
-										style="black; font-family: 'NanumbarunpenR';">
-										<i class="fa fa-upload"> <span
-											style="font-family: 'NanumbarunpenR';">팔로우</span></i>
-										</button>
-									    </c:when>
-									    <c:otherwise>
-									        <button type="button" class="btn btn-itso followbtn"
-										style="font-family: 'NanumbarunpenR';">
-										<i class="fa fa-upload"> <span
-											style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
-									</button>
-									    </c:otherwise>
-									</c:choose>	
+										<c:choose>
+											<c:when test="${flist.seq eq list.social_writer}">
+												<button type="button" class="btn btn-indigo followbtn"
+													style="font-family: 'NanumbarunpenR';">
+													<i class="fa fa-upload"> <span
+														style="font-family: 'NanumbarunpenR';">팔로우</span></i>
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-itso followbtn"
+													style="font-family: 'NanumbarunpenR';">
+													<i class="fa fa-upload"> <span
+														style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
+												</button>
+											</c:otherwise>
+										</c:choose>
 
-									
+
 									</c:forEach>
-									
+
 									<button type="button" class="btn btn-indigo"
 										style="background-color: black; font-family: 'NanumbarunpenR';">
 										<i class="fa fa-upload"> <span
