@@ -283,6 +283,7 @@ button.dropdown-toggle {
 
 				$(".heart").on('click', function() {
 					var seq = $(this).attr("value");
+					var writer	= $(".writerseq").val();
 					var font = $(this).children('font');
 					console.log("숫자: " + $(this).children('font').html());
 					console.log(seq);
@@ -291,7 +292,8 @@ button.dropdown-toggle {
 						url : "mainHeart.ajax",
 						type : "post",
 						data : {
-							social_seq : seq
+							social_seq : seq , 
+							social_writer :writer
 						},
 						success : function(data) {
 							console.log("들어옴" + data), font.html(data)
@@ -365,37 +367,7 @@ button.dropdown-toggle {
 </head>
 
 <body>
-	<script>
-		var ws = "";
-		function send_Message() {
-			websocket = new WebSocket("ws://localhost:8080/echo/websocket");
-			websocket.onopen = function(event) {
-				onOpen(event);
-			};
-			websocket.onmessage = function(event) {
-				onMessage(event)
-			};
-			websocket.onerror = function(event) {
-				onError(event);
-			};
-		}
-			function onOpen(event){
-				console.log("onOpen");
-				websocket.send("안녕");
-			}
-			function onMessage(event){
-				console.log("돌아왔어");
-			}
-			function onError(event){
-				console.log("에러입니다");
-			}
-		
-			   $(document).ready(function(){
-		    		send_Message();
-				    });
-	    		
-	</script>
-
+	
 	<%@include file="navi.jsp"%>
 
 

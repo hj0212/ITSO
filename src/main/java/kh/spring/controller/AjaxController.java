@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -14,13 +15,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NotificationDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
+import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.websocket.EchoHandler;
 
 @Controller
 public class AjaxController {
@@ -30,7 +36,12 @@ public class AjaxController {
 	private ISocialBoardService sservice;
 	
 	@Autowired
+	private INotificationService noservice;
+	
+	@Autowired
 	private ISocialBoardService sbService;
+
+
 	
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
@@ -58,7 +69,7 @@ public class AjaxController {
 	}
 	
 	@RequestMapping("/mainHeart.ajax")
-	public @ResponseBody int mainHeart(int social_seq,HttpServletResponse response,HttpSession session) {				
+	public @ResponseBody int mainHeart(int social_seq,int social_writer,HttpServletResponse response,HttpSession session) {				
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		GoodDTO gdto = new GoodDTO(social_seq,user_seq);
 		
@@ -69,12 +80,28 @@ public class AjaxController {
 			int delete = sbService.deleteGoodCount(gdto);
 		}else {
 			int insert = sbService.insertGoodCount(gdto);
+			
+			if(user_seq != social_writer) {
+				NotificationDTO nodto = new NotificationDTO(social_writer,user_seq,"good","좋아요를 눌렀습니다.","n","아무거나",social_seq);
+				int noInsert = noservice.insertNotification(nodto);
+				
+				NotificationDTO list = noservice.selectNotification(nodto).get(0);
+				System.out.println(list);
+					try {
+						ObjectMapper mapper = new ObjectMapper();
+						String jsonString  = mapper.writeValueAsString(list);
+						System.out.println(jsonString);
+						EchoHandler.users.get(nodto.getUser_seq()).getBasicRemote().sendText(jsonString);
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+			}
 		}
 		
 		int count = sbService.allGoodCount(gdto);
-		
-		System.out.println(social_seq);
-		System.out.println(user_seq);
+		System.out.println("작성자"+social_writer);
+		System.out.println("게시물번호"+social_seq);
+		System.out.println("누른사람 번호"+user_seq);
 		return count;
 	}
 	

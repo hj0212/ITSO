@@ -255,6 +255,31 @@ nav {
 		</div>
 	</div>
 	
+	
+	<script type="text/javascript">
+	if("WebSocket" in window){
+		var ws = new WebSocket("ws://localhost:8080/websocket");
+		var str;
+		var file ="";
+		
+		ws.onopen = function() {
+			ws.send("${sessionScope.user.seq}");
+		};
+		ws.onmessage = function(msg) {
+			var obj = JSON.parse(msg.data);
+			
+			
+			console.log("이거 유저인데 :"+obj.user_seq);		 
+		};
+		
+		ws.onclose = function() {
+		};
+		
+	}
+	
+	</script>
+	
+	
 	<div class="notification-list">
 	
 	

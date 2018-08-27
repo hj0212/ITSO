@@ -12,12 +12,15 @@ public class NotificationDTO {
 	private String noti_read;	// y, n
 	private String noti_url;
 	private int article_seq;
+	private String noti_user_photo;
+	private String noti_user_name;
 	
 	public NotificationDTO() {
 		super();
 	}
+	
 	public NotificationDTO(int noti_seq, int user_seq, int noti_user_seq, String noti_type, String noti_contents,
-			Date noti_date, String noti_read, String noti_url, int article_seq) {
+			Date noti_date, String noti_read, String noti_url, int article_seq,String noti_user_photo,String noti_user_name) {
 		super();
 		this.noti_seq = noti_seq;
 		this.user_seq = user_seq;
@@ -28,7 +31,24 @@ public class NotificationDTO {
 		this.noti_read = noti_read;
 		this.noti_url = noti_url;
 		this.article_seq = article_seq;
+		this.noti_user_photo = noti_user_photo;
+		this.noti_user_name = noti_user_name;
 	}
+	public NotificationDTO(int user_seq,int noti_useq_seq,String noti_type, String noti_contents, String noti_read,String noti_url, int article_seq) {
+		this.user_seq = user_seq;
+		this.noti_user_seq = noti_useq_seq;
+		this.noti_type = noti_type;
+		this.noti_contents = noti_contents;
+		this.noti_read = noti_read;
+		this.noti_url = noti_url;
+		this.article_seq = article_seq;
+	}
+	
+	public NotificationDTO(int user_seq) {
+		this.user_seq = user_seq;
+	}
+	
+	
 	public int getNoti_seq() {
 		return noti_seq;
 	}

@@ -3,11 +3,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Notification">
-	<insert id="insertNotification">
-		
+	<insert id="insertNotification" parameterType="notificationDTO">
+		insert into notification values(notification_seq.nextval,#{user_seq},#{noti_user_seq},#{noti_type},#{article_seq},#{noti_contents},sysdate,#{noti_read},#{noti_url})
 	</insert>
 	<update id="readNotification">
 		update notification set noti_read = 'n' where noti_seq = #{noti_seq}
 	</update>
-
+	<select id="selectNotification" resultType="notificationDTO" >
+		select  n.* ,u.photo noti_user_photo,u.name noti_user_name from notification n ,users u where  n.noti_user_seq = u.seq and n.user_seq = #{user_seq} and n.noti_read = 'n'
+	</select>
 </mapper>
