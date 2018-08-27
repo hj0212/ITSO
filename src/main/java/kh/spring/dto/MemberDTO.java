@@ -6,8 +6,6 @@ public class MemberDTO {
 	private String email;
 	private String pw;
 	private String name;
-	private String g_email;
-	private String g_name;
 	private String part;
 	private String create_Date;
 	private String block;
@@ -57,18 +55,6 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getG_email() {
-		return g_email;
-	}
-	public void setG_email(String g_email) {
-		this.g_email = g_email;
-	}
-	public String getG_name() {
-		return g_name;
-	}
-	public void setG_name(String g_name) {
-		this.g_name = g_name;
-	}
 	public String getPart() {
 		return part;
 	}
@@ -112,7 +98,7 @@ public class MemberDTO {
 		this.followcheck = followcheck;
 	}
 
-	public MemberDTO(int seq, Integer age, String email, String pw, String name, String g_email, String g_name,
+	public MemberDTO(int seq, Integer age, String email, String pw, String name,
 			String part, String create_Date, String block, String photo, String withdrawal, String state,
 			String followcheck) {
 		super();
@@ -121,8 +107,6 @@ public class MemberDTO {
 		this.email = email;
 		this.pw = pw;
 		this.name = name;
-		this.g_email = g_email;
-		this.g_name = g_name;
 		this.part = part;
 		this.create_Date = create_Date;
 		this.block = block;
