@@ -234,7 +234,7 @@ $(document).ready(function () {
     /*login button click event*/
  /*    $("#signin").on('click', function () {
         $("userform").attr("action", "signin.do");
-    });
+    });]
  */
     $("#signin").click(function(){
     	$("#userform").attr("action","signin.do");

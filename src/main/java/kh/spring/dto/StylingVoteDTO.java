@@ -3,7 +3,7 @@ package kh.spring.dto;
 import java.sql.Date;
 
 public class StylingVoteDTO {
-
+			
 	private int styling_vote_seq;
 	private String styling_title;
 	private String styling_contents;
@@ -18,53 +18,16 @@ public class StylingVoteDTO {
 	private String styling_writeip;
 	private String styling_delete_flag;
 	private Date styling_lastdate;
+	private String styling_endtermtxt;
 
 	
 	public StylingVoteDTO() {}
 	
-	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
-			Date styling_writedate, int styling_viewcount, int styling_end, Date styling_endterm,
-			int styling_voternum, String photo, String styling_writeip,
-			String styling_delete_flag) {
-		super();
-		this.styling_vote_seq = styling_vote_seq;
-		this.styling_title = styling_title;
-		this.styling_contents = styling_contents;
-		this.styling_writer = styling_writer;
-		this.styling_writedate = styling_writedate;
-		this.styling_viewcount = styling_viewcount;
-		this.styling_end = styling_end;
-		this.styling_endterm = styling_endterm;
-		this.styling_voternum = styling_voternum;
-		this.photo = photo;
-		this.styling_writeip = styling_writeip;
-		this.styling_delete_flag = styling_delete_flag;		
-	}
-	
-	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
-			Date styling_writedate, int styling_viewcount, int styling_end, Date styling_endterm,
-			int styling_voternum, String photo, String styling_writeip,
-			String styling_delete_flag, Date styling_lastdate) {
-		super();
-		this.styling_vote_seq = styling_vote_seq;
-		this.styling_title = styling_title;
-		this.styling_contents = styling_contents;
-		this.styling_writer = styling_writer;
-		this.styling_writedate = styling_writedate;
-		this.styling_viewcount = styling_viewcount;
-		this.styling_end = styling_end;
-		this.styling_endterm = styling_endterm;
-		this.styling_voternum = styling_voternum;
-		this.photo = photo;
-		this.styling_writeip = styling_writeip;
-		this.styling_delete_flag = styling_delete_flag;
-		this.styling_lastdate = styling_lastdate;
-	}
 
 	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
-			Date styling_writedate, int styling_viewcount, int styling_end, Date styling_endterm,
-			int styling_voternum, String photo, String styling_writername, String styling_writeip,
-			String styling_delete_flag, Date styling_lastdate) {
+			Date styling_writedate, int styling_viewcount, int styling_end, Date styling_endterm, int styling_voternum,
+			String photo, String styling_writername, String styling_writeip, String styling_delete_flag,
+			Date styling_lastdate, String styling_endtermtxt) {
 		super();
 		this.styling_vote_seq = styling_vote_seq;
 		this.styling_title = styling_title;
@@ -80,7 +43,9 @@ public class StylingVoteDTO {
 		this.styling_writeip = styling_writeip;
 		this.styling_delete_flag = styling_delete_flag;
 		this.styling_lastdate = styling_lastdate;
+		this.styling_endtermtxt = styling_endtermtxt;
 	}
+
 
 
 	public int getStyling_vote_seq() {
@@ -221,5 +186,14 @@ public class StylingVoteDTO {
 	public void setStyling_lastdate(Date styling_lastdate) {
 		this.styling_lastdate = styling_lastdate;
 	}
+
+	public String getStyling_endtermtxt() {
+		return styling_endtermtxt;
+	}
+
+	public void setStyling_endtermtxt(String styling_endtermtxt) {
+		this.styling_endtermtxt = styling_endtermtxt;
+	}
+
 	
 }
