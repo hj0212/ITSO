@@ -439,9 +439,6 @@ button.dropdown-toggle {
 													style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;<font
 													color="gray">"${list.userState}"</font>
 
-												
-											<span>${list.userState}</span>	
-
 											</div> <!-- <script type="text/javascript">
 										console
 												.log("${goodCount[status.count]}");
@@ -621,9 +618,12 @@ button.dropdown-toggle {
 															</c:if>
 														</c:when>
 														<c:otherwise>
+															<c:if test="${plist.collection_seq == clist.collection_seq }">
 															<div class="collectionPhotoItem" style="display:none;"><img src="/upload/social/${plist.photo }"
 																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
+															</c:if>
 														</c:otherwise>
+														
 													</c:choose>
 
 												</c:forEach>
@@ -753,16 +753,14 @@ button.dropdown-toggle {
 			var plistsize = cursor.find(".collectionPhotoItem").length;
 			
 			for(var j=1; j<=plistsize; j++) {
-				collection_socialseq = $(".collectionPhotoItem:nth-of-type("+j+")").find(".socialseq").val();
-				console.log("검사 : "+ j+ ":" + social_seq + ":" + collection_socialseq ); 
+				var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type("+j+")").find(".socialseq").val();
+				console.log("검사 : "+ i + "," + j + ":" + social_seq + ":" + collection_socialseq ); 
 				if(social_seq == collection_socialseq) {
 					cursor.addClass("active");
 					console.log("true");
 					break;
 				}
 			}
-			
-			
 		}
 	})
 
