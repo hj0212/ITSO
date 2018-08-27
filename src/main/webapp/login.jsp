@@ -138,6 +138,20 @@ body, html {
 #cancel:hover {
 	border: 2px solid #feff19;
 }
+
+#gender{
+   border:0px;
+   border-bottom: 1px solid white;
+   width: 80%;
+   margin: 0px auto;
+   color: white;
+}
+.yes{
+   color: blue;
+}
+#gender #g{
+color: black;
+}
 </style>
 <script>
 $(document).ready(function () {
@@ -177,7 +191,7 @@ $(document).ready(function () {
         var email = $("#email").val();
         if (!emailCheck(email)) {
             $("#email").val("");
-            console.log("emali형식이 맞지않습니다");
+            console.log("email형식이 맞지않습니다");
         }
 
         function emailCheck(email) {
@@ -273,7 +287,7 @@ $(document).ready(function () {
             cookie: true, // enable cookies to allow the server to access 
             // the session
             xfbml: true, // parse social plugins on this page
-            version: 'v3.1' // use graph api version 2.8
+            version: 'v2.8' // use graph api version 2.8
         });
 
         // Now that we've initialized the JavaScript SDK, we call 
@@ -398,7 +412,18 @@ $(document).ready(function () {
 								Age</label>
 						</div>
 					</div>
-					<!--gender-->
+					 <!--gender-->
+	               <div class="row sign" style="width: 100%">
+	                  <div class="md-form " style="width: 100%">
+	                     <i class="fa fa-venus-mars prefix" style="color: white"></i> 
+	                     <select class="form-control" id="gender" name="gender" >
+	                        <option value="" id="g" disabled selected>Gender</option>
+	                        <option value="m" id="m" class="yes">Male</option>
+	                        <option value="f" id="f" class="yes">Female</option>
+	                     </select>
+	                  </div>
+	               </div>
+
 
 					<!--button group-->
 					<div id="login-bt-group" style="text-align: center;">
