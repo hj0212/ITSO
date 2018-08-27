@@ -23,4 +23,9 @@ public class SocialHashTagDAOImpl implements ISocialHashTagDAO{
 	public List<SocialHashTagDTO> selectHashTag(int seq) {
 		return this.template.selectList("SocialHashTag.selectHashTag", seq);
 	}
+
+	@Override
+	public int deleteSocialHashTag(int seq) {
+		return this.template.delete("SocialHashTag.deleteHashTag",seq);
+	}
 }

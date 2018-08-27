@@ -245,7 +245,7 @@
 										<div>
 											<span class="comment-date"> ${commentList.social_comment_time} 
 												<c:if test="${sessionScope.user.seq == commentList.user_seq}">
-													<span><a href="deleteComment.go?comment_seq=${commentList.social_comment_seq}&social_seq=${commentList.social_seq}"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+													<span><a href="javascript:void(0)" data-seq="${commentList.social_comment_seq}" data-social="${commentList.social_seq}" class="delete"><i class="fa fa-times" aria-hidden="true"></i></a></span>
 												</c:if>
 											</span>
 										</div>
@@ -275,14 +275,11 @@
         <div id="right-side" class="col">
             <aside id="aside">
                 <section class="container border-bottom-line mt-4">
-                    <img style="vertical-align: super;" src="https://images.pexels.com/photos/607894/pexels-photo-607894.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+                    <img style="vertical-align: super;" src="resources/images/${writer.photo}"
                         class="vertical-align-none avatar rounded-circle z-depth-1-half">
                     <ul class="info">
-                        <li>이슬</li>
-                        <li>24 디자인학과</li>
-                        <li>
-                            <i class="fa fa-map-marker"></i> 연남동, 서울
-                        </li>
+                        <li>${writer.name}</li>
+                        <li>${writer.age} ${writer.state}</li>
                         <li>
                             <button class="btn btn-elegant btn-sm">+ Fan</button>
                         </li>
@@ -473,7 +470,7 @@
     				html += '		<div>';
     				html += '			<span class="comment-date">'+item.social_comment_time;
     				if(item.user_seq == item.writer){
-    					html += '			<span><a href="deleteComment.go?comment_seq='+item.social_comment_seq + '&social_seq=' + item.social_seq +'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+    					html += '			<span><a href="javascript:void(0)" class="delete" data-seq="'+item.social_comment_seq+'" data-social="'+item.social_seq+'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
     				}
     				html += '			</span>';
     				html += '		</div>';
@@ -483,6 +480,17 @@
     			$("#commentarea").val("");
     			$("#comment-container").html(html);
     		}
+    		
+    		$(document).on('click','.delete',function(){
+    			let comment_seq = $(this).data("seq");
+    			let social_seq = $(this).data("social");
+				
+    			let deleteCheck = confirm("댓글을 삭제 하시겠습니까?");
+    			
+    			if(deleteCheck) {
+    				location.href = 'deleteComment.go?comment_seq='+comment_seq+"&social_seq="+social_seq;
+    			}
+    		})
     	});
     </script>
     </c:if>

@@ -170,9 +170,9 @@ public class SocialController {
 		}
 		 
 		
-		for(MemberDTO ddt : mdto) {
-			System.out.println(ddt.getName());
-		}
+//		for(MemberDTO ddt : mdto) {
+//			System.out.println(ddt.getName());
+//		}
 		
 		
 		List<Integer> goodCount = new ArrayList<>();
@@ -238,6 +238,7 @@ public class SocialController {
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
+		MemberDTO mdto = this.mService.selectSocialWrtier(seq);
 		
 		String contents = dto.getSocial_contents();
 		
@@ -248,7 +249,7 @@ public class SocialController {
 		dto.setSocial_contents(contents);
 		
 		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
-
+		
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int social_seq = dto.getSocial_seq();
@@ -317,6 +318,7 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("writer", mdto);
 		mav.addObject("commentList",commentList);
 		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
@@ -374,9 +376,7 @@ public class SocialController {
 			// 태그 정보
 			String taginfo = request.getParameter("taginfo");
 
-			if(taginfo.equals("{}")) {
-				System.out.println("태그가 없음 : 파일만 저장");
-			}else {
+			if(!taginfo.equals("{}")) {
 				ObjectMapper om = new ObjectMapper();
 				om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 				SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
@@ -399,7 +399,6 @@ public class SocialController {
 					SocialTagDTO stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
 					tagService.insertSocialTag(stdto);
 				}
-				
 			}
 			mav.setViewName("redirect:main.go");
 		}catch(NotLoginException nl) {
@@ -523,9 +522,6 @@ public class SocialController {
 			String photo = request.getParameter("imageinfo");
 			SocialBoardDTO dto = new SocialBoardDTO(social_seq,title,content,0,photo,gender,age);
 			
-			// 기존에 있던 태그 리스트
-			List<SocialHashTagDTO> oList = this.shtService.selectHashTag(social_seq);
-			
 			// 새로 들어온 해시태그 리스트
 			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
 			Matcher m = p.matcher(content);
@@ -536,19 +532,24 @@ public class SocialController {
 				nList.add(nidto);
 			}
 			
+//			List<SocialHashTagDTO> deleteList = new ArrayList<>();
 			// 새로 들어온 해시태그 뽑아오기
-			for(int i = 0; i < oList.size(); i++) {
-				for(int j = 0; j < nList.size(); j++) {
-					if(oList.get(i).getSocial_hash_tag_contents().equals(nList.get(j).getSocial_hash_tag_contents())) {
-						nList.remove(nList.get(j));
-					}
+//			for(int i = 0; i < oList.size(); i++) {
+//				for(int j = 0; j < nList.size(); j++) {
+//					if(oList.get(i).getSocial_hash_tag_contents().equals(nList.get(j).getSocial_hash_tag_contents())) {
+//						nList.remove(nList.get(j));
+//						deleteList.add(oList.get(i));
+//					}
+//				}
+//			}
+//			
+			if(nList.size() > 0) {
+				int deleteResult = this.shtService.deleteSocialHashTag(social_seq);
+				
+				for(SocialHashTagDTO ndto : nList) {
+					int hashtagresult = this.shtService.insertHashTag(ndto);
 				}
 			}
-			
-			for(SocialHashTagDTO ndto : nList) {
-				int tagiresult = this.shtService.insertHashTag(ndto);
-			}
-			
 			
 			// 글 수정
 			service.updateSocialBoard(dto);
@@ -557,9 +558,7 @@ public class SocialController {
 			String taginfo = request.getParameter("taginfo");
 			//System.out.println(taginfo);
 			
-			if(taginfo.equals("{}")) {
-				System.out.println("태그가 없음 : 파일만 저장");
-			} else {
+			if(!taginfo.equals("{}")) {
 				ObjectMapper om = new ObjectMapper();
 				om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 				SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
@@ -703,12 +702,11 @@ public class SocialController {
 		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
 		Matcher m = p.matcher(contents);
 		
-		while(m.find()) {
-			System.out.println(m.group(1));
-		}
+//		while(m.find()) {
+//			System.out.println(m.group(1));
+//		}
 		
 		contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='test2.go?word="+"$2'>"+"$1"+"</a>");
-		System.out.println(contents);
 		
 		request.setAttribute("contents", contents);
 		mav.setViewName("Test.jsp");

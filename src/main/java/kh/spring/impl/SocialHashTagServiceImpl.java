@@ -23,4 +23,9 @@ public class SocialHashTagServiceImpl implements ISocialHashTagService{
 	public List<SocialHashTagDTO> selectHashTag(int seq) {
 		return this.dao.selectHashTag(seq);
 	}
+
+	@Override
+	public int deleteSocialHashTag(int seq) {
+		return this.dao.deleteSocialHashTag(seq);
+	}
 }

@@ -9,4 +9,8 @@
 	<select id="selectHashTag" parameterType="int" resultType="shtdto">
 		select * from social_hash_tag where social_seq = #{0}
 	</select>	
+	
+	<delete id="deleteHashTag" parameterType="int">
+		delete from social_hash_tag where social_seq = #{0}
+	</delete>
 </mapper>

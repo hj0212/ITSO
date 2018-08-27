@@ -1,6 +1,8 @@
 package kh.spring.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +71,9 @@ public class MemberDAOImpl implements IMemberDAO{
 	public List<MemberDTO> getFollowingList(MemberDTO dto) {
 		return template.selectList("Member.selectFollowing", dto);
 	}
-
+	
+	@Override
+	public MemberDTO selectSocialWriter(int social_seq) {
+		return template.selectOne("Member.selectSocialWriter", social_seq);
+	}
 }
