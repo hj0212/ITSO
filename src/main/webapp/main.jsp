@@ -439,9 +439,8 @@ button.dropdown-toggle {
 													style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;<font
 													color="gray">"${list.userState}"</font>
 
-
-
-
+												
+											<span>${list.userState}</span>	
 
 											</div> <!-- <script type="text/javascript">
 										console

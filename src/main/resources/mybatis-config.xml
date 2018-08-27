@@ -2,6 +2,7 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<typeAlias type="kh.spring.dto.AdminPageDTO" alias="AdminPageDTO" />
 		<typeAlias type="kh.spring.dto.MemberDTO" alias="dto"/>
 		<typeAlias type="kh.spring.dto.TipDTO" alias="TipDTO"/>
 		<typeAlias type="kh.spring.dto.TipGoodDTO" alias="TipGoodDTO"/>
