@@ -242,7 +242,7 @@ a#MOVE_TOP_BTN {
 	margin-left: 3px;
 }
 
-.dropdown-toggle {
+.container.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
 </style>

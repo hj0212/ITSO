@@ -140,200 +140,197 @@ body, html {
 }
 </style>
 <script>
-	$(document)
-			.ready(
-					function() {
-						$(".sign").hide();
+$(document).ready(function () {
+    $(".sign").hide();
 
-						$("#signup").click(function() {
-							$(".sign").show("slow");
-							$("#login").hide();
-							$(".login").hide();
-							$(".form-control").val("");
-						});
+    $("#signup").click(function () {
+        $(".sign").show("slow");
+        $("#login").hide();
+        $(".login").hide();
+        $(".form-control").val("");
+    });
 
-						$("#cancel").click(function() {
-							$("#login").show();
-							$(".sign").hide();
-							$(".login").show();
-							$(".form-control").val("");
-						});
-						/*input regex*/
-						/*email*/
-						document.getElementById("inputIconEx1").onblur = function() {
-							var email = $("#inputIconEx1").val();
+    $("#cancel").click(function () {
+        $("#login").show();
+        $(".sign").hide();
+        $(".login").show();
+        $(".form-control").val("");
+    });
+    /*input regex*/
+    /*email*/
+    document.getElementById("inputIconEx1").onblur = function () {
+        var email = $("#inputIconEx1").val();
 
-							if (!emailCheck(email)) {
-								$("#inputIconEx1").val("");
-								console.log("emali형식이 맞지않습니다");
-							}
+        if (!emailCheck(email)) {
+            $("#inputIconEx1").val("");
+            console.log("emali형식이 맞지않습니다");
+        }
 
-							function emailCheck(email) {
-								var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-								return regex.test(email);
-							}
-						};
+        function emailCheck(email) {
+            var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            return regex.test(email);
+        }
+    };
 
-						/*ajax */
-						document.getElementById("email").onblur = function() {
-							var email = $("#email").val();
-							if (!emailCheck(email)) {
-								$("#email").val("");
-								console.log("emali형식이 맞지않습니다");
-							}
+    /*ajax */
+    document.getElementById("email").onblur = function () {
+        var email = $("#email").val();
+        if (!emailCheck(email)) {
+            $("#email").val("");
+            console.log("emali형식이 맞지않습니다");
+        }
 
-							function emailCheck(email) {
-								var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-								return regex.test(email);
-							}
+        function emailCheck(email) {
+            var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+            return regex.test(email);
+        }
 
-							console.log(email);
-							$.ajax({
-								url : "emailcheck.ajax",
-								type : "post",
-								data : {
-									email : email
-								},
-								success : function(data) {
-									console.log("들어옴" + data), $("#emailIcon")
-											.attr("class", data);
-									iconColor(data);
-								}
-							});
-						};
+        console.log(email);
+        $.ajax({
+            url: "emailcheck.ajax",
+            type: "post",
+            data: {
+                email: email
+            },
+            success: function (data) {
+                console.log("들어옴" + data), $("#emailIcon")
+                    .attr("class", data);
+                iconColor(data);
+            }
+        });
+    };
 
-						function iconColor(data) {
-							console.log(data + "1");
-							if (data.indexOf("fa-close") > -1) {
-								console.log(data + "2");
-								$("#email").val("");
-								$("#email").focus();
-								$("#emailIcon").css("color", "red");
-							} else {
-								$("#emailIcon").css("color", "green");
-							}
-						}
+    function iconColor(data) {
+        console.log(data + "1");
+        if (data.indexOf("fa-close") > -1) {
+            console.log(data + "2");
+            $("#email").val("");
+            $("#email").focus();
+            $("#emailIcon").css("color", "red");
+        } else {
+            $("#emailIcon").css("color", "green");
+        }
+    }
 
-						/*password*/
-						$("#inputValidationEx2")
-								.keypress(
-										function() {
-											var password = $(
-													"#inputValidationEx2")
-													.val();
+    /*password*/
+    $("#inputValidationEx2")
+        .keypress(
+            function () {
+                var password = $(
+                        "#inputValidationEx2")
+                    .val();
 
-											if (blank(password)) {
-												console.log(password);
-												var regex = /\s/g;
-												document
-														.getElementById("inputValidationEx2").value = document
-														.getElementById("inputValidationEx2").value
-														.replace(regex, "");
-											}
-											;
+                if (blank(password)) {
+                    console.log(password);
+                    var regex = /\s/g;
+                    document
+                        .getElementById("inputValidationEx2").value = document
+                        .getElementById("inputValidationEx2").value
+                        .replace(regex, "");
+                };
 
-											function blank(password) {
-												var regex = /\s/g;
-												return regex.test(password);
-											}
-											;
-										});
+                function blank(password) {
+                    var regex = /\s/g;
+                    return regex.test(password);
+                };
+            });
 
     /*login button click event*/
- /*    $("#signin").on('click', function () {
-        $("userform").attr("action", "signin.do");
+    /*    $("#signin").on('click', function () {
+           $("userform").attr("action", "signin.do");
+       });
+    */
+    $("#signin").click(function () {
+        $("#userform").attr("action", "signin.do");
+        $("#userform").submit();
     });
- */
-    $("#signin").click(function(){
-    	$("#userform").attr("action","signin.do");
-    	$("#userform").submit();
-    });
- 
+
     $("#login").click(function () {
         $("#userform").attr("action", "login.do");
         $("#userform").submit();
     });
-    
+
     /* 페이스북 로그인 */
-	var checkLoginStatus = function(response) {
-    	console.log(response);
+    var checkLoginStatus = function (response) {
+        console.log(response);
         // statusChangeCallback(response);
-        
+
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
             $("#authBtn").val("logout");
             fbLoginAction();
-          } else {
-        	  $("#authBtn").val("login");
+        } else {
+            $("#authBtn").val("login");
             // The person is not logged into your app or we are unable to tell.
             document.getElementById('status').innerHTML = 'Please log ' +
-              'into this app.';
-          }
+                'into this app.';
+        }
     };
-	
-	window.fbAsyncInit = function() {
-	    FB.init({
-	      appId      : '1128205587330014',
-	      cookie     : true,  // enable cookies to allow the server to access 
-	                          // the session
-	      xfbml      : true,  // parse social plugins on this page
-	      version    : 'v3.1' // use graph api version 2.8
-	    });
 
-	    // Now that we've initialized the JavaScript SDK, we call 
-	    // FB.getLoginStatus().  This function gets the state of the
-	    // person visiting this page and can return one of three states to
-	    // the callback you provide.  They can be:
-	    //
-	    // 1. Logged into your app ('connected')
-	    // 2. Logged into Facebook, but not your app ('not_authorized')
-	    // 3. Not logged into Facebook and can't tell if they are logged into
-	    //    your app or not.
-	    //
-	    // These three cases are handled in the callback function.
-	    
-	    checkLoginState = function() {
-	    	FB.getLoginStatus(checkLoginStatus);
-	    }
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1128205587330014',
+            cookie: true, // enable cookies to allow the server to access 
+            // the session
+            xfbml: true, // parse social plugins on this page
+            version: 'v3.1' // use graph api version 2.8
+        });
 
-	  };
+        // Now that we've initialized the JavaScript SDK, we call 
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
 
-	  // Load the SDK asynchronously
-	  (function(d, s, id) {
-	    var js, fjs = d.getElementsByTagName(s)[0];
-	    if (d.getElementById(id)) return;
-	    js = d.createElement(s); js.id = id;
-	    js.src = "https://connect.facebook.net/en_US/sdk.js";
-	    fjs.parentNode.insertBefore(js, fjs);
-	  }(document, 'script', 'facebook-jssdk'));
-	  
-	  
-	 function fbLoginAction() {
-		 FB.login(function(response) {
-				var fbname;
-				var accessToken = response.authResponse.accessToken;
-				FB.api('/me?fields=id,name,email', function(resp) {
-					console.log(resp);
-					var data = JSON.stringify(resp);
-					console.log(data);
-					$.ajax({
-				        url:"fbLogin.ajax",
-				        type:"post",
-				        data:{
-				         	data:data
-				        },
-				        success:function(data){
-				          location.href = data;
-				        }
-				     });
-					
-					
-				});
-		});
-	 }
+        checkLoginState = function () {
+            FB.getLoginStatus(checkLoginStatus);
+        }
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    function fbLoginAction() {
+        FB.login(function (response) {
+            var fbname;
+            var accessToken = response.authResponse.accessToken;
+            FB.api('/me?fields=id,name,email', function (resp) {
+                console.log(resp);
+                var data = JSON.stringify(resp);
+                console.log(data);
+                $.ajax({
+                    url: "fbLogin.ajax",
+                    type: "post",
+                    data: {
+                        data: data
+                    },
+                    success: function (data) {
+                        location.href = data;
+                    }
+                });
+
+
+            });
+        });
+    }
 });
 
-					});
+
 </script>
 </head>
 <body>
