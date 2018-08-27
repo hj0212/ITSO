@@ -40,6 +40,10 @@
 img {
 	width: 100%;
 }
+
+#comment a {
+	color : black;
+}
 </style>
 
 </head>
@@ -106,9 +110,12 @@ img {
 								<a href="#">${tipComments.name}</a>
 							</div>
 							<div>${tipComments.tip_comment_contents}</div>
-							<div>${tipComments.tip_comment_time}</div>
+							<div>${tipComments.tip_comment_time}
+								<c:if test="${sessionScope.user.seq == tipComments.user_seq}">
+									<span><a href="javascript:void(0)" data-seq="${commentList.social_comment_seq}" data-social="${commentList.social_seq}" class="delete"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+								</c:if>
+							</div>
 						</td>
-						
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -145,96 +152,103 @@ img {
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script>
 		window.onload = function() {
-		// tip delete btn proc
-		$("#tipDeleteBtn").click(function() {
-			var tipSeq = document.getElementById("tip_seq").innerHTML;
-			console.log(tipSeq);
-
-			$.ajax({
-				url : "deleteSpecificTip.tip",
-				data : {
-					"tipSeq" : tipSeq
-				},
-				type : "get",
-				success : function() {
-					alert("success");
-					location.replace("tipBoardMainPage.tip");
-				},
-				error : function() {
-					alert("error");
-				}
+			// tip delete btn proc
+			$("#tipDeleteBtn").click(function() {
+				var tipSeq = document.getElementById("tip_seq").innerHTML;
+				console.log(tipSeq);
+	
+				$.ajax({
+					url : "deleteSpecificTip.tip",
+					data : {
+						"tipSeq" : tipSeq
+					},
+					type : "get",
+					success : function() {
+						alert("success");
+						location.replace("tipBoardMainPage.tip");
+					},
+					error : function() {
+						alert("error");
+					}
+				})
 			})
-		})
-
-		// tip comment proc
-		$("#insertTipCommentBtn").click(function() {
-			var data = JSON.stringify({
-				tip_seq : document.getElementById("tip_seq").innerHTML,
-				user_seq : document.getElementById("user_seq").value,
-				tip_comment_contents : document.getElementById("tip_comment_contents").value,
+	
+			// tip comment proc
+			$("#insertTipCommentBtn").click(function() {
+				var data = JSON.stringify({
+					tip_seq : document.getElementById("tip_seq").innerHTML,
+					user_seq : document.getElementById("user_seq").value,
+					tip_comment_contents : document.getElementById("tip_comment_contents").value,
+				});
+	
+				console.log(data);
+	
+				$.ajax({
+					url : "insertTipCommentProc.tip",
+					type : "post",
+					data : data,
+					dataType : "json",
+					contentType : "application/json;charset=UTF-8",
+					async : true,
+					success : function(data) {
+						showTipComment(data);
+					},
+					
+					error : function() {
+						alert("failure");
+					}
+				})
 			});
-
-			console.log(data);
-
-			$.ajax({
-				url : "insertTipCommentProc.tip",
-				type : "post",
-				data : data,
-				dataType : "json",
-				contentType : "application/json;charset=UTF-8",
-				async : true,
-				success : function() {
-					alert("success");
-					location.reload();
-				},
-				error : function() {
-					alert("failure");
-				}
-
-			})
-		});
-
-		var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
-		var tipLikingUser = document.getElementById("user_seq").value;
-
-		var i = 0;
-
-		document.getElementById("like-btn").onclick = function() {
-			console.log("like btn clicked! " + ++i);
-			if (tipLikingUser == "") {
-				tipLikingUser = 0;
+			
+			function showTipComment(data) {
+				let html = '<table id="comment">';
+				html += '<tbody>'
+				$.each(data, function(index, item){
+					html += '<tr>';
+				});
 			}
-			console.log(tipSeqForLike + ":" + tipLikingUser);
-
-			$.ajax({
-				url : "tipArticleLikeProc.tip",
-				method : "post",
-				data : {
-					"tipSeq" : tipSeqForLike,
-					"tipLikingUser" : tipLikingUser
-				},
-				success : function(data, textStatus, jqXHR) {
-					console.log("[" + data + "]");
-
-					if (data == 9) {
-						alert("좋아요는 한번만 할 수 있습니다.");
-
-					} else if (data == 1) {
-						console.log("좋아요  + 1");
-						alert("좋아요!")
-					} else {
-						alert("좋아요 에러 발생!");
-					};
-
-				},
-				error : function(jqXHR, textStatus, errorThrown) {
-					console.log(this.textStatus + "," + this.jqXHR + ","
-							+ this.errorThrown);
-					console.log("좋아요 실패 관리자에게 문의 요망");
+	
+			var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
+			var tipLikingUser = document.getElementById("user_seq").value;
+	
+			var i = 0;
+	
+			document.getElementById("like-btn").onclick = function() {
+				console.log("like btn clicked! " + ++i);
+				if (tipLikingUser == "") {
+					tipLikingUser = 0;
 				}
-			});
-		}
-	};
+				console.log(tipSeqForLike + ":" + tipLikingUser);
+	
+				$.ajax({
+					url : "tipArticleLikeProc.tip",
+					method : "post",
+					data : {
+						"tipSeq" : tipSeqForLike,
+						"tipLikingUser" : tipLikingUser
+					},
+					success : function(data, textStatus, jqXHR) {
+						console.log("[" + data + "]");
+	
+						if (data == 9) {
+							alert("좋아요는 한번만 할 수 있습니다.");
+	
+						} else if (data == 1) {
+							console.log("좋아요  + 1");
+							alert("좋아요!")
+						} else {
+							alert("좋아요 에러 발생!");
+						};
+	
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						console.log(this.textStatus + "," + this.jqXHR + ","
+								+ this.errorThrown);
+						console.log("좋아요 실패 관리자에게 문의 요망");
+					}
+				});
+			}
+		};
 	</script>
 </body>
 </html>

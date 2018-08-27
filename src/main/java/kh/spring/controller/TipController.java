@@ -3,6 +3,7 @@ package kh.spring.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -129,16 +133,33 @@ public class TipController {
 	}
 
 	@RequestMapping("insertTipCommentProc.tip")
-	public void insertTipCommentProc(@RequestBody TipCommentDTO dto) {
+	public void insertTipCommentProc(@RequestBody TipCommentDTO dto, HttpServletRequest request, HttpServletResponse response) {
 		try {
 			System.out.println(1);
 			System.out.println(dto.toString());
 
 			int result = service.insertTipCommentProc(dto);
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 			
 			ObjectMapper om = new ObjectMapper();
 			List<TipCommentDTO> commentList = service.getCommentsFromTip(dto.getTip_seq());
+			ArrayNode array = om.createArrayNode();
 			
+			for(TipCommentDTO tdto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("tip_comment_seq", tdto.getTip_comment_seq());
+				on.put("tip_seq", tdto.getTip_seq());
+				on.put("user_seq", tdto.getUser_seq());
+				on.put("tip_comment_contents", tdto.getTip_comment_contents());
+				on.put("tip_comment_time", tdto.getTip_comment_time());
+				on.put("name", tdto.getName());
+				on.put("photo", tdto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
