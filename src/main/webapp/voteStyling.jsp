@@ -197,6 +197,7 @@ input[type="file"] {
 				<div class="col">
 					<input type="text" id="datepicker" name="styling_endterm" disabled
 						class="form-control form-control-sm col-md-4">
+						<input type="hidden" name="styling_endterm2" id="realterm">
 				</div>
 			</div>
 			<!-- </div> -->
@@ -254,8 +255,7 @@ input[type="file"] {
 		document.oncontextmenu = function(e) {
 			return false;
 		};
-		
-		
+			
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
@@ -328,10 +328,10 @@ input[type="file"] {
 			var wrapprev = $(this).closest('tr').prev('tr');
 			var number = parseInt($(this).closest('td').siblings('th').text());
 			wraptr.insertBefore(wraptr.prev());
-			if (number > 1) {
+			/* if (number > 1) {
 				wrapprev.children('th').text(number);
 				$(this).closest('td').siblings('th').text(number - 1);
-			}
+			} */
 		})
 
 		$(document).on('click', '.downvotebtn', function() {
@@ -340,9 +340,9 @@ input[type="file"] {
 			var number = parseInt($(this).closest('td').siblings('th').text());
 			wraptr.insertAfter(wraptr.next());
 			wrapnext.children('th').text(number);
-			if (number < count) {
+			/* if (number < count) {
 				$(this).closest('td').siblings('th').text(number + 1);
-			}
+			} */
 		})
 
 		$(document).on('click', '.custom-control-input', function() {
@@ -362,6 +362,9 @@ input[type="file"] {
 		})
 		
 		$('#itsobtn').click(function(){
+			/* var endterm =$('#datepicker').datepicker({ dateFormat: 'yy/mm/dd' }).val();
+			console.log(endterm);
+			$('#realterm').val(endterm); */
 			var radioval = $('input[name = "styling_endsel"]:checked').val();
 			console.log(radioval);
 			$('#radioresult').val(radioval);

@@ -8,19 +8,46 @@ public class StylingVoteItemDTO {
 	private int styling_vote_item_seq;
 	private String styling_vote_item_contents;
 	private String styling_vote_item_photo;
+	private int eachcount;
+	private int totalcount;
+	private double eachrate;
 	
 	private List<StylingVoteItemDTO> items;
 	
 	public StylingVoteItemDTO() {}
 
 	public StylingVoteItemDTO(int styling_vote_seq, int styling_vote_item_seq, String styling_vote_item_contents,
-			String styling_vote_item_photo, List<StylingVoteItemDTO> items) {
+			String styling_vote_item_photo) {
 		super();
 		this.styling_vote_seq = styling_vote_seq;
 		this.styling_vote_item_seq = styling_vote_item_seq;
 		this.styling_vote_item_contents = styling_vote_item_contents;
 		this.styling_vote_item_photo = styling_vote_item_photo;
-		this.items = items;
+		
+	}
+
+	
+	public StylingVoteItemDTO(int styling_vote_seq, int styling_vote_item_seq, String styling_vote_item_contents,
+			String styling_vote_item_photo, double eachrate) {
+		super();
+		this.styling_vote_seq = styling_vote_seq;
+		this.styling_vote_item_seq = styling_vote_item_seq;
+		this.styling_vote_item_contents = styling_vote_item_contents;
+		this.styling_vote_item_photo = styling_vote_item_photo;
+		this.eachrate = eachrate;
+	}
+
+	public StylingVoteItemDTO(int styling_vote_seq, int styling_vote_item_seq, String styling_vote_item_contents,
+			String styling_vote_item_photo, int eachcount, int totalcount, double eachrate) {
+		super();
+		this.styling_vote_seq = styling_vote_seq;
+		this.styling_vote_item_seq = styling_vote_item_seq;
+		this.styling_vote_item_contents = styling_vote_item_contents;
+		this.styling_vote_item_photo = styling_vote_item_photo;
+		this.eachcount = eachcount;
+		this.totalcount = totalcount;
+		this.eachrate = eachrate;
+		
 	}
 
 	public int getStyling_vote_seq() {
@@ -61,6 +88,30 @@ public class StylingVoteItemDTO {
 
 	public void setItems(List<StylingVoteItemDTO> items) {
 		this.items = items;
+	}
+
+	public int getEachcount() {
+		return eachcount;
+	}
+
+	public void setEachcount(int eachcount) {
+		this.eachcount = eachcount;
+	}
+
+	public int getTotalcount() {
+		return totalcount;
+	}
+
+	public void setTotalcount(int totalcount) {
+		this.totalcount = totalcount;
+	}
+
+	public double getEachrate() {
+		return eachrate;
+	}
+
+	public void setEachrate(double eachrate) {
+		this.eachrate = eachrate;
 	}
 
 	

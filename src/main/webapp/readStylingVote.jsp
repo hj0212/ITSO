@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%-- <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> --%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -122,7 +124,7 @@ input[type="file"] {
 					id="delbtn">글 삭제</button>
 			</c:if>
 
-			<c:choose>	
+			<c:choose>
 				<c:when test="${didVote eq 0}">
 					<button class="btn btn-indigo btn-md float-right" type="button"
 						id="votebtn">투표하기</button>
@@ -130,7 +132,7 @@ input[type="file"] {
 				<c:when test="${didVote >= 1}">
 					<button class="btn btn-indigo btn-md float-right" type="button"
 						id="votebtn" disabled>투표완료</button>
-				</c:when>				
+				</c:when>
 			</c:choose>
 		</h4>
 		<input type="hidden" id="sequenceId"
@@ -140,7 +142,7 @@ input[type="file"] {
 		<div class="row my-2">
 			<div class="md-form form-lg col-4 mx-0">
 				<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
-					alt="사진 없음" id="votetitleimg" style="width:100%">
+					alt="사진 없음" id="votetitleimg" style="width: 100%">
 			</div>
 			<div class="md-form form-lg col-7 offset-md-5 mx-0">
 				<h4>투표주제: ${votedto.styling_title}</h4>
@@ -165,19 +167,19 @@ input[type="file"] {
 					</thead>
 					<tbody id="itemlist">
 						<c:forEach var="svitemdto" items="${voteitems}" varStatus="status">
-							<tr> 
-								<th scope="row">
-									<div class="custom-control custom-radio" id="test${status.index}">
+							
+							
+							<tr>
+								<th scope="col">
+									<div class="custom-control custom-radio"
+										id="test${status.index}">
 										<input type="radio" class="custom-control-input"
 											id="defaultGroupExample${status.index}"
 											name="styling_votesel"
-											value="${svitemdto.styling_vote_item_seq}"> <span class="custom-control"
-											for="test${status.index}">
-											결과()
-										</span> <label
+											value="${svitemdto.styling_vote_item_seq}"> <span
+											class="custom-control" for="test${status.index}"> </span> <label
 											class="custom-control-label"
-											for="defaultGroupExample${status.index}" >
-										</label>
+											for="defaultGroupExample${status.index}"> </label>
 									</div>
 								</th>
 								<td>
@@ -199,6 +201,13 @@ input[type="file"] {
 										</div>
 									</div>
 								</td>
+								<td>
+								
+									<div class="progress">
+										<div class="progress-bar" style="width:${voteresults[status.index].eachrate}%" role="progressbar" aria-valuenow="0"
+											aria-valuemin="0" aria-valuemax="100"></div>
+									</div><a>${voteresults[status.index].eachrate} %</a> <br>
+								</td>
 							</tr>
 						</c:forEach>
 
@@ -206,7 +215,7 @@ input[type="file"] {
 				</table>
 			</div>
 		</div>
-		<div class="row">댓글..?</div>
+		<div class="row">--</div>
 
 		<div class="col-md-2 offset-md-10">
 			<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1"
@@ -258,6 +267,8 @@ input[type="file"] {
 						console.log("AJAX 투표 성공");
 						$('#votebtn').attr("disabled", true);
 						$('#votebtn').text("투표 완료");
+						$('input[type="radio"]').attr("disabled",true);
+						location.href="readStylingVote.style?styling_vote_seq="+styling_vote_seq;
 					}
 				});
 			}else if(voteval == null){
@@ -274,6 +285,7 @@ input[type="file"] {
 		
 		$('#modibtn').click(function(){
 			location.href="modifyStylingVote.go?styling_vote_seq=${votedto.styling_vote_seq}";
+			console.log("${votedto.styling_vote_seq}번글 수정으로 go");
 		})
 
 		$(function() {

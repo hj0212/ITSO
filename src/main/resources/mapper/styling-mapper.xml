@@ -4,10 +4,7 @@
 <mapper namespace="Styling">
 
 	<insert id="insertStylingVote" parameterType="svdto">
-		insert into
-		styling_vote values(styling_vote_seq.nextval, #{styling_title},
-		#{styling_contents},
-		#{styling_writer},sysdate,#{styling_viewcount},#{styling_end},#{styling_endterm,jdbcType=DATE},#{styling_voternum,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{styling_writeip,jdbcType=VARCHAR},'n',sysdate)
+		insert into styling_vote values(styling_vote_seq.nextval, #{styling_title},#{styling_contents},#{styling_writer},sysdate,0,#{styling_end},#{styling_endterm,jdbcType=DATE},#{styling_voternum,jdbcType=INTEGER},#{photo,jdbcType=VARCHAR},#{styling_writeip,jdbcType=VARCHAR},'n',sysdate)
 	</insert>
 
 	<select id="selectStylingSeq" resultType="int">
@@ -31,7 +28,7 @@
 	
 	<select id="selectStylingVoteItem" parameterType="int" resultType="svitemDTO">
 	<!-- select * from (select s.styling_vote_seq, s.styling_title, s.styling_contents, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end, s.styling_endterm,s.styling_voternum, s.photo, si.styling_vote_item_seq, si.styling_vote_item_contents,si.styling_vote_item_photo from styling_vote s, styling_vote_item si where s.styling_vote_seq=si.styling_vote_seq)selvote where styling_vote_seq = #{styling_vote_seq} -->
-	select *  from styling_vote_item where styling_vote_seq = #{styling_vote_seq}
+	select * from styling_vote_item where styling_vote_seq=#{styling_vote_seq}
 	</select>
 	
 	<select id="selectDidVote" parameterType="sparam" resultType="int">
@@ -48,6 +45,17 @@
 		update styling_vote set styling_delete_flag = 'y' where styling_vote_seq= #{styling_vote_seq}
 	</update>
 	
+	<update id="modifyStylingVote" parameterType="svDTO">
+		update styling_vote set styling_title= #{styling_title}, styling_contents= #{styling_contents},styling_end=#{styling_end},styling_endterm=#{styling_endterm,jdbcType=DATE},styling_voternum=#{styling_voternum,jdbcType=INTEGER},photo=#{photo,jdbcType=VARCHAR},styling_lastdate=sysdate where styling_vote_seq=#{styling_vote_seq}
+	</update>
 	
+	
+	<update id="updateStylingViewcount" parameterType="int">
+		update styling_vote set styling_viewcount =(nvl(styling_viewcount,0)+1) where styling_vote_seq = #{styling_vote_seq}
+	</update>
+	
+	<select id="getStylingVoteResult" resultType="svresultDTO" parameterType="int">
+	select vr.*, round(vr.eachcount/vr.totalcount*100,2)eachrate from(select vote_value, count(*) eachcount,(select count(*)from styling_vote_user where styling_vote_seq=#{styling_vote_seq})totalcount from styling_vote_user where styling_vote_seq =#{styling_vote_seq}group by vote_value)vr order by vr.vote_value
+	</select>
 
 </mapper>

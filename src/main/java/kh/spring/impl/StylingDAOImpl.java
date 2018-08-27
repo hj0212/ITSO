@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
+import kh.spring.dto.StylingVoteResultDTO;
 import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IStylingDAO;
 import kh.spring.jsonobject.StylingParam;
@@ -37,7 +38,6 @@ public class StylingDAOImpl implements IStylingDAO{
 
 	@Override
 	public List<StylingVoteDTO> selectStylingBoard() {
-		System.out.println("콘은 온다");
 		return template.selectList("Styling.selectStylingBoard");
 	}
 
@@ -68,8 +68,23 @@ public class StylingDAOImpl implements IStylingDAO{
 	}
 
 	@Override
-	public int modifyStylingVote(int styling_vote_seq) {
-		return template.update("Styling.modifyStylingVote",styling_vote_seq);
+	public int modifyStylingVote(StylingVoteDTO svdto) {
+		System.out.println("수정사항"+svdto.getStyling_vote_seq()+"번글//제목:"+svdto.getStyling_title()+"/내용:"+svdto.getStyling_contents()+"/종료방법:"+svdto.getStyling_end()+"/추가사항"+svdto.getStyling_voternum());
+		
+		return template.update("Styling.modifyStylingVote",svdto);
+	}
+
+	@Override
+	public int updateStylingViewcount(int styling_vote_seq) {
+		System.out.println("dao 들어옴/ 변수 :" + styling_vote_seq);
+		int resul= template.update("Styling.updateStylingViewcount",styling_vote_seq);
+		System.out.println(resul);
+		return resul;
+	}
+
+	@Override
+	public List<StylingVoteResultDTO> getStylingVoteResult(int styling_vote_seq) {
+		return template.selectList("Styling.getStylingVoteResult",styling_vote_seq);
 	}
 	
 }
