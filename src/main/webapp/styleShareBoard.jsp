@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta property="og:url"                content="document.location.href" />
+<meta property="og:type"               content="article" />
+<meta property="og:title"              content="${content.social_title}" />
+<meta property="og:description"        content="How much does culture influence creative thinking?" />
+<meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
 <link href="https://fonts.googleapis.com/css?family=Montserrat"
 	rel="stylesheet">
 <script type="text/javascript"
@@ -541,13 +546,14 @@ body {
 	
 	//트위터 공유 
 	function twittergo(url, text) {
-		var url = window.location.protocol + window.location.host
-				+ window.location.pathname;
-		var text = '${content.social_title}';	
-		var wow = '${goodCount.social_good_seq}';
+		//var url = window.location.protocol + window.location.host				+ window.location.pathname;
+		var url=document.location.href;
+		var text = encodeURI('${content.social_title}');	
+		var wow = encodeURI('${goodCount.social_good_seq}');
 		
 		
 		console.log("와우에 오는 깃 : " + wow);
+		console.log("text에 오는 것: " + text);
 		
 		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="+ url, "", "width=700, height=400");
 	}
@@ -572,9 +578,7 @@ body {
 		          mobileWebUrl: document.location.href
 		        }
 		      },
-		      social: {
-		        likeCount: 9999999 //좋아요우 올곳
-		      },
+		      
 		      buttons: [
 		        {
 		          title: '웹에서보기',
@@ -590,12 +594,12 @@ body {
 	//페이스북
 	function facebookgo() {
 		//var url =  window.location.host + window.location.pathname;
-		var url = 'http://192.168.20.35/controller/main.go'
+		//var url = document.location.href;<-이거쓸것
+		var url = 'http://192.168.20.35/controller/main.go'//test용이라 주소 직접 입력해놓음
 		var encodeUrl = encodeURIComponent(url);
 		var facebook = 'https://www.facebook.com/sharer/sharer.php?u=';
 		var link = facebook + encodeUrl;
 		window.open(link, "", "width=700, height=400");
-
 	}
 	
 	
