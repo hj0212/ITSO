@@ -20,7 +20,7 @@
 </insert>
 
 <select id="getCommentsFromTip" parameterType="int" resultMap="TipCommentDTOResultMap">
-	select * from tip_comment tc, users u where tc.user_seq = u.seq and tc.tip_seq=#{0}
+	select * from tip_comment tc, users u where tc.user_seq = u.seq and tc.tip_seq=#{0} order by tc.tip_comment_seq asc
 </select>
 
 <delete id="deleteTipComment" parameterType="int">
