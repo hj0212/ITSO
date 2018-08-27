@@ -161,18 +161,6 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="chevrons">
-                                <span class="instafilta-target">
-                                    <a href=#>
-                                        <i class="fa fa-chevron-left"></i>
-                                    </a>
-                                </span>
-                                <span class="instafilta-target">
-                                    <a href="#">
-                                        <i class="fa fa-chevron-right"></i>
-                                    </a>
-                                </span>
-                            </div>
                         </div>
                     </header>
                     <div class=container>
@@ -180,11 +168,7 @@
                         <!-- header -->
                         <header class="container">
                             <h3>${content.social_title}</h3>
-                            <time>${date[1]} ${date[2]}, ${date[0]}</time>
-                            <div class="instafilta-target mt-1">
-                                2
-                                <i class="fa fa-comment-o"></i>
-                            </div>
+                            <span class="time">${date[1]} ${date[2]}, ${date[0]}</span>
                         </header>
 
 						<div>
@@ -262,8 +246,9 @@
                     <div class="form-group">
                         <textarea class="form-control rounded-0" id="commentarea" rows="3" placeholder="로그인이 필요합니다." maxlength="166"></textarea>
                     </div>
-                    <div class="text-right">
-                        <input type="button" class="btn btn-grey btn-sm" id="write-comment" value="쓰기" disabled="disabled"></button>
+                    <div style="float:right;">
+                        <input type="button" class="btn btn-grey btn-sm" id="write-comment" value="쓰기" disabled="disabled">
+                        <input type="button" class="btn btn-grey btn-sm" id="gomain" value="목록">
                     </div>
                 </div>
             </div>
@@ -346,7 +331,6 @@
 	        	});
         	};
         });
-        
     </script>
     <c:if test="${sessionScope.user.seq == content.social_writer}">
    	<script>
@@ -371,6 +355,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    	document.getElementById("gomain").onclick = function() {
+    		location.href = "main.go";
+    	}
+    </script>
     <c:if test="${!empty sessionScope.user.seq}">
     <script>
     	$(document).ready(function(){
