@@ -296,11 +296,6 @@ button.dropdown-toggle {
 
 				}
 
-				if (scrolltop == $(document).height() - $(window).height()) {
-					$("#sidefooter").fadeIn();
-				} else {
-					$("#sidefooter").fadeOut();
-				}
 			});
 
 			$("#MOVE_TOP_BTN").click(function() {
@@ -310,33 +305,30 @@ button.dropdown-toggle {
 				return false;
 			});
 		});
-		
-		$(".followbtn").on('click', function () {
-		    var seq = $(this).siblings('.writerseq').val();
-		    var text = $(this).find('.show').text();
-		    console.log("text: " + text);
-		    var btn = $(".writerseq[value='"+seq+"']").siblings("button.followbtn");
-		    var span = btn.find('span');
-		    $.ajax({
-		        url: "followUser.ajax",
-		        type: "post",
-		        data: {
-		            seq: seq,
-		            text: text
-		        },
-		        success: function (response) {
-		            if (response != null) {
-		                console.log("DB success : " + response);
-		                btn.toggleClass("btn-itso");
-		                btn.toggleClass("btn-indigo");
-		                span.toggleClass("hidden");
-		                span.toggleClass("show");
-		            }
-		        },
-		        error: function (response) {
-		            console.log("DB Failed")
-		        }
-		    });
+
+		$(".followbtn").on('click', function() {
+			var seq = $(this).siblings("#seq").val();
+			var text = $(this).text();
+			var btn = $(this);
+			$.ajax({
+				url : "followUser.ajax",
+				type : "post",
+				data : {
+					seq : seq,
+					text : text
+				},
+				success : function(response) {
+					if (response != null) {
+						console.log("DB success : " + response);
+						btn.toggleClass("btn-itso");
+						btn.toggleClass("btn-indigo");
+						btn.html(response);
+					}
+				},
+				error : function(response) {
+					console.log("DB Failed")
+				}
+			});
 		})
 	});
 </script>
@@ -435,13 +427,9 @@ button.dropdown-toggle {
 											src="/upload/profile/${list.user_photo}"
 											style="width: 50px; height: 50px; margin-top: 10px">
 											<div class="media-body" style="margin: 0px auto">
+
 												<a class="writer-a"><b class="writerName"
-													style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;<font
-													color="gray">"${list.userState}"</font>
-
-
-
-
+													style="font-size: 20px;">${list.writerName}</b></a> <span>${list.userState}</span>
 
 											</div> <!-- <script type="text/javascript">
 										console
@@ -501,42 +489,29 @@ button.dropdown-toggle {
 									<c:choose>
 									<c:when test="${!empty followingList }">
 									<c:forEach var="flist" items="${followingList }">
-									<c:choose>
-										<c:when test="${list.social_writer eq sessionScope.user.seq}">
-									        
-									    </c:when>
-									    <c:otherwise>
-									    	<c:choose>
-									    		<c:when test="${flist.seq eq list.social_writer}">
-									        <button type="button" class="btn btn-itso followbtn">
-												<span class="unfollow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
-												<span class="follow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
-											</button>
-									    </c:when>
-									    <c:otherwise>
-									        <button type="button" class="btn btn-indigo followbtn">
-												<span class="follow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
-												<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
-											</button>
-									    </c:otherwise>
-									    	</c:choose>									    
-									    </c:otherwise>
-									</c:choose>	
+										<c:choose>
+											<c:when test="${flist.seq eq list.social_writer}">
+												<button type="button" class="btn btn-indigo followbtn"
+													style="font-family: 'NanumbarunpenR';">
+													<i class="fa fa-upload"> <span
+														style="font-family: 'NanumbarunpenR';">팔로우</span></i>
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button" class="btn btn-itso followbtn"
+													style="font-family: 'NanumbarunpenR';">
+													<i class="fa fa-upload"> <span
+														style="font-family: 'NanumbarunpenR';">언팔로우</span></i>
+												</button>
+											</c:otherwise>
+										</c:choose>
+
+
 									</c:forEach>
-									</c:when>
-									<c:otherwise>
-									<button type="button" class="btn btn-indigo followbtn">
-										<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';"><i class="fa fa-check"/></i> 언팔로우</span>
-										<span class="follow show" style="font-family: 'NanumbarunpenR';"><i class="fa fa-plus"/></i> 팔로우</span>
-									</button>
-									</c:otherwise>
-									</c:choose>
-									
-									
-									<input type="hidden" value="${list.social_writer }" class="writerseq"/>
-									<input type="hidden" value="${list.social_seq }" class="socialseq"/>
-									<button type="button" class="btn btn-indigo savebtn" data-toggle="modal" data-target="#saveModal">
-										<i class="fa fa-upload" > <span
+
+									<button type="button" class="btn btn-indigo"
+										style="background-color: black; font-family: 'NanumbarunpenR';">
+										<i class="fa fa-upload"> <span
 											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>
 									</button>
 									<!--share-->

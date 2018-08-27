@@ -2,6 +2,8 @@ package kh.spring.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,12 +12,10 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,7 +23,6 @@ import kh.spring.dto.MemberDTO;
 import kh.spring.dto.StylingVoteDTO;
 import kh.spring.dto.StylingVoteItemDTO;
 import kh.spring.dto.StylingVoteResultDTO;
-import kh.spring.exception.NotLoginException;
 import kh.spring.interfaces.IStylingService;
 
 @Controller
@@ -184,22 +183,43 @@ public class StylingController {
 	}*/
 
 
-	@RequestMapping("/insertStylingVote.style")
-	public ModelAndView insertStylingVote(HttpSession session, StylingVoteDTO svdto, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
+	@RequestMapping(value="/insertStylingVote.style",method = RequestMethod.POST)
+	public ModelAndView insertStylingVote(HttpSession session, @RequestParam("styling_title")String styling_title, @RequestParam("styling_contents")String styling_contents,@RequestParam("styling_endtermtxt")String styling_endtermtxt, @RequestParam("styling_end")int styling_end, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
 		/*		System.out.println(svdto.getStyling_end());
 		System.out.println(svdto.getStyling_title());*/		
-
-		System.out.println("인서트 컨트롤러");
+	/*public ModelAndView insertStylingVote(HttpSession session,StylingVoteDTO svDTO, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
+*/
+		System.out.println("인서트 컨트롤러-----누가 이기나 보자 ㅋㅋ-------------------------------------");
+		System.out.println("제목:"+styling_title+"내용:"+styling_contents);
 		ModelAndView mav = new ModelAndView();
 		try {
 			MemberDTO user =(MemberDTO)session.getAttribute("user");
-			svdto.setStyling_writeip(req.getRemoteAddr());
+			StylingVoteDTO svDTO = new StylingVoteDTO();
+			/*svdto.setStyling_writeip(req.getRemoteAddr());*/
 			System.out.println(req.getRemoteAddr());
-			svdto.setStyling_writer(user.getSeq());
-			System.out.println(user.getSeq());
-
+			/*svdto.setStyling_writer(user.getSeq());*/
+			System.out.println(user.getSeq());		
+			/*System.out.println(svdto.getStyling_endtermtxt());*/
 			String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
-
+	
+			svDTO.setStyling_writer(user.getSeq());
+			svDTO.setStyling_writeip(req.getRemoteAddr());
+			svDTO.setStyling_title(styling_title);
+			svDTO.setStyling_contents(styling_contents);
+			svDTO.setStyling_end(styling_end);
+					
+			if(svDTO.getStyling_endtermtxt() !=null) {
+				String startdate = styling_endtermtxt;
+				System.out.println(startdate);
+				SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+				java.util.Date tempdate = format.parse(startdate);
+				/*SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd-MM-YYYY");
+				System.out.println("Output date is = " + outputDateFormat.format(tempDate));*/
+				/*svdto.setStyling_endterm(tempDate);*/
+				java.sql.Date sqldate = new java.sql.Date(tempdate.getTime());
+				svDTO.setStyling_endterm(sqldate);
+			}
+			
 			//사진파일 업로드-주제
 			if(titlefile != null) {
 				File file2 = new File(path);
@@ -210,7 +230,7 @@ public class StylingController {
 					if(file2.exists()) {
 						sfileName = System.currentTimeMillis() + "_" + ofileName;
 						/*System.out.println("sfileName : " + sfileName);*/		
-						svdto.setPhoto(sfileName);
+						svDTO.setPhoto(sfileName);
 						/*System.out.println("성공인가");*/
 					}
 				}
@@ -224,7 +244,7 @@ public class StylingController {
 				}
 			}
 
-			int insertResult =styservice.insertStylingVote(svdto);
+			int insertResult =styservice.insertStylingVote(svDTO);
 			/*List<StylingVoteItemDTO> svitemdtos = (List<StylingVoteItemDTO>) svitemdto;*/
 			/*System.out.println(svitemdtos.size());*/
 			int stylingseq = styservice.selectStylingSeq()-1;

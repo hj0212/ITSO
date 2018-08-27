@@ -268,7 +268,7 @@ input[type="file"] {
 						$('#votebtn').attr("disabled", true);
 						$('#votebtn').text("투표 완료");
 						$('input[type="radio"]').attr("disabled",true);
-						location.href="readStylingVote.style?styling_vote_seq="+styling_vote_seq;
+						location.href="readStylingVote.style?styling_vote_seq="+$('#sequenceId').val();
 					}
 				});
 			}else if(voteval == null){

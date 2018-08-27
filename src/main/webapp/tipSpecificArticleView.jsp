@@ -10,8 +10,12 @@
 
 
 <!-- Font Awesome 4.7-->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" -->
+<!-- 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+
+<!-- Font awesome 5.2 -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
 <!-- Bootstrap core CSS -->
 <link
@@ -190,7 +194,26 @@ img {
 			</tr>
 			<tr>
 				<td><p id="tip_seq">${tipContent.tip_seq}</p></td>
-				<td>${tipContent.category}${tipContent.tip_viewcount}
+				<td><span id="this-article-category">${tipContent.category}<i id="category-icon"></i></span>
+				<script>
+				window.onload = function(){ 
+					var category = document.getElementById("this-article-category").innerHTML;
+					
+					console.log(category);
+					
+					if(category=="뷰티"){
+						category += "<i class='fa fa-paint-brush'></i>";
+					}else if(category=="다이어트"){
+						category += "<i class='fas fa-dumbbell'></i>";
+					}else if(category=="직장생활"){
+						category += "<i class='fas fa-user-tie'></i>";
+					}else if(category=="패션"){
+						category += "<i class='fas fa-tshirt'></i>";
+					}
+				}
+				</script>
+				
+				<i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}
 					${tipContent.tip_writer}</td>
 			</tr>
 			<tr>
@@ -208,9 +231,6 @@ img {
 			<i class=" fa fa-heart red-text" aria-hidden="true"></i>
 			<%-- 				${tipLikeCounts.tip_good_seq} --%>
 			<%-- 			</c:forEach> --%>
-		</button>
-		<button class="btn white btn-sm">
-			<i class="fa fa-bomb black-text" aria-hidden="true"></i>
 		</button>
 	</div>
 

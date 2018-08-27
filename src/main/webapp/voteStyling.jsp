@@ -100,28 +100,26 @@ input[type="file"] {
 			var count = 1;
 		</script>
 		<div class="row my-2"></div>
-		<form method="post" action="insertStylingVote.style" id="voteform"
-			enctype="multipart/form-data">
+		<form method="post" action="insertStylingVote.style" id="voteform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
 				<h4>투표주제</h4>
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<div class="md-form form-md form-group">
 						<input type="text" id="votetitleid" name="styling_title"
-							class="form-control col-md-9 float-right"> <label
+							class="form-control col-md-9 float-right" maxlength="50"> <label
 							for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
 							id="votelabel">투표 주제를 입력해주세요.</label>
 					</div>
 					<div class="md-form form-md form-group">
-						<input type="text" id="votecontentsid"
-							name="styling_contents"
-							class="form-control col-md-9 float-right"
+						<input type="text" id="votecontentsid" name="styling_contents"
+							class="form-control col-md-9 float-right" maxlength="90"
 							placeholder="내용을 입력해주세요.">
 					</div>
 					<div class="media-body image-upload-wrap form-group"
 						id="voteitemdiv">
 						<img class="d-flex file-upload-image" src="" alt="사진 없음"
-							id="voteitemimg"> <input type="file" name="votetitleimgfile"
-							id="imgfile0" onchange="readURL(this);"
+							id="voteitemimg"> <input type="file"
+							name="votetitleimgfile" id="imgfile0" onchange="readURL(this);"
 							class="file-upload-input form-control" accept="image/*" />
 					</div>
 				</div>
@@ -166,8 +164,9 @@ input[type="file"] {
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
-												<input type="text" id="vitemtext" class="form-control" name="styling_vote_item_contents[]">
-												<label for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
+												<input type="text" id="vitemtext" class="form-control itemconts"
+													name="styling_vote_item_contents[]"> <label
+													for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
 											</div>
 										</div>
 									</div>
@@ -195,9 +194,9 @@ input[type="file"] {
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="styling_endterm" disabled
-						class="form-control form-control-sm col-md-4">
-						<input type="hidden" name="styling_endterm2" id="realterm">
+					<input type="text" id="datepicker" name="styling_endtermtxt" disabled
+						class="form-control form-control-sm col-md-4"> <input
+						type="hidden" name="styling_endterm2" id="realterm">
 				</div>
 			</div>
 			<!-- </div> -->
@@ -255,7 +254,15 @@ input[type="file"] {
 		document.oncontextmenu = function(e) {
 			return false;
 		};
-			
+		
+		document.getElementById("votenum").oninput = function() { 
+            var txt = document.getElementById("votenum").value;
+            var regex = /[^0-9]/; 
+            if (regex.test(txt) == true) {
+                document.getElementById("votenum").value = "";
+            } else {}
+        }	
+
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
@@ -280,7 +287,7 @@ input[type="file"] {
 					$('.image-title').html(input.files[0].name);
 				};
 				reader.readAsDataURL(input.files[0]);
-			}else {
+			} else {
 				removeUpload();
 			}
 		}
@@ -306,7 +313,7 @@ input[type="file"] {
 														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
 														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
 														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
-														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control" name="styling_vote_item_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
+														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control itemconts" name="styling_vote_item_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
 														+ '</div></div></div></td></tr>');
 							} else if (count == 6) {
 								alert("투표 항목은 6개까지 추가할 수 있습니다.")
@@ -345,33 +352,73 @@ input[type="file"] {
 			} */
 		})
 
-		$(document).on('click', '.custom-control-input', function() {
-			if ($(this).val() == 2) {
-				$('#votenum').attr('readOnly', false);
-				$("#datepicker").attr('disabled',true);
-			} else if ($(this).val() == 1) {
-				$('#votenum').attr('readOnly', true);
-				$("#datepicker").attr('disabled',false);
-				$(function() {
-					$("#datepicker").datepicker();
+		$(document).on(
+				'click',
+				'.custom-control-input',
+				function() {
+					if ($(this).val() == 2) {
+						$('#votenum').attr('readOnly', false);
+						$("#datepicker").attr('disabled', true);
+					} else if ($(this).val() == 1) {
+						$('#votenum').attr('readOnly', true);
+						$("#datepicker").attr('disabled', false);
+						$(function() {
+							$("#datepicker").datepicker(
+									{
+										minDate : "+0D", //최소 선택일자
+										maxDate : "+3Y",
+										monthNamesShort : [ '1', '2', '3', '4',
+												'5', '6', '7', '8', '9', '10',
+												'11', '12' ] //달력의 월 부분 텍스트
+										,
+										monthNames : [ '1월', '2월', '3월', '4월',
+												'5월', '6월', '7월', '8월', '9월',
+												'10월', '11월', '12월' ] //달력의 월 부분 Tooltip 텍스트
+										,
+										dayNamesMin : [ '일', '월', '화', '수',
+												'목', '금', '토' ] //달력의 요일 부분 텍스트
+										,
+										dayNames : [ '일요일', '월요일', '화요일',
+												'수요일', '목요일', '금요일', '토요일' ],
+										//달력의 요일 부분 Tooltip 텍스트
+										yearSuffix : "년",
+										showMonthAfterYear : true
+
+									});
+						});
+					} else {
+						$('#votenum').attr('readOnly', true);
+						$("#datepicker").attr('disabled', true);
+					}
+				})
+
+		$('#itsobtn').click(function() {	
+					
+					var radioval = $('input[name = "styling_endsel"]:checked').val();
+					if(radioval ==null){
+						alert("종료 방법을 선택해 주세요.");
+					}else{
+						$('#radioresult').val(radioval);
+						console.log($('input[name = "styling_end"]').val());		
+						console.log($('#datepicker').val());	
+						
+						if($('#votetitleid').val() == "" || $('#imgfile0').val() == "" || $('#votecontentsid').val() == "" || $('.file-upload-input, .filesel').val() == "" || $('.itemconts').val() == "" ){
+							alert("항목을 모두 입력해 주세요.");
+						}else if(radioval==1 && $('#datepicker').val()==""){
+							alert("종료 날짜를 선택해 주세요.");			
+						}else if(radioval==2 && $('#votenum').val()==""){
+							alert("참여 인원을 입력해 주세요.");	
+						}else if($('#datepicker').val()=="" && $('#votenum').val()==""){
+							alert("투표종료 조건을 입력해 주세요.");
+						}else if($('.filesel').length<2){
+							alert("투표항목은 2개 이상 입력해 주세요.");
+						}else{
+							  $('#voteform').submit();  
+							/*  console.log("submit");  */
+						}
+					}						
+					console.log(radioval+"번 종료조건 선택 함");
 				});
-			}else{
-				$('#votenum').attr('readOnly', true);
-				$("#datepicker").attr('disabled',true);
-			}
-		})
-		
-		$('#itsobtn').click(function(){
-			/* var endterm =$('#datepicker').datepicker({ dateFormat: 'yy/mm/dd' }).val();
-			console.log(endterm);
-			$('#realterm').val(endterm); */
-			var radioval = $('input[name = "styling_endsel"]:checked').val();
-			console.log(radioval);
-			$('#radioresult').val(radioval);
-			console.log($('input[name = "styling_end"]').val());
-			$('#voteform').submit();
-		})
-		
 	</script>
 
 </body>
