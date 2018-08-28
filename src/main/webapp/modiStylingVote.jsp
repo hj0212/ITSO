@@ -87,6 +87,12 @@ input[type="file"] {
 	box-shadow: 0px;
 	width: 10%;
 }
+
+#datepicker[readonly]
+{
+    background-color:white;
+}
+
 </style>
 
 </head>
@@ -108,14 +114,14 @@ input[type="file"] {
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<div class="md-form form-md form-group">
 						<input type="text" id="votetitleid" name="styling_title"
-							class="form-control col-md-9 float-right" value="${votedto.styling_title}"> <label
+							class="form-control col-md-9 float-right" value="${votedto.styling_title}" maxlength="50"> <label
 							for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
 							id="votelabel">투표 주제를 입력해주세요.</label>
 					</div>
 					<div class="md-form form-md form-group">
 						<input type="text" id="votecontentsid"
 							name="styling_contents" value="${votedto.styling_contents}"
-							class="form-control col-md-9 float-right"
+							class="form-control col-md-9 float-right" maxlength="90"
 							placeholder="내용을 입력해주세요.">
 					</div>
 					<div class="media-body image-upload-wrap form-group"
@@ -160,6 +166,7 @@ input[type="file"] {
 												type="file" name="voteimgfile[]" id="imgfile1"
 												class="file-upload-input form-control filesel"
 												onchange="readURL(this);" accept="image/*">
+												<input type="hidden" name="voteitemfiles[]" value="${item.styling_vote_item_photo}">
 										</div>
 
 										<div class="media-body image-upload-wrap form-group"
@@ -204,7 +211,7 @@ input[type="file"] {
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="styling_endterm" disabled
+					<input type="text" id="datepicker" name="styling_endterm" disabled readOnly
 						class="form-control form-control-sm col-md-4" value="${votedto.styling_endterm}">
 				</div>
 			</div>
@@ -231,10 +238,13 @@ input[type="file"] {
 				</div>
 			</div>
 			<input type="hidden" name="styling_end" id="radioresult">
+			
 			<div class="row my-2"></div>
-
-			<div class="row">
+			
+			<div class="row" id="btmrow">
 				<div class="md-form form-lg col-md-12 my-2"></div>
+				<!-- <input type="hidden" name ="deleteditem[]" > -->
+				<input type="hidden" name ="deleteditem[]" value="deletestart">
 			</div>
 
 			<div class="row">
@@ -264,6 +274,13 @@ input[type="file"] {
 			return false;
 		};
 		
+		document.getElementById("votenum").oninput = function() { 
+            var txt = document.getElementById("votenum").value;
+            var regex = /[^0-9]/; 
+            if (regex.test(txt) == true) {
+                document.getElementById("votenum").value = "";
+            } else {}
+        }	
 		
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
@@ -330,6 +347,12 @@ input[type="file"] {
 			for(i=0 i<arr.size i++){
 				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜
 			} */
+			
+			var voteitemseq = $(this).parent().parent().parent().prev('th').children('input[name="styling_vote_item_seq"]').val();
+			console.log('삭제할 번호'+voteitemseq);
+			$("#btmrow").append('<input type="hidden" name ="deleteditem[]" >');
+			$('input[name="deleteditem[]"]').val(voteitemseq);
+			
 		})
 
 		$(document).on('click', '.upvotebtn', function() {
@@ -361,8 +384,30 @@ input[type="file"] {
 			} else if ($(this).val() == 1) {
 				$('#votenum').attr('readOnly', true);
 				$("#datepicker").attr('disabled',false);
+				$("#datepicker").trigger('click');
 				$(function() {
-					$("#datepicker").datepicker();
+					$("#datepicker").datepicker(
+							{
+								minDate : "+0D", //최소 선택일자
+								maxDate : "+3Y",
+								monthNamesShort : [ '1', '2', '3', '4',
+										'5', '6', '7', '8', '9', '10',
+										'11', '12' ] //달력의 월 부분 텍스트
+								,
+								monthNames : [ '1월', '2월', '3월', '4월',
+										'5월', '6월', '7월', '8월', '9월',
+										'10월', '11월', '12월' ] //달력의 월 부분 Tooltip 텍스트
+								,
+								dayNamesMin : [ '일', '월', '화', '수',
+										'목', '금', '토' ] //달력의 요일 부분 텍스트
+								,
+								dayNames : [ '일요일', '월요일', '화요일',
+										'수요일', '목요일', '금요일', '토요일' ],
+								//달력의 요일 부분 Tooltip 텍스트
+								yearSuffix : "년",
+								showMonthAfterYear : true
+
+							});
 				});
 			}else{
 				$('#votenum').attr('readOnly', true);
@@ -373,9 +418,31 @@ input[type="file"] {
 		$('#itsobtn').click(function(){
 			var radioval = $('input[name = "styling_endsel"]:checked').val();
 			console.log(radioval);
-			$('#radioresult').val(radioval);
-			console.log($('input[name = "styling_end"]').val());
-			$('#modiform').submit();
+			if(radioval ==null){
+				alert("종료 방법을 선택해 주세요.");
+			}else{
+				$('#radioresult').val(radioval);
+				console.log($('input[name = "styling_end"]').val());			
+				console.log($('#datepicker').val());	
+				
+				if($('#votetitleid').val() == "" || $('#imgfile0').val() == "" || $('#votecontentsid').val() == "" || $('.filesel, input[name="voteimgfile[]"]').val() == "" || $('.itemconts').val() == "" ){
+					alert("항목을 모두 입력해 주세요.");
+				}else if(radioval==1 && $('#datepicker').val()==""){
+					alert("종료 날짜를 선택해 주세요.");			
+				}else if(radioval==2 && $('#votenum').val()==""){
+					alert("참여 인원을 입력해 주세요.");	
+				}else if($('#datepicker').val()=="" && $('#votenum').val()==""){
+					alert("투표종료 조건을 입력해 주세요.");
+				}else if($('.filesel').length<2){
+					alert("투표항목은 2개 이상 입력해 주세요.");
+				}else{
+					  $('#voteform').submit();  
+					/*  console.log("submit");  */
+				}
+				$('#modiform').submit();
+			}
+			
+			
 		})
 		
 	</script>

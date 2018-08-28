@@ -93,6 +93,18 @@ public class StylingServiceImpl implements IStylingService{
 		return result;
 	}
 
+	@Override
+	public StylingVoteItemDTO selectStylingVoteItemName(String styling_vote_item_photo) {
+		StylingVoteItemDTO svitemDTO = sdao.selectStylingVoteItemName(styling_vote_item_photo);
+		return svitemDTO;
+	}
+
+	@Override
+	public int deleteStylingVoteItem(int styling_vote_item_seq) {
+		int delresult = sdao.deleteStylingVoteItem(styling_vote_item_seq);
+		return delresult;
+	}
+
 
 
 

@@ -86,5 +86,15 @@ public class StylingDAOImpl implements IStylingDAO{
 	public List<StylingVoteResultDTO> getStylingVoteResult(int styling_vote_seq) {
 		return template.selectList("Styling.getStylingVoteResult",styling_vote_seq);
 	}
+
+	@Override
+	public StylingVoteItemDTO selectStylingVoteItemName(String styling_vote_item_photo) {
+		return template.selectOne("Styling.selectStylingVoteItemName",styling_vote_item_photo);
+	}
+
+	@Override
+	public int deleteStylingVoteItem(int styling_vote_item_seq) {
+		return template.delete("Styling.deleteStylingVoteItem",styling_vote_item_seq);
+	}
 	
 }

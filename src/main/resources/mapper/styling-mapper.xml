@@ -71,5 +71,13 @@ order by s.styling_writedate desc
 	<select id="getStylingVoteResult" resultType="svresultDTO" parameterType="int">
 	select vr.*, round(vr.eachcount/vr.totalcount*100,2)eachrate from(select vote_value, count(*) eachcount,(select count(*)from styling_vote_user where styling_vote_seq=#{styling_vote_seq})totalcount from styling_vote_user where styling_vote_seq =#{styling_vote_seq}group by vote_value)vr order by vr.vote_value
 	</select>
+	
+	<select id="selectStylingVoteItemName" parameterType="String" resultType="svitemDTO">
+	select * from styling_vote_item where styling_vote_item_photo =#{styling_vote_item_photo}
+	</select>
+	
+	<delete id="deleteStylingVoteItem" parameterType="int">
+	delete from styling_vote_item where styling_vote_item_seq = #{styling_vote_item_seq}
+	</delete>
 
 </mapper>

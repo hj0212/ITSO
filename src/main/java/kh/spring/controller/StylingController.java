@@ -58,12 +58,12 @@ public class StylingController {
 		try {	
 			/*int result =styservice.updateStylingViewcount(styling_vote_seq);
 			System.out.println(result);
-*/
+			 */
 			StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
 			System.out.println("votedto까지 생성완료");
 			List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
 			System.out.println(svitemdtos.size()+"개의 voteItemdto 생성완료");
-			
+
 			List<StylingVoteResultDTO> resultdtos =styservice.getStylingVoteResult(styling_vote_seq);
 			if(resultdtos.size()==0) {
 				System.out.println(resultdtos.size()+"개의 투표결과가 컨트롤러 는 무사히..지나감");
@@ -78,7 +78,7 @@ public class StylingController {
 				dto.setEachrate((double)0);			
 				resultdtos.add(dto);
 			}
-			
+
 			int seq=((MemberDTO)session.getAttribute("user")).getSeq();		
 			int didvote = styservice.selectDidVote(seq,styling_vote_seq);		
 			System.out.println(styling_vote_seq +"번글 투표했냐"+didvote);
@@ -90,7 +90,7 @@ public class StylingController {
 			mav.addObject("voteresults",resultdtos);
 			System.out.println(resultdtos.get(0).getEachrate());
 			System.out.println(resultdtos.size()+"개의 투표결과가 컨트롤러 는 무사히..지나감");
-			
+
 			mav.setViewName("readStylingVote.jsp");
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -127,7 +127,7 @@ public class StylingController {
 	}
 
 	@RequestMapping("/modifyStylingVote.style")
-	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles) {
+	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, @RequestParam("deleteditem[]")List<Integer>deletedseq, @RequestParam("voteitemfiles[]")List<String>itemfilenames, HttpServletRequest req) {
 		ModelAndView mav = new ModelAndView();
 
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
@@ -162,11 +162,68 @@ public class StylingController {
 			}catch(Exception e) {
 
 			}
-			int modiresul = styservice.modifyStylingVote(svdto);
-			System.out.println("수정완료"+modiresul);
+		}
+		int modiresul = styservice.modifyStylingVote(svdto);
+		
+		//--------------------------------------------------------------------투표 아이템 수정
+		List<StylingVoteItemDTO> itemsdto = styservice.selectStylingVoteItem(styling_vote_seq);
+		List<String> itemnames = itemfilenames;
+		List<String> itemcontents = itemconts;
+		System.out.println("아이템 내용 개수:"+itemcontents.size());
+		List<Integer> deletedList = deletedseq;
+		System.out.println("삭제아이템 내용 개수:"+deletedList.size());
+		if(deletedList.size()>0) { //삭제 된 사진들
+			for(int i=0; i<deletedList.size(); i++) {
+				styservice.deleteStylingVoteItem(deletedList.get(i));
+			}
 
+		}else {System.out.println("삭제된 사진 없음");}
+		
+		if(itemnames.size()>0) { //원래 있던 사진 이름				
+			for(int i=0; i<itemnames.size(); i++) {
+				String findname = itemnames.get(i);
+				StylingVoteItemDTO dto =styservice.selectStylingVoteItemName(findname);
+				dto.setStyling_vote_item_contents(itemcontents.get(i));
+				dto.setStyling_vote_item_photo(findname);
+				System.out.println(dto.getStyling_vote_item_seq()+"번 아이템은 사진 안바뀜");								
+			}			
+		}else {
+			System.out.println("다 수정해서 원래있던 사진 없단다");	
+		}
+
+		
+		if(uploadfiles.size() != 0) {
+			File file = new File(path);
+			for(MultipartFile uploadfile: uploadfiles) {			
+				String ofileName = uploadfile.getOriginalFilename();
+				String sfileName = "";
+				if (ofileName != null && !ofileName.equals("")) {
+					if(file.exists()) {
+						sfileName = System.currentTimeMillis() + "_" + ofileName;
+						itemfilenames.add(sfileName);
+						/*System.out.println("sfileName : " + sfileName);*/					
+					}
+				}
+				try {
+					byte[] data = uploadfile.getBytes();
+					FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
+					fos.write(data);
+					fos.close();	
+				}catch(Exception e) {
+				}
+			}
+			for(int i=0; i<itemconts.size(); i++) {
+				StylingVoteItemDTO svitemdto = new StylingVoteItemDTO();
+				svitemdto.setStyling_vote_seq(styling_vote_seq);
+				svitemdto.setStyling_vote_item_contents(itemconts.get(i));
+				svitemdto.setStyling_vote_item_photo(itemfilenames.get(i));
+				styservice.insertStylingVoteItem(svitemdto);				
+			}
+			/*System.out.println(itemconts.size()+"개가 왔다 왔어!");*/
 
 		}
+
+		System.out.println("수정완료"+modiresul);
 
 		mav.setViewName("readStylingVote.style?styling_vote_seq="+styling_vote_seq);
 		return mav;
@@ -183,12 +240,13 @@ public class StylingController {
 	}*/
 
 
+
 	@RequestMapping(value="/insertStylingVote.style",method = RequestMethod.POST)
 	public ModelAndView insertStylingVote(HttpSession session, @RequestParam("styling_title")String styling_title, @RequestParam("styling_contents")String styling_contents,@RequestParam("styling_endtermtxt")String styling_endtermtxt, @RequestParam("styling_end")int styling_end, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
 		/*		System.out.println(svdto.getStyling_end());
 		System.out.println(svdto.getStyling_title());*/		
-	/*public ModelAndView insertStylingVote(HttpSession session,StylingVoteDTO svDTO, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
-*/
+		/*public ModelAndView insertStylingVote(HttpSession session,StylingVoteDTO svDTO, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
+		 */
 		System.out.println("인서트 컨트롤러-----누가 이기나 보자 ㅋㅋ-------------------------------------");
 		System.out.println("제목:"+styling_title+"내용:"+styling_contents);
 		ModelAndView mav = new ModelAndView();
@@ -201,13 +259,13 @@ public class StylingController {
 			System.out.println(user.getSeq());		
 			/*System.out.println(svdto.getStyling_endtermtxt());*/
 			String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
-	
+
 			svDTO.setStyling_writer(user.getSeq());
 			svDTO.setStyling_writeip(req.getRemoteAddr());
 			svDTO.setStyling_title(styling_title);
 			svDTO.setStyling_contents(styling_contents);
 			svDTO.setStyling_end(styling_end);
-					
+
 			if(styling_endtermtxt !=null) {
 				String startdate = styling_endtermtxt;
 				System.out.println(startdate);
@@ -219,7 +277,7 @@ public class StylingController {
 				java.sql.Date sqldate = new java.sql.Date(tempdate.getTime());
 				svDTO.setStyling_endterm(sqldate);
 			}
-			
+
 			//사진파일 업로드-주제
 			if(titlefile != null) {
 				File file2 = new File(path);
