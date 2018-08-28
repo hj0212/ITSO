@@ -208,7 +208,7 @@ public class StylingController {
 			svDTO.setStyling_contents(styling_contents);
 			svDTO.setStyling_end(styling_end);
 					
-			if(svDTO.getStyling_endtermtxt() !=null) {
+			if(styling_endtermtxt !=null) {
 				String startdate = styling_endtermtxt;
 				System.out.println(startdate);
 				SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");

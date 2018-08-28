@@ -29,7 +29,28 @@ public class StylingVoteDTO {
 	
 	public StylingVoteDTO() {}
 	
-
+	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
+			Date styling_writedate, int styling_viewcount, int styling_end, Date styling_endterm, int styling_voternum,
+			String photo, String styling_writerip, String styling_delete_flag, Date styling_lastdate) {
+		super();
+		this.styling_vote_seq = styling_vote_seq;
+		this.styling_title = styling_title;
+		this.styling_contents = styling_contents;
+		this.styling_writer = styling_writer;
+		this.styling_writedate = styling_writedate;
+		this.styling_viewcount = styling_viewcount;
+		this.styling_end = styling_end;
+		this.styling_endterm= styling_endterm;		
+		this.styling_voternum = styling_voternum;
+		this.photo = photo;
+		this.styling_writeip = styling_writerip;
+		this.styling_delete_flag= styling_delete_flag;
+		this.styling_lastdate=styling_lastdate;
+	
+	}	
+	
+	
+	
 	
 	//----------------망팟생성자
 	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
