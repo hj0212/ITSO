@@ -32,4 +32,8 @@
 	<select id="selectUserData" resultType="dto">
 		select * from users where seq = #{seq}
 	</select>
+	
+	<select id="selectSocialWriter" parameterType="int" resultType="dto">
+		select u.* from social s, users u where s.social_seq = #{social_seq} and s.social_writer = u.seq
+	</select>
 </mapper>

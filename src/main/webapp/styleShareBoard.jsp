@@ -98,9 +98,17 @@
 	display: inline-block;
 }
 
-body {
-	font-family: 'Montserrat'
-}
+            #wrapper a {
+                color: black;
+            }
+            
+            #social_contents a {
+            	color : dodgerblue;
+            }
+            
+            #social_contents a:hover {
+            	color : black;
+            }
 
 .inner {
 	position: absolute;
@@ -136,7 +144,35 @@ body {
 
 	<div id="wrapper" class="row">
 
-		<div id="left-side" class="col">
+            <div>
+                <div>
+                    <header>
+                        <div id="lookAction" class=container>
+                            <button type=button class="btn btn-elegant">HYPE</button> 853
+                            <button type=button class="btn btn-grey-ligten-5 btn-sm">SAVE</button>
+                            <!-- social button list -->
+                            <div id="snsLists" class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                    <button type="button" class="btn btn-grey-ligten-5 btn-sm">
+                                        <i class="fa fa-facebook"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-grey-ligten-5 btn-sm">
+                                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-grey-ligten-5 btn-sm">
+                                        <i class="fa fa-instagram"></i> 
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    <div class=container>
+                        <br>
+                        <!-- header -->
+                        <header class="container">
+                            <h3>${content.social_title}</h3>
+                            <span class="time">${date[1]} ${date[2]}, ${date[0]}</span>
+                        </header>
 
 			<div>
 				<div>
@@ -240,9 +276,10 @@ body {
 
 							<!-- user-context -->
 
-							<div class=container>${content.social_contents}</div>
-
-							<div style="float: right;">
+							<div class=container id="social_contents">
+								${content.social_contents}
+							</div>
+							<div style="float:right;">
 								<c:if test="${sessionScope.user.seq == content.social_writer}">
 									<button id="modify" class="btn btn-grey btn-sm">수정</button>
 									<button id="delete" class="btn btn-grey btn-sm">삭제</button>
@@ -250,80 +287,47 @@ body {
 							</div>
 						</div>
 
-						<div class="container mt-4">
-							<table id="comment">
-								<tbody>
-									<tr>
-										<td><img
-											class="avatar rounded-circle z-depth-1-half mr-3"
-											src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-										</td>
-										<td>
-											<div>
-												<a href="#">Risovic N.</a> <a href="#">@risovic</a>
-											</div>
-											<div>Nice dress, color, and the vibe</div>
-											<div id=comment>
-												0 <a href="#">▲</a>· reply · flag · 6 months ago
-											</div>
-
-										</td>
-									</tr>
-
-
-									<tr>
-										<table>
-											<tr>
-												<td>
-													<div class="comment-child">
-														<img
-															class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-															src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-													</div>
-												</td>
-												<td></td>
-												<td>
-													<div>
-														<a href="#">Alex X.</a> <a href="">@Alex</a>
-													</div>
-													<div>How sweet of her.</div>
-
-													<div id=comment>
-														2 <a href="#">▲</a· reply>· flag · 6 months ago 
-													</div>
-												</td>
-											</tr>
-
-											<tr>
-												<td>
-													<div class="comment-child">
-														<img
-															class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-															src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-													</div>
-												</td>
-												<td></td>
-												<td>
-													<div>
-														<a href="#">Lauren A.</a> <a href="">@Lauren</a>
-													</div>
-													<div>I envy her body ratio</div>
-
-													<div id=comment>
-														5 <a href="#">▲</a>· reply· flag · 6 months ago
-													</div>
-												</td>
-											</tr>
-										</table>
-
-									</tr>
-
-								</tbody>
-
-
+						<div class="container mt-4" id="comment-container">
+                            <table id="comment" cellpadding="5">
+                            	<c:forEach var="commentList" items="${commentList}">
+								<tr>
+									<td>
+										<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/${commentList.photo}">
+									</td>
+									<td>
+										<div>
+											<a href="#">${commentList.name}</a>
+										</div>
+										<div>
+											<span class="user-comment">
+												${commentList.social_comment_contents}
+											</span>
+										</div>
+										<div>
+											<span class="comment-date"> ${commentList.social_comment_time} 
+												<c:if test="${sessionScope.user.seq == commentList.user_seq}">
+													<span><a href="javascript:void(0)" data-seq="${commentList.social_comment_seq}" data-social="${commentList.social_seq}" class="delete"><i class="fa fa-times" aria-hidden="true"></i></a></span>
+												</c:if>
+											</span>
+										</div>
+									</td>
+								</tr>                            	
+                            	</c:forEach>
 							</table>
 						</div>
 
+                <!-- reply -->
+                <div class="container mt-4">
+                    <div class="form-group">
+                        <textarea class="form-control rounded-0" id="commentarea" rows="3" placeholder="로그인이 필요합니다." maxlength="166"></textarea>
+                    </div>
+                    <div style="float:right;">
+                        <input type="button" class="btn btn-grey btn-sm" id="write-comment" value="쓰기" disabled="disabled">
+                        <input type="button" class="btn btn-grey btn-sm" id="gomain" value="목록">
+                    </div>
+                </div>
+            </div>
+        </div>
 
 					</div>
 				</div>
@@ -335,40 +339,20 @@ body {
 							<textarea class="form-control rounded-0"
 								id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"></textarea>
 
-							<!-- Default inline 1-->
-
-
-
-							<button class="btn btn-grey btn-sm">쓰기</button>
-						</div>
-					</div>
-				</form>
-
-
-
-			</div>
-
-		</div>
-
-		<!-- user info -->
-
-
-		<div id="right-side" class="col">
-			<aside id="aside">
-				<section class="container border-bottom-line mt-4">
-					<img style="vertical-align: super;"
-						src="https://images.pexels.com/photos/607894/pexels-photo-607894.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-						class="vertical-align-none avatar rounded-circle z-depth-1-half">
-					<ul class="info">
-						<li>이슬</li>
-						<li>24 디자인학과</li>
-						<li><i class="fa fa-map-marker"></i> 연남동, 서울</li>
-						<li>
-							<button class="btn btn-elegant btn-sm">+ Fan</button>
-						</li>
-					</ul>
-				</section>
-
+        <div id="right-side" class="col">
+            <aside id="aside">
+                <section class="container border-bottom-line mt-4">
+                    <img style="vertical-align: super;" src="resources/images/${writer.photo}"
+                        class="vertical-align-none avatar rounded-circle z-depth-1-half">
+                    <ul class="info">
+                        <li>${writer.name}</li>
+                        <li>${writer.age} ${writer.state}</li>
+                        <li>
+                            <button class="btn btn-elegant btn-sm">+ Fan</button>
+                        </li>
+                    </ul>
+                </section>
+				
 				<c:if test="${!empty list}">
 					<section class=border-bottom-line>
 						<div class="mt-4 mb-3 ">
@@ -391,59 +375,15 @@ body {
 						</ol>
 					</section>
 				</c:if>
-
-				<div>
-					<!-- you may like these users -->
-					<div class="mt-4 mb-3">
-						<strong> 당신이 좋아할만한 유저 </strong>
-					</div>
-
-					<ol class="list-style-none">
-						<li class="mt-3"><img
-							class="vertical-align-none z-depth-1-half rounded-circle"
-							alt="Primark" height="75"
-							src="http://s3cdn-test-lookbooknu.netdna-ssl.com/files/users/small/6484472_image.jpg?1531857217">
+        </div>
 
 
-							<ol class="info">
-								<li class="ml-2"><a href=#>김연아</a></li>
-
-								<li class="ml-2">18 항공승무원 부산</li>
-								<li>
-									<button class="btn btn-elegant btn-sm">+ Fan</button>
-								</li>
-							</ol></li>
-						<li class="mt-3"><img
-							class="vertical-align-none z-depth-1-half rounded-circle"
-							alt="Zaful" height="75"
-							src="http://s3cdn-test-lookbooknu.netdna-ssl.com/files/users/small/3348731_velvet_playsuit_seite_gesicht.jpg?1407499836"
-							width="75">
-
-							<ol class="info">
-								<li class="ml-2"><a href=#>안졸리나</a></li>
-
-								<li class="ml-2">23 수학과 서울</li>
-
-								<li>
-									<button class="inline-block btn btn-elegant btn-sm">+
-										Fan</button>
-								</li>
-							</ol></li>
-
-					</ol>
-					</li>
-					</ul>
-
-
-					</ol>
-					</section>
-
-				</div>
-		</div>
-
-
-	</div>
-	<script>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+   	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+   	<script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
+    <script>
+    	document.title = "${content.social_title}";
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
         	if("${dataflag}" === "true"){
@@ -473,7 +413,6 @@ body {
 	        	});
         	};
         });
-        
     </script>
 	<c:if test="${sessionScope.user.seq == content.social_writer}">
 		<script>
@@ -488,121 +427,106 @@ body {
        		}
        	};   	
    	</script>
-	</c:if>
-	<link rel="stylesheet"
-		href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-		integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-		crossorigin="anonymous">
-	<!-- Bootstrap core CSS -->
-	<link
-		href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
-		rel="stylesheet">
-	<!-- Material Design Bootstrap -->
-	<link
-		href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
-		rel="stylesheet">
-	<!-- Bootstrap tooltips -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
-	<!-- JQuery -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<!-- MDB core JavaScript -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+    </c:if>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    	document.getElementById("gomain").onclick = function() {
+    		location.href = "main.go";
+    	}
+    </script>
+    <c:if test="${!empty sessionScope.user.seq}">
+    <script>
+    	$(document).ready(function(){
+    		$("#commentarea").attr("placeholder","댓글 쓰기");
+    		$("#write-comment").attr("disabled",false);
+    		
+    		$("#write-comment").click(function(){
+    			var blank_pattern = /^\s+|\s+$/g;
+    			if($("#commentarea").val().replace(blank_pattern,"") == ""){
+    				alert("내용을 입력해주세요!");
+    			}else{
+    				$.ajax({
+    					url : "procSocialComment.go",
+    					dataType : "JSON",
+    					method : "post",
+    					data : {
+    						comment : $("#commentarea").val(),
+    						seq : "${content.social_seq}"
+    					},
+    					
+    					success : function(data){
+    						showComment(data);
+    					}
+    				});
+    			}
+    		});
+    		
+    		function showComment(data) {
+    			let html = '<table id="comment" cellpadding="5">';
+    			$.each(data, function(index,item){
+    				html += '<tr>';
+    				html += '	<td>';
+    				html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'">';
+    				html += '	</td>';
+    				html += '	<td>';
+    				html += '		<div>';
+    				html += '			<a href="#">' + item.name + '</a>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="user-comment">';
+    				html += 				item.social_comment_contents;
+    				html +=	'			</span>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="comment-date">'+item.social_comment_time;
+    				if(item.user_seq == item.writer){
+    					html += '			<span><a href="javascript:void(0)" class="delete" data-seq="'+item.social_comment_seq+'" data-social="'+item.social_seq+'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+    				}
+    				html += '			</span>';
+    				html += '		</div>';
+    				html += '	</td>';
+    				html += ''
+    			});
+    			$("#commentarea").val("");
+    			$("#comment-container").html(html);
+    		}
+    		
+    		$(document).on('click','.delete',function(){
+    			let comment_seq = $(this).data("seq");
+    			let social_seq = $(this).data("social");
+				
+    			let deleteCheck = confirm("댓글을 삭제 하시겠습니까?");
+    			
+    			if(deleteCheck) {
+    				$.ajax({
+    					url : "deleteComment.go",
+    					dataType : "JSON",
+    					method : "post",
+    					data : {
+    						comment_seq : comment_seq,
+    						social_seq : social_seq
+    					},
+    					
+    					success : function(data) {
+    						showComment(data);
+    					}
+    				});
+    			}
+    		})
+    	});
+    </script>
+    </c:if>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 </body>
-<!-- 카카오api -->
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<!-- 페이스북api -->
-<script>
-	(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id))
-			return;
-		js = d.createElement(s);
-		js.id = id;
-		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
-</script>
-
-<script>
-
-	//도큐멘트 title 값 제목값으로 변경
-	 
-	
-	var newURL = window.location.protocol + window.location.host
-			+ window.location.pathname;
-	var titletext = '${list.social_title}';
-	
-	console.log("<c:out value='${param.mode}'/>");
-
-	var mode = "<c:out value='${list.social_title}'/>";
-
-		
-	
-	//트위터 공유 
-	function twittergo(url, text) {
-		//var url = window.location.protocol + window.location.host				+ window.location.pathname;
-		var url=document.location.href;
-		var text = encodeURI('${content.social_title}');	
-		var wow = encodeURI('${goodCount.social_good_seq}');
-		
-		
-		console.log("와우에 오는 깃 : " + wow);
-		console.log("text에 오는 것: " + text);
-		
-		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="+ url, "", "width=700, height=400");
-	}
-	
-	var kakaoURL = 'http://192.168.20.35:8080/controller/readSocial.go?seq=186';
-	
-	
-	
-
-	//카카오톡공유 
-	Kakao.init('6f7ebead2317edc298ae9592c2996720');	
-	function kakaogo(){
-		 Kakao.Link.createDefaultButton({
-			 container: '#kakao-link-btn',
-		      objectType: 'feed',
-		      content: {
-		        title: document.title,
-		        description: '${content.social_contents}',
-		        imageUrl: document.images[0].src, //이미지 주소 올곳
-		        link: {
-		          webUrl: document.location.href,
-		          mobileWebUrl: document.location.href
-		        }
-		      },
-		      
-		      buttons: [
-		        {
-		          title: '웹에서보기',
-		          link: {
-		            mobileWebUrl: document.location.href,
-		            webUrl: document.location.href
-		          }
-		        }  
-		      ]
-		    });
-	}
-
-	//페이스북
-	function facebookgo() {
-		//var url =  window.location.host + window.location.pathname;
-		//var url = document.location.href;<-이거쓸것
-		var url = 'http://192.168.20.35/controller/main.go'//test용이라 주소 직접 입력해놓음
-		var encodeUrl = encodeURIComponent(url);
-		var facebook = 'https://www.facebook.com/sharer/sharer.php?u=';
-		var link = facebook + encodeUrl;
-		window.open(link, "", "width=700, height=400");
-	}
-	
-	
-</script>
-
 </html>

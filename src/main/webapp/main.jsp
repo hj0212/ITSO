@@ -71,12 +71,6 @@ body {
 	}
 }
 
-@media ( max-width : 1100px) {
-	#MOVE_TOP_BTN {
-		visibility: hidden;
-	}
-}
-
 .avatar {
 	margin-bottom: 5px;
 }
@@ -149,10 +143,12 @@ button.dropdown-toggle {
 }
 
 #sidefooter {
-	width: 100%;
+	width: 300px;
 	bottom: 0px;
+	right: 50px;
+	position: fixed;
 	border-top: 2px solid black;
-	text-align: center;
+	display: none;
 }
 
 #sidefooter p {
@@ -288,12 +284,13 @@ button.dropdown-toggle {
 
 		$(function() {
 			$(window).scroll(function() {
-				var scrolltop = $(window).scrollTop();
 				if ($(this).scrollTop() > 500) {
 					$('#MOVE_TOP_BTN').fadeIn();
+
+					$('#sidefooter').fadeIn();
 				} else {
 					$('#MOVE_TOP_BTN').fadeOut();
-
+					$('#sidefooter').fadeOut();
 				}
 
 				if (scrolltop == $(document).height() - $(window).height()) {
@@ -443,7 +440,7 @@ button.dropdown-toggle {
 										console
 												.log("${goodCount[status.count]}");
 									</script> -->
-											<div class="goodarea">
+											<div>
 												<c:set var="loop_flag" value="false" />
 												<c:choose>
 													<c:when test="${empty goodList }">
@@ -476,7 +473,7 @@ button.dropdown-toggle {
 																				style="float: right; font-size: 25px; margin-top: 20px;"
 																				value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
 																			</font></i>
-
+																			<font>${list.userState }</font>
 
 																		</c:if>
 																	</c:otherwise>
@@ -494,8 +491,6 @@ button.dropdown-toggle {
 
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
-									<c:choose>
-									<c:when test="${!empty followingList }">
 									<c:forEach var="flist" items="${followingList }">
 									<c:choose>
 										<c:when test="${list.social_writer eq sessionScope.user.seq}">
@@ -566,31 +561,7 @@ button.dropdown-toggle {
 				</tr>
 			</c:otherwise>
 		</c:choose>
-		
-		<!-- saveModal -->
-		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<!--Content-->
-				<div class="modal-content">
-					<!--Header-->
-					<div class="modal-header">
-						<p class="heading lead mb-0">컬렉션으로 저장하기</p>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
 
-					<!--Body-->
-					<div class="modal-body">
-						<div id="modalbtnarea">
-							<button class="btn btn-itso" data-toggle="modal"
-								data-target="#createModal">
-								<i class="fa fa-plus"></i> 컬렉션 생성
-							</button>
-							<button class="btn btn-indigo" id="managebtn"> 컬렉션 관리 </button>
-						</div>
 
 						<c:choose>
 							<c:when test="${not empty collectionList }">
@@ -721,9 +692,17 @@ button.dropdown-toggle {
 
 					</div></li>
 			</ul>
+			<!--side footer -->
+			<div id="sidefooter">
+				<p>©2018 ItSo. All rights reserved.</p>
+				<p>
+					<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
+					<a href="#">advertise</a>· <a href="#">legal</a>
+				</p>
+			</div>
+
 
 		</div>
-	
 	</div>
 		<!--side footer -->
 		<div id="sidefooter">
@@ -853,7 +832,9 @@ button.dropdown-toggle {
 	
 	</script>
 </body>
-
+<!-- JQuery -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

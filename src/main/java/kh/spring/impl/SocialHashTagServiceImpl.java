@@ -1,5 +1,7 @@
 package kh.spring.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,15 @@ public class SocialHashTagServiceImpl implements ISocialHashTagService{
 	@Override
 	public int insertHashTag(SocialHashTagDTO shtdto) {
 		return this.dao.insertHashTag(shtdto);
+	}
+
+	@Override
+	public List<SocialHashTagDTO> selectHashTag(int seq) {
+		return this.dao.selectHashTag(seq);
+	}
+
+	@Override
+	public int deleteSocialHashTag(int seq) {
+		return this.dao.deleteSocialHashTag(seq);
 	}
 }

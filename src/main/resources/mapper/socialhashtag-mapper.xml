@@ -5,4 +5,12 @@
 	<insert id="insertHashTag" parameterType="shtdto">
 		insert into social_hash_tag values(social_hash_tag_seq.nextval,#{social_seq},#{user_seq},#{social_hash_tag_contents})
 	</insert>
+	
+	<select id="selectHashTag" parameterType="int" resultType="shtdto">
+		select * from social_hash_tag where social_seq = #{0}
+	</select>	
+	
+	<delete id="deleteHashTag" parameterType="int">
+		delete from social_hash_tag where social_seq = #{0}
+	</delete>
 </mapper>
