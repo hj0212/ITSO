@@ -25,7 +25,7 @@ public class MemberController {
 	@Autowired
 	private ISocialBoardService sservice;
 	
-	protected static Logger log = LoggerFactory.getLogger("MemberController");
+	protected static Logger log = LoggerFactory.getLogger(MemberController.class);
 
 	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO dto, HttpSession session) {

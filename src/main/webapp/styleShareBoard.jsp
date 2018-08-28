@@ -1,103 +1,63 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="utf8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta property="og:url"                content="document.location.href" />
-<meta property="og:type"               content="article" />
-<meta property="og:title"              content="${content.social_title}" />
-<meta property="og:description"        content="How much does culture influence creative thinking?" />
-<meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
-<link href="https://fonts.googleapis.com/css?family=Montserrat"
-	rel="stylesheet">
-<script type="text/javascript"
-	src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
-<title>Style-Share | ITSO</title>
-<style>
-#wrapper {
-	min-height: 100%;
-	width: 980px;
-	margin: 0 auto;
-}
-
-.vertical-align-none {
-	vertical-align: -50%;
-}
-
-#snsLists {
-	display: inline;
-}
-
-.chevrons {
-	display: inline;
-}
-
-.inline-block {
-	display: inline-block;
-}
-
-.block {
-	display: block;
-}
-
-.list-style-none {
-	list-style-type: none;
-}
-
-.info {
-	list-style-type: none;
-	display: inline-block;
-	padding: 10px;
-}
-
-.avatar {
-	width: 64px;
-	height: 64px;
-	display: inline;
-}
-
-#lookAction {
-	border-bottom: 1px #9AA9B2 solid;
-}
-
-.comment-child-border {
-	border-left: 1px #e6e6e6 solid;
-}
-
-.border-bottom-line {
-	border-bottom: 1px #9AA9B2 solid;
-}
-
-.comment-child {
-	margin-top: 15px;
-	margin-left: 32px;
-}
-
-.brand-icon {
-	width: 64px;
-}
-
-#wrapper a, a:hover {
-	color: black;
-}
-
-#right-side {
-	width: 30%;
-	display: inline-block;
-}
-
-#left-side {
-	width: 70%;
-	display: inline-block;
-}
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="utf8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+      <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+       <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	   <title> Style-Share | ITSO</title>
+		<style>
+            #wrapper {
+                min-height: 100%;
+                width: 980px;
+                margin:0 auto;
+            }
+            .vertical-align-none {
+                vertical-align: -50%;
+            }
+            #snsLists {
+                display: inline;
+            }
+            .chevrons {
+                display: inline;
+            }
+            .inline-block {
+                display: inline-block;
+            }
+            .block {
+                display: block;
+            }
+            .list-style-none {
+                list-style-type: none;
+            }
+            .info {
+                list-style-type: none;
+                display: inline-block;
+                padding: 10px;
+            }
+            .avatar {
+                width: 64px;
+                height: 64px;
+                display: inline;
+            }
+            #lookAction {
+                border-bottom: 1px #9AA9B2 solid;
+            }
+            .comment-child-border {
+                border-left: 1px #e6e6e6 solid;
+            }
+            .border-bottom-line {
+                border-bottom: 1px #9AA9B2 solid;
+            }
+            .comment-child {
+                margin-top: 15px;
+                margin-left: 32px;
+            }
+            .brand-icon {
+                width: 64px;
+            }
             #wrapper a {
                 color: black;
             }
@@ -109,40 +69,58 @@
             #social_contents a:hover {
             	color : black;
             }
-
-.inner {
-	position: absolute;
-}
-
-.image-containers {
-	display: block;
-}
-
-.pin-containers img {
-	object-fit: contain;
-}
-
-.image-containers img {
-	object-fit: contain;
-}
-
-.modify-delete {
-	float: right;
-}
-
-/* #comment {
+            #right-side {
+                width: 30%;
+                display: inline-block;
+            }
+            #left-side{
+                width:70%;
+                display:inline-block;
+            }
+            
+	        body {
+	            font-family: 'Montserrat'
+	        }
+	        .inner {
+	            position: absolute;
+	        }
+	
+	        .image-containers {
+	            display: block;
+	        }
+	        
+	        .pin-containers img {
+	        	object-fit : contain;
+	        }
+	        
+	        .image-containers img {
+	        	object-fit : contain;
+	        }
+			
+			.modify-delete {
+				float : right;
+			}
+            /* #comment {
                 border: 1px solid #e6e6e6;
             } */
-</style>
-</head>
+            
+            #comment-container {
+            	white-space: nowrap; 
+            	overflow: hidden;
+   				text-overflow: ellipsis; 
+            }
+        </style>
+    </head>
 
-<body>
+    <body>
 
 
 
 
+	<%@include file="navi.jsp"%>
+    <div id="wrapper" class="row">
 
-	<div id="wrapper" class="row">
+        <div id="left-side" class="col">
 
             <div>
                 <div>
@@ -174,105 +152,31 @@
                             <span class="time">${date[1]} ${date[2]}, ${date[0]}</span>
                         </header>
 
-			<div>
-				<div>
-					<header>
-						<div id="lookAction" class=container>
-							<button type=button class="btn btn-elegant">HYPE</button>
-							<p id="hype">853</p>
-							<button type=button class="btn btn-grey-ligten-5 btn-sm">SAVE</button>
-							<!-- social button list -->
-							<div id="snsLists" class="btn-toolbar" role="toolbar"
-								aria-label="Toolbar with button groups">
-								<div class="btn-group mr-2" role="group"
-									aria-label="First group">
-									<button type="button" class="btn btn-grey-ligten-5 btn-sm">
-										<i class="fa fa-facebook"></i>
-									</button>
-									<button type="button" class="btn btn-grey-ligten-5 btn-sm">
-										<i class="fa fa-twitter" aria-hidden="true"></i>
-									</button>
-									<button type="button" class="btn btn-grey-ligten-5 btn-sm">
-										<i class="fa fa-instagram"></i>
-									</button>
-								</div>
-							</div>
-							<div class="chevrons">
-								<span class="instafilta-target"> <a href=#> <i
-										class="fa fa-chevron-left"></i>
-								</a>
-								</span> <span class="instafilta-target"> <a href="#"> <i
-										class="fa fa-chevron-right"></i>
-								</a>
-								</span>
-							</div>
-						</div>
-					</header>
-					<div class=container>
-						<br>
-						<!-- header -->
-						<header class="container">
-							<h3>${content.social_title}</h3>
-							<script>
-							document.title = "${content.social_title}"; 
-							
-							</script>
-
-							<time>${date[1]} ${date[2]}, ${date[0]}</time>
-							<div class="instafilta-target mt-1">
-								2 <i class="fa fa-comment-o"></i>
-							</div>
-							<div>
-								<!--kakao-->
-								<button type="button" class="btn-floating btn-sm btn-is share "
-									style="float: right; background-color: #ffff00; color: gray; border: 0px; margin-left: 10px; border-radius: 5x;"
-									id="kakao-link-btn" onclick="kakaogo()">
-									<i class="fab fa-kaggle"></i>
-								</button>
-								<!--twitter-->
-								<button type="button" class="btn-floating btn-sm btn-tw share"
-									style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;"
-									onclick="twittergo()">
-									<i class="fab fa-twitter"></i>
-								</button>
-								<!--facebook-->
-								<button type="button" class="btn-floating btn-sm btn-fb share"
-									style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;"
-									onclick="facebookgo()">
-									<i class="fab fa-facebook"></i>
-								</button>
-							</div>
-
-						</header>
-						<br>
-
-
 						<div>
 							<!-- image -->
 							<br>
 							<figure>
 								<div class="pin-container" style="width: 500px; height: 500px">
 									<div class="pin-containers inner">
-										<img src="upload/social/${src}?${dummy}" class="pin"
-											width="500" height="500" easypin-id="image_db">
+										<img src="upload/social/${src}?${dummy}" class="pin" width="500"
+											height="500" easypin-id="image_db">
 									</div>
 									<div class="image-containers inner">
-										<img src="upload/social/${src}?${dummy}" width="500"
-											height="500">
+										<img src="upload/social/${src}?${dummy}" width="500" height="500">
 									</div>
 								</div>
 							</figure>
-
+							</figure>
 
 							<div style="display: none;" easypin-tpl>
-								<popover> </popover>
+								<popover> 
+								</popover>
 
 								<marker>
-								<div
-									style="border: solid 1px #1B0946; width: 15px; height: 15px; background-color: black; border-radius: 50%"
-									class="clothes-marker" id="clothes-marker"></div>
+									<div style="border: solid 1px #1B0946; width: 15px; height: 15px; background-color: black; border-radius: 50%" class="clothes-marker" id="clothes-marker"></div>
 								</marker>
 							</div>
+
 
 							<!-- user-context -->
 
@@ -282,7 +186,7 @@
 							<div style="float:right;">
 								<c:if test="${sessionScope.user.seq == content.social_writer}">
 									<button id="modify" class="btn btn-grey btn-sm">수정</button>
-									<button id="delete" class="btn btn-grey btn-sm">삭제</button>
+									<button id="delete" class="btn btn-grey btn-sm">삭제</button>								
 								</c:if>
 							</div>
 						</div>
@@ -314,7 +218,9 @@
 								</tr>                            	
                             	</c:forEach>
 							</table>
-						</div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- reply -->
                 <div class="container mt-4">
@@ -329,15 +235,8 @@
             </div>
         </div>
 
-					</div>
-				</div>
+        <!-- user info -->
 
-				<!-- reply -->
-				<form action="" method="post">
-					<div class="container mt-4">
-						<div class="form-group">
-							<textarea class="form-control rounded-0"
-								id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"></textarea>
 
         <div id="right-side" class="col">
             <aside id="aside">
@@ -354,26 +253,26 @@
                 </section>
 				
 				<c:if test="${!empty list}">
-					<section class=border-bottom-line>
-						<div class="mt-4 mb-3 ">
-							<strong>사진 속 의류 정보</strong>
-						</div>
-						<ol>
-							<c:forEach var="item" items="${list}">
-								<div class="clothesinfo">
-									<li class="mb-2">
-										<div>${item.tag_name}</div>
-										<div>
-											<a href=${item.tag_url } target="_blank">${item.tag_brand}</a>
-											<c:if test="${!empty item.tag_store }">
-												<a href="">in ${item.tag_store}</a>
-											</c:if>
-										</div>
-									</li>
-								</div>
-							</c:forEach>
-						</ol>
-					</section>
+                <section class=border-bottom-line>
+                    <div class="mt-4 mb-3 ">
+                        <strong>사진 속 의류 정보</strong>
+                    </div>
+                    <ol>
+                    	<c:forEach var="item" items="${list}">
+                    	    <div class="clothesinfo">
+                    	    <li class="mb-2">
+  	                            <div><a href=${item.tag_url} target="_blank">${item.tag_name}</a></div>
+	                            <div>
+	                                <a href="#">${item.tag_brand}</a>
+	                                <c:if test="${!empty item.tag_store }">
+		                                <a href="#">in ${item.tag_store}</a>
+	                                </c:if>
+	                            </div>
+                        	</li>
+                    	    </div>
+                    	</c:forEach>
+                    </ol>
+                </section>
 				</c:if>
         </div>
 
@@ -414,8 +313,8 @@
         	};
         });
     </script>
-	<c:if test="${sessionScope.user.seq == content.social_writer}">
-		<script>
+    <c:if test="${sessionScope.user.seq == content.social_writer}">
+   	<script>
         document.getElementById("modify").onclick = function() {
         	location.href = "modifySocial.go?seq="+${content.social_seq};
         };

@@ -8,9 +8,9 @@
   </appender>  
 
     <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">		
-		<file>c:/log/my-web.log</file>
+		<file>c:/logs/output.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-		<fileNamePattern>my-web.%d{yyyy-MM-dd}.log</fileNamePattern>
+		<fileNamePattern>logback.%d{yyyy-MM-dd}.log</fileNamePattern>
 		<!-- 30일 지난 파일은 삭제한다.  -->
 		 <maxHistory>30</maxHistory>
 		</rollingPolicy>		

@@ -24,75 +24,65 @@
 * {
 	box-sizing: border-box;
 }
-
 .text-small {
 	font-size: 0.75rem;
 }
-
 body {
 	width: 100%;
 	margin: 0px auto;
 }
-
 #card-group {
 	margin: 0px auto !important;
 	width: 100%;
 }
-
 .gb {
 	margin: 0px auto !important;
 	width: 100%;
 	margin-bottom: 10px !important;
 }
-
 .col-lg-4 {
 	margin: 0px auto !important;
 }
-
 .follow:hover {
 	background-color: #e9e9e9 !important;
 }
-
 .heart {
 	cursor: pointer;
 }
-
 .share {
 	cursor: pointer;
 }
-
 .share:hover {
 	box-shadow: 1px 2px 2px 0px black;
 }
-
 @media ( max-width : 1100px) {
 	#rightfix {
 		display: none;
 	}
 }
-
+@media ( max-width : 1100px) {
+	#MOVE_TOP_BTN {
+		visibility: hidden;
+	}
+}
 .avatar {
 	margin-bottom: 5px;
 }
-
 #rightfix {
 	width: 300px;
 	top: 30%;
 	right: 50px;
 	position: fixed;
 }
-
 .media-body {
 	height: 70px;
 	line-height: 70px;
 	margin-top: 10px;
 }
-
 .media-body button {
 	color: white;
 	cursor: pointer;
 }
-
 .firstSection .mainIntro {
 	text-align: center;
 	padding: 20px;
@@ -101,65 +91,50 @@ body {
 	line-height: 30px;
 	background-image: url("resources/images/background.jpg");
 }
-
 .firstSection .mainIntro strong {
 	font-weight: 600;
 }
-
 .secondSection .container {
 	text-align: right;
 	margin-bottom: 10px;
 }
-
 .secondSection .container .btn {
 	background-color: white;
 	color: black;
 	box-shadow: none !important;
 }
-
 .btn-group .dropdown-menu :hover {
 	background-color: black;
 	color: white;
 }
-
 .droptxt1 {
 	font-size: 10px;
 }
-
 .droptxt2 {
 	font-size: 13px;
 }
-
 .dropdown-menu {
 	border: 1px solid black;
 }
-
 .btn-group {
 	margin-left: 3px;
 }
-
 button.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
-
 #sidefooter {
-	width: 300px;
+	width: 100%;
 	bottom: 0px;
-	right: 50px;
-	position: fixed;
 	border-top: 2px solid black;
-	display: none;
+	text-align: center;
 }
-
 #sidefooter p {
 	font-style: oblique;
 }
-
 #sidefooter p a {
 	font-style: oblique;
 	color: black;
 }
-
 #MOVE_TOP_BTN {
 	position: fixed;
 	right: 5%;
@@ -171,33 +146,27 @@ button.dropdown-toggle {
 	color: white;
 	text-align: center;
 }
-
 .writerName:hover {
 	color: aqua;
 }
-
 .btn-floating {
 	
 }
 .footer-brand{
 	width: 70px;
 }
-
 .hidden {
 	display: none;
 }
-
 .show {
 	display: block;
 }
-
 /* ---------------- 모달 스타일 ------------------*/
 #collectionarea {
 	text-align: center;
 	overflow: auto;
 	-ms-overflow-style: none;
 }
-
 ::-webkit-scrollbar {
 	display:none;
 }
@@ -243,31 +212,25 @@ button.dropdown-toggle {
 	border: 3px solid #21FCFF;
 	margin-left: 1px;
 }
-
 .btn-group {
 	margin-left: 3px;
 }
 </style>
 <script>
 	$(document).ready(function() {
-
 		$(".heart").click(function() {
 			var heartVal = $(this).attr("class");
-
 			if (heartVal == "fa fa-heart red-text heart") {
 				$(this).attr("class", "fa fa-heart-o red-text heart");
 			} else {
 				$(this).attr("class", "fa fa-heart red-text heart");
-
 			}
 		});
-
 		$(".heart").on('click', function() {
 			var seq = $(this).attr("value");
 			var font = $(this).children('font');
 			console.log("숫자: " + $(this).children('font').html());
 			console.log(seq);
-
 			$.ajax({
 				url : "mainHeart.ajax",
 				type : "post",
@@ -276,30 +239,23 @@ button.dropdown-toggle {
 				},
 				success : function(data) {
 					console.log("들어옴" + data), font.html(data)
-
 				}
 			});
-
 		});
-
 		$(function() {
 			$(window).scroll(function() {
+				var scrolltop = $(window).scrollTop();
 				if ($(this).scrollTop() > 500) {
 					$('#MOVE_TOP_BTN').fadeIn();
-
-					$('#sidefooter').fadeIn();
 				} else {
 					$('#MOVE_TOP_BTN').fadeOut();
-					$('#sidefooter').fadeOut();
 				}
-
 				if (scrolltop == $(document).height() - $(window).height()) {
 					$("#sidefooter").fadeIn();
 				} else {
 					$("#sidefooter").fadeOut();
 				}
 			});
-
 			$("#MOVE_TOP_BTN").click(function() {
 				$('html, body').animate({
 					scrollTop : 0
@@ -440,7 +396,7 @@ button.dropdown-toggle {
 										console
 												.log("${goodCount[status.count]}");
 									</script> -->
-											<div>
+											<div class="goodarea">
 												<c:set var="loop_flag" value="false" />
 												<c:choose>
 													<c:when test="${empty goodList }">
@@ -473,7 +429,7 @@ button.dropdown-toggle {
 																				style="float: right; font-size: 25px; margin-top: 20px;"
 																				value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
 																			</font></i>
-																			<font>${list.userState }</font>
+
 
 																		</c:if>
 																	</c:otherwise>
@@ -491,6 +447,8 @@ button.dropdown-toggle {
 
 									<!--Text-->
 									<p class="card-text">${list.social_title}</p>
+									<c:choose>
+									<c:when test="${!empty followingList }">
 									<c:forEach var="flist" items="${followingList }">
 									<c:choose>
 										<c:when test="${list.social_writer eq sessionScope.user.seq}">
@@ -561,7 +519,31 @@ button.dropdown-toggle {
 				</tr>
 			</c:otherwise>
 		</c:choose>
+		
+		<!-- saveModal -->
+		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead mb-0">컬렉션으로 저장하기</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
 
+					<!--Body-->
+					<div class="modal-body">
+						<div id="modalbtnarea">
+							<button class="btn btn-itso" data-toggle="modal"
+								data-target="#createModal">
+								<i class="fa fa-plus"></i> 컬렉션 생성
+							</button>
+							<button class="btn btn-indigo" id="managebtn"> 컬렉션 관리 </button>
+						</div>
 
 						<c:choose>
 							<c:when test="${not empty collectionList }">
@@ -692,17 +674,9 @@ button.dropdown-toggle {
 
 					</div></li>
 			</ul>
-			<!--side footer -->
-			<div id="sidefooter">
-				<p>©2018 ItSo. All rights reserved.</p>
-				<p>
-					<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
-					<a href="#">advertise</a>· <a href="#">legal</a>
-				</p>
-			</div>
-
 
 		</div>
+	
 	</div>
 		<!--side footer -->
 		<div id="sidefooter">
@@ -742,7 +716,6 @@ button.dropdown-toggle {
 			}
 		}
 	})
-
 	$("#collectionarea").on("click", ".collectionItem", function() {
 		var cursor = $(this);
 		cursor.toggleClass('active');
@@ -810,7 +783,6 @@ button.dropdown-toggle {
 	        }
 	    });
 	});
-
 	$("#createModal").on('show.bs.modal', function() {
 		$("#saveModal").hide();
 	});
@@ -832,9 +804,7 @@ button.dropdown-toggle {
 	
 	</script>
 </body>
-<!-- JQuery -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
