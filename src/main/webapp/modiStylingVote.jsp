@@ -424,8 +424,8 @@ input[type="file"] {
 				$('#radioresult').val(radioval);
 				console.log($('input[name = "styling_end"]').val());			
 				console.log($('#datepicker').val());	
-				
-				if($('#votetitleid').val() == "" || $('#imgfile0').val() == "" || $('#votecontentsid').val() == "" || $('.filesel, input[name="voteimgfile[]"]').val() == "" || $('.itemconts').val() == "" ){
+				console.log($('input[name="photo"]').val());
+				if($('#votetitleid').val() == "" || ($('#imgfile0').val() == "" && $('input[name="photo"]').val()=="") || $('#votecontentsid').val() == "" || ($('.filesel').val()=="" && $('input[name="voteimgfile[]"]').val() == "") || $('input[name="styling_vote_item_contents[]"]').val() == "" ){
 					alert("항목을 모두 입력해 주세요.");
 				}else if(radioval==1 && $('#datepicker').val()==""){
 					alert("종료 날짜를 선택해 주세요.");			
@@ -436,10 +436,10 @@ input[type="file"] {
 				}else if($('.filesel').length<2){
 					alert("투표항목은 2개 이상 입력해 주세요.");
 				}else{
-					  $('#voteform').submit();  
+					$('#modiform').submit(); 
 					/*  console.log("submit");  */
 				}
-				$('#modiform').submit();
+				
 			}
 			
 			
