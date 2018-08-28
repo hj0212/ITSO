@@ -108,14 +108,14 @@ input[type="file"] {
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<div class="md-form form-md form-group">
 						<input type="text" id="votetitleid" name="styling_title"
-							class="form-control col-md-9 float-right" value="${votedto.styling_title}"> <label
+							class="form-control col-md-9 float-right" value="${votedto.styling_title}" maxlength="50"> <label
 							for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
 							id="votelabel">투표 주제를 입력해주세요.</label>
 					</div>
 					<div class="md-form form-md form-group">
 						<input type="text" id="votecontentsid"
 							name="styling_contents" value="${votedto.styling_contents}"
-							class="form-control col-md-9 float-right"
+							class="form-control col-md-9 float-right" maxlength="90"
 							placeholder="내용을 입력해주세요.">
 					</div>
 					<div class="media-body image-upload-wrap form-group"
@@ -372,10 +372,29 @@ input[type="file"] {
 		
 		$('#itsobtn').click(function(){
 			var radioval = $('input[name = "styling_endsel"]:checked').val();
-			console.log(radioval);
-			$('#radioresult').val(radioval);
-			console.log($('input[name = "styling_end"]').val());
-			$('#modiform').submit();
+			if(radioval ==null){
+				alert("종료 방법을 선택해 주세요.");
+			}else{
+				$('#radioresult').val(radioval);
+				console.log($('input[name = "styling_end"]').val());		
+				console.log($('#datepicker').val());	
+				
+				if($('#votetitleid').val() == "" || $('#imgfile0').val() == "" || $('#votecontentsid').val() == "" || $('.file-upload-input, .filesel').val() == "" || $('.itemconts').val() == "" ){
+					alert("항목을 모두 입력해 주세요.");
+				}else if(radioval==1 && $('#datepicker').val()==""){
+					alert("종료 날짜를 선택해 주세요.");			
+				}else if(radioval==2 && $('#votenum').val()==""){
+					alert("참여 인원을 입력해 주세요.");	
+				}else if($('#datepicker').val()=="" && $('#votenum').val()==""){
+					alert("투표종료 조건을 입력해 주세요.");
+				}else if($('.filesel').length<2){
+					alert("투표항목은 2개 이상 입력해 주세요.");
+				}else{
+					  $('#modiform').submit();  
+					/*  console.log("submit");  */
+				}
+			}						
+		
 		})
 		
 	</script>
