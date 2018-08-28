@@ -372,9 +372,32 @@ input[type="file"] {
 		
 		$('#itsobtn').click(function(){
 			var radioval = $('input[name = "styling_endsel"]:checked').val();
-			console.log(radioval);
-			$('#radioresult').val(radioval);
-			console.log($('input[name = "styling_end"]').val());
+			
+			if(radioval ==null){
+				alert("종료 방법을 선택해 주세요.");
+			}else{
+				$('#radioresult').val(radioval);
+				console.log($('input[name = "styling_end"]').val());		
+				console.log($('#datepicker').val());
+				
+				if($('#votetitleid').val() == "" || ($('#imgfile0').val() == "" && $('voteitemimg').attr('src')=="") || $('#votecontentsid').val() == "" || $('.file-upload-input, .filesel').val() == "" || $('.itemconts').val() == "" ){
+					alert("항목을 모두 입력해 주세요.");
+				}else if(radioval==1 && $('#datepicker').val()==""){
+					alert("종료 날짜를 선택해 주세요.");			
+				}else if(radioval==2 && $('#votenum').val()==""){
+					alert("참여 인원을 입력해 주세요.");	
+				}else if($('#datepicker').val()=="" && $('#votenum').val()==""){
+					alert("투표종료 조건을 입력해 주세요.");
+				}else if($('.filesel').length<2){
+					alert("투표항목은 2개 이상 입력해 주세요.");
+				}else{
+					  $('#voteform').submit();  
+					/*  console.log("submit");  */
+				}
+				
+			}
+			console.log(radioval+"번 종료조건 선택 함");
+					
 			$('#modiform').submit();
 		})
 		
