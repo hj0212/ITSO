@@ -6,7 +6,7 @@
 	<insert id="insertNotification" parameterType="notificationDTO">
 		insert into notification values(notification_seq.nextval,#{user_seq},#{noti_user_seq},#{noti_type},#{article_seq},#{noti_contents},sysdate,#{noti_read},#{noti_url})
 	</insert>
-	<update id="readNotification">
+	<update id="readNotification" parameterType="notificationDTO">
 		update notification set noti_read = 'y' where noti_seq =#{noti_seq} 
 	</update>
 	<select id="selectNotification" resultType="notificationDTO" >

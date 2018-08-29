@@ -17,7 +17,7 @@ public class NotificationDTO {
 	private int article_seq;
 	private String noti_user_photo;
 	private String noti_user_name;
-	
+	private String nono;
 	public NotificationDTO() {
 		super();
 	}
@@ -47,10 +47,14 @@ public class NotificationDTO {
 		this.article_seq = article_seq;
 	}
 	
-	public NotificationDTO(int noti_seq) {
+	public NotificationDTO(int noti_seq,String nono) {
 		this.noti_seq = noti_seq;
+		this.nono= null;
 	}
 	
+	public NotificationDTO(int user_seq) {
+		this.user_seq= user_seq;
+	}
 
 	
 	
