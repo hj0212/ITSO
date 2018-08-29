@@ -147,6 +147,72 @@ body {
 	text-overflow: ellipsis;
 }
 
+/* ---------------- 모달 스타일 ------------------*/
+#collectionarea {
+	text-align: center;
+	overflow: auto;
+	-ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+@media ( max-width : 575px) {
+	.collectionItem {
+		width: 80%;
+	}
+}
+
+@media ( min-width : 576px) and (max-width: 991px) {
+	.collectionItem {
+		width: 50%;
+		float: left;
+	}
+}
+
+@media ( min-width : 991px) {
+	.collectionItem {
+		width: 30%;
+	}
+}
+
+.collectionItem {
+	display: inline-block;
+	margin: 0 auto 10px auto !important;
+	background: white;
+	height: 236px;
+}
+
+.collectionItem:hover {
+	transform: scale(1.05);
+	transition: all 0.1s ease-in-out;
+}
+
+.collectionPhoto {
+	height: 100%;
+	padding-left: 5px;
+}
+
+.collectionPhotoItem {
+	float: left;
+	display: inline;
+	padding: 1px;
+}
+
+.collectionPhotoItem img {
+	width: 105px;
+}
+
+#saveModal .active {
+	border: 3px solid #21FCFF;
+	margin-left: 1px;
+}
+
+.btn-group {
+	margin-left: 3px;
+}
+
 /* 디자인 수정 */
 .btn-group {
 	float: right;
@@ -205,6 +271,10 @@ body {
 								aria-label="Toolbar with button groups">
 								<div class="btn-group mr-2" role="group"
 									aria-label="First group">
+										<input type="hidden" value="${content.social_writer }"
+											class="writerseq" /> 
+										<input type="hidden"
+											value="${content.social_seq }" class="socialseq" />
 										<button type="button" class="btn-floating btn-sm savebtn"
 											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
 											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
@@ -807,7 +877,7 @@ body {
 	
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-	var titletext = '${list.social_title}';
+	var titletext = '${content.social_title}';
 	
 	console.log("<c:out value='${param.mode}'/>");
 

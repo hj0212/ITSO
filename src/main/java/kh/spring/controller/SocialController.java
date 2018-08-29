@@ -237,12 +237,23 @@ public class SocialController {
 
 	@Transactional
 	@RequestMapping("/readSocial.go")
-	public ModelAndView readSocial(HttpServletRequest request) {
+	public ModelAndView readSocial(HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		ObjectMapper om = new ObjectMapper();
 		long dummy = System.currentTimeMillis();
 		// json에 넣을 순번
 		int i = 0;
+		
+		try {
+			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
+			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+			mav.addObject("collectionList",collectionList);
+			mav.addObject("photoList",photoList);
+		}  catch (Exception e) {
+			System.out.println("로그인x");
+			mav.setViewName("login.go");
+			return mav;
+		}
 
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
@@ -329,7 +340,7 @@ public class SocialController {
 			mav.addObject("markerdata", json);
 			mav.addObject("dataflag","true");
 		}
-
+		
 		mav.addObject("writer", mdto);
 		mav.addObject("commentList",commentList);
 		mav.addObject("content",dto);

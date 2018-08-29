@@ -586,7 +586,8 @@ table .profilearea {
 									<div class="sharebtnarea"
 										style="margin-top: 8px; margin-bottom: 8px; float: right;">
 										<input type="hidden" value="${list.social_writer }"
-											class="writerseq" /> <input type="hidden"
+											class="writerseq" /> 
+										<input type="hidden"
 											value="${list.social_seq }" class="socialseq" />
 
 										<!--instagram-->
