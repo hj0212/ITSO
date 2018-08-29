@@ -15,7 +15,10 @@
 
 
 <!-- Font awesome 5.2 -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+	crossorigin="anonymous">
 
 <!-- Bootstrap core CSS -->
 <link
@@ -133,17 +136,33 @@ img {
 
 							});
 
-			var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
-			var tipLikingUser = document.getElementById("user_seq").value;
+		
+		}
+		
+			</script>
 
-			var i = 0;
+	<script>
+			
+			
+// 	like btn proc
+			$(document).ready(function(){
+	
 
-			document.getElementById("like-btn").onclick = function() {
+					
+				var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
+				var tipLikingUser = document.getElementById("user_seq").value;
+
+				var i = 0;
+
+				
+				$("#like-btn").click(function() {
 
 				console.log("like btn clicked! " + ++i);
+
 				if (tipLikingUser == "") {
 					tipLikingUser = 0;
 				}
+
 				console.log(tipSeqForLike + ":" + tipLikingUser);
 
 				$.ajax({
@@ -165,7 +184,8 @@ img {
 							alert("좋아요!")
 						} else {
 							alert("좋아요 에러 발생!");
-						};
+						}
+						;
 
 					},
 					error : function(jqXHR, textStatus, errorThrown) {
@@ -175,9 +195,9 @@ img {
 					}
 
 				});
-
-			}
-		};
+			})
+})
+					
 	</script>
 
 
@@ -194,26 +214,25 @@ img {
 			</tr>
 			<tr>
 				<td><p id="tip_seq">${tipContent.tip_seq}</p></td>
-				<td><span id="this-article-category">${tipContent.category}<i id="category-icon"></i></span>
-				<script>
-				window.onload = function(){ 
-					var category = document.getElementById("this-article-category").innerHTML;
-					
-					console.log(category);
-					
-					if(category=="뷰티"){
-						category += "<i class='fa fa-paint-brush'></i>";
-					}else if(category=="다이어트"){
-						category += "<i class='fas fa-dumbbell'></i>";
-					}else if(category=="직장생활"){
-						category += "<i class='fas fa-user-tie'></i>";
-					}else if(category=="패션"){
-						category += "<i class='fas fa-tshirt'></i>";
-					}
-				}
-				</script>
-				
-				<i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}
+				<td><span id="this-article-category">${tipContent.category}<i
+						id="category-icon"></i></span> <script>
+							window.onload = function() {
+								var category = document
+										.getElementById("this-article-category").innerHTML;
+
+								console.log(category);
+
+								if (category == "뷰티") {
+									category += "<i class='fa fa-paint-brush'></i>";
+								} else if (category == "다이어트") {
+									category += "<i class='fas fa-dumbbell'></i>";
+								} else if (category == "직장생활") {
+									category += "<i class='fas fa-user-tie'></i>";
+								} else if (category == "패션") {
+									category += "<i class='fas fa-tshirt'></i>";
+								}
+							}
+						</script> <i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}
 					${tipContent.tip_writer}</td>
 			</tr>
 			<tr>
@@ -227,10 +246,7 @@ img {
 
 	<div id=reaction>
 		<button id="like-btn" class="btn white btn-sm">
-			<%-- 			<c:forEach items="${tipLikeCounts}" var="tipLikeCounts"> --%>
 			<i class=" fa fa-heart red-text" aria-hidden="true"></i>
-			<%-- 				${tipLikeCounts.tip_good_seq} --%>
-			<%-- 			</c:forEach> --%>
 		</button>
 	</div>
 

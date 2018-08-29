@@ -25,4 +25,6 @@ int specificUserblock(int userSeq);
 
 String isThisUserBlocked(int userSeq);
 
+int blockUserReleasing(int userSeq);
+
 }

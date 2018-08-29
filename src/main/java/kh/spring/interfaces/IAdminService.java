@@ -28,5 +28,7 @@ public	List<AdminPageDTO> getAllAnalysisData();
 
 	public String isThisUserBlocked(int userSeq);
 
+	public int blockUserReleasing(int userSeq);
+
 
 }

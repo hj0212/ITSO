@@ -59,6 +59,11 @@ public class AdminDAOImpl implements IAdminDAO {
 	public String isThisUserBlocked(int userSeq) {
 		return template.selectOne("adminPageSQL.isThisUserBlocked", userSeq);
 	}
+
+	@Override
+	public int blockUserReleasing(int userSeq) {
+		return template.update("adminPageSQL.blockUserReleasing",userSeq);
+	}
 	
 
 }

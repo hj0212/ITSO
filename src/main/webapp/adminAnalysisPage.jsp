@@ -37,6 +37,60 @@
 .ta-center {
 	text-align: center;
 }
+
+/* toggle button */
+
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	display: none;
+}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked+.slider {
+	background-color: #2196F3;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
 </style>
 
 </head>
@@ -115,7 +169,6 @@
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main class="pt-5 mx-lg-5">
 <div class="container-fluid mt-5">
 
 	<!-- Heading -->
@@ -224,18 +277,6 @@
 
 				<!--Card content-->
 				<div class="card-body">
-
-
-					<!-- 			<form class="d-flex justify-content-center col-md-5 mb-4" action="searchSpecificUser.adm" method="post"> -->
-					<!-- 				Default input -->
-					<!-- 				<input type="search" placeholder="검색할 유저의 이름을 입력하세요." name="user" -->
-					<!-- 					aria-label="Search" class="form-control"> -->
-					<!-- 				<button class="btn btn-primary btn-sm my-0 p" type="submit"> -->
-					<!-- 					<i class="fa fa-search"></i> -->
-					<!-- 				</button> -->
-
-					<!-- 			</form> -->
-
 					<!-- Table  -->
 					<table class="table table-hover">
 						<!-- Table head -->
@@ -256,22 +297,92 @@
 
 						<!-- block Table body -->
 						<tbody class=ta-center>
-							<c:forEach items="${reportedUsers}" var="reportedUsers">
+							<c:forEach items="${reportedUsers}" var="reportedUsers"
+								varStatus="status">
 								<tr>
 									<th scope="row"></th>
-									<td id="user_seq">${reportedUsers.user_seq}</td>
+									<td class="user_seq" name="${status.index}">${reportedUsers.user_seq}</td>
 									<td>${reportedUsers.email}</td>
 									<td>${reportedUsers.name}</td>
 									<td>${reportedUsers.create_date}</td>
 									<td>${reportedUsers.report_count}</td>
 									<td>${reportedUsers.report_reason}</td>
-									<td id="isBlocked">${reportedUsers.block}</td>
-									<td><button class="btn red btn-sm" id="doBlocking">블럭</button></td>
+									<td class="isBlocked" name="${status.index}">${reportedUsers.block}</td>
+									<td>
+										<!-- Rectangular switch --> <label class="switch"> <input
+											type="checkbox" class="cb" name="${status.index}"> <span
+											class="slider"></span>
+									</label>
+									</td>
 								</tr>
+
+								<script>
+									// 유저 블럭 스크립트
+									$("input[name|=${status.index}]")
+											.click(
+													function() {
+														var userSeq = $(
+																".user_seq[name|=${status.index}]")
+																.html();
+
+														console.log(userSeq);
+
+														$
+																.ajax({
+																	url : "specificUserblock.adm",
+																	data : {
+																		"userSeq" : userSeq
+																	},
+																	type : "post",
+																	success : function(
+																			result) {
+																		console
+																				.log(result);
+																		if (result > 0) {
+																			alert("블럭 상태 수정")
+																		} else {
+																			alert("에러 발생!");
+																		}
+																	},
+																	error : function() {
+																		alert("에러가 발생하였습니다. 관리자에게 문의하세요!");
+																	}
+																})
+													})
+								</script>
+								<script>
+									// 블럭 버튼 UI
+
+									function changingBlockBtn() {
+										var isBlocked = $(
+												".isBlocked[name=${status.index}]")
+												.html();
+										if (isBlocked.contain('y')) {
+											$(".cb[name=${status.index}]")
+													.next("span").html(
+															"::before");
+											$(
+													".isBlocked[name=${status.index}]")
+													.html('y');
+										} else {
+											$(".cb[name=${status.index}]")
+													.next("span").html("");
+											$(
+													".isBlocked[name=${status.index}]")
+													.html('n');
+										}
+
+									}
+								</script>
+
+
+
 							</c:forEach>
 						</tbody>
 						<!-- Table body -->
 					</table>
+
+
 					<!-- Table  -->
 					<span>1회 이상 신고 받은 유저만 목록에 출력 됩니다.</span>
 
@@ -384,7 +495,8 @@
 		</div>
 		<!--Grid column-->
 	</div>
-</main>
+
+</div>
 <!--Main layout-->
 
 
@@ -479,6 +591,26 @@
 				}
 			});
 
+
+	//line-chart increased-rate of users compare with last month
+	var ctx = document.getElementById("lineChart").getContext('2d');
+	var myLineChart = new Chart(ctx, {
+		type : 'line',
+		data : {
+			"labels" : [ "January", "February", "March", "April", "May",
+				"June", "July" ],
+		"datasets" : [ {
+			"label" : "My First Dataset",
+			"data" : [ 65, 59, 80, 81, 56, 55, 40 ],
+			"fill" : false,
+			"borderColor" : "rgb(75, 192, 192)",
+			"lineTension" : 0.1
+		} ]
+	},
+		options : {
+		}
+	});
+
 	//radar
 	var ctxR = document.getElementById("radarChart").getContext('2d');
 	var myRadarChart = new Chart(ctxR, {
@@ -510,47 +642,6 @@
 			responsive : true
 		}
 	});
-</script>
-
-<script>
-	// 유저 블럭 스크립트
-	$("#doBlocking").click(function() {
-
-		var userSeq = $("#user_seq").html();
-
-		console.log(userSeq);
-
-		$.ajax({
-			url : "specificUserblock.adm",
-			data : {
-				"userSeq" : userSeq
-			},
-			type : "post",
-			success : function(result) {
-				console.log(result);
-				if (result > 0) {
-					alert("블럭에 성공하였습니다.");
-				} else {
-					alert("블럭에 실패하였습니다.");
-				}
-			},
-			error : function() {
-				alert("에러가 발생하였습니다. 관리자에게 문의하세요!");
-			}
-		})
-	})
-</script>
-<script>
-	// 블럭 버튼 UI
-
-	var isBlocked = $("#isBlocked").html();
-
-	if (isBlocked == 'y') {
-		$("#doBlocking").addClass('green');
-		$("#doBlocking").html("해제");
-	} else {
-
-	}
 </script>
 
 <!--Google Maps-->

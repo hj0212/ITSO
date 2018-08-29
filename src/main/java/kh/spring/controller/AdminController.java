@@ -72,19 +72,17 @@ public class AdminController {
 		String isBlocked = service.isThisUserBlocked(userSeq);
 
 		if (isBlocked.equals("y")) {
-			System.out.println("user already blocked");
-			result = 0;
+			System.out.println("user already blocked, so we will release the block user back");
+			result = service.blockUserReleasing(userSeq);
+			System.out.println("Target user is unblocked!");
 		} else {
+			System.out.println("user wasn't blocked, so we will block him");
 			result = service.specificUserblock(userSeq);
+			System.out.println("Targeted User is Blocked!");
 		}
+		
 		System.out.println("blocked method results : " + result);
 
-		// block result come-out
-		if (result > 0) {
-			System.out.println("Targeted User is Blocked!");
-		} else {
-			System.out.println("Block failed");
-		}
 		return result;
 	}
 
