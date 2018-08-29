@@ -7,6 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
     <style>
         @font-face {
 			font-family: 'NanumbarunpenR';
@@ -195,9 +201,10 @@
 	    });
 	    	
 	    function notsubmit() {
-	           let num = 0;
-	           let obj = [];
-	           let clothesInformation = {};
+           let num = 0;
+           let obj = [];
+           let clothesInformation = {};
+           let blank_pattern = /^\s+|\s+$/g;
 	           
 	        $instance.easypin.fire("get.coordinates", { param1: 1, param2: 2, param3: 3 }, function (data) {
 	            $instance.easypin.fire("get.coordinates", function (data) {
@@ -229,12 +236,12 @@
 	        let stylename = document.getElementById("stylename").value;
 	        let stylecontent = document.getElementById("textareaPrefix").value;
 	        
-	        if(stylename === "") {
+	        if(stylename.replace(blank_pattern,"") == ""){
 	        	alert("스타일 이름을 정해주세요");
-	        	return false;	
+	        	return false;
 	        }
 	        
-	        if(stylecontent === ""){
+	        if(stylecontent.replace(blank_pattern,"") == ""){
 	        	alert("스타일을 소개해 주세요.");
 	        	return false;
 	        }
@@ -255,12 +262,6 @@
 	        }
 	    }
 	</script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <!-- JQuery -->
