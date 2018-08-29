@@ -126,8 +126,9 @@ public class StylingController {
 		return mav;
 	}
 
+	
 	@RequestMapping("/modifyStylingVote.style")
-	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile,@RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("voteitemori[]")List<String> oriconts, @RequestParam("voteitemnew[]")List<String> newconts, @RequestParam("deletedsvitem[]")List<String> delseqs,@RequestParam("itemphotos[]")List<String> svitemphotos) {
+	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("voteitemori[]")List<String> oriconts, @RequestParam("voteitemnew[]")List<String> newconts, @RequestParam("deletedsvitem[]")List<String> delseqs, @RequestParam("itemphotos[]")List<String> svitemphotos) {
 		ModelAndView mav = new ModelAndView();
 		System.out.println("------------------------------modiCtrl");		
 		System.out.println(svitemphotos.size()+":원래사진 개수");

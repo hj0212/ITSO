@@ -25,7 +25,6 @@ public class StylingVoteDTO {
 	private int voter; // 참여중 인원
 	private int dnum; // 종료까지 남은 인원
 	
-
 	
 	public StylingVoteDTO() {}
 	

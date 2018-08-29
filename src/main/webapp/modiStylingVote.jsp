@@ -103,8 +103,11 @@ input[type="file"] {
 		<div class="row my-2"></div>
 		<form method="post" action="modifyStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}" id="modiform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
-				<h4>투표주제</h4>
+				<h4>투표주제</h4><span>  작성자: ${votedto.styling_writer}</span><span>  조회수: ${styling_viewcount}</span>
+				<input type="hidden" value="${votedto.styling_writer}" id="votewriterid" name ="styling_writer">
 			<input type="hidden" name="styling_vote_seq" value="${votedto.styling_vote_seq}">
+			<input type="hidden" name="styling_viewcount" value="${votedto.styling_viewcount}">
+			<input type="hidden" id="showdto" value="투표인원${votedto.styling_voternum}::기간${votedto.styling_endterm}::최근수정날짜${votedto.styling_lastdate}::조회수${votedto.styling_viewcount}::글번호${votedto.styling_vote_seq}">
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<div class="md-form form-md form-group">
 						<input type="text" id="votetitleid" name="styling_title"
@@ -469,10 +472,13 @@ input[type="file"] {
 						console.log("del목록"+$('input[name ="deletedsvitem[]"]').length);
 						console.log("new내용 개수"+$('input[name="voteitemnew[]"]').length);
 						console.log("ori내용 개수"+$('input[name="voteitemori[]"]').length);
-						console.log("사진값(있던사진):"+$('input[name="itemphotos[]"]'));
-						 $('#modiform').submit();   
+						console.log("사진값(있던사진):"+$('input[name="itemphotos[]"]').val());
+						console.log("dto 분해 -투표주제:작성자/"+$('#votetitleid').val()+":"+$('#votewriterid').val());
+						console.log($('#showdto').val());
 						
-					/*  console.log("submit");  */
+						 /*  $('#modiform').submit();  */   
+						
+					  console.log("submit");  
 				}		
 			}
 		})
