@@ -8,6 +8,10 @@ s
 
 
 
+
+
+
+
 @font-face {
 	font-family: 'NanumbarunpenR';
 	src: url('resources/fonts/nanumbarunpenr.ttf') format('truetype');
@@ -63,7 +67,7 @@ nav {
 
 .notification-list .notification-item {
 	display: grid;
-	grid-template-columns: 1fr 2fr;
+	grid-template-columns: 0fr 1fr;
 	padding-top: 5px;
 }
 
@@ -77,12 +81,13 @@ nav {
 }
 
 .user-image {
-	border-radius: 50%;
+	float: left;
 	width: 50px;
 }
 
 .user-content {
-	font-size: 15px;
+	width: 100%;
+	float: left;
 }
 
 @media ( max-width : 575px) {
@@ -126,6 +131,7 @@ nav {
 }
 
 .img-left {
+	width: 60px;
 	text-align: center;
 }
 
@@ -290,7 +296,8 @@ nav {
 				notification += "</span>";
 				notification += "<p class='comment-time'>1 hours ago</p>";
 				notification += "</div>";
-				notification += "</div>"
+				notification += "</div>";
+
 				$("#notification_list").prepend(notification);
 
 				console.log("이거 유저인데 :" + obj.user_seq + obj.noti_user_name);
@@ -309,82 +316,83 @@ nav {
 				<c:forEach var="tmp" items="${notiList}">
 					<div class="notification-item">
 						<div class="img-left">
-							<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
-								class="user-image">
+						<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
+								class="user-image rounded-circle">
 						</div>
 						<div class="user-content">
-							<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}</b></span>${noti_contents}</span>
+							<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}
+										님이</b></span>${tmp.noti_contents}&nbsp;&nbsp;</span>
 							<p class="comment-time">${tmp.noti_date}</p>
 						</div>
 					</div>
 				</c:forEach>
 			</c:when>
-
-
-
-
+			<c:otherwise>
+				<div class="notification-item">게시물이 없습니다.</div>
+			</c:otherwise>
 		</c:choose>
 
 
 	</div>
+</div>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-	<script>
-		$("#nav2").hide();
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+	$("#nav2").hide();
 
-		$("#menu").on('click', 'a', function(event) {
-			var val = ($(this).html()).split("<")[0];
-			var item = $("#navbar2>ul>li:first-of-type>a").html();
-			console.log(val + ":" + item);
-			console.log($("#nav2").css("display"));
-			if ($("#nav2").css("display") == "none") {
-				$("#nav2").show();
-				if (val == '게시판') {
-					$("#navbar2 > ul:first-of-type").hide();
-					$("#navbar2 > ul:nth-of-type(2)").show();
-				} else {
-					$("#navbar2 > ul:first-of-type").show();
-					$("#navbar2 > ul:nth-of-type(2)").hide();
-				}
+	$("#menu").on('click', 'a', function(event) {
+		var val = ($(this).html()).split("<")[0];
+		var item = $("#navbar2>ul>li:first-of-type>a").html();
+		console.log(val + ":" + item);
+		console.log($("#nav2").css("display"));
+		if ($("#nav2").css("display") == "none") {
+			$("#nav2").show();
+			if (val == '게시판') {
+				$("#navbar2 > ul:first-of-type").hide();
+				$("#navbar2 > ul:nth-of-type(2)").show();
 			} else {
-				if (val == '게시판') {
-					$("#navbar2 > ul:first-of-type").hide();
-					$("#navbar2 > ul:nth-of-type(2)").show();
-				} else {
-					$("#navbar2 > ul:first-of-type").show();
-					$("#navbar2 > ul:nth-of-type(2)").hide();
-				}
+				$("#navbar2 > ul:first-of-type").show();
+				$("#navbar2 > ul:nth-of-type(2)").hide();
 			}
-		});
-
-		$("#searchIcon").hide();
-		$("#searchinput").hide();
-
-		$("#searchshow").click(function() {
-			$("#searchIcon").toggle();
-			$("#searchinput").toggle();
-
-		});
-
-		$("#searchIcon").click(function() {
-			var input = $("#searchinput").val();
-			if (input == "") {
-				$("#searchIcon").toggle("fast");
-				$("#searchinput").toggle("slow");
-
+		} else {
+			if (val == '게시판') {
+				$("#navbar2 > ul:first-of-type").hide();
+				$("#navbar2 > ul:nth-of-type(2)").show();
 			} else {
-				console.log("search");
-			}
-		});
-
-		function toggleTooltip() {
-			let contents = document.getElementById("notification-info");
-			if (contents.style.display === "none") {
-				contents.style.display = "block";
-			} else {
-				contents.style.display = "none";
+				$("#navbar2 > ul:first-of-type").show();
+				$("#navbar2 > ul:nth-of-type(2)").hide();
 			}
 		}
-		let toggle = document.getElementById("tooltip");
-		toggle.addEventListener("click", toggleTooltip, false);
-	</script>
+	});
+
+	$("#searchIcon").hide();
+	$("#searchinput").hide();
+
+	$("#searchshow").click(function() {
+		$("#searchIcon").toggle();
+		$("#searchinput").toggle();
+
+	});
+
+	$("#searchIcon").click(function() {
+		var input = $("#searchinput").val();
+		if (input == "") {
+			$("#searchIcon").toggle("fast");
+			$("#searchinput").toggle("slow");
+
+		} else {
+			console.log("search");
+		}
+	});
+
+	function toggleTooltip() {
+		let contents = document.getElementById("notification-info");
+		if (contents.style.display === "none") {
+			contents.style.display = "block";
+		} else {
+			contents.style.display = "none";
+		}
+	}
+	let toggle = document.getElementById("tooltip");
+	toggle.addEventListener("click", toggleTooltip, false);
+</script>
