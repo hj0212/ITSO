@@ -150,14 +150,14 @@ input[type="file"] {
 							<tr class="z-depth-3 hoverable" id="tr${status.index}">
 								<th scope="row">
 								<input type="text" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
-								<td id="td${status.index}">
+								<td>
 									<div class="media">
 										<div class="media-img">
 										<c:set var="itemphoto" value="${item.styling_vote_item_photo}"/>
 										<c:set var="leng" value="${fn:length(itemphoto)}"/>
 										
 											<img class="d-flex mr-3 selimg" src="upload/stylingvote/${item.styling_vote_item_photo}" alt="후보사진"> <input
-												type="file" name="voteimgfile[]" id="imgfile1"
+												type="file" name="voteimgfile[]" id="imgfile${status.count}"
 												class="file-upload-input form-control filesel"
 												onchange="readURL(this);" accept="image/*">
 										</div>
@@ -181,6 +181,7 @@ input[type="file"] {
 									</div>
 								</td>
 							</tr>
+							
 							</c:forEach>
 						</tbody>
 					</table>
@@ -242,6 +243,9 @@ input[type="file"] {
 				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
 			</div>
+			<input type="hidden" name="voteitemori[]" value="ori">
+			<input type="hidden" name="voteitemnew[]" value="new">
+			<input type="hidden" name ="deletedsvitem[]" value="del">
 		</form>
 	</div>
 
@@ -264,7 +268,7 @@ input[type="file"] {
 			return false;
 		};
 		
-		var deletedsvitem = new Array(); 
+		count = $("#itemtable tr").length;
 		
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
@@ -294,7 +298,7 @@ input[type="file"] {
 				removeUpload();
 			}
 		}
-		count = 1;
+		 
 		$("#addvotebtn")
 				.on(
 						"click",
@@ -307,7 +311,7 @@ input[type="file"] {
 												'<tr class="z-depth-3 hoverable" id="tr${status.index}"><th scope="row">'
 														+ count
 														+ '</th>'
-														+ '<td id="td${status.index}"><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
+														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'
 														+ count
 														+ '" class="file-upload-input form-control filesel"'
@@ -328,7 +332,7 @@ input[type="file"] {
 			$(this).closest("tr").remove();
 			count--;
 			var delseq = $(this).parent().parent().parent().prev('th').children('input').val();
-			deletedsvitem.push(delseq);
+			$('input[name ="deletedsvitem[]"]').val(delseq);
 			/* var arr = wraptr.nextAll('tr').children('th');
 			for(i=0 i<arr.size i++){
 				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜
@@ -365,7 +369,27 @@ input[type="file"] {
 				$('#votenum').attr('readOnly', true);
 				$("#datepicker").attr('disabled',false);
 				$(function() {
-					$("#datepicker").datepicker();
+					$("#datepicker").datepicker(
+							{
+								minDate : "+0D", //최소 선택일자
+								maxDate : "+3Y",
+								monthNamesShort : [ '1', '2', '3', '4',
+										'5', '6', '7', '8', '9', '10',
+										'11', '12' ] //달력의 월 부분 텍스트
+								,
+								monthNames : [ '1월', '2월', '3월', '4월',
+										'5월', '6월', '7월', '8월', '9월',
+										'10월', '11월', '12월' ] //달력의 월 부분 Tooltip 텍스트
+								,
+								dayNamesMin : [ '일', '월', '화', '수',
+										'목', '금', '토' ] //달력의 요일 부분 텍스트
+								,
+								dayNames : [ '일요일', '월요일', '화요일',
+										'수요일', '목요일', '금요일', '토요일' ],
+								//달력의 요일 부분 Tooltip 텍스트
+								yearSuffix : "년",
+								showMonthAfterYear : true
+							});
 				});
 			}else{
 				$('#votenum').attr('readOnly', true);
@@ -373,8 +397,9 @@ input[type="file"] {
 			}
 		})
 		
-		$('#itsobtn').click(function(){
-			breakflag = false;
+		$('#itsobtn').click(function(){			
+			var	breakflag = false;
+				
 			var radioval = $('input[name = "styling_endsel"]:checked').val();
 			if(radioval ==null){
 				alert("종료 방법을 선택해 주세요.");
@@ -384,15 +409,20 @@ input[type="file"] {
 				console.log($('#datepicker').val());
 				
 				if($('#votetitleid').val() == "" || ($('#imgfile0').val() == "" && $('#voteitemimg').attr('src')=="") || $('#votecontentsid').val() == "" || $('.itemconts').val() == "" ){
-					alert("1. 항목을 모두 입력해 주세요.");
+					alert("항목을 모두 입력해 주세요.");
+					breakflag=true;
 				}else if(radioval==1 && $('#datepicker').val()==""){
-					alert("2. 종료 날짜를 선택해 주세요.");			
+					alert("종료 날짜를 선택해 주세요.");
+					breakflag=true;
 				}else if(radioval==2 && $('#votenum').val()==""){
-					alert("참여 인원을 입력해 주세요.");	
-				}else if($('#datepicker').val()=="" && $('#votenum').val()==""){
+					alert("참여 인원을 입력해 주세요.");
+					breakflag=true;
+				}else if($('#datepicker').val()=="" && $('#votenum').val()==""){			
 					alert("투표종료 조건을 입력해 주세요.");
+					breakflag=true;
 				}else if($('.filesel').length<2){
-					alert("투표항목은 2개 이상 입력해 주세요.");
+					alert("투표항목은 2개 이상 입력해 주세요.");	
+					breakflag=true;									
 				}else {
 					for(i=1; i<$("#itemtable tr").length; i++){
 						console.log(breakflag);
@@ -406,18 +436,28 @@ input[type="file"] {
 							alert("아이템 내용을 적어주세요.");
 							breakflag=true;
 						}else{
-							
+							console.log("여기서 음...내용 판별");
+							if($('#itemtable tr:nth-of-type('+i+')').find('.filesel').val() == ""){
+								var ori = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();
+								$('#modiform').append('<input type="hidden" name="voteitemori[]" value="'+ori+'">');							
+							/* 	voteitemnew.push($('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val());	 */						
+							}else{
+								var newitem = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();								
+								$('#modiform').append('<input type="hidden" name="voteitemnew[]" value="'+newitem+'">');	
+							}							
+							}			
 						}
 						}
 					}
 					if(breakflag == false){
 						console.log("최종submit-------------");
-						console.log("del목록"+deletedsvitem.pop(0));
-						/*  $('#modiform').submit();   */	 
+						console.log("del목록"+$('input[name ="deletedsvitem[]"]').length);
+						console.log("new내용 개수"+$('input[name="voteitemnew[]"]').length);
+						console.log("ori내용 개수"+$('input[name="voteitemori[]"]').length);
+						 $('#modiform').submit();   
+						
 					/*  console.log("submit");  */
-				}
-					
-			}						
+				}		
 			}
 		})
 		

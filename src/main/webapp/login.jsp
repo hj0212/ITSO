@@ -339,7 +339,8 @@ $(document).ready(function () {
 			</form>
 			<div id="other-bt-group" style="text-align: center;">
 
-				<!-- Title -->
+				<!-- T
+				itle -->
 				<h4 class="card-title" style="color: #e9e9e9">
 					<strong>Other Login</strong>
 				</h4>

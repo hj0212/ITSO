@@ -127,9 +127,11 @@ public class StylingController {
 	}
 
 	@RequestMapping("/modifyStylingVote.style")
-	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles) {
+	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile,@RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, @RequestParam("voteitemori[]")List<String> oriconts, @RequestParam("voteitemnew[]")List<String> newconts) {
 		ModelAndView mav = new ModelAndView();
-
+		System.out.println("------------------------------modiCtrl");
+		
+		 
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
 		System.out.println(styling_vote_seq+"번 글 수정 Ctrl");
 		System.out.println(svdto.getPhoto()+":이건 원래 있던 포토");
