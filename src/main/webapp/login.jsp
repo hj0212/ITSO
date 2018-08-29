@@ -4,13 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta property="og:url"
-	content="http://news.naver.com/main/read.nhn?oid=001&sid1=101&aid=0009814769&mid=shm&mode=LSD&nh=20180116081307">
-<meta property="og:title" content="테스트 뉴스">
+<meta property="og:site_name" content="ITSO"/>
+<meta property="og:title" content="IS THIS STYLE OK?">
 <meta property="og:image"
-	content="http://imgnews.naver.net/image/001/2018/01/16/AKR20180115146300002_01_i_20180116084056132.jpg?type=w540">
-<meta property="og:description" content="네이버 뉴스를 테스트로 해보았습니다.">
+	content="https://image.ibb.co/cvb5k9/itso_12.png">
+<meta property="og:description" content="ITSO WELCOME PAGE">
 <title>It So</title>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- Font Awesome -->
