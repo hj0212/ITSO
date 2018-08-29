@@ -482,8 +482,7 @@ button.dropdown-toggle {
 									</c:choose>
 									
 									
-									<input type="hidden" value="${list.social_writer }" class="writerseq"/>
-									<input type="hidden" value="${list.social_seq }" class="socialseq"/>
+									
 									<button type="button" class="btn btn-indigo savebtn" data-toggle="modal" data-target="#saveModal">
 										<i class="fa fa-upload" > <span
 											style="font-family: 'NanumbarunpenR';">컬렉션에저장</span></i>

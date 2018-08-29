@@ -24,8 +24,8 @@ public class MemberController {
 	private IMemberService mservice;
 	@Autowired
 	private ISocialBoardService sservice;
-	
-	protected static Logger log = LoggerFactory.getLogger(MemberController.class);
+
+//	protected static Logger log = LoggerFactory.getLogger(MemberController.class);
 
 	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO dto, HttpSession session) {
@@ -36,22 +36,25 @@ public class MemberController {
 			session.setMaxInactiveInterval(60 * 60);
 			MemberDTO user = result.get(0);
 			session.setAttribute("user", user);
-		}
 
-		System.out.println("result.get(0) : " + result.get(0).getEmail() + " : " + result.get(0).getPw());
-		String userId = result.get(0).getEmail();
-		String userPw = result.get(0).getPw();
 
-		// Admin Account Redirect syntax
-		if (userId.equals("itso@admin") && userPw.equals("itso@admin")) {
-			mav.setViewName("goAdminPageWithAllAnalysisData.adm");
+			System.out.println("result.get(0) : " + result.get(0).getEmail() + " : " + result.get(0).getPw());
+			String userId = result.get(0).getEmail();
+			String userPw = result.get(0).getPw();
+
+			// Admin Account Redirect syntax
+			if (userId.equals("itso@admin") && userPw.equals("itso@admin")) {
+				mav.setViewName("goAdminPageWithAllAnalysisData.adm");
+			} else {
+				// usual users account redirect syntax
+				mav.addObject("result", result.size());
+				mav.setViewName("loginProc.jsp");
+				System.out.println(result.size());
+			}
+//			log.debug("로그인");
 		} else {
-			// usual users account redirect syntax
-			mav.addObject("result", result.size());
-			System.out.println(result.size());
 			mav.setViewName("loginProc.jsp");
 		}
-		log.debug("로그인");
 		return mav;
 
 	}

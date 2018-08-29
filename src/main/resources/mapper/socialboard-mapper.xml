@@ -4,22 +4,25 @@
 <mapper namespace="SocialBoard">
 	<!--최신  -->
 	<select id="showSocialBoardList" resultType="sdto">
-		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq		
+		 select su.*,nvl(sg.count, '0') good_count,nvl(sc.comcount, '0') comment_count from (select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq) su
+        left outer join (select social_seq,count(*) count from social_good group by social_seq) sg on su.social_seq = sg.social_seq
+         left outer join (select social_seq,count(*) comcount from social_comment group by social_seq) sc on su.social_seq = sc.social_seq
 		<if test="age gt 0">
 			<!-- 연령순 -->
 			and s.age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
-
 			and s.gender = #{gender}
-			
 		</if>		
 		order by social_date desc
 	</select>
 	
 	<select id="showSocialHotBoardList" resultType="sdto">
-		select s.*,sg.count count from social s,(select social_seq,count(*) count from social_good GROUP by social_seq)sg where s.SOCIAL_SEQ = sg.social_seq
+		 select su.*,nvl(sg.count, '0') good_count,nvl(sc.comcount, '0') comment_count 
+		 from (select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq) su
+        left outer join (select social_seq,count(*) count from social_good group by social_seq) sg on su.social_seq = sg.social_seq
+         left outer join (select social_seq,count(*) comcount from social_comment group by social_seq) sc on su.social_seq = sc.social_seq
 		
 			<if test="age gt 0">
 			 	and s.AGE= #{age}
@@ -27,11 +30,11 @@
 			<if test="gender !=null and gender !='g'.toString()">
 				and s.GENDER=#{gender}
 			</if> 
-		ORDER by count desc
+		ORDER by good_count desc
 	</select>
 	
 	<select id="showSocialFollowBoardList" resultType="sdto">
-	select s.*from(select following_seq from follow where USER_SEQ =#{social_seq})f,SOCIAL s where f.following_seq = s.SOCIAL_WRITER
+	select s.*, nvl(sc.count, '0') comment_count, u.name writerName,u.photo user_photo, u.state userState from(select following_seq from follow where USER_SEQ = #{social_seq})f,SOCIAL s, users u where f.following_seq = s.SOCIAL_WRITER and s.social_writer = u.seq
 		<if test="age gt 0">
 			and s.AGE=#{age}
 		</if>
