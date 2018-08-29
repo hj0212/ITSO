@@ -245,7 +245,83 @@ $(document).ready(function () {
         $("#userform").submit();
     });
     
+    /* 페이스북 로그인 */
+	var checkLoginStatus = function(response) {
+    	console.log(response);
+        // statusChangeCallback(response);
+        
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            $("#authBtn").val("logout");
+            fbLoginAction();
+          } else {
+        	  $("#authBtn").val("login");
+            // The person is not logged into your app or we are unable to tell.
+            document.getElementById('status').innerHTML = 'Please log ' +
+              'into this app.';
+          }
+    };
+	
+	window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1128205587330014',
+	      cookie     : true,  // enable cookies to allow the server to access 
+	                          // the session
+	      xfbml      : true,  // parse social plugins on this page
+	      version    : 'v3.1' // use graph api version 2.8
+	    });
 
+	    // Now that we've initialized the JavaScript SDK, we call 
+	    // FB.getLoginStatus().  This function gets the state of the
+	    // person visiting this page and can return one of three states to
+	    // the callback you provide.  They can be:
+	    //
+	    // 1. Logged into your app ('connected')
+	    // 2. Logged into Facebook, but not your app ('not_authorized')
+	    // 3. Not logged into Facebook and can't tell if they are logged into
+	    //    your app or not.
+	    //
+	    // These three cases are handled in the callback function.
+	    
+	    checkLoginState = function() {
+	    	FB.getLoginStatus(checkLoginStatus);
+	    }
+
+	  };
+
+	  // Load the SDK asynchronously
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "https://connect.facebook.net/en_US/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+	  
+	  
+	 function fbLoginAction() {
+		 FB.login(function(response) {
+				var fbname;
+				var accessToken = response.authResponse.accessToken;
+				FB.api('/me?fields=id,name,email', function(resp) {
+					console.log(resp);
+					var data = JSON.stringify(resp);
+					console.log(data);
+					$.ajax({
+				        url:"fbLogin.ajax",
+				        type:"post",
+				        data:{
+				         	data:data
+				        },
+				        success:function(data){
+				          location.href = data;
+				        }
+				     });
+					
+					
+				});
+		});
+	 }
 });
 
 </script>
@@ -348,19 +424,8 @@ $(document).ready(function () {
 				<p class="card-text"></p>
 
 				<!-- Facebook -->
-				<button type="button" class="btn-floating btn-lg btn-fb"
-					id="facebook">
-					<i class="fab fa-facebook-f"></i>
-				</button>
-				<button type="button" class="btn-floating btn-lg btn-tw"
-					id="twitter">
-					<i class="fab fa-twitter"></i>
-				</button>
-				<!--Google +-->
-				<button type="button" class="btn-floating btn-lg btn-gplus"
-					id="google">
-					<i class="fab fa-google-plus-g"></i>
-				</button>
+				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+				</fb:login-button>
 			</div>
 		</div>
 	</div>

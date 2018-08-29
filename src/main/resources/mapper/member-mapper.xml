@@ -6,7 +6,7 @@
 		select * from users where email=#{email} and pw=#{pw}
 	</select>
 	<insert id="insertData" parameterType="dto" >
-		insert into users values(users_seq.nextval,#{email},#{pw},#{name},#{g_email,jdbcType=VARCHAR},#{g_name,jdbcType=VARCHAR},#{part},SYSDATE,#{withdrawal},#{photo},#{block},#{state},#{age})
+		insert into users values(users_seq.nextval,#{email},#{pw,jdbcType=VARCHAR,javaType=String},#{name},#{part},SYSDATE,#{withdrawal},#{photo},#{block},#{state},#{age}, #{gender})
 	</insert>
 	<update id="updateData" parameterType="dto">
 		update users set pw=#{pw}, name=#{name}, state=#{state}, age=#{age} where seq=#{seq}
@@ -31,5 +31,9 @@
 	</select>
 	<select id="selectUserData" resultType="dto">
 		select * from users where seq = #{seq}
+	</select>
+	
+	<select id="selectSocialWriter" parameterType="int" resultType="dto">
+		select u.* from social s, users u where s.social_seq = #{social_seq} and s.social_writer = u.seq
 	</select>
 </mapper>

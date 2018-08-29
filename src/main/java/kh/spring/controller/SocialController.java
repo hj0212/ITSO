@@ -3,35 +3,40 @@ package kh.spring.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.SocialCommentDTO;
+import kh.spring.dto.SocialHashTagDTO;
 import kh.spring.dto.SocialTagDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.exception.NotWriterException;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.ISocialCommentService;
+import kh.spring.interfaces.ISocialHashTagService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
 
@@ -45,6 +50,12 @@ public class SocialController {
 	
 	@Autowired 
 	ISocialTagService tagService;
+	
+	@Autowired
+	ISocialCommentService comService;
+	
+	@Autowired
+	ISocialHashTagService shtService;
 
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session,HttpServletRequest request) {
@@ -113,8 +124,6 @@ public class SocialController {
 			}else {
 				mav.setViewName("main.jsp");
 			}
-
-
 		}catch(Exception e4) {
 			mav.setViewName("main.jsp");
 		}
@@ -160,9 +169,9 @@ public class SocialController {
 		}
 		 
 		
-		for(MemberDTO ddt : mdto) {
-			System.out.println(ddt.getName());
-		}
+//		for(MemberDTO ddt : mdto) {
+//			System.out.println(ddt.getName());
+//		}
 		
 		
 		List<Integer> goodCount = new ArrayList<>();
@@ -199,7 +208,6 @@ public class SocialController {
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
 			mav.addObject("socialList",result);
-
 		}
 		return mav;
 	}
@@ -229,11 +237,22 @@ public class SocialController {
 		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
+		MemberDTO mdto = this.mService.selectSocialWrtier(seq);
+		
+		String contents = dto.getSocial_contents();
+		
+		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+		Matcher m = p.matcher(contents);
+		
+		contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?search="+"$2'>"+"$1"+"</a>");
+		dto.setSocial_contents(contents);
+		
+		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
+		
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
-		/*System.out.println(dto.getSocial_date());*/
 		// image_db -> {} -> 0 : {}, 1 : {}
 		ObjectNode infoNode = om.createObjectNode();
 		// 각 태그
@@ -298,6 +317,8 @@ public class SocialController {
 			mav.addObject("dataflag","true");
 		}
 		
+		mav.addObject("writer", mdto);
+		mav.addObject("commentList",commentList);
 		mav.addObject("content",dto);
 		mav.addObject("date",writeDate);
 		mav.addObject("src", dto.getPhoto());
@@ -342,13 +363,19 @@ public class SocialController {
 			
 			// 작성된 글 번호
 			int social_seq = service.getSocialBoardcurrval();
+			
+			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+			Matcher m = p.matcher(content);
+			
+			while(m.find()) {
+				SocialHashTagDTO shtdto = new SocialHashTagDTO(social_seq,writer,m.group(1));
+				int result = this.shtService.insertHashTag(shtdto);
+			}
 
 			// 태그 정보
 			String taginfo = request.getParameter("taginfo");
 
-			if(taginfo.equals("{}")) {
-				System.out.println("태그가 없음 : 파일만 저장");
-			}else {
+			if(!taginfo.equals("{}")) {
 				ObjectMapper om = new ObjectMapper();
 				om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 				SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
@@ -371,7 +398,6 @@ public class SocialController {
 					SocialTagDTO stdto = new SocialTagDTO(social_seq,tag_name,tag_brand,tag_store,tag_url,tag_lat,tag_along,tag_category);
 					tagService.insertSocialTag(stdto);
 				}
-				
 			}
 			mav.setViewName("redirect:main.go");
 		}catch(NotLoginException nl) {
@@ -495,6 +521,35 @@ public class SocialController {
 			String photo = request.getParameter("imageinfo");
 			SocialBoardDTO dto = new SocialBoardDTO(social_seq,title,content,0,photo,gender,age);
 			
+			// 새로 들어온 해시태그 리스트
+			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+			Matcher m = p.matcher(content);
+			
+			List<SocialHashTagDTO> nList = new ArrayList<SocialHashTagDTO>();
+			while(m.find()) {
+				SocialHashTagDTO nidto = new SocialHashTagDTO(social_seq,writer,m.group(1));
+				nList.add(nidto);
+			}
+			
+//			List<SocialHashTagDTO> deleteList = new ArrayList<>();
+			// 새로 들어온 해시태그 뽑아오기
+//			for(int i = 0; i < oList.size(); i++) {
+//				for(int j = 0; j < nList.size(); j++) {
+//					if(oList.get(i).getSocial_hash_tag_contents().equals(nList.get(j).getSocial_hash_tag_contents())) {
+//						nList.remove(nList.get(j));
+//						deleteList.add(oList.get(i));
+//					}
+//				}
+//			}
+//			
+			if(nList.size() > 0) {
+				int deleteResult = this.shtService.deleteSocialHashTag(social_seq);
+				
+				for(SocialHashTagDTO ndto : nList) {
+					int hashtagresult = this.shtService.insertHashTag(ndto);
+				}
+			}
+			
 			// 글 수정
 			service.updateSocialBoard(dto);
 			
@@ -502,9 +557,7 @@ public class SocialController {
 			String taginfo = request.getParameter("taginfo");
 			//System.out.println(taginfo);
 			
-			if(taginfo.equals("{}")) {
-				System.out.println("태그가 없음 : 파일만 저장");
-			} else {
+			if(!taginfo.equals("{}")) {
 				ObjectMapper om = new ObjectMapper();
 				om.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 				SocialTag[] myObjects = om.readValue(taginfo, SocialTag[].class);
@@ -588,6 +641,217 @@ public class SocialController {
 		}catch(Exception e) {
 			e.printStackTrace();
 			mav.setViewName("redirect:readSocial.go?seq="+seq);
+		}
+		return mav;
+	}
+	
+	@RequestMapping("/procSocialComment.go")
+	public void procSocialComment(HttpServletRequest request, HttpServletResponse response) {
+		int social_seq = Integer.parseInt(request.getParameter("seq"));
+		
+		try {
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			String comment = request.getParameter("comment");
+			SocialCommentDTO scdto = new SocialCommentDTO(social_seq, writer, comment);
+			int result = this.comService.insertSocialComment(scdto);
+			
+			List<SocialCommentDTO> commentList = comService.showCommentList(social_seq);
+			ObjectMapper om = new ObjectMapper();
+			
+			ArrayNode array = om.createArrayNode();
+			
+			
+			for(SocialCommentDTO dto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("social_comment_seq", dto.getSocial_comment_seq());
+				on.put("social_seq",dto.getSocial_seq());
+				on.put("user_seq", dto.getUser_seq());
+				on.put("social_comment_contents", dto.getSocial_comment_contents());
+				on.put("social_comment_time", dto.getSocial_comment_time());
+				on.put("name", dto.getName());
+				on.put("photo", dto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/deleteComment.go")
+	public void deleteComment(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ObjectMapper om = new ObjectMapper();
+			int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+			int social_seq = Integer.parseInt(request.getParameter("social_seq"));
+			int result = this.comService.deleteComment(comment_seq);
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			
+			List<SocialCommentDTO> commentList = this.comService.showCommentList(social_seq);
+			ArrayNode array = om.createArrayNode();
+			
+			for(SocialCommentDTO dto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("social_comment_seq", dto.getSocial_comment_seq());
+				on.put("social_seq",dto.getSocial_seq());
+				on.put("user_seq", dto.getUser_seq());
+				on.put("social_comment_contents", dto.getSocial_comment_contents());
+				on.put("social_comment_time", dto.getSocial_comment_time());
+				on.put("name", dto.getName());
+				on.put("photo", dto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("searchTag.go")
+	public ModelAndView searchTag(HttpSession session, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		int user_seq = 0;
+		try {
+			user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		}catch(Exception e) {
+			mav.setViewName("login.go");
+			return mav;
+		}
+		
+		String search = null;
+		String main = null;
+		String gender = null;
+		String age = null;
+		
+		String pGender = null;
+		int pAge = 0;
+		try {
+			search = request.getParameter("search") == null ? "" : request.getParameter("search");
+		}catch(Exception notWord) {
+			search = "";
+			mav.setViewName("searchTag.jsp");
+		}
+		
+		try {
+			gender =	request.getParameter("gender");		 
+			pGender = request.getParameter("gender");
+			if(pGender.equals("")) {
+				pGender=null;
+			}
+			if(gender.equals("f")) {
+				gender = "여성";
+			}else if(gender.equals("m")) {
+				gender =" 남성";
+			}else {
+				gender ="무관";
+			}
+		}catch(Exception e2) {
+			gender ="무관";			
+		}
+		
+		try {
+			pAge =Integer.parseInt(request.getParameter("age"));
+			age = request.getParameter("age");
+			if(pAge==0) {
+				pAge=0;
+			}
+			if(age.equals("10")) {
+				age="10대";
+			}else if(age.equals("20")) {
+				age="20대";
+			}else if(age.equals("30")) {
+				age="30대";
+			}else if(age.equals("40")) {
+				age="40대";
+			}else {
+				age="모든연령";
+			}
+
+		}catch(Exception e3) {
+			age="모든연령";
+		}
+		
+		try {
+			main = request.getParameter("main");
+			if(main.equals("full")) {
+				mav.setViewName("searchTag.jsp");
+			}else if(main.equals("thumbnail")) {
+				mav.setViewName("searchTag2.jsp");
+			}else {
+				mav.setViewName("searchTag.jsp");
+			}
+		}catch(Exception e4) {
+			mav.setViewName("searchTag.jsp");
+		}
+		
+		List<SocialBoardDTO> result = null;
+		String feed = null;
+		try {
+			feed = request.getParameter("feed");
+			
+			if(feed.equals("new")) {
+				result = this.service.showHashTagBoardList(pAge, pGender, user_seq, search);
+			}else if(feed.equals("hot")) {
+				result = this.service.showHashTagHotBoardList(pAge, pGender, user_seq, search);
+			}else if(feed.equals("following")) {
+				result = this.service.showHashTagFollowBoardList(pAge, pGender, user_seq, search);
+			}
+		}catch(Exception ea) {
+			result = this.service.showHashTagBoardList(pAge, pGender, user_seq, search);
+			feed="new";
+		}
+		
+		List<Integer> ggdto = new ArrayList<>();
+		List<MemberDTO> mdto = new ArrayList<>();
+		
+		for(SocialBoardDTO sdd : result) {	
+			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
+			MemberDTO mom =  new MemberDTO(sdd.getSocial_seq()); 
+			ggdto.add(this.service.allGoodCount(gdto)) ;
+			mdto.addAll( this.mService.getUserData(mom));
+			/*System.out.println(ggdto);*/
+		}
+		
+		List<Integer> goodCount = new ArrayList<>();
+		for(SocialBoardDTO sdd : result) {
+			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq(),user_seq);
+			goodCount.add(this.service.selectGoodCount(gdto));
+			/*System.out.println("goodCount"+goodCount);*/
+		}
+
+		try {
+			/*System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());*/
+			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
+			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
+			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
+			
+			
+			mav.addObject("collectionList",collectionList);
+			mav.addObject("photoList",photoList);
+			mav.addObject("goodList", goodList);
+			mav.addObject("followingList", followingList);
+			
+		}catch(NullPointerException e) {
+			/*		System.out.println("濡쒓렇�씤x");*/
+		}finally {
+			
+			mav.addObject("search", search);
+			mav.addObject("feed",feed);
+			mav.addObject("goodCount",goodCount);
+			mav.addObject("heart",ggdto);
+			mav.addObject("pAge",pAge);
+			mav.addObject("main", main);
+			mav.addObject("pGender",pGender);
+			mav.addObject("gender",gender);		
+			mav.addObject("age",age);
+			mav.addObject("socialList",result);
 		}
 		return mav;
 	}

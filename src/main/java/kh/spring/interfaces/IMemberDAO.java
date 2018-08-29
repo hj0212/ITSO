@@ -16,4 +16,5 @@ public interface IMemberDAO {
 	  public int deleteFollowData(FollowDTO dto);
 	  public List<MemberDTO> getFollowerList(MemberDTO dto);
 	  public List<MemberDTO> getFollowingList(MemberDTO dto);
+	  public MemberDTO selectSocialWriter(int social_seq);
 }

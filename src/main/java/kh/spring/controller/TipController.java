@@ -3,6 +3,7 @@ package kh.spring.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -72,7 +78,6 @@ public class TipController {
 		mav.addObject("dietTipData", dietTipData);
 		mav.addObject("fashionTipData", fashionTipData);
 		mav.addObject("businessTipData", businessTipData);
-		// mav.addObject("tipThumpsUpCountData", tipThumpsUpCountData);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;
@@ -127,12 +132,36 @@ public class TipController {
 	}
 
 	@RequestMapping("insertTipCommentProc.tip")
-	public @ResponseBody int insertTipCommentProc(@RequestBody TipCommentDTO dto) {
-		System.out.println(1);
-		System.out.println(dto.toString());
+	public void insertTipCommentProc(@RequestBody TipCommentDTO dto, HttpServletRequest request, HttpServletResponse response) {
+		try {
+			System.out.println(1);
+			System.out.println(dto.toString());
 
-		int result = service.insertTipCommentProc(dto);
-		return result;
+			int result = service.insertTipCommentProc(dto);
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			
+			ObjectMapper om = new ObjectMapper();
+			List<TipCommentDTO> commentList = service.getCommentsFromTip(dto.getTip_seq());
+			ArrayNode array = om.createArrayNode();
+			
+			for(TipCommentDTO tdto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("tip_comment_seq", tdto.getTip_comment_seq());
+				on.put("tip_seq", tdto.getTip_seq());
+				on.put("user_seq", tdto.getUser_seq());
+				on.put("tip_comment_contents", tdto.getTip_comment_contents());
+				on.put("tip_comment_time", tdto.getTip_comment_time());
+				on.put("name", tdto.getName());
+				on.put("photo", tdto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping("deleteSpecificTip.tip")
@@ -142,7 +171,38 @@ public class TipController {
 		int result = service.deleteSpecificTip(tipSeq);
 		System.out.println(result);
 		return result;
-
 	}
-
+	
+	@RequestMapping("deleteTipComment.tip")
+	public void deleteTipComment(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			ObjectMapper om = new ObjectMapper();
+			int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
+			int tip_seq = Integer.parseInt(request.getParameter("tip_seq"));
+			int result = service.deleteTipComment(comment_seq);
+			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			
+			List<TipCommentDTO> commentList = service.getCommentsFromTip(tip_seq);
+			ArrayNode array = om.createArrayNode();
+			
+			for(TipCommentDTO tdto : commentList) {
+				ObjectNode on = om.createObjectNode();
+				on.put("tip_comment_seq", tdto.getTip_comment_seq());
+				on.put("tip_seq", tdto.getTip_seq());
+				on.put("user_seq", tdto.getUser_seq());
+				on.put("tip_comment_contents", tdto.getTip_comment_contents());
+				on.put("tip_comment_time", tdto.getTip_comment_time());
+				on.put("name", tdto.getName());
+				on.put("photo", tdto.getPhoto());
+				on.put("writer", writer);
+				
+				array.add(on);
+			}
+			
+			response.getWriter().println(array);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
