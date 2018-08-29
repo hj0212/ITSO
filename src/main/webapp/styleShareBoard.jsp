@@ -7,12 +7,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta property="fb:app_id" content="175142883151176"/>
 <meta property="og:site_name" content="ITSO"/>
 <meta property="og:title" content="${content.social_title}"/>    
 <meta property="og:description" content="${content.social_contents}" />
 <meta property="article:author" content="${content.social_writer}" />
 <meta property="og:url" content="document.location.href" />
-<meta property="og:image" content="썸네일로 쓰일 이미지 주소" />
+<meta property="og:image" content="https://image.ibb.co/cvb5k9/itso_12.png"/>
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:url" content="document.location.href"/> 
+<meta name="twitter:title" content="${content.social_title}" />
+<meta name="twitter:description" content="${content.social_contents}" /> 
+<meta name="twitter:image" content="https://image.ibb.co/cvb5k9/itso_12.png" /> 
+<meta name="twitter:site" content="${content.social_writer}" /> 
+<meta name="twitter:creator" content="@트위터아이디" /> 
+
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat"
 	rel="stylesheet">
