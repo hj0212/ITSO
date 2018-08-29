@@ -127,11 +127,10 @@ public class StylingController {
 	}
 
 	@RequestMapping("/modifyStylingVote.style")
-	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile,@RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, @RequestParam("voteitemori[]")List<String> oriconts, @RequestParam("voteitemnew[]")List<String> newconts) {
+	public ModelAndView modifyStylingVote(HttpSession session, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile,@RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("voteitemori[]")List<String> oriconts, @RequestParam("voteitemnew[]")List<String> newconts, @RequestParam("deletedsvitem[]")List<String> delseqs,@RequestParam("itemphotos[]")List<String> svitemphotos) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println("------------------------------modiCtrl");
-		
-		 
+		System.out.println("------------------------------modiCtrl");		
+		System.out.println(svitemphotos.size()+":원래사진 개수");
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
 		System.out.println(styling_vote_seq+"번 글 수정 Ctrl");
 		System.out.println(svdto.getPhoto()+":이건 원래 있던 포토");
@@ -165,11 +164,19 @@ public class StylingController {
 
 			}
 			int modiresul = styservice.modifyStylingVote(svdto);
-			System.out.println("수정완료"+modiresul);
-
+			System.out.println("글 주제수정완료"+modiresul);
 
 		}
-
+		//--------------후보수정
+		System.out.println(delseqs.size()+"개 지울거임");
+		 
+		for(int i =1; i<delseqs.size();i++) {
+			int tmpseq = Integer.parseInt(delseqs.get(i));		
+			styservice.deleteStylingVoteItem(tmpseq);		
+		}
+		System.out.println("삭제다음 단계----");
+		
+		
 		mav.setViewName("readStylingVote.style?styling_vote_seq="+styling_vote_seq);
 		return mav;
 	}
@@ -191,7 +198,7 @@ public class StylingController {
 		System.out.println(svdto.getStyling_title());*/		
 	/*public ModelAndView insertStylingVote(HttpSession session,StylingVoteDTO svDTO, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("votetitleimgfile")MultipartFile titlefile, @RequestParam("styling_vote_item_contents[]")List<String> itemconts, HttpServletRequest req) {
 */
-		System.out.println("인서트 컨트롤러-----누가 이기나 보자 ㅋㅋ-------------------------------------");
+		System.out.println("인서트 컨트롤러------------------------------------------");
 		System.out.println("제목:"+styling_title+"내용:"+styling_contents);
 		ModelAndView mav = new ModelAndView();
 		try {

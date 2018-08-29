@@ -160,6 +160,7 @@ input[type="file"] {
 												type="file" name="voteimgfile[]" id="imgfile${status.count}"
 												class="file-upload-input form-control filesel"
 												onchange="readURL(this);" accept="image/*">
+												<input type="hidden" class="oriphotovalue" value="${item.styling_vote_item_photo}">
 										</div>
 
 										<div class="media-body image-upload-wrap form-group"
@@ -174,7 +175,7 @@ input[type="file"] {
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
-												<input type="text" id="vitemtext" class="form-control itemconttext" name="styling_vote_item_contents[]" value="${item.styling_vote_item_contents}">
+												<input type="text" id="vitemtext" class="form-control itemconttext" value="${item.styling_vote_item_contents}">
 												<label for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
 											</div>
 										</div>
@@ -218,8 +219,17 @@ input[type="file"] {
 
 				</div>
 				<div class="col">
+				<c:choose>
+				<c:when test="${votedto.styling_voternum eq 0}">
+				<input type="text" class="form-control form-control-sm col-md-4"
+						readOnly id="votenum" placeholder="명" name="styling_voternum">
+				</c:when>	
+				
+				<c:otherwise>
 					<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}">
+						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}명">
+				</c:otherwise>
+				</c:choose>
 				</div>
 
 			</div>
@@ -237,15 +247,17 @@ input[type="file"] {
 			<div class="row">
 				<div class="md-form form-lg col-md-12 my-2"></div>
 			</div>
+			<input type="hidden" name="voteitemori[]" value="ori">
+			<input type="hidden" name="voteitemnew[]" value="new">
+			<input type="hidden" name ="deletedsvitem[]" value="del">
+			<input type="hidden" name ="itemphotos[]" value="photo">
 
 			<div class="row">
 				<button class="btn btn-indigo" type="button" id="itsobtn">itso?</button>
 				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
 			</div>
-			<input type="hidden" name="voteitemori[]" value="ori">
-			<input type="hidden" name="voteitemnew[]" value="new">
-			<input type="hidden" name ="deletedsvitem[]" value="del">
+			
 		</form>
 	</div>
 
@@ -268,7 +280,7 @@ input[type="file"] {
 			return false;
 		};
 		
-		count = $("#itemtable tr").length;
+		count = $("#itemtable tr").length-1;
 		
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
@@ -320,7 +332,7 @@ input[type="file"] {
 														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
 														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
 														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
-														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control itemconttext" name="styling_vote_item_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
+														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control itemconttext"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
 														+ '</div></div></div></td></tr>');
 							} else if (count == 6) {
 								alert("투표 항목은 6개까지 추가할 수 있습니다.")
@@ -439,7 +451,10 @@ input[type="file"] {
 							console.log("여기서 음...내용 판별");
 							if($('#itemtable tr:nth-of-type('+i+')').find('.filesel').val() == ""){
 								var ori = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();
-								$('#modiform').append('<input type="hidden" name="voteitemori[]" value="'+ori+'">');							
+								var pho = $('#itemtable tr:nth-of-type('+i+')').find('.oriphotovalue').val();
+								$('#modiform').append('<input type="hidden" name="voteitemori[]" value="'+ori+'">');
+								
+								$('#modiform').append('<input type="hidden" name="itemphotos[]" value="${"'+pho+'"}">');
 							/* 	voteitemnew.push($('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val());	 */						
 							}else{
 								var newitem = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();								
@@ -454,6 +469,7 @@ input[type="file"] {
 						console.log("del목록"+$('input[name ="deletedsvitem[]"]').length);
 						console.log("new내용 개수"+$('input[name="voteitemnew[]"]').length);
 						console.log("ori내용 개수"+$('input[name="voteitemori[]"]').length);
+						console.log("사진값확인:");
 						 $('#modiform').submit();   
 						
 					/*  console.log("submit");  */
