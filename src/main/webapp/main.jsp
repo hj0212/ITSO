@@ -447,7 +447,7 @@ button.dropdown-toggle {
 								<ul class="list-unstyled">
 									<li class="media align-middle"><img
 										class="d-flex mr-3 rounded-circle "
-										src="resources/images/${list.user_photo}"
+										src="/upload/social/${list.user_photo}"
 										style="width: 50px; height: 50px; margin-top: 10px">
 										<div class="media-body" style="margin: 0px auto">
 											<a class="writer-a"><b class="writerName"
@@ -515,7 +515,7 @@ button.dropdown-toggle {
 									</a>
 								</div>
 
-								<div class=container id="social_contents">
+								<div class="container m-0 p-0" id="social_contents">
 									${list.social_contents}</div>
 
 								<div class="btnarea my-1">
@@ -896,10 +896,6 @@ button.dropdown-toggle {
 
 		$("#createModal").on('hidden.bs.modal', function () {
 		    $("#saveModal").show();
-		});
-
-		$("#saveModal").on('show.bs.modal', function () {
-
 		});
 
 		$("#saveModal").on('hidden.bs.modal', function () {

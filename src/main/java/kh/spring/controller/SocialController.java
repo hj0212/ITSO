@@ -208,7 +208,7 @@ public class SocialController {
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
-		
+			result = makeHashTag(result);
 			mav.addObject("feed",feed);
 			mav.addObject("goodCount",goodCount);
 			mav.addObject("heart",ggdto);
@@ -228,7 +228,6 @@ public class SocialController {
 		dto.setCollection_seq(seq);
 		List<CollectionDTO> clist = service.getCollectionData(dto);
 		List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
-		list = makeHashTag(list);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("collectionList", clist);
 		mav.addObject("socialList", list);
@@ -901,6 +900,4 @@ public class SocialController {
 		}
 		return list;
 	}
-
-	
 }
