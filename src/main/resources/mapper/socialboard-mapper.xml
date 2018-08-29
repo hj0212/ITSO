@@ -101,7 +101,7 @@
 	</select>
 	
 	<select id="getMySocialList" parameterType ="dto" resultType="sdto">
-		select s.*, u.name social_writerName from social s, users u where s.social_writer = u.seq and s.social_writer=#{seq} order by social_date desc
+		select s.*, u.name social_writerName, u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq and s.social_writer=#{seq} order by social_date desc
 	</select>
 	
 	<select id="getSocialBoardcurrval" resultType="int">
