@@ -14,13 +14,17 @@
 
 
 <insert id="insertTipCommentProc" parameterType="TipCommentDTO">
-insert into 
-tip_comment(tip_comment_seq, tip_seq, user_seq, tip_comment_time, tip_comment_contents) 
-values(tip_comment_seq.nextval, #{tip_seq,javaType=Integer,jdbcType=INTEGER}, 0, sysdate, #{tip_comment_contents,javaType=String,jdbcType=VARCHAR})
+	insert into 
+	tip_comment(tip_comment_seq, tip_seq, user_seq, tip_comment_time, tip_comment_contents) 
+	values(tip_comment_seq.nextval, #{tip_seq,javaType=Integer,jdbcType=INTEGER}, 0, sysdate, #{tip_comment_contents,javaType=String,jdbcType=VARCHAR})
 </insert>
 
-<select id="getCommentsFromTip" parameterType="TipCommentDTO" resultMap="TipCommentDTOResultMap">
-select * from tip_comment tc, users u where tc.user_seq = u.seq and tc.tip_seq=#{tip_seq}
+<select id="getCommentsFromTip" parameterType="int" resultMap="TipCommentDTOResultMap">
+	select * from tip_comment tc, users u where tc.user_seq = u.seq and tc.tip_seq=#{0} order by tc.tip_comment_seq asc
 </select>
+
+<delete id="deleteTipComment" parameterType="int">
+	delete from tip_comment where tip_comment_seq = #{0}
+</delete>
 
 </mapper>

@@ -7,7 +7,16 @@ public class TipCommentDTO {
 	String tip_comment_contents;
 	String name;
 	String tip_comment_time;
+	String photo;
 	
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
 	public String getTip_comment_time() {
 		return tip_comment_time;
 	}

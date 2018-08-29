@@ -2,17 +2,20 @@ package kh.spring.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
@@ -80,25 +83,25 @@ public class AjaxController {
 	
 	
 	@RequestMapping("/saveCollection.ajax")
-	public @ResponseBody String saveCollection(int collection_seq, int social_seq, HttpSession session) {
+	public @ResponseBody Object saveCollection(int collection_seq, int social_seq, HttpSession session) {
 		System.out.println("ajax:"+collection_seq+":"+social_seq);
 		SocialBoardDTO dto = new SocialBoardDTO();
 		dto.setCollection_seq(collection_seq);
 		dto.setSocial_seq(social_seq);
 		
 		List<SocialBoardDTO> list = sservice.selectCollectionContent(dto);	// 테이블에 있는지
-		
-		String msg;
+		System.out.println(list.size());
+		SocialBoardDTO result = null;
 		if(list.size() > 0) {
 			int delete = sservice.deleteCollectionContent(dto);
 			System.out.println(delete>0?"delete성공":"delete실패");
-			msg="delete";
 		}else {
 			int insert = sservice.insertCollectionContent(dto);
+			System.out.println("결과: " + insert);
 			System.out.println(insert>0?"insert성공":"insert실패");
-			msg="insert";
+			result = sservice.selectSocialBoard(social_seq);
 		}
-		return msg;
+		return result;
 	}
 	
 	@RequestMapping("/createCollection.ajax")
@@ -133,26 +136,59 @@ public class AjaxController {
 	
 	@RequestMapping("/followUser.ajax")
 	public @ResponseBody String followProc(int seq, String text, HttpSession session, HttpServletResponse resp) {
-		System.out.println("여기");
 		FollowDTO dto = new FollowDTO();
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 
-		if(text.equals("팔로우")) {
-			dto.setUser_seq(user_seq);
-			dto.setFollowing_seq(seq);
-			int result = service.insertFollowData(dto);
-			String resultmsg = result>0?"팔로우성공":"팔로우실패";
-			System.out.println(resultmsg);
-			return "언팔로우";
-		} else {
-			dto.setUser_seq(user_seq);
-			dto.setFollowing_seq(seq);
+		dto.setUser_seq(user_seq);
+		dto.setFollowing_seq(seq);
+		
+		System.out.println("text:" + text);
+		String resultmsg = "";
+		if(text.contains("언팔로우")) {
 			int result = service.deleteFollowData(dto);
-			String resultmsg = result>0?"언팔로우성공":"언팔로우실패";
+			resultmsg = result>0?"언팔로우성공":"언팔로우실패";
 			System.out.println(resultmsg);
-			return "팔로우";
+		} else {
+			int result = service.insertFollowData(dto);
+			resultmsg = result>0?"팔로우성공":"팔로우실패";
+			System.out.println(resultmsg);
+		}
+		return resultmsg;
+	}
+	
+	@RequestMapping("/fbLogin.ajax")
+	public @ResponseBody String fbLogin(String data, HttpSession session) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, String> map = new HashMap<String, String>();
+		String returnstr;
+		try {
+			map = mapper.readValue(data, new TypeReference<Map<String, String>>(){});
+			
+			MemberDTO dto = new MemberDTO();
+			dto.setName(map.get("name"));
+			dto.setEmail(map.get("email"));
+			dto.setPart("facebook");
+			
+			List<MemberDTO> list = service.loginExist(dto);
+			
+			if(list.size()>0) {
+				System.out.println("페북 로그인 성공");
+				session.setMaxInactiveInterval(60*60);
+				MemberDTO user = list.get(0);
+				session.setAttribute("user", user);
+				returnstr = "main.do";
+			} else {
+				int result = service.insertUserData(dto);
+				System.out.println(result>0?"페북 가입 성공":"페북 가입 실패");
+				returnstr = "login.go";
+			}
+			
+			return returnstr;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
+		return null;
 	}
 	
 	

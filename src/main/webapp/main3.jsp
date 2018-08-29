@@ -591,8 +591,9 @@ a#MOVE_TOP_BTN {
 		$("#saveModal").hide();
 	});
 
-	$("#createModal").on('hidden.bs.modal', function() {
-		$("#saveModal").show();
+	$("#saveModal").on('hidden.bs.modal', function() {
+		console.log("닫힘");
+		$(".collectionItem").removeClass("active");
 	});
 </script>
 

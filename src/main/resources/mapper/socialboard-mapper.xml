@@ -7,12 +7,12 @@
 		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq		
 		<if test="age gt 0">
 			<!-- 연령순 -->
-			and age=#{age}
+			and s.age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
 
-			and gender = #{gender}
+			and s.gender = #{gender}
 			
 		</if>		
 		order by social_date desc
@@ -37,6 +37,42 @@
 		</if>
 		<if test="gender !=null and gender !='g'.toString()">
 			and s.GENDER=#{gender}
+		</if>
+		order by s.social_date desc
+	</select>
+	
+		<!--최신  -->
+	<select id="showHashTagBoardList" resultType="sdto" parameterType="map">
+		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u, social_hash_tag sht where s.social_writer = u.seq and s.social_seq = sht.social_seq	and sht.social_hash_tag_contents = #{search}	
+		<if test="pAge gt 0">
+			<!-- 연령순 -->
+			and s.age=#{pAge}
+		</if>
+		<if test="pGender !=null and gender !='g'.toString() ">
+			<!--성별  -->
+			and s.gender = #{pGender}
+		</if>		
+		order by social_date desc
+	</select>
+	
+	<select id="showHashTagHotBoardList" resultType="sdto" parameterType="map">
+		select s.*,sg.count count from social s,(select social_seq,count(*) count from social_good GROUP by social_seq)sg, social_hash_tag sht where s.SOCIAL_SEQ = sg.social_seq and sht.social_hash_tag_contents=#{search} and s.social_seq = sht.social_seq
+			<if test="pAge gt 0">
+			 	and s.AGE= #{pAge}
+			</if>
+			<if test="pGender !=null and gender !='g'.toString()">
+				and s.GENDER=#{pGender}
+			</if> 
+		ORDER by count desc
+	</select>
+	
+	<select id="showHashTagFollowBoardList" resultType="sdto" parameterType="map">
+	select s.*from(select following_seq from follow where USER_SEQ =#{user_seq})f,SOCIAL s, social_hash_tag sht where f.following_seq = s.SOCIAL_WRITER and sht.social_hash_tag_contents=#{search} and s.social_seq = sht.social_seq
+		<if test="pAge gt 0">
+			and s.AGE=#{pAge}
+		</if>
+		<if test="pGender !=null and gender !='g'.toString()">
+			and s.GENDER=#{pGender}
 		</if>
 		order by s.social_date desc
 	</select>
