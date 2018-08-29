@@ -6,6 +6,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>팁 보기 | ITSO</title>
+<!-- Font Awesome 4.7-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
 <style>
 .btn-itso {
 	background-color: #1B0946;
@@ -124,9 +130,9 @@ img {
 
 	<!-- To write reply -->
 	<div class="mt-4 container">
-		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents"></textarea>
+		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents" placeholder="로그인이 필요합니다."></textarea>
 		<input type="hidden" class="form-control" value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
-		<button id="insertTipCommentBtn" type="button" class="btn btn-sm btn-itso">댓글 쓰기</button>
+		<button id="insertTipCommentBtn" type="button" class="btn btn-sm btn-itso" disabled="disabled">댓글 쓰기</button>
 	</div>
 
 	<!-- like btn -->
@@ -142,12 +148,6 @@ img {
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
-	<!-- Font Awesome 4.7-->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<!-- Bootstrap core CSS -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<!-- Material Design Bootstrap -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
 	<!-- JQuery 원래 밑에 있었음-->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script>
@@ -228,6 +228,8 @@ img {
 				$("#comment-container").html(html);
 			}
 			
+			
+			
 			$(document).on('click','.delete',function(){
 				let comment_seq = $(this).data("seq");
 				let tip_seq = $(this).data("tip");
@@ -293,7 +295,15 @@ img {
 					}
 				});
 			}
+			
+			
 		};
 	</script>
+	<c:if test="${!empty sessionScope.user.seq}">
+		<script>
+			$("#tip_comment_contents").attr("placeholder","댓글 쓰기");
+			$("#insertTipCommentBtn").attr("disabled",false);
+		</script>
+	</c:if>
 </body>
 </html>
