@@ -70,7 +70,7 @@ nav {
 
 .notification-list .notification-item {
 	display: grid;
-	grid-template-columns: 0fr 1fr;
+	grid-template-columns: 0fr 1fr 0fr;
 	padding-top: 5px;
 	cursor: pointer;
 }
@@ -138,15 +138,14 @@ nav {
 	width: 60px;
 	text-align: center;
 }
-.read-Y{
-background-color: #eae998;
+
+.read-Y {
+	background-color: #eae998;
 }
 
-.read-Y:hover{
-background-color: #dbd97f;
+.read-Y:hover {
+	background-color: #dbd97f;
 }
-
-
 
 @media ( min-width : 400px) {
 	.navbar-expand-ssm {
@@ -296,7 +295,7 @@ background-color: #dbd97f;
 		var notificationcounter = 0;
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://localhost:80/websocket?seq=${sessionScope.user.seq}");
+					"ws://localhost:8080/websocket?seq=${sessionScope.user.seq}");
 			var str;
 			var file = "";
 
@@ -305,11 +304,11 @@ background-color: #dbd97f;
 			};
 			ws.onmessage = function(msg) {
 				var obj = JSON.parse(msg.data);
-				
-				if(obj.noti_read =='n'){
-					var notification  = "<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
-				}else{
-					var notification  ="<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+
+				if (obj.noti_read == 'n') {
+					var notification = "<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+				} else {
+					var notification = "<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
 				}
 				notification += "<div class='img-left'>";
 				notification += "<img src='/upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
@@ -330,6 +329,7 @@ background-color: #dbd97f;
 				if ($("#notification-counter").text != "0") {
 					$("#notification-counter").show();
 				}
+				;
 
 				console.log("이거 유저인데 :" + obj.user_seq + obj.noti_user_name);
 			};
@@ -345,36 +345,41 @@ background-color: #dbd97f;
 		<c:choose>
 			<c:when test="${notiList ne null}">
 				<c:forEach var="tmp" items="${notiList}">
-					<c:if test="${tmp.noti_read eq 'n'}">
-						<div class="notification-item read-n" id="${tmp.noti_seq}" seq="${tmp.article_seq}">
-							<div class="img-left">
-								<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
-									class="user-image rounded-circle">
+					<c:if test="${tmp.user_seq eq u-seq}">
+						<c:if test="${tmp.noti_read eq 'n'}">
+							<div class="notification-item read-n" id="${tmp.noti_seq}"
+								seq="${tmp.article_seq}">
+								<div class="img-left">
+									<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
+										class="user-image rounded-circle">
+								</div>
+								<div class="user-content">
+									<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}
+												님이</b></span>${tmp.noti_contents}&nbsp;&nbsp;</span>
+									<p class="comment-time">${tmp.noti_date}</p>
+								</div>
+								
 							</div>
-							<div class="user-content">
-								<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}
-											님이</b></span>${tmp.noti_contents}&nbsp;&nbsp;</span>
-								<p class="comment-time">${tmp.noti_date}</p>
+						</c:if>
+						<script>
+							console.log("${tmp.noti_read}");
+						</script>
+						<c:if test="${tmp.noti_read eq 'y'}">
+							<div class="notification-item read-Y" id="${tmp.noti_seq}"
+								seq="${tmp.article_seq}">
+								<div class="img-left">
+									<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
+										class="user-image rounded-circle">
+								</div>
+								<div class="user-content">
+									<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}
+												님이</b></span>${tmp.noti_contents}&nbsp;&nbsp;</span>
+									<p class="comment-time">${tmp.noti_date}</p>
+								</div>
 							</div>
-						</div>
+						</c:if>
 					</c:if>
-					<script>
-					console.log("${tmp.noti_read}");
-					</script>
-					<c:if test="${tmp.noti_read eq 'y'}">
-					<div class="notification-item read-Y"  id="${tmp.noti_seq}" seq="${tmp.article_seq}">
-							<div class="img-left">
-								<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
-									class="user-image rounded-circle">
-							</div>
-							<div class="user-content">
-								<span class="user-info"><span class="user-name" ><b>${tmp.noti_user_name}
-											님이</b></span>${tmp.noti_contents}&nbsp;&nbsp;</span>
-								<p class="comment-time">${tmp.noti_date}</p>
-							</div>
-						</div>
-					</c:if>
-					
+				
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -453,15 +458,17 @@ background-color: #dbd97f;
 	if ($("#notification-counter").text() == 0) {
 		$("#notification-counter").hide();
 	};
-	
-	
-	$(document).on('click',".notification-item",function(){
-		console.log($(this).attr("id"));
-		console.log($(this).attr("seq"));
-		var seq =$(this).attr("seq");
-		var noti_seq =$(this).attr("id");
-		$(location).attr("href","readSocial.go?seq="+seq+"&noti_seq="+noti_seq);
-		
-	});
-	
+
+	$(document).on(
+			'click',
+			".notification-item",
+			function() {
+				console.log($(this).attr("id"));
+				console.log($(this).attr("seq"));
+				var seq = $(this).attr("seq");
+				var noti_seq = $(this).attr("id");
+				$(location).attr("href",
+						"readSocial.go?seq="+ seq + "&noti_seq="+ noti_seq);
+
+			});
 </script>
