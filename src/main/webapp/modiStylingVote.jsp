@@ -469,7 +469,7 @@ input[type="file"] {
 						console.log("del목록"+$('input[name ="deletedsvitem[]"]').length);
 						console.log("new내용 개수"+$('input[name="voteitemnew[]"]').length);
 						console.log("ori내용 개수"+$('input[name="voteitemori[]"]').length);
-						console.log("사진값확인:");
+						console.log("사진값(있던사진):"+$('input[name="itemphotos[]"]'));
 						 $('#modiform').submit();   
 						
 					/*  console.log("submit");  */

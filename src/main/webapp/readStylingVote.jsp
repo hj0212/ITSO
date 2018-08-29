@@ -106,7 +106,7 @@ input[type="file"] {
 	<div class="row my-5"></div>
 	<div id="wrapper" class="container-fluid col-md-8">
 		<h4>
-			투표
+			투표 <span>(${votedto.voter}명 참여중)</span>
 			<script>
 				console.log("${sessionScope.user.seq}");
 			</script>
@@ -118,10 +118,19 @@ input[type="file"] {
 			</script>
 
 			<c:if test="${sessionScope.user.seq eq votedto.styling_writer}">
+			<c:choose>
+			<c:when test="${votedto.voter eq 0}">
 				<button class="btn btn-indigo btn-md float-right" type="button"
 					id="modibtn">글 수정</button>
 				<button class="btn btn-indigo btn-md float-right" type="button"
 					id="delbtn">글 삭제</button>
+			</c:when>
+			<c:when test="${votedto.voter > 0}">
+				<button class="btn btn-indigo btn-md float-right" type="button"
+					id="delbtn">글 삭제</button>
+			</c:when>
+			</c:choose>
+				
 			</c:if>
 
 			<c:choose>
