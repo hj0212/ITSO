@@ -120,7 +120,7 @@ public class StylingController {
 		ModelAndView mav = new ModelAndView();
 		System.out.println(styling_vote_seq);
 		int delresult = styservice.deleteStylingVote(styling_vote_seq);
-
+		
 		mav.addObject("delresult",delresult);	
 		mav.setViewName("stylingBoard.style");
 		return mav;
@@ -170,10 +170,32 @@ public class StylingController {
 		//--------------후보수정
 		System.out.println(delseqs.size()+"개 지울거임");
 		 
-		for(int i =1; i<delseqs.size();i++) {
-			int tmpseq = Integer.parseInt(delseqs.get(i));		
-			styservice.deleteStylingVoteItem(tmpseq);		
+		if(delseqs.size() > 1) {
+			for(int i =1; i<delseqs.size();i++) {
+				int tmpseq = Integer.parseInt(delseqs.get(i));		
+				styservice.deleteStylingVoteItem(tmpseq);		
+			}
 		}
+		//-----------------원래 있던 사진 update
+		if(svitemphotos.size()>1) {
+			for(int i =1; i<svitemphotos.size();i++) {
+				String tmpname = svitemphotos.get(i);
+				String oricont = oriconts.get(i);
+				StylingVoteItemDTO svitemDTO =styservice.selectsvitemDTO(tmpname);
+				System.out.println("있던사진이름1:"+tmpname);
+				System.out.println("1의 내용:"+oricont);
+				
+				svitemDTO.setStyling_vote_item_contents(oricont);
+				int updateresult= styservice.modifyStylingVoteItem(svitemDTO);
+				System.out.println("있던 사진 업데이트 결과:"+updateresult);
+				
+				
+			}
+		}
+		
+		
+		
+		
 		System.out.println("삭제다음 단계----");
 		
 		

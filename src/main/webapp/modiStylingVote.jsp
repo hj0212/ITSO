@@ -103,7 +103,7 @@ input[type="file"] {
 		<div class="row my-2"></div>
 		<form method="post" action="modifyStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}" id="modiform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
-				<h4>투표주제</h4>
+				<h4>투표주제</h4> <span>작성자: ${votedto.styling_writer} 작성일: ${votedto.styling_writedate}</span>
 			<input type="hidden" name="styling_vote_seq" value="${votedto.styling_vote_seq}">
 				<div class="md-form form-lg col-md-12 file-upload mt-0">
 					<div class="md-form form-md form-group">
@@ -129,6 +129,10 @@ input[type="file"] {
 				</div>
 			</div>
 			<hr />
+			<input type="hidden" name="styling_writer" value="${votedto.styling_writer}">
+			<input type="hidden" name ="styling_writedate" value="${votedto.styling_writedate}">
+			<input type="hidden" name="styling_viewcount" value="${votedto.styling_viewcount}">
+			
 
 			<div class="row">
 				<h4 class="mb-0">투표항목</h4>
@@ -206,7 +210,7 @@ input[type="file"] {
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="styling_endterm" disabled
+					<input type="text" id="datepicker" name="styling_endtermtxt" disabled
 						class="form-control form-control-sm col-md-4" value="${votedto.styling_endterm}">
 				</div>
 			</div>
@@ -222,12 +226,12 @@ input[type="file"] {
 				<c:choose>
 				<c:when test="${votedto.styling_voternum eq 0}">
 				<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum">
+						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}"+"명">
 				</c:when>	
 				
 				<c:otherwise>
 					<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}명">
+						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}"+"명">
 				</c:otherwise>
 				</c:choose>
 				</div>
@@ -344,7 +348,7 @@ input[type="file"] {
 			$(this).closest("tr").remove();
 			count--;
 			var delseq = $(this).parent().parent().parent().prev('th').children('input').val();
-			$('input[name ="deletedsvitem[]"]').val(delseq);
+			$('#modiform').append('<input type="hidden" name="deletedsvitem[]" value="'+delseq+'">');	
 			/* var arr = wraptr.nextAll('tr').children('th');
 			for(i=0 i<arr.size i++){
 				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜
@@ -452,10 +456,12 @@ input[type="file"] {
 							if($('#itemtable tr:nth-of-type('+i+')').find('.filesel').val() == ""){
 								var ori = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();
 								var pho = $('#itemtable tr:nth-of-type('+i+')').find('.oriphotovalue').val();
-								$('#modiform').append('<input type="hidden" name="voteitemori[]" value="'+ori+'">');
-								
+								$('#modiform').append('<input type="hidden" name="voteitemori[]" value="'+ori+'">');	
 								$('#modiform').append('<input type="hidden" name="itemphotos[]" value="${"'+pho+'"}">');
 							/* 	voteitemnew.push($('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val());	 */						
+								console.log(ori);
+								console.log(pho);
+							
 							}else{
 								var newitem = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();								
 								$('#modiform').append('<input type="hidden" name="voteitemnew[]" value="'+newitem+'">');	
