@@ -69,6 +69,12 @@ public class AdminServiceImpl implements IAdminService{
 	public String isThisUserBlocked(int userSeq) {
 		return this.dao.isThisUserBlocked(userSeq);
 	}
+
+
+	@Override
+	public int blockUserReleasing(int userSeq) {
+		return this.dao.blockUserReleasing(userSeq);
+	}
 	
 	
 }

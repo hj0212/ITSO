@@ -41,10 +41,15 @@ select user_seq, report_count,report_reason, name, email, create_date, block fro
 update users set block='y' where seq=#{userSeq}
 </update>
 
+
+<!-- block user releasing -->
+<update id="blockUserReleasing">
+update users set block='n' where seq=#{userSeq}
+</update>
+
 <!-- isThisUserBlocked -->
 <select id="isThisUserBlocked" resultType="java.lang.String">
 select block from users where seq=#{userSeq}
 </select>
-
 
 </mapper>
