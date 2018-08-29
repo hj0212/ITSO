@@ -16,7 +16,7 @@
 <insert id="insertTipCommentProc" parameterType="TipCommentDTO">
 	insert into 
 	tip_comment(tip_comment_seq, tip_seq, user_seq, tip_comment_time, tip_comment_contents) 
-	values(tip_comment_seq.nextval, #{tip_seq,javaType=Integer,jdbcType=INTEGER}, 0, sysdate, #{tip_comment_contents,javaType=String,jdbcType=VARCHAR})
+	values(tip_comment_seq.nextval, #{tip_seq,javaType=Integer,jdbcType=INTEGER}, #{user_seq}, sysdate, #{tip_comment_contents,javaType=String,jdbcType=VARCHAR})
 </insert>
 
 <select id="getCommentsFromTip" parameterType="int" resultMap="TipCommentDTOResultMap">

@@ -195,9 +195,10 @@
 	    });
 	    	
 	    function notsubmit() {
-	           let num = 0;
-	           let obj = [];
-	           let clothesInformation = {};
+           let num = 0;
+           let obj = [];
+           let clothesInformation = {};
+           let blank_pattern = /^\s+|\s+$/g;
 	           
 	        $instance.easypin.fire("get.coordinates", { param1: 1, param2: 2, param3: 3 }, function (data) {
 	            $instance.easypin.fire("get.coordinates", function (data) {
@@ -229,12 +230,12 @@
 	        let stylename = document.getElementById("stylename").value;
 	        let stylecontent = document.getElementById("textareaPrefix").value;
 	        
-	        if(stylename === "") {
+	        if(stylename.replace(blank_pattern,"") == ""){
 	        	alert("스타일 이름을 정해주세요");
-	        	return false;	
+	        	return false;
 	        }
 	        
-	        if(stylecontent === ""){
+	        if(stylecontent.replace(blank_pattern,"") == ""){
 	        	alert("스타일을 소개해 주세요.");
 	        	return false;
 	        }
