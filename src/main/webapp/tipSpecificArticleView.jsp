@@ -117,9 +117,9 @@ img {
 
 	<!-- To write reply -->
 	<div class="mt-4 container">
-		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents"></textarea>
+		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents" placeholder="로그인이 필요합니다."></textarea>
 		<input type="hidden" class="form-control" value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
-		<button id="insertTipCommentBtn" type="button" class="btn btn-sm btn-itso">댓글 쓰기</button>
+		<button id="insertTipCommentBtn" type="button" class="btn btn-sm btn-itso" disabled="disabled">댓글 쓰기</button>
 	</div>
 
 	<!-- like btn -->
@@ -255,10 +255,8 @@ $("#tipModifyBtn").click(function(){
 				$("#tip_comment_contents").val("");
 				$("#comment-container").html(html);
 			}
-			
-			
-			
-			$(document).on('click','.delete',function(){
+
+			$(document).on('click', '.delete', function() {
 				let comment_seq = $(this).data("seq");
 				let tip_seq = $(this).data("tip");
 

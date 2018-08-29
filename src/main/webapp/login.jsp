@@ -4,6 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="og:site_name" content="ITSO"/>
+<meta property="og:title" content="IS THIS STYLE OK?">
+<meta property="og:image"
+	content="https://image.ibb.co/cvb5k9/itso_12.png">
+<meta property="og:description" content="ITSO WELCOME PAGE">
 <title>It So</title>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- Font Awesome -->
@@ -132,7 +137,19 @@ body, html {
 	border: 2px solid #feff19;
 }
 
-
+#gender{
+   border:0px;
+   border-bottom: 1px solid white;
+   width: 80%;
+   margin: 0px auto;
+   color: white;
+}
+.yes{
+   color: blue;
+}
+#gender #g{
+color: black;
+}
 </style>
 <script>
 $(document).ready(function () {
@@ -172,7 +189,7 @@ $(document).ready(function () {
         var email = $("#email").val();
         if (!emailCheck(email)) {
             $("#email").val("");
-            console.log("emali형식이 맞지않습니다");
+            console.log("email형식이 맞지않습니다");
         }
 
         function emailCheck(email) {
@@ -188,8 +205,8 @@ $(document).ready(function () {
                 email: email
             },
             success: function (data) {
-                console.log("들어옴" + data),
-                    $("#emailIcon").attr("class", data);
+                console.log("들어옴" + data), $("#emailIcon")
+                    .attr("class", data);
                 iconColor(data);
             }
         });
@@ -231,103 +248,105 @@ $(document).ready(function () {
             });
 
     /*login button click event*/
- /*    $("#signin").on('click', function () {
-        $("userform").attr("action", "signin.do");
+    /*    $("#signin").on('click', function () {
+           $("userform").attr("action", "signin.do");
+       });
+    */
+    $("#signin").click(function () {
+        $("#userform").attr("action", "signin.do");
+        $("#userform").submit();
     });
- */
-    $("#signin").click(function(){
-    	$("#userform").attr("action","signin.do");
-    	$("#userform").submit();
-    });
- 
+
     $("#login").click(function () {
         $("#userform").attr("action", "login.do");
         $("#userform").submit();
     });
-    
+
     /* 페이스북 로그인 */
-	var checkLoginStatus = function(response) {
-    	console.log(response);
+    var checkLoginStatus = function (response) {
+        console.log(response);
         // statusChangeCallback(response);
-        
+
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
             $("#authBtn").val("logout");
             fbLoginAction();
-          } else {
-        	  $("#authBtn").val("login");
+        } else {
+            $("#authBtn").val("login");
             // The person is not logged into your app or we are unable to tell.
             document.getElementById('status').innerHTML = 'Please log ' +
-              'into this app.';
-          }
+                'into this app.';
+        }
     };
-	
-	window.fbAsyncInit = function() {
-	    FB.init({
-	      appId      : '1128205587330014',
-	      cookie     : true,  // enable cookies to allow the server to access 
-	                          // the session
-	      xfbml      : true,  // parse social plugins on this page
-	      version    : 'v3.1' // use graph api version 2.8
-	    });
 
-	    // Now that we've initialized the JavaScript SDK, we call 
-	    // FB.getLoginStatus().  This function gets the state of the
-	    // person visiting this page and can return one of three states to
-	    // the callback you provide.  They can be:
-	    //
-	    // 1. Logged into your app ('connected')
-	    // 2. Logged into Facebook, but not your app ('not_authorized')
-	    // 3. Not logged into Facebook and can't tell if they are logged into
-	    //    your app or not.
-	    //
-	    // These three cases are handled in the callback function.
-	    
-	    checkLoginState = function() {
-	    	FB.getLoginStatus(checkLoginStatus);
-	    }
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1128205587330014',
+            cookie: true, // enable cookies to allow the server to access 
+            // the session
+            xfbml: true, // parse social plugins on this page
+            version: 'v2.8' // use graph api version 2.8
+        });
 
-	  };
+        // Now that we've initialized the JavaScript SDK, we call 
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
 
-	  // Load the SDK asynchronously
-	  (function(d, s, id) {
-	    var js, fjs = d.getElementsByTagName(s)[0];
-	    if (d.getElementById(id)) return;
-	    js = d.createElement(s); js.id = id;
-	    js.src = "https://connect.facebook.net/en_US/sdk.js";
-	    fjs.parentNode.insertBefore(js, fjs);
-	  }(document, 'script', 'facebook-jssdk'));
-	  
-	  
-	 function fbLoginAction() {
-		 FB.login(function(response) {
-				var fbname;
-				var accessToken = response.authResponse.accessToken;
-				FB.api('/me?fields=id,name,email', function(resp) {
-					console.log(resp);
-					var data = JSON.stringify(resp);
-					console.log(data);
-					$.ajax({
-				        url:"fbLogin.ajax",
-				        type:"post",
-				        data:{
-				         	data:data
-				        },
-				        success:function(data){
-				          location.href = data;
-				        }
-				     });
-					
-					
-				});
-		});
-	 }
+        checkLoginState = function () {
+            FB.getLoginStatus(checkLoginStatus);
+        }
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    function fbLoginAction() {
+        FB.login(function (response) {
+            var fbname;
+            var accessToken = response.authResponse.accessToken;
+            FB.api('/me?fields=id,name,email', function (resp) {
+                console.log(resp);
+                var data = JSON.stringify(resp);
+                console.log(data);
+                $.ajax({
+                    url: "fbLogin.ajax",
+                    type: "post",
+                    data: {
+                        data: data
+                    },
+                    success: function (data) {
+                        location.href = data;
+                    }
+                });
+
+
+            });
+        });
+    }
 });
+
 
 </script>
 </head>
 <body>
-		
+
 	<!--back ground-->
 	<div class="bg view overlay">
 		<!--  <div class="">-->
@@ -391,7 +410,18 @@ $(document).ready(function () {
 								Age</label>
 						</div>
 					</div>
-					<!--gender-->
+					 <!--gender-->
+	               <div class="row sign" style="width: 100%">
+	                  <div class="md-form " style="width: 100%">
+	                     <i class="fa fa-venus-mars prefix" style="color: white"></i> 
+	                     <select class="form-control" id="gender" name="gender" >
+	                        <option value="" id="g" disabled selected>Gender</option>
+	                        <option value="m" id="m" class="yes">Male</option>
+	                        <option value="f" id="f" class="yes">Female</option>
+	                     </select>
+	                  </div>
+	               </div>
+
 
 					<!--button group-->
 					<div id="login-bt-group" style="text-align: center;">
@@ -399,8 +429,8 @@ $(document).ready(function () {
 							name="login">User Login</button>
 						<button type="button" class="btn login" id="signup" name="signup">Sign
 							UP</button>
-							
-							<button type="button" class="btn sign" id="signin" name="signin">Sign
+
+						<button type="button" class="btn sign" id="signin" name="signin">Sign
 							in</button>
 						<button class="btn sign" id="cancel" type="button">Cancel</button>
 					</div>
@@ -439,5 +469,6 @@ $(document).ready(function () {
 <!-- MDB core JavaScript -->
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+
 
 </html>

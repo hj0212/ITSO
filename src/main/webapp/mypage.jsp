@@ -26,6 +26,13 @@
 <!--   ---------CDN 모음 끝------------------------------------------  -->
 <title>MyPage</title>
 <style>
+body {
+	background-color : #eeeeee;
+}
+
+#wrapper div {
+	background-color : #fff;
+}
 #header {
 	height: 150px;
 }

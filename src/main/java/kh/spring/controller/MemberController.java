@@ -5,17 +5,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.CollectionDTO;
-import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
+import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
 
 @Controller
@@ -25,31 +26,39 @@ public class MemberController {
 	@Autowired
 	private ISocialBoardService sservice;
 
+//	protected static Logger log = LoggerFactory.getLogger(MemberController.class);
+
 	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO dto, HttpSession session) {
-		System.out.println(dto.getEmail() + ":" + dto.getPw());
+		System.out.println(dto.getEmail()+":"+dto.getPw());
 		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = mservice.loginExist(dto);
 		if (result.size() > 0) {
 			session.setMaxInactiveInterval(60 * 60);
 			MemberDTO user = result.get(0);
 			session.setAttribute("user", user);
-		}
 
-		System.out.println("result.get(0) : " + result.get(0).getEmail() + " : " + result.get(0).getPw());
-		String userId = result.get(0).getEmail();
-		String userPw = result.get(0).getPw();
 
-		// Admin Account Redirect syntax
-		if (userId.equals("itso@admin") && userPw.equals("itso@admin")) {
-			mav.setViewName("goAdminPageWithAllAnalysisData.adm");
+			System.out.println("result.get(0) : " + result.get(0).getEmail() + " : " + result.get(0).getPw());
+			String userId = result.get(0).getEmail();
+			String userPw = result.get(0).getPw();
+
+			// Admin Account Redirect syntax
+			if (userId.equals("itso@admin") && userPw.equals("itso@admin")) {
+				mav.setViewName("goAdminPageWithAllAnalysisData.adm");
+			} else {
+				// usual users account redirect syntax
+				mav.addObject("result", result.size());
+				mav.setViewName("loginProc.jsp");
+				System.out.println(result.size());
+			}
+//			log.debug("로그인");
 		} else {
-			// usual users account redirect syntax
-			mav.addObject("result", result.size());
-			System.out.println(result.size());
 			mav.setViewName("loginProc.jsp");
 		}
-
+		mav.addObject("result",result.size());
+		System.out.println(result.size());
+		mav.setViewName("loginProc.jsp");
 		return mav;
 
 	}
@@ -60,10 +69,15 @@ public class MemberController {
 	}
 
 	@RequestMapping("/signin.do")
-	public ModelAndView SigninProc(String mail, String pw, String name, int age) {
+	public ModelAndView SigninProc(String mail,String pw, String name,int age,String gender) {
 		ModelAndView mav = new ModelAndView();
 
-		MemberDTO dto = new MemberDTO(mail, pw, name, age);
+		MemberDTO dto = new MemberDTO(mail,pw,name,age,gender);
+		dto.setPart("home");
+		dto.setBlock("n");
+		dto.setState(" ");
+		dto.setPhoto("background.jpg");
+		dto.setWithdrawal("n");
 		int result = mservice.insertUserData(dto);
 		mav.addObject("result", result);
 		mav.setViewName("signinProc.jsp");
