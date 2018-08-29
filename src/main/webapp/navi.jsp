@@ -296,7 +296,7 @@ background-color: #dbd97f;
 		var notificationcounter = 0;
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://localhost:8080/websocket?seq=${sessionScope.user.seq}");
+					"ws://localhost:80/websocket?seq=${sessionScope.user.seq}");
 			var str;
 			var file = "";
 
