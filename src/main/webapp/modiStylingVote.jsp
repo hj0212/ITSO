@@ -138,7 +138,7 @@ input[type="file"] {
 					aria-hidden="true"></i>
 				</a>
 				<div class="md-form form-lg col-md-12 mt-0">
-					<table class="table table-borderless">
+					<table class="table table-borderless" id="itemtable">
 						<thead>
 							<tr>
 								<th scope="col">seq</th>
@@ -146,11 +146,11 @@ input[type="file"] {
 							</tr>
 						</thead>
 						<tbody id="itemlist">
-						<c:forEach var="item" items="${voteitems}">
-							<tr class="z-depth-3 hoverable">
+						<c:forEach var="item" items="${voteitems}" varStatus = "status">
+							<tr class="z-depth-3 hoverable" id="tr${status.index}">
 								<th scope="row">
 								<input type="text" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
-								<td>
+								<td id="td${status.index}">
 									<div class="media">
 										<div class="media-img">
 										<c:set var="itemphoto" value="${item.styling_vote_item_photo}"/>
@@ -174,7 +174,7 @@ input[type="file"] {
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
-												<input type="text" id="vitemtext" class="form-control" name="styling_vote_item_contents[]" value="${item.styling_vote_item_contents}">
+												<input type="text" id="vitemtext" class="form-control itemconttext" name="styling_vote_item_contents[]" value="${item.styling_vote_item_contents}">
 												<label for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
 											</div>
 										</div>
@@ -303,10 +303,10 @@ input[type="file"] {
 								console.log(count);
 								$('#itemlist')
 										.append(
-												'<tr class="z-depth-3 hoverable"><th scope="row">'
+												'<tr class="z-depth-3 hoverable" id="tr${status.index}"><th scope="row">'
 														+ count
 														+ '</th>'
-														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
+														+ '<td id="td${status.index}"><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'
 														+ count
 														+ '" class="file-upload-input form-control filesel"'
@@ -315,7 +315,7 @@ input[type="file"] {
 														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
 														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
 														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
-														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control" name="styling_vote_item_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
+														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control itemconttext" name="styling_vote_item_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
 														+ '</div></div></div></td></tr>');
 							} else if (count == 6) {
 								alert("투표 항목은 6개까지 추가할 수 있습니다.")
@@ -371,30 +371,50 @@ input[type="file"] {
 		})
 		
 		$('#itsobtn').click(function(){
+			breakflag = false;
 			var radioval = $('input[name = "styling_endsel"]:checked').val();
 			if(radioval ==null){
 				alert("종료 방법을 선택해 주세요.");
 			}else{
 				$('#radioresult').val(radioval);
 				console.log($('input[name = "styling_end"]').val());		
-				console.log($('#datepicker').val());	
+				console.log($('#datepicker').val());
 				
-				if($('#votetitleid').val() == "" || $('#imgfile0').val() == "" || $('#votecontentsid').val() == "" || $('.file-upload-input, .filesel').val() == "" || $('.itemconts').val() == "" ){
-					alert("항목을 모두 입력해 주세요.");
+				if($('#votetitleid').val() == "" || ($('#imgfile0').val() == "" && $('#voteitemimg').attr('src')=="") || $('#votecontentsid').val() == "" || $('.itemconts').val() == "" ){
+					alert("1. 항목을 모두 입력해 주세요.");
 				}else if(radioval==1 && $('#datepicker').val()==""){
-					alert("종료 날짜를 선택해 주세요.");			
+					alert("2. 종료 날짜를 선택해 주세요.");			
 				}else if(radioval==2 && $('#votenum').val()==""){
 					alert("참여 인원을 입력해 주세요.");	
 				}else if($('#datepicker').val()=="" && $('#votenum').val()==""){
 					alert("투표종료 조건을 입력해 주세요.");
 				}else if($('.filesel').length<2){
 					alert("투표항목은 2개 이상 입력해 주세요.");
-				}else{
-					  $('#modiform').submit();  
+				}else {
+					for(i=1; i<$("#itemtable tr").length; i++){
+						console.log(breakflag);
+						console.log(i+"번째 포문");			
+						if(breakflag==true){break;}else{
+						if($('#itemtable tr:nth-of-type('+i+')').find('.filesel').val()=="" && $('#itemtable tr:nth-of-type('+i+')').find('.selimg').attr('src')=="" ){
+							alert("사진을 선택해 주세요."); 
+							breakflag=true;
+							}
+						else if($('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val()==null ||$('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val()==""){							
+							alert("아이템 내용을 적어주세요.");
+							breakflag=true;
+						}else{
+							
+						}
+						}
+					}
+					if(breakflag == false){
+						console.log("최종submit");
+						 $('#modiform').submit();  	 
 					/*  console.log("submit");  */
 				}
+					
 			}						
-		
+			}
 		})
 		
 	</script>
