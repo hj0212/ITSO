@@ -271,7 +271,6 @@ a#MOVE_TOP_BTN {
 		<!-- 드랍박스메뉴시작 -->
 		<section class="secondSection col-md-12">
 		<div class="container">
-
 			<div class="btn-group">
 				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
 					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -313,6 +312,8 @@ a#MOVE_TOP_BTN {
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
 		</section>
 		
 		<!-- 드랍박스메뉴종료 -->
