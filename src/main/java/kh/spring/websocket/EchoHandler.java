@@ -1,13 +1,8 @@
 package kh.spring.websocket;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -16,15 +11,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.server.standard.SpringConfigurator;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import kh.spring.dto.NotificationDTO;
-import kh.spring.impl.NotificationServiceImpl;
-import kh.spring.interfaces.INotificationService;
 
 @Controller
 @ServerEndpoint("/websocket")
