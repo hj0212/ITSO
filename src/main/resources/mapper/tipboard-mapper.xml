@@ -138,4 +138,10 @@ order by t.tip_seq desc
 		values(TIP_GOOD_SEQ.NEXTVAL,#{seq},#{tipLikingUser,jdbcType=INTEGER,javaType=Integer})
 	</insert>
 
+
+<update id="tipModifyProc" parameterType="TipDTO">
+update tip set tip_contents = #{tip_contents}, tip_title = #{tip_title}  where tip_seq = #{tip_seq}
+</update>
+
+
 </mapper>
