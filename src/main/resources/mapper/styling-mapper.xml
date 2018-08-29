@@ -87,7 +87,7 @@ order by s.styling_writedate desc
 	</select>
 	
 	<delete id="deleteStylingVoteItem" parameterType="int">
-	delete from styling_vote_item where styling_vote_item_seq= #{styling_vote_item_seq};
+	delete from styling_vote_item where styling_vote_item_seq= #{styling_vote_item_seq}
 	</delete>
 	
 	<select id="selectsvitemDTO" resultType="svitemDTO">

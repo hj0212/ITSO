@@ -204,7 +204,7 @@ input[type="file"] {
 				<!-- Group of default radios - option 1 -->
 				<!-- 	<div class="col-md-12 ml-5"> -->
 				<div class="col custom-control custom-radio col-md-3  ml-2">
-					<input type="radio" class="custom-control-input"
+					<input type="radio" class="custom-control-input" 
 						name="styling_endsel" id="defaultGroupExample1" value="1">
 					<label class="custom-control-label" for="defaultGroupExample1">기간</label><i
 						class="fa fa-calendar" aria-hidden="true">:</i>
@@ -284,7 +284,17 @@ input[type="file"] {
 			return false;
 		};
 		
+		document.getElementById("votenum").oninput = function() { 
+            var txt = document.getElementById("votenum").value;
+            var regex = /[^0-9]/; 
+            if (regex.test(txt) == true) {
+                document.getElementById("votenum").value = "";
+            } else {}
+        }
+		
 		count = $("#itemtable tr").length-1;
+		
+		
 		
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
@@ -384,6 +394,8 @@ input[type="file"] {
 			} else if ($(this).val() == 1) {
 				$('#votenum').attr('readOnly', true);
 				$("#datepicker").attr('disabled',false);
+				$("#datepicker").attr('readOnly',false);
+				$("#datepicker").css("background-color","white");
 				$(function() {
 					$("#datepicker").datepicker(
 							{
