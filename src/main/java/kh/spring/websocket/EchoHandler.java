@@ -37,16 +37,15 @@ public class EchoHandler{
 	
 	@OnOpen
 	public void hadleOpen(Session session) {
-		System.out.println("session들어왔슴돠");
+		System.out.println(session.getRequestParameterMap().get("seq").get(0));
+		int seq =Integer.parseInt(session.getRequestParameterMap().get("seq").get(0));
+		users.put(seq,session );
 	}
 	
 	@OnMessage
 	public void handleMessage(int message,Session session) {
 		try {
-			users.put(message,session);
-			
-		
-			
+							
 			
 			System.out.println(message +" :"+ session);
 		}catch(Exception e) {

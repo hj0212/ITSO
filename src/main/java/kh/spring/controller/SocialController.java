@@ -12,25 +12,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NotificationDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.dto.SocialTagDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.exception.NotWriterException;
 import kh.spring.interfaces.IMemberService;
+import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
@@ -45,6 +43,9 @@ public class SocialController {
 	
 	@Autowired 
 	ISocialTagService tagService;
+	
+	@Autowired
+	private INotificationService nosevice;
 
 	@RequestMapping("/main.go")
 	public ModelAndView showSocialBoardList(HttpSession session,HttpServletRequest request) {
@@ -174,13 +175,16 @@ public class SocialController {
 
 
 		try {
+			int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
+			NotificationDTO ndto = new NotificationDTO(sessionSeq);
 			/*System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());*/
+			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
 			
-			
+			mav.addObject("notiList",notiList);
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);

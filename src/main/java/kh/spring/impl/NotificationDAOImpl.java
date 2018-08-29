@@ -33,4 +33,10 @@ public class NotificationDAOImpl implements INotificationDAO {
 		return 0;
 	}
 
+	@Override
+	public List<NotificationDTO> notificationData(NotificationDTO ndto) {
+		// TODO Auto-generated method stub
+		return this.template.selectList("Notification.notificationData", ndto);
+	}
+
 }

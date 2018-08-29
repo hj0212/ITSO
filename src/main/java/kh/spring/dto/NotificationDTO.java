@@ -103,6 +103,22 @@ public class NotificationDTO {
 	public void setArticle_seq(int article_seq) {
 		this.article_seq = article_seq;
 	}
+
+	public String getNoti_user_photo() {
+		return noti_user_photo;
+	}
+
+	public void setNoti_user_photo(String noti_user_photo) {
+		this.noti_user_photo = noti_user_photo;
+	}
+
+	public String getNoti_user_name() {
+		return noti_user_name;
+	}
+
+	public void setNoti_user_name(String noti_user_name) {
+		this.noti_user_name = noti_user_name;
+	}
 	
 	
 }

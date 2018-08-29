@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<style>s
+<style>
+s
+
+
+
+
 @font-face {
 	font-family: 'NanumbarunpenR';
 	src: url('resources/fonts/nanumbarunpenr.ttf') format('truetype');
@@ -60,6 +65,11 @@ nav {
 	display: grid;
 	grid-template-columns: 1fr 2fr;
 	padding-top: 5px;
+}
+
+.notification-list {
+	overflow: auto;
+	height: 400px;
 }
 
 .user-name {
@@ -184,12 +194,13 @@ nav {
             </div>
             <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
         </form> -->
-        <form class="form-inline lg-form form-lg" style="width: 600px;">
+		<form class="form-inline lg-form form-lg" style="width: 600px;">
 			<input class="form-control form-control-sm mr-3 w-75" type="text"
-				placeholder="Search" aria-label="Search" id="searchinput">
-			<i id="searchIcon" class="fa fa-search" aria-hidden="true" style="color: white;"></i>
+				placeholder="Search" aria-label="Search" id="searchinput"> <i
+				id="searchIcon" class="fa fa-search" aria-hidden="true"
+				style="color: white;"></i>
 		</form>
-        
+
 		<ul class="navbar-nav ml-auto nav-flex-icons">
 			<li class="nav-item" id="searchli"><a
 				class="nav-link waves-effect waves-light" id="searchshow"> <i
@@ -254,128 +265,126 @@ nav {
 			<a href="#" class="notification-link">모두 읽음 상태로 표시</a>
 		</div>
 	</div>
-	
-	
+
+
 	<script type="text/javascript">
-	if("WebSocket" in window){
-		var ws = new WebSocket("ws://localhost:8080/websocket");
-		var str;
-		var file ="";
-		
-		ws.onopen = function() {
-			ws.send("${sessionScope.user.seq}");
-		};
-		ws.onmessage = function(msg) {
-			var obj = JSON.parse(msg.data);
-			
-			
-			console.log("이거 유저인데 :"+obj.user_seq);		 
-		};
-		
-		ws.onclose = function() {
-		};
-		
-	}
-	
+		if ("WebSocket" in window) {
+			var ws = new WebSocket(
+					"ws://localhost:8080/websocket?seq=${sessionScope.user.seq}");
+			var str;
+			var file = "";
+
+			ws.onopen = function() {
+				ws.send("${sessionScope.user.seq}");
+			};
+			ws.onmessage = function(msg) {
+				var obj = JSON.parse(msg.data);
+				var notification = "<div class='notification-item'>";
+				notification += "<div class='img-left'>";
+				notification += "<img src='/upload/profile/'"+obj.noti_user_photo+ "alt='' class='user-image'>";
+				notification += "</div>";
+				notification += "<div class='user-content'>";
+				notification += "<span class='user-info'> <span class='user-name'><b>"
+						+ obj.noti_user_name + "님이&nbsp;</b></span>";
+				notification += obj.noti_contents;
+				notification += "</span>";
+				notification += "<p class='comment-time'>1 hours ago</p>";
+				notification += "</div>";
+				notification += "</div>"
+				$("#notification_list").prepend(notification);
+
+				console.log("이거 유저인데 :" + obj.user_seq + obj.noti_user_name);
+			};
+
+			ws.onclose = function() {
+			};
+
+		}
 	</script>
-	
-	
-	<div class="notification-list">
-	
-	
-		<div class="notification-item">
-			<div class="img-left">
-				<img src="/upload/profile/profile.png" alt="" class="user-image">
-			</div>
-			<div class="user-content">
-				<span class="user-info"> <span class="user-name"><b>Alexander</b></span>
-					left a comment.
-				</span>
-				<p class="comment-time">1 hours ago</p>
-			</div>
-		</div>
-		<div class="notification-item">
-			<div class="img-left">
-				<img src="/upload/profile/profile.png" alt="" class="user-image">
-			</div>
-			<div class="user-content">
-				<span class="user-info"> <span class="user-name"><b>Alexander</b></span>
-					left a comment.
-				</span>
-				<p class="comment-time">1 hours ago</p>
-			</div>
-		</div>
-		<div class="notification-item">
-			<div class="img-left">
-				<img src="/upload/profile/profile.png" alt="" class="user-image">
-			</div>
-			<div class="user-content">
-				<span class="user-info"> <span class="user-name"><b>Alexander</b></span>
-					left a comment.
-				</span>
-				<p class="comment-time">1 hours ago</p>
-			</div>
-		</div>
+
+
+	<div class="notification-list" id="notification_list">
+		<c:choose>
+			<c:when test="${notiList ne null}">
+				<c:forEach var="tmp" items="${notiList}">
+					<div class="notification-item">
+						<div class="img-left">
+							<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
+								class="user-image">
+						</div>
+						<div class="user-content">
+							<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}</b></span>${noti_contents}</span>
+							<p class="comment-time">${tmp.noti_date}</p>
+						</div>
+					</div>
+				</c:forEach>
+			</c:when>
+
+
+
+
+		</c:choose>
+
+
 	</div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script>
-	$("#nav2").hide();
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script>
+		$("#nav2").hide();
 
-	$("#menu").on('click', 'a', function(event) {
-		var val = ($(this).html()).split("<")[0];
-		var item = $("#navbar2>ul>li:first-of-type>a").html();
-		console.log(val + ":" + item);
-		console.log($("#nav2").css("display"));
-		if ($("#nav2").css("display") == "none") {
-			$("#nav2").show();
-			if (val == '게시판') {
-				$("#navbar2 > ul:first-of-type").hide();
-				$("#navbar2 > ul:nth-of-type(2)").show();
+		$("#menu").on('click', 'a', function(event) {
+			var val = ($(this).html()).split("<")[0];
+			var item = $("#navbar2>ul>li:first-of-type>a").html();
+			console.log(val + ":" + item);
+			console.log($("#nav2").css("display"));
+			if ($("#nav2").css("display") == "none") {
+				$("#nav2").show();
+				if (val == '게시판') {
+					$("#navbar2 > ul:first-of-type").hide();
+					$("#navbar2 > ul:nth-of-type(2)").show();
+				} else {
+					$("#navbar2 > ul:first-of-type").show();
+					$("#navbar2 > ul:nth-of-type(2)").hide();
+				}
 			} else {
-				$("#navbar2 > ul:first-of-type").show();
-				$("#navbar2 > ul:nth-of-type(2)").hide();
+				if (val == '게시판') {
+					$("#navbar2 > ul:first-of-type").hide();
+					$("#navbar2 > ul:nth-of-type(2)").show();
+				} else {
+					$("#navbar2 > ul:first-of-type").show();
+					$("#navbar2 > ul:nth-of-type(2)").hide();
+				}
 			}
-		} else {
-			if (val == '게시판') {
-				$("#navbar2 > ul:first-of-type").hide();
-				$("#navbar2 > ul:nth-of-type(2)").show();
+		});
+
+		$("#searchIcon").hide();
+		$("#searchinput").hide();
+
+		$("#searchshow").click(function() {
+			$("#searchIcon").toggle();
+			$("#searchinput").toggle();
+
+		});
+
+		$("#searchIcon").click(function() {
+			var input = $("#searchinput").val();
+			if (input == "") {
+				$("#searchIcon").toggle("fast");
+				$("#searchinput").toggle("slow");
+
 			} else {
-				$("#navbar2 > ul:first-of-type").show();
-				$("#navbar2 > ul:nth-of-type(2)").hide();
+				console.log("search");
+			}
+		});
+
+		function toggleTooltip() {
+			let contents = document.getElementById("notification-info");
+			if (contents.style.display === "none") {
+				contents.style.display = "block";
+			} else {
+				contents.style.display = "none";
 			}
 		}
-	});
-
-	$("#searchIcon").hide();
-	$("#searchinput").hide();
-
-	$("#searchshow").click(function() {
-		$("#searchIcon").toggle();
-		$("#searchinput").toggle();
-
-	});
-
-	$("#searchIcon").click(function() {
-		var input = $("#searchinput").val();
-		if (input == "") {
-			$("#searchIcon").toggle("fast");
-			$("#searchinput").toggle("slow");
-
-		} else {
-			console.log("search");
-		}
-	});
-
-	function toggleTooltip() {
-		let contents = document.getElementById("notification-info");
-		if (contents.style.display === "none") {
-			contents.style.display = "block";
-		} else {
-			contents.style.display = "none";
-		}
-	}
-	let toggle = document.getElementById("tooltip");
-	toggle.addEventListener("click", toggleTooltip, false);
-</script>
+		let toggle = document.getElementById("tooltip");
+		toggle.addEventListener("click", toggleTooltip, false);
+	</script>

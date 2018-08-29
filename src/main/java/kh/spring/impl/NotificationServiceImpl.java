@@ -36,4 +36,11 @@ public class NotificationServiceImpl implements INotificationService {
 		return 0;
 	}
 
+
+	@Override
+	public List<NotificationDTO> notificationData(NotificationDTO ndto) {
+		// TODO Auto-generated method stub
+		return this.dao.notificationData(ndto);
+	}
+
 }

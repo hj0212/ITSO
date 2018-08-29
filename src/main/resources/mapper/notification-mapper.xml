@@ -12,4 +12,10 @@
 	<select id="selectNotification" resultType="notificationDTO" >
 		select  n.* ,u.photo noti_user_photo,u.name noti_user_name from notification n ,users u where  n.noti_user_seq = u.seq and n.user_seq = #{user_seq} and n.noti_read = 'n'
 	</select>
+	<select id="notificationData" resultType="notificationDTO">
+		select * from notification where user_seq = #{user_seq} and noti_user_seq =#{noti_user_seq}	and noti_type =#{noti_type} and article_seq = #{article_seq}
+	</select>
+	
+	
+	
 </mapper>

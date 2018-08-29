@@ -8,4 +8,5 @@ public interface INotificationDAO {
 	public int insertNotification(NotificationDTO ndto); //알림 들어간다
 	public List<NotificationDTO> selectNotification(NotificationDTO ndto);
 	public int updateNotification(NotificationDTO ndto);
+	public List<NotificationDTO> notificationData(NotificationDTO ndto);
 }
