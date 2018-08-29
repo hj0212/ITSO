@@ -198,7 +198,7 @@ public class SocialController {
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
 			
-			
+			mav.addObject("u-seq",sessionSeq);
 			mav.addObject("notiList",notiList);
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
@@ -208,7 +208,7 @@ public class SocialController {
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
-
+		
 			mav.addObject("feed",feed);
 			mav.addObject("goodCount",goodCount);
 			mav.addObject("heart",ggdto);
@@ -262,8 +262,8 @@ public class SocialController {
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
 		int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
-		NotificationDTO nodto = new NotificationDTO(noti_seq);
-		int update_noti = nosevice.updateNotification(nodto);
+		NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");
+		int update_noti =this.nosevice.updateNotification(nodto);
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
