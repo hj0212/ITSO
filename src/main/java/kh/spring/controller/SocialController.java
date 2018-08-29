@@ -184,6 +184,10 @@ public class SocialController {
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
 			
+		
+			
+			
+			
 			mav.addObject("notiList",notiList);
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
@@ -233,6 +237,11 @@ public class SocialController {
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
 		String[] writeDate = dto.getSocial_date().toString().split("-");
+		
+		
+		int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
+		NotificationDTO nodto = new NotificationDTO(noti_seq);
+		int update_noti = nosevice.updateNotification(nodto);
 		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);

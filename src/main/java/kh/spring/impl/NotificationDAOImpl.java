@@ -30,7 +30,7 @@ public class NotificationDAOImpl implements INotificationDAO {
 	@Override
 	public int updateNotification(NotificationDTO ndto) {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.template.update("Notification.readNotification",ndto);
 	}
 
 	@Override

@@ -2,12 +2,15 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class NotificationDTO {
 	private int noti_seq;	
 	private int user_seq;
 	private int noti_user_seq;
 	private String noti_type;	// comment, tag, good, reply
-	private String noti_contents;	
+	private String noti_contents;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date noti_date;		// 알림발생시간
 	private String noti_read;	// y, n
 	private String noti_url;
@@ -44,9 +47,11 @@ public class NotificationDTO {
 		this.article_seq = article_seq;
 	}
 	
-	public NotificationDTO(int user_seq) {
-		this.user_seq = user_seq;
+	public NotificationDTO(int noti_seq) {
+		this.noti_seq = noti_seq;
 	}
+	
+
 	
 	
 	public int getNoti_seq() {

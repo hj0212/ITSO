@@ -33,7 +33,7 @@ public class NotificationServiceImpl implements INotificationService {
 	@Override
 	public int updateNotification(NotificationDTO ndto) {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.dao.updateNotification(ndto);
 	}
 
 

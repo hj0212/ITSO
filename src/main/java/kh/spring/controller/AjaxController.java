@@ -92,8 +92,10 @@ public class AjaxController {
 						int noInsert = noservice.insertNotification(nodto);
 					
 						NotificationDTO list = noservice.selectNotification(nodto).get(0);		
+						System.out.println(list.getNoti_date());
 						ObjectMapper mapper = new ObjectMapper();
 						String jsonString  = mapper.writeValueAsString(list);	
+						System.out.println(jsonString);
 						EchoHandler.users.get(nodto.getUser_seq()).getBasicRemote().sendText(jsonString);
 					}else {
 						System.out.println("있음");
