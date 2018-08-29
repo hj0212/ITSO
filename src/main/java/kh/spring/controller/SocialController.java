@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.NotificationDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.dto.SocialCommentDTO;
 import kh.spring.dto.SocialHashTagDTO;
@@ -33,6 +34,7 @@ import kh.spring.dto.SocialTagDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.exception.NotWriterException;
 import kh.spring.interfaces.IMemberService;
+import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.ISocialCommentService;
 import kh.spring.interfaces.ISocialHashTagService;
@@ -49,6 +51,9 @@ public class SocialController {
 
 	@Autowired 
 	ISocialTagService tagService;
+	
+	@Autowired
+	private INotificationService nosevice;
 
 	@Autowired
 	ISocialCommentService comService;
@@ -184,13 +189,17 @@ public class SocialController {
 
 
 		try {
+			int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
+			NotificationDTO ndto = new NotificationDTO(sessionSeq);
 			/*System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());*/
+			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
-
-
+			
+			
+			mav.addObject("notiList",notiList);
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
@@ -251,8 +260,11 @@ public class SocialController {
 		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
 
 		String[] writeDate = dto.getSocial_date().toString().split("-");
-
-
+		
+		int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
+		NotificationDTO nodto = new NotificationDTO(noti_seq);
+		int update_noti = nosevice.updateNotification(nodto);
+		
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
 		// image_db -> {} -> 0 : {}, 1 : {}

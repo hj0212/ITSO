@@ -30,7 +30,7 @@
 
     var ws="";
 	function send_Message() {
-		ws = new WebSocket("ws://localhost:8080/echo/websocket");
+		ws = new WebSocket("ws://localhost:8080/websocket");
 		ws.onopen = function(event) {
 			onOpen(event);
 		};
@@ -46,7 +46,7 @@
 			ws.send($("#message").val());
 		}
 		function onMessage(event){
-			$("body").html(event);
+			$("#data").text(event.data);
 			console.log("돌아왔어");
 		}
 		function onError(event){

@@ -294,6 +294,7 @@ button.dropdown-toggle {
 				});
 				$(".heart").on('click', function() {
 					var seq = $(this).attr("value");
+					var writer	= $(".writerseq").val();
 					var font = $(this).children('font');
 					console.log("숫자: " + $(this).children('font').html());
 					console.log(seq);
@@ -301,7 +302,8 @@ button.dropdown-toggle {
 						url : "mainHeart.ajax",
 						type : "post",
 						data : {
-							social_seq : seq
+							social_seq : seq , 
+							social_writer :writer
 						},
 						success : function(data) {
 							console.log("들어옴" + data), font.html(data)

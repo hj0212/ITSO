@@ -16,6 +16,7 @@ import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
+import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
 
 @Controller
@@ -29,7 +30,7 @@ public class MemberController {
 
 	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO dto, HttpSession session) {
-		System.out.println(dto.getEmail() + ":" + dto.getPw());
+		System.out.println(dto.getEmail()+":"+dto.getPw());
 		ModelAndView mav = new ModelAndView();
 		List<MemberDTO> result = mservice.loginExist(dto);
 		if (result.size() > 0) {
@@ -55,6 +56,9 @@ public class MemberController {
 		} else {
 			mav.setViewName("loginProc.jsp");
 		}
+		mav.addObject("result",result.size());
+		System.out.println(result.size());
+		mav.setViewName("loginProc.jsp");
 		return mav;
 
 	}
