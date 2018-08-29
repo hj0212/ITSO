@@ -264,6 +264,7 @@ input[type="file"] {
 			return false;
 		};
 		
+		var deletedsvitem = new Array(); 
 		
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
@@ -326,6 +327,8 @@ input[type="file"] {
 			var wraptr = $(this).closest("tr");
 			$(this).closest("tr").remove();
 			count--;
+			var delseq = $(this).parent().parent().parent().prev('th').children('input').val();
+			deletedsvitem.push(delseq);
 			/* var arr = wraptr.nextAll('tr').children('th');
 			for(i=0 i<arr.size i++){
 				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜
@@ -408,8 +411,9 @@ input[type="file"] {
 						}
 					}
 					if(breakflag == false){
-						console.log("최종submit");
-						 $('#modiform').submit();  	 
+						console.log("최종submit-------------");
+						console.log("del목록"+deletedsvitem.pop(0));
+						/*  $('#modiform').submit();   */	 
 					/*  console.log("submit");  */
 				}
 					

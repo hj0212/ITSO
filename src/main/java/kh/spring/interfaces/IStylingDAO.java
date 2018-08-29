@@ -32,4 +32,6 @@ public interface IStylingDAO {
 	public int updateStylingViewcount(int styling_vote_seq);
 	
 	public List<StylingVoteResultDTO> getStylingVoteResult(int styling_vote_seq);
+	
+	public int deleteStylingVoteItem(int styling_vote_item_seq);
 }
