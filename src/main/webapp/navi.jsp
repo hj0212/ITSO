@@ -305,7 +305,12 @@ background-color: #dbd97f;
 			};
 			ws.onmessage = function(msg) {
 				var obj = JSON.parse(msg.data);
-				var notification = "<div class='notification-item'>";
+				
+				if(obj.noti_read =='n'){
+					var notification  = "<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+				}else{
+					var notification  ="<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+				}
 				notification += "<div class='img-left'>";
 				notification += "<img src='/upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
 				notification += "</div>";
@@ -450,7 +455,7 @@ background-color: #dbd97f;
 	};
 	
 	
-	$(".notification-item").on('click',function(){
+	$(document).on('click',".notification-item",function(){
 		console.log($(this).attr("id"));
 		console.log($(this).attr("seq"));
 		var seq =$(this).attr("seq");
