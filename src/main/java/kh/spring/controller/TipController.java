@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.MemberDTO;
-import kh.spring.dto.SocialCommentDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -79,7 +78,6 @@ public class TipController {
 		mav.addObject("dietTipData", dietTipData);
 		mav.addObject("fashionTipData", fashionTipData);
 		mav.addObject("businessTipData", businessTipData);
-		// mav.addObject("tipThumpsUpCountData", tipThumpsUpCountData);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;

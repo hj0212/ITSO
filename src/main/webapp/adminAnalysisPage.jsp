@@ -296,7 +296,7 @@ input:checked+.slider:before {
 						<!-- Table head -->
 
 						<!-- block Table body -->
-						<tbody class=ta-center>
+						<tbody class="ta-center align-middle">
 							<c:forEach items="${reportedUsers}" var="reportedUsers"
 								varStatus="status">
 								<tr>
@@ -311,11 +311,27 @@ input:checked+.slider:before {
 									<td>
 										<!-- Rectangular switch --> <label class="switch"> <input
 											type="checkbox" class="cb" name="${status.index}"> <span
-											class="slider"></span>
+											name="${status.index}" class="slider"></span>
 									</label>
 									</td>
 								</tr>
 
+								<script>
+									$(document)
+											.ready(
+													function() {
+														var isBlocked = $(
+																".isBlocked[name|=${status.index}]")
+																.html();
+														console.log(isBlocked);
+														if (isBlocked == 'y') {
+															$("input[name|=${status.index}]").attr('checked',true);
+														} else {
+															$("input[name|=${status.index}]").attr('checked',false);
+														}
+
+													})
+								</script>
 								<script>
 									// 유저 블럭 스크립트
 									$("input[name|=${status.index}]")
@@ -334,12 +350,32 @@ input:checked+.slider:before {
 																		"userSeq" : userSeq
 																	},
 																	type : "post",
+																	async : true,
 																	success : function(
 																			result) {
 																		console
 																				.log(result);
-																		if (result > 0) {
-																			alert("블럭 상태 수정")
+																		console
+																				.log("3이면 유저 언블럭 성공, 4면 유저 블럭 성공");
+
+																		var isBlocked = $(
+																				".isBlocked[name=${status.index}]")
+																				.html();
+
+																		if (result == 3) {
+																			alert("해당 유저의 블럭이 해제되었습니다.");
+																			$(
+																					".isBlocked[name=${status.index}]")
+																					.html(
+																							'n');
+
+																		} else if (result == 4) {
+																			alert("해당 유저가 블럭되었습니다.");
+																			$(
+																					".isBlocked[name=${status.index}]")
+																					.html(
+																							'y');
+
 																		} else {
 																			alert("에러 발생!");
 																		}
@@ -350,33 +386,6 @@ input:checked+.slider:before {
 																})
 													})
 								</script>
-								<script>
-									// 블럭 버튼 UI
-
-									function changingBlockBtn() {
-										var isBlocked = $(
-												".isBlocked[name=${status.index}]")
-												.html();
-										if (isBlocked.contain('y')) {
-											$(".cb[name=${status.index}]")
-													.next("span").html(
-															"::before");
-											$(
-													".isBlocked[name=${status.index}]")
-													.html('y');
-										} else {
-											$(".cb[name=${status.index}]")
-													.next("span").html("");
-											$(
-													".isBlocked[name=${status.index}]")
-													.html('n');
-										}
-
-									}
-								</script>
-
-
-
 							</c:forEach>
 						</tbody>
 						<!-- Table body -->
@@ -591,24 +600,22 @@ input:checked+.slider:before {
 				}
 			});
 
-
 	//line-chart increased-rate of users compare with last month
 	var ctx = document.getElementById("lineChart").getContext('2d');
 	var myLineChart = new Chart(ctx, {
 		type : 'line',
 		data : {
 			"labels" : [ "January", "February", "March", "April", "May",
-				"June", "July" ],
-		"datasets" : [ {
-			"label" : "My First Dataset",
-			"data" : [ 65, 59, 80, 81, 56, 55, 40 ],
-			"fill" : false,
-			"borderColor" : "rgb(75, 192, 192)",
-			"lineTension" : 0.1
-		} ]
-	},
-		options : {
-		}
+					"June", "July" ],
+			"datasets" : [ {
+				"label" : "My First Dataset",
+				"data" : [ 65, 59, 80, 81, 56, 55, 40 ],
+				"fill" : false,
+				"borderColor" : "rgb(75, 192, 192)",
+				"lineTension" : 0.1
+			} ]
+		},
+		options : {}
 	});
 
 	//radar

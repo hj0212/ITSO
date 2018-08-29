@@ -75,10 +75,14 @@ public class AdminController {
 			System.out.println("user already blocked, so we will release the block user back");
 			result = service.blockUserReleasing(userSeq);
 			System.out.println("Target user is unblocked!");
+			
+			result=3;
+			
 		} else {
 			System.out.println("user wasn't blocked, so we will block him");
 			result = service.specificUserblock(userSeq);
 			System.out.println("Targeted User is Blocked!");
+			result=4;
 		}
 		
 		System.out.println("blocked method results : " + result);

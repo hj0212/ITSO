@@ -13,7 +13,6 @@
 			javaType="java.lang.String" />
 		<result property="tip_writer" column="tip_writer" jdbcType="INTEGER"
 			javaType="java.lang.Integer" />
-		<!-- <result property="tip_date" column="tip_date" jdbcType="DATE" javaType="java.util.Date"/> -->
 		<result property="tip_viewcount" column="tip_viewcount"
 			jdbcType="VARCHAR" javaType="java.lang.String" />
 		<result property="category" column="category" jdbcType="VARCHAR"
@@ -99,13 +98,6 @@ order by t.tip_seq desc
 
 
 
-<!-- 		select * from users u, tip t left outer join (select -->
-<!-- 		tip_seq, count(*) -->
-<!-- 		tip_like_count from tip_good group by tip_seq) tg on -->
-<!-- 		t.tip_seq = -->
-<!-- 		tg.tip_seq where t.tip_writer=u.seq and t.category='직장생활' -->
-<!-- 		order by -->
-<!-- 		t.TIP_SEQ desc -->
 	</select>
 
 	<!-- getToBeUpvotingArticles 50>tip_like_count>15 -->
@@ -127,7 +119,10 @@ order by t.tip_seq desc
 	<!-- specific article get sql by #{tip_seq} number -->
 	<select id="getSpecificTipView" parameterType="TipDTO"
 		resultMap="TipDTOResultMap">
-		select * from Tip where tip_seq=#{seq}
+<!-- 		select * from Tip where tip_seq=#{seq} -->
+		select * from tip t , users u where t.tip_seq=#{seq} and u.seq = t.tip_writer
+		
+		
 	</select>
 
 	<!-- tip board viewcount +1 proc -->
