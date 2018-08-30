@@ -33,10 +33,85 @@
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+<style>
+.ta-center {
+	text-align: center;
+}
+
+/* toggle button */
+
+/* The switch - the box around the slider */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	display: none;
+}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked+.slider {
+	background-color: #2196F3;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+</style>
+
 </head>
+
+
 <!-- dataSets -->
-<input value="${femaleUsers}" type="number" id="femaleUserCounts">
-<input value="${maleUsers}" type="number" id="maleUserCounts">
+
+<!-- gender rate -->
+<input value="${femaleUsers}" type="hidden" id="femaleUserCounts">
+<input value="${maleUsers}" type="hidden" id="maleUserCounts">
+
+<!-- Age rates -->
+<input value="${teenagers}" type="hidden" id="10s">
+<input value="${twenties}" type="hidden" id="20s">
+<input value="${thirties}" type="hidden" id="30s">
+<input value="${forties}" type="hidden" id="40s">
+
+
+
+
+
 
 <!--Main Navigation-->
 <header>
@@ -94,7 +169,6 @@
 <!--Main Navigation-->
 
 <!--Main layout-->
-<main class="pt-5 mx-lg-5">
 <div class="container-fluid mt-5">
 
 	<!-- Heading -->
@@ -108,15 +182,6 @@
 					target="_blank">Home Page</a> <span>/</span> <span>Dashboard</span>
 			</h4>
 
-			<form class="d-flex justify-content-center">
-				<!-- Default input -->
-				<input type="search" placeholder="Type your query"
-					aria-label="Search" class="form-control">
-				<button class="btn btn-primary btn-sm my-0 p" type="submit">
-					<i class="fa fa-search"></i>
-				</button>
-
-			</form>
 
 		</div>
 
@@ -205,106 +270,130 @@
 	<div class="row wow fadeIn">
 
 		<!--Grid column-->
-		<div class="col-md-6 mb-4">
+		<div class="col-md-12 mb-4">
 
 			<!--Card-->
 			<div class="card">
 
 				<!--Card content-->
 				<div class="card-body">
-
 					<!-- Table  -->
 					<table class="table table-hover">
 						<!-- Table head -->
-						<thead class="blue-grey lighten-4">
+						<thead class="indigo lighten-4 ta-center">
 							<tr>
 								<th>#</th>
-								<th>Lorem</th>
-								<th>Ipsum</th>
-								<th>Dolor</th>
+								<th>유저번호</th>
+								<th>이메일</th>
+								<th>이름</th>
+								<th>가입일</th>
+								<th>신고 횟수</th>
+								<th>신고 사유</th>
+								<th>블럭 유무</th>
+								<th>정지</th>
 							</tr>
 						</thead>
 						<!-- Table head -->
 
-						<!-- Table body -->
-						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>Cell 1</td>
-								<td>Cell 2</td>
-								<td>Cell 3</td>
-							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>Cell 4</td>
-								<td>Cell 5</td>
-								<td>Cell 6</td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>Cell 7</td>
-								<td>Cell 8</td>
-								<td>Cell 9</td>
-							</tr>
+						<!-- block Table body -->
+						<tbody class="ta-center align-middle">
+							<c:forEach items="${reportedUsers}" var="reportedUsers"
+								varStatus="status">
+								<tr>
+									<th scope="row"></th>
+									<td class="user_seq" name="${status.index}">${reportedUsers.user_seq}</td>
+									<td>${reportedUsers.email}</td>
+									<td>${reportedUsers.name}</td>
+									<td>${reportedUsers.create_date}</td>
+									<td>${reportedUsers.report_count}</td>
+									<td>${reportedUsers.report_reason}</td>
+									<td class="isBlocked" name="${status.index}">${reportedUsers.block}</td>
+									<td>
+										<!-- Rectangular switch --> <label class="switch"> <input
+											type="checkbox" class="cb" name="${status.index}"> <span
+											name="${status.index}" class="slider"></span>
+									</label>
+									</td>
+								</tr>
+
+								<script>
+									$(document)
+											.ready(
+													function() {
+														var isBlocked = $(
+																".isBlocked[name|=${status.index}]")
+																.html();
+														console.log(isBlocked);
+														if (isBlocked == 'y') {
+															$("input[name|=${status.index}]").attr('checked',true);
+														} else {
+															$("input[name|=${status.index}]").attr('checked',false);
+														}
+
+													})
+								</script>
+								<script>
+									// 유저 블럭 스크립트
+									$("input[name|=${status.index}]")
+											.click(
+													function() {
+														var userSeq = $(
+																".user_seq[name|=${status.index}]")
+																.html();
+
+														console.log(userSeq);
+
+														$
+																.ajax({
+																	url : "specificUserblock.adm",
+																	data : {
+																		"userSeq" : userSeq
+																	},
+																	type : "post",
+																	async : true,
+																	success : function(
+																			result) {
+																		console
+																				.log(result);
+																		console
+																				.log("3이면 유저 언블럭 성공, 4면 유저 블럭 성공");
+
+																		var isBlocked = $(
+																				".isBlocked[name=${status.index}]")
+																				.html();
+
+																		if (result == 3) {
+																			alert("해당 유저의 블럭이 해제되었습니다.");
+																			$(
+																					".isBlocked[name=${status.index}]")
+																					.html(
+																							'n');
+
+																		} else if (result == 4) {
+																			alert("해당 유저가 블럭되었습니다.");
+																			$(
+																					".isBlocked[name=${status.index}]")
+																					.html(
+																							'y');
+
+																		} else {
+																			alert("에러 발생!");
+																		}
+																	},
+																	error : function() {
+																		alert("에러가 발생하였습니다. 관리자에게 문의하세요!");
+																	}
+																})
+													})
+								</script>
+							</c:forEach>
 						</tbody>
 						<!-- Table body -->
 					</table>
-					<!-- Table  -->
 
-				</div>
-
-			</div>
-			<!--/.Card-->
-
-		</div>
-		<!--Grid column-->
-
-		<!--Grid column-->
-		<div class="col-md-6 mb-4">
-
-			<!--Card-->
-			<div class="card">
-
-				<!--Card content-->
-				<div class="card-body">
 
 					<!-- Table  -->
-					<table class="table table-hover">
-						<!-- Table head -->
-						<thead class="blue lighten-4">
-							<tr>
-								<th>#</th>
-								<th>Lorem</th>
-								<th>Ipsum</th>
-								<th>Dolor</th>
-							</tr>
-						</thead>
-						<!-- Table head -->
-
-						<!-- Table body -->
-						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>Cell 1</td>
-								<td>Cell 2</td>
-								<td>Cell 3</td>
-							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>Cell 4</td>
-								<td>Cell 5</td>
-								<td>Cell 6</td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>Cell 7</td>
-								<td>Cell 8</td>
-								<td>Cell 9</td>
-							</tr>
-						</tbody>
-						<!-- Table body -->
-					</table>
-					<!-- Table  -->
+					<span>1회 이상 신고 받은 유저만 목록에 출력 됩니다.</span>
 
 				</div>
 
@@ -414,804 +503,9 @@
 
 		</div>
 		<!--Grid column-->
-
-		<!--Grid column-->
-		<div class="col-md-6 mb-4">
-
-			<!--Card-->
-			<div class="card">
-
-				<!--Section: Modals-->
-				<section>
-
-					<!-- Frame Modal Top Info-->
-					<div class="modal fade top" id="frameModalTopInfoDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-frame modal-top modal-notify modal-info"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Body-->
-								<div class="modal-body">
-									<div
-										class="row d-flex justify-content-center align-items-center">
-
-										<p class="pt-3 pr-2">Lorem ipsum dolor sit amet,
-											consectetur adipisicing elit. Impedit nisi quo provident
-											fugiat reprehenderit nostrum quos..</p>
-
-										<a role="button" class="btn btn-info">Get it now <i
-											class="fa fa-diamond ml-1"></i>
-										</a> <a role="button" class="btn btn-outline-info waves-effect"
-											data-dismiss="modal">No, thanks</a>
-									</div>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Frame Modal Bottom Success-->
-
-					<!-- Frame Modal Bottom Success-->
-					<div class="modal fade bottom" id="frameModalBottomSuccessDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-frame modal-bottom modal-notify modal-success"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Body-->
-								<div class="modal-body">
-									<div
-										class="row d-flex justify-content-center align-items-center">
-
-										<p class="pt-3 pr-2">Lorem ipsum dolor sit amet,
-											consectetur adipisicing elit. Impedit nisi quo provident
-											fugiat reprehenderit nostrum quos..</p>
-
-										<a role="button" class="btn btn-success">Get it now <i
-											class="fa fa-diamond ml-1"></i>
-										</a> <a role="button" class="btn btn-outline-success waves-effect"
-											data-dismiss="modal">No, thanks</a>
-									</div>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Frame Modal Bottom Success-->
-
-					<!-- Side Modal Top Right Success-->
-					<div class="modal fade right" id="sideModalTRSuccessDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-side modal-top-right modal-notify modal-success"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Success</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<div class="text-center">
-										<i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Impedit iusto nulla aperiam blanditiis ad consequatur
-											in dolores culpa, dignissimos, eius non possimus fugiat. Esse
-											ratione fuga, enim, ab officiis totam.</p>
-									</div>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer justify-content-center">
-									<a role="button" class="btn btn-success">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-success waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Side Modal Top Right Success-->
-
-					<!-- Side Modal Top Left Info-->
-					<div class="modal fade left" id="sideModalTLInfoDemo" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
-						data-backdrop="false">
-						<div
-							class="modal-dialog modal-side modal-top-left modal-notify modal-info"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Info</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-
-									<img
-										src="https://mdbootstrap.com/wp-content/uploads/2016/11/admin-dashboard-bootstrap.jpg"
-										alt="Material Design for Bootstrap - dashboard"
-										class="img-fluid">
-
-									<div class="text-center">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Nesciunt vero illo error eveniet cum.</p>
-									</div>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer justify-content-center">
-									<a role="button" class="btn btn-info">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-info waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Side Modal Top Left Info-->
-
-					<!-- Side Modal Bottom Right Danger-->
-					<div class="modal fade right" id="sideModalBRDangerDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-side modal-bottom-right modal-notify modal-danger"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading">Modal Danger</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-
-									<div class="row">
-										<div class="col-3">
-											<p></p>
-											<p class="text-center">
-												<i class="fa fa-shopping-cart fa-4x"></i>
-											</p>
-										</div>
-
-										<div class="col-9">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit. Fuga, molestiae provident temporibus sunt earum.</p>
-											<h2>
-												<span class="badge">v52gs1</span>
-											</h2>
-										</div>
-									</div>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer justify-content-center">
-									<a role="button" class="btn btn-danger">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-danger waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Side Modal Bottom Right Danger-->
-
-					<!-- Side Modal Bottom Left Warning-->
-					<div class="modal fade left" id="sideModalBLWarningDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-side modal-bottom-left modal-notify modal-warning"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading">Modal Warning</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-
-									<div class="row">
-										<div class="col-3 text-center">
-											<img
-												src="https://mdbootstrap.com/img/Photos/Avatars/img%20(1).jpg"
-												alt="Michal Szymanski - founder of Material Design for Bootstrap"
-												class="img-fluid z-depth-1-half rounded-circle">
-											<div style="height: 10px"></div>
-											<p class="title mb-0">Jane</p>
-											<p class="text-muted " style="font-size: 13px">Consultant</p>
-										</div>
-
-										<div class="col-9">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit. Fuga, molestiae provident temporibus sunt earum.</p>
-											<p class="card-text">
-												<strong>Lorem ipsum dolor sit amet, consectetur
-													adipisicing elit.</strong>
-											</p>
-										</div>
-									</div>
-
-
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer justify-content-center">
-									<a role="button" class="btn btn-warning">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-warning waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Side Modal Bottom Left Warning-->
-
-					<!--Modal Form Login with Avatar Demo-->
-					<div class="modal fade" id="modalLoginAvatarDemo" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog cascading-modal modal-avatar modal-sm"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-
-								<!--Header-->
-								<div class="modal-header">
-									<img
-										src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg"
-										class="rounded-circle img-responsive" alt="Avatar photo">
-								</div>
-								<!--Body-->
-								<div class="modal-body text-center mb-1">
-
-									<h5 class="mt-1 mb-2">Maria Doe</h5>
-
-									<div class="md-form ml-0 mr-0">
-										<input type="password" type="text" id="form1"
-											class="form-control ml-0"> <label for="form1"
-											class="ml-0">Enter password</label>
-									</div>
-
-									<div class="text-center mt-4">
-										<button class="btn btn-cyan">
-											Login <i class="fa fa-sign-in ml-1"></i>
-										</button>
-									</div>
-								</div>
-
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!--Modal Form Login with Avatar Demo-->
-
-					<!--Modal: Login / Register Form Demo-->
-					<div class="modal fade" id="modalLRFormDemo" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">...</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary">Save
-										changes</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--Modal: Login / Register Form Demo-->
-
-					<!-- Central Modal Large Info-->
-					<div class="modal fade" id="centralModalLGInfoDemo" tabindex="-1"
-						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg modal-notify modal-info"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Info</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<div class="text-center">
-										<i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Impedit iusto nulla aperiam blanditiis ad consequatur
-											in dolores culpa, dignissimos, eius non possimus fugiat. Esse
-											ratione fuga, enim, ab officiis totam.</p>
-									</div>
-									<img
-										src="https://mdbootstrap.com/wp-content/uploads/2016/11/admin-dashboard-bootstrap.jpg"
-										alt="Material Design for Bootstrap - dashboard"
-										class="img-fluid">
-
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer">
-									<a role="button" class="btn btn-info">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-info waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Central Modal Large Info-->
-
-					<!-- Central Modal Fluid Success-->
-					<div class="modal fade" id="centralModalFluidSuccessDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog modal-fluid modal-notify modal-success"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Success</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<div class="text-center">
-										<i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Impedit iusto nulla aperiam blanditiis ad consequatur
-											in dolores culpa, dignissimos, eius non possimus fugiat. Esse
-											ratione fuga, enim, ab officiis totam.</p>
-									</div>
-									<ul class="list-group z-depth-0">
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-									</ul>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer">
-									<a role="button" class="btn btn-success">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-success waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Central Modal Fluid Success-->
-
-					<!-- Full Height Modal Right Success Demo-->
-					<div class="modal fade right" id="fluidModalRightSuccessDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-full-height modal-right modal-notify modal-success"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Success</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<div class="text-center">
-										<i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Impedit iusto nulla aperiam blanditiis ad consequatur
-											in dolores culpa, dignissimos, eius non possimus fugiat. Esse
-											ratione fuga, enim, ab officiis totam.</p>
-									</div>
-									<ul class="list-group z-depth-0">
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-									</ul>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer justify-content-center">
-									<a role="button" class="btn btn-success">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-success waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Full Height Modal Right Success Demo-->
-
-					<!-- Full Height Modal Left Info Demo-->
-					<div class="modal fade left" id="fluidModalLeftInfoDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-full-height modal-left modal-notify modal-info"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Success</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<div class="text-center">
-										<i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-											elit. Impedit iusto nulla aperiam blanditiis ad consequatur
-											in dolores culpa, dignissimos, eius non possimus fugiat. Esse
-											ratione fuga, enim, ab officiis totam.</p>
-									</div>
-									<ul class="list-group z-depth-0">
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-									</ul>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer justify-content-center">
-									<a role="button" class="btn btn-info">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-info waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Full Height Modal Right Info Demo-->
-
-					<!-- Full Height Modal Top Warning Demo-->
-					<div class="modal fade top" id="fluidModalTopWarningDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-full-height modal-top modal-notify modal-warning"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Warning</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<div class="text-center">
-										<i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-									</div>
-									<ul class="list-group z-depth-0">
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-									</ul>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer">
-									<a role="button" class="btn btn-warning">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-warning waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Full Height Modal Top Warning Demo-->
-
-					<!-- Full Height Modal Bottom Danger Demo-->
-					<div class="modal fade bottom" id="fluidModalBottomDangerDemo"
-						tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-						aria-hidden="true" data-backdrop="false">
-						<div
-							class="modal-dialog modal-full-height modal-bottom modal-notify modal-danger"
-							role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead">Modal Danger</p>
-
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true" class="white-text">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<div class="text-center">
-										<i class="fa fa-check fa-4x mb-3 animated rotateIn"></i>
-									</div>
-									<ul class="list-group z-depth-0">
-										<li class="list-group-item justify-content-between">Cras
-											justo odio <span class="badge badge-primary badge-pill">14</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Dapibus ac facilisis in <span
-											class="badge badge-primary badge-pill">2</span>
-										</li>
-										<li class="list-group-item justify-content-between">
-											Morbi leo risus <span class="badge badge-primary badge-pill">1</span>
-										</li>
-									</ul>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer">
-									<a role="button" class="btn btn-danger">Get it now <i
-										class="fa fa-diamond ml-1"></i>
-									</a> <a role="button" class="btn btn-outline-danger waves-effect"
-										data-dismiss="modal">No, thanks</a>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
-					</div>
-					<!-- Full Height Modal Bottom Danger Demo-->
-
-				</section>
-				<!--Section: Modals-->
-
-				<!-- Card header -->
-				<div class="card-header">Modals</div>
-
-				<!--Card content-->
-				<div class="card-body">
-
-					<div class="text-center mb-5">
-						<p class="lead">Click buttons below to launch modals demo</p>
-					</div>
-
-					<!-- First row-->
-					<div class="row">
-
-						<!--First column-->
-						<div class="col-md-3">
-							<h5 class="text-center mb-3">Frame Modal</h5>
-
-							<img src="https://mdbootstrap.com/img/brandflow/modal4.jpg"
-								alt="MDB graphics" class="img-fluid z-depth-1">
-							<div class="text-center">
-								<h5 class="my-3">Position</h5>
-
-								<a class="btn btn-primary btn-sm" data-toggle="modal"
-									data-target="#frameModalTopInfoDemo" data-backdrop="false">Top</a>
-								<br> <a class="btn btn-primary btn-sm" data-toggle="modal"
-									data-target="#frameModalBottomSuccessDemo"
-									data-backdrop="false">Bottom</a>
-							</div>
-						</div>
-						<!--First column-->
-
-						<!--Second column-->
-						<div class="col-md-3">
-							<h5 class="text-center mb-3">Side Modal</h5>
-
-							<img src="https://mdbootstrap.com/img/brandflow/modal3.jpg"
-								alt="MDB graphics" class="img-fluid z-depth-1">
-							<div class="text-center">
-								<h5 class="my-3">Position</h5>
-
-								<a class="btn btn-primary btn-sm" data-toggle="modal"
-									data-target="#sideModalTRSuccessDemo" data-backdrop="false">Top
-									Right</a> <br> <a class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#sideModalTLInfoDemo">Top
-									Left</a> <br> <a class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#sideModalBRDangerDemo">Bottom
-									Right</a> <br> <a class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#sideModalBLWarningDemo">Bottom
-									Left</a>
-							</div>
-						</div>
-						<!--Second column-->
-
-						<!--Third column-->
-						<div class="col-md-3">
-							<h5 class="text-center mb-3">Central Modal</h5>
-
-							<img src="https://mdbootstrap.com/img/brandflow/modal2.jpg"
-								alt="MDB graphics" class="img-fluid z-depth-1">
-							<div class="text-center">
-								<h5 class="my-3">Size</h5>
-
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#modalLoginAvatarDemo">Small
-								</button>
-								<br>
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#modalLRFormDemo">Medium
-								</button>
-								<br>
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#centralModalLGInfoDemo">Large
-								</button>
-								<br>
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#centralModalFluidSuccessDemo">Fluid</button>
-							</div>
-						</div>
-						<!--Third column-->
-
-						<!--Fourth column-->
-						<div class="col-md-3">
-							<h5 class="text-center mb-3">Fluid Modal</h5>
-
-							<img src="https://mdbootstrap.com/img/brandflow/modal1.jpg"
-								alt="MDB graphics" class="img-fluid z-depth-1">
-							<div class="text-center">
-								<h5 class="my-3">Position</h5>
-
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#fluidModalRightSuccessDemo">Right</button>
-								<br>
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#fluidModalLeftInfoDemo">Left</button>
-								<br>
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#fluidModalTopWarningDemo">Top</button>
-								<br>
-								<button type="button" class="btn btn-primary btn-sm"
-									data-toggle="modal" data-target="#fluidModalBottomDangerDemo">Bottom</button>
-							</div>
-						</div>
-						<!--Fourth column-->
-
-					</div>
-					<!-- /.First row-->
-
-				</div>
-
-			</div>
-			<!--/.Card-->
-
-		</div>
-		<!--Grid column-->
-
 	</div>
-	<!--Grid row-->
 
 </div>
-</main>
 <!--Main layout-->
 
 
@@ -1250,7 +544,8 @@
 				data : {
 					labels : [ "여", "남" ],
 					datasets : [ {
-						labelString : '성별',
+						label : '성별',
+						borderSkipped : 'low',
 						data : [ femaleUserCounts, maleUserCounts ],
 						backgroundColor : [ 'rgba(255, 99, 132, 0.2)',
 								'rgba(54, 162, 235, 0.2)' ],
@@ -1265,9 +560,6 @@
 							ticks : {
 								display : true,
 								beginAtZero : true,
-								callback : function(data) {
-									return data;
-								}
 							}
 						} ]
 					},
@@ -1277,7 +569,16 @@
 
 			});
 
-	//pie
+	//age rate pie
+
+	const teenagers = document.getElementById("10s").value;
+	const twenties = document.getElementById("20s").value;
+	const thirties = document.getElementById("30s").value;
+	const forties = document.getElementById("40s").value;
+
+	console.log(teenagers + " : " + twenties + " : " + thirties + " : "
+			+ forties);
+
 	var ctxP = document.getElementById("pieChart").getContext('2d');
 	var myPieChart = new Chart(ctxP,
 			{
@@ -1285,7 +586,7 @@
 				data : {
 					labels : [ "10대", "20대", "30대", "40대" ],
 					datasets : [ {
-						data : [ 53, 233, 140, 100 ],
+						data : [ teenagers, twenties, thirties, forties ],
 						backgroundColor : [ "#F7464A", "#46BFBD", "#FDB45C",
 								"#949FB1" ],
 						hoverBackgroundColor : [ "#FF5A5E", "#5AD3D1",
@@ -1298,6 +599,24 @@
 
 				}
 			});
+
+	//line-chart increased-rate of users compare with last month
+	var ctx = document.getElementById("lineChart").getContext('2d');
+	var myLineChart = new Chart(ctx, {
+		type : 'line',
+		data : {
+			"labels" : [ "January", "February", "March", "April", "May",
+					"June", "July" ],
+			"datasets" : [ {
+				"label" : "My First Dataset",
+				"data" : [ 65, 59, 80, 81, 56, 55, 40 ],
+				"fill" : false,
+				"borderColor" : "rgb(75, 192, 192)",
+				"lineTension" : 0.1
+			} ]
+		},
+		options : {}
+	});
 
 	//radar
 	var ctxR = document.getElementById("radarChart").getContext('2d');

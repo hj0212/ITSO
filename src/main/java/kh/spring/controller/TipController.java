@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.MemberDTO;
-import kh.spring.dto.SocialCommentDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -66,8 +65,7 @@ public class TipController {
 		List<TipDTO> businessTipData = service.getBusinessTipData();
 		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
-		
-		
+
 		if (beautyTipData != null) {
 			System.out.println(beautyTipData.toString());
 
@@ -79,7 +77,6 @@ public class TipController {
 		mav.addObject("dietTipData", dietTipData);
 		mav.addObject("fashionTipData", fashionTipData);
 		mav.addObject("businessTipData", businessTipData);
-		// mav.addObject("tipThumpsUpCountData", tipThumpsUpCountData);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;
@@ -134,20 +131,21 @@ public class TipController {
 	}
 
 	@RequestMapping("insertTipCommentProc.tip")
-	public void insertTipCommentProc(@RequestBody TipCommentDTO dto, HttpServletRequest request, HttpServletResponse response) {
+	public void insertTipCommentProc(@RequestBody TipCommentDTO dto, HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
 			System.out.println("댓글 등록~");
 
-			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			int writer = ((MemberDTO) request.getSession().getAttribute("user")).getSeq();
 			System.out.println(dto.getUser_seq());
 			System.out.println(writer);
 			int result = service.insertTipCommentProc(dto);
-			
+
 			ObjectMapper om = new ObjectMapper();
 			List<TipCommentDTO> commentList = service.getCommentsFromTip(dto.getTip_seq());
 			ArrayNode array = om.createArrayNode();
-			
-			for(TipCommentDTO tdto : commentList) {
+
+			for (TipCommentDTO tdto : commentList) {
 				ObjectNode on = om.createObjectNode();
 				on.put("tip_comment_seq", tdto.getTip_comment_seq());
 				on.put("tip_seq", tdto.getTip_seq());
@@ -157,12 +155,12 @@ public class TipController {
 				on.put("name", tdto.getName());
 				on.put("photo", tdto.getPhoto());
 				on.put("writer", writer);
-				
+
 				array.add(on);
 			}
-			
+
 			response.getWriter().println(array);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -175,6 +173,31 @@ public class TipController {
 		System.out.println(result);
 		return result;
 	}
+
+	@RequestMapping("tipModification.go")
+	public ModelAndView tipModificationGo(HttpServletRequest req) {
+
+		int tipSeq = Integer.parseInt(req.getParameter("tipSeq"));
+		System.out.println(tipSeq);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("tipSeq",tipSeq);
+		mav.setViewName("tipModifyPage.jsp");
+	
+		return mav;
+	}
+
+	@RequestMapping("tipModifyProc.tip")
+	public @ResponseBody int tipModifyProc(@RequestBody TipDTO dto) {
+		
+		
+		dto.toString();
+		int result = service.tipModifyProc(dto);
+		System.out.println("tipModify result :" + result);
+		
+		return result;
+	}
+	
 	
 	@RequestMapping("deleteTipComment.tip")
 	public void deleteTipComment(HttpServletRequest request, HttpServletResponse response) {
@@ -183,12 +206,12 @@ public class TipController {
 			int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
 			int tip_seq = Integer.parseInt(request.getParameter("tip_seq"));
 			int result = service.deleteTipComment(comment_seq);
-			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
-			
+			int writer = ((MemberDTO) request.getSession().getAttribute("user")).getSeq();
+
 			List<TipCommentDTO> commentList = service.getCommentsFromTip(tip_seq);
 			ArrayNode array = om.createArrayNode();
-			
-			for(TipCommentDTO tdto : commentList) {
+
+			for (TipCommentDTO tdto : commentList) {
 				ObjectNode on = om.createObjectNode();
 				on.put("tip_comment_seq", tdto.getTip_comment_seq());
 				on.put("tip_seq", tdto.getTip_seq());
@@ -198,14 +221,14 @@ public class TipController {
 				on.put("name", tdto.getName());
 				on.put("photo", tdto.getPhoto());
 				on.put("writer", writer);
-				
+
 				array.add(on);
 			}
-			
+
 			response.getWriter().println(array);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

@@ -148,6 +148,12 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
+	public CollectionDTO getCollectionSeq(CollectionDTO dto) {
+		return this.dao.getCollectionSeq(dto);
+	}
+
+	
+	@Override
 	public List<SocialBoardDTO> showHashTagBoardList(int pAge, String pGender, int user_seq, String search) {
 		return this.dao.showHashTagBoardList(pAge, pGender, user_seq, search);
 	}

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
   <c:choose>
    <c:when test="${result>0}">
     <script>
@@ -21,8 +22,5 @@
    </script>
    </c:otherwise>
   </c:choose>
-  
-  
-  
 </body>
 </html>

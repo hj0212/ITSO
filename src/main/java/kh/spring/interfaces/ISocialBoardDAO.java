@@ -28,6 +28,7 @@ public interface ISocialBoardDAO {
 	public int insertCollection(CollectionDTO dto);
 	public int deleteCollection(CollectionDTO dto);
 	public int updateCollection(CollectionDTO dto);
+	public CollectionDTO getCollectionSeq(CollectionDTO dto);
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
