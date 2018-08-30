@@ -110,4 +110,14 @@ public class TipDAOImpl implements ITipDAO {
 		return template.selectList("TipGood.isThisLikeWhetherFirst",map);
 	}
 
+	@Override
+	public int deleteTipComment(int seq) {
+		return template.delete("TipComment.deleteTipComment",seq);
+	}
+
+	@Override
+	public int tipModifyProc(TipDTO dto) {
+		return template.update("TipBoard.tipModifyProc",dto);
+	}
+
 }

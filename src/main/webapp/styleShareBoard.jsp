@@ -1,27 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="utf8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta property="fb:app_id" content="175142883151176"/>
-<meta property="og:site_name" content="ITSO"/>
-<meta property="og:title" content="${content.social_title}"/>    
+<meta property="fb:app_id" content="175142883151176" />
+<meta property="og:site_name" content="ITSO" />
+<meta property="og:title" content="${content.social_title}" />
 <meta property="og:description" content="${content.social_contents}" />
 <meta property="article:author" content="${content.social_writer}" />
 <meta property="og:url" content="document.location.href" />
-<meta property="og:image" content="https://image.ibb.co/cvb5k9/itso_12.png"/>
+<meta property="og:image"
+	content="https://image.ibb.co/cvb5k9/itso_12.png" />
 
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:url" content="document.location.href"/> 
+<meta name="twitter:url" content="document.location.href" />
 <meta name="twitter:title" content="${content.social_title}" />
-<meta name="twitter:description" content="${content.social_contents}" /> 
-<meta name="twitter:image" content="https://image.ibb.co/cvb5k9/itso_12.png" /> 
-<meta name="twitter:site" content="${content.social_writer}" /> 
-<meta name="twitter:creator" content="@트위터아이디" /> 
+<meta name="twitter:description" content="${content.social_contents}" />
+<meta name="twitter:image"
+	content="https://image.ibb.co/cvb5k9/itso_12.png" />
+<meta name="twitter:site" content="${content.social_writer}" />
+<meta name="twitter:creator" content="@트위터아이디" />
 
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat"
@@ -76,6 +79,7 @@
 }
 
 #lookAction {
+	height: 60px;
 	border-bottom: 1px #9AA9B2 solid;
 }
 
@@ -137,6 +141,83 @@ body {
 /* #comment {
                 border: 1px solid #e6e6e6;
             } */
+#comment-container {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* ---------------- 모달 스타일 ------------------*/
+#collectionarea {
+	text-align: center;
+	overflow: auto;
+	-ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+@media ( max-width : 575px) {
+	.collectionItem {
+		width: 80%;
+	}
+}
+
+@media ( min-width : 576px) and (max-width: 991px) {
+	.collectionItem {
+		width: 50%;
+		float: left;
+	}
+}
+
+@media ( min-width : 991px) {
+	.collectionItem {
+		width: 30%;
+	}
+}
+
+.collectionItem {
+	display: inline-block;
+	margin: 0 auto 10px auto !important;
+	background: white;
+	height: 236px;
+}
+
+.collectionItem:hover {
+	transform: scale(1.05);
+	transition: all 0.1s ease-in-out;
+}
+
+.collectionPhoto {
+	height: 100%;
+	padding-left: 5px;
+}
+
+.collectionPhotoItem {
+	float: left;
+	display: inline;
+	padding: 1px;
+}
+
+.collectionPhotoItem img {
+	width: 105px;
+}
+
+#saveModal .active {
+	border: 3px solid #21FCFF;
+	margin-left: 1px;
+}
+
+.btn-group {
+	margin-left: 3px;
+}
+
+/* 디자인 수정 */
+.btn-group {
+	float: right;
+	margin-top: 15px;
+}
 </style>
 </head>
 
@@ -145,6 +226,7 @@ body {
 
 
 
+	<%@include file="navi.jsp"%>
 
 	<div id="wrapper" class="row">
 
@@ -154,77 +236,84 @@ body {
 				<div>
 					<header>
 						<div id="lookAction" class=container>
-							<button type=button class="btn btn-elegant">HYPE</button>
-							<p id="hype">853</p>
-							<button type=button class="btn btn-grey-ligten-5 btn-sm">SAVE</button>
+							<div class="goodarea" style="margin-top: 17px; float: left;">
+										<c:set var="loop_flag" value="false" />
+										<c:choose>
+											<c:when test="${goodCount > 0 }">
+												<c:choose>
+												<c:when test="${goodStatus eq true }">
+													<i class="fa fa-heart red-text heart" aria-hidden="true"
+																	style="float: left; font-size: 25px;"
+																	value="${content.social_seq}"><font color="black">${goodCount}
+																</font></i>
+												</c:when>
+												<c:otherwise>
+													<i class="fa fa-heart-o red-text heart"
+																		aria-hidden="true"
+																		style="float: left; font-size: 25px;"
+																		value="${content.social_seq}"><font color="black"> 0
+																	</font></i>
+												</c:otherwise>
+												</c:choose>
+												
+											</c:when>
+											<c:otherwise>
+											<i class="fa fa-heart-o red-text heart"
+																		aria-hidden="true"
+																		style="float: left; font-size: 25px;"
+																		value="${content.social_seq}"><font color="black"> 0
+																	</font></i>
+											</c:otherwise>
+										</c:choose>
+									</div>
 							<!-- social button list -->
 							<div id="snsLists" class="btn-toolbar" role="toolbar"
 								aria-label="Toolbar with button groups">
 								<div class="btn-group mr-2" role="group"
 									aria-label="First group">
-									<button type="button" class="btn btn-grey-ligten-5 btn-sm">
-										<i class="fa fa-facebook"></i>
-									</button>
-									<button type="button" class="btn btn-grey-ligten-5 btn-sm">
-										<i class="fa fa-twitter" aria-hidden="true"></i>
-									</button>
-									<button type="button" class="btn btn-grey-ligten-5 btn-sm">
-										<i class="fa fa-instagram"></i>
-									</button>
+										<input type="hidden" value="${content.social_writer }"
+											class="writerseq" /> 
+										<input type="hidden"
+											value="${content.social_seq }" class="socialseq" />
+										<button type="button" class="btn-floating btn-sm savebtn"
+											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
+											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
+											<i class="fa fa-upload"></i>
+										</button>
+										<!--facebook-->
+										<button type="button" class="btn-floating btn-sm btn-fb share"
+											style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
+											<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
+										</button>
+										<!--twitter-->
+										<button type="button" class="btn-floating btn-sm btn-tw share"
+											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
+											<i class="fa fa-twitter" title="트위터로 공유하기"></i>
+										</button>
+										<!--kakao-->
+										<button type="button" class="btn-floating btn-sm share "
+											style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											title="카카오로 공유하기">
+											<i class="fa fa-comment"></i>
+										</button>
+										
+										
+										
 								</div>
-							</div>
-							<div class="chevrons">
-								<span class="instafilta-target"> <a href=#> <i
-										class="fa fa-chevron-left"></i>
-								</a>
-								</span> <span class="instafilta-target"> <a href="#"> <i
-										class="fa fa-chevron-right"></i>
-								</a>
-								</span>
 							</div>
 						</div>
 					</header>
 					<div class=container>
 						<br>
 						<!-- header -->
-						<header class="container">
+						<header class="container p-0">
 							<h3>${content.social_title}</h3>
-							<script>
-							document.title = "${content.social_title}"; 
-							
-							</script>
-
-							<time>${date[1]} ${date[2]}, ${date[0]}</time>
-							<div class="instafilta-target mt-1">
-								2 <i class="fa fa-comment-o"></i>
-							</div>
-							<div>
-							
-								<!--kakao-->
-								<button type="button" class="btn-floating btn-sm btn-is share "
-									style="float: right; background-color: #ffff00; color: gray; border: 0px; margin-left: 10px; border-radius: 5x;"
-									id="kakao-link-btn" onclick="kakaogo()">
-									<i class="fab fa-kaggle"></i>
-								</button>
-								<!--twitter-->
-								<button type="button" class="btn-floating btn-sm btn-tw share"
-									style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 6px;"
-									onclick="twittergo()">
-									<i class="fab fa-twitter"></i>
-								</button>
-								<!--facebook-->
-								<button type="button" class="btn-floating btn-sm btn-fb share"
-									style="float: right; background-color: #4267b2; color: white; border: 0px; border-radius: 5px;"
-									onclick="facebookgo()">
-									<i class="fab fa-facebook-f"></i>
-								</button>								
-								
-
-							</div>
-
+							<span class="time">${date[1]} ${date[2]}, ${date[0]}</span>
 						</header>
-						<br>
 
+						<div class="instafilta-target mt-1">
+							2 <i class="fa fa-comment-o"></i>
+						</div>
 
 						<div>
 							<!-- image -->
@@ -241,7 +330,7 @@ body {
 									</div>
 								</div>
 							</figure>
-
+							</figure>
 
 							<div style="display: none;" easypin-tpl>
 								<popover> </popover>
@@ -253,10 +342,11 @@ body {
 								</marker>
 							</div>
 
+
 							<!-- user-context -->
 
-							<div class=container>${content.social_contents}</div>
-
+							<div class="container m-0 p-0" id="social_contents">
+								${content.social_contents}</div>
 							<div style="float: right;">
 								<c:if test="${sessionScope.user.seq == content.social_writer}">
 									<button id="modify" class="btn btn-grey btn-sm">수정</button>
@@ -265,104 +355,53 @@ body {
 							</div>
 						</div>
 
-						<div class="container mt-4">
-							<table id="comment">
-								<tbody>
+						<div class="container mt-4" id="comment-container">
+							<table id="comment" cellpadding="5">
+								<c:forEach var="commentList" items="${commentList}">
 									<tr>
 										<td><img
 											class="avatar rounded-circle z-depth-1-half mr-3"
-											src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg">
-										</td>
+											src="resources/images/${commentList.photo}"></td>
 										<td>
 											<div>
-												<a href="#">Risovic N.</a> <a href="#">@risovic</a>
+												<a href="#">${commentList.name}</a>
 											</div>
-											<div>Nice dress, color, and the vibe</div>
-											<div id=comment>
-												0 <a href="#">▲</a>· reply · flag · 6 months ago
+											<div>
+												<span class="user-comment">
+													${commentList.social_comment_contents} </span>
 											</div>
-
+											<div>
+												<span class="comment-date">
+													${commentList.social_comment_time} <c:if
+														test="${sessionScope.user.seq == commentList.user_seq}">
+														<span><a href="javascript:void(0)"
+															data-seq="${commentList.social_comment_seq}"
+															data-social="${commentList.social_seq}" class="delete"><i
+																class="fa fa-times" aria-hidden="true"></i></a></span>
+													</c:if>
+												</span>
+											</div>
 										</td>
 									</tr>
-
-
-									<tr>
-										<table>
-											<tr>
-												<td>
-													<div class="comment-child">
-														<img
-															class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-															src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg">
-													</div>
-												</td>
-												<td></td>
-												<td>
-													<div>
-														<a href="#">Alex X.</a> <a href="">@Alex</a>
-													</div>
-													<div>How sweet of her.</div>
-
-													<div id=comment>
-														2 <a href="#">▲</a· reply>· flag · 6 months ago 
-													</div>
-												</td>
-											</tr>
-
-											<tr>
-												<td>
-													<div class="comment-child">
-														<img
-															class="ml-4 avatar rounded-circle z-depth-1-half mr-3"
-															src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg">
-													</div>
-												</td>
-												<td></td>
-												<td>
-													<div>
-														<a href="#">Lauren A.</a> <a href="">@Lauren</a>
-													</div>
-													<div>I envy her body ratio</div>
-
-													<div id=comment>
-														5 <a href="#">▲</a>· reply· flag · 6 months ago
-													</div>
-												</td>
-											</tr>
-										</table>
-
-									</tr>
-
-								</tbody>
-
-
+								</c:forEach>
 							</table>
 						</div>
-
-
 					</div>
 				</div>
 
 				<!-- reply -->
-				<form action="" method="post">
-					<div class="container mt-4">
-						<div class="form-group">
-							<textarea class="form-control rounded-0"
-								id="exampleFormControlTextarea2" rows="3" placeholder="댓글 달기"></textarea>
-
-							<!-- Default inline 1-->
-
-
-
-							<button class="btn btn-grey btn-sm">쓰기</button>
-						</div>
+				<div class="container mt-4">
+					<div class="form-group">
+						<textarea class="form-control rounded-0" id="commentarea" rows="3"
+							placeholder="로그인이 필요합니다." maxlength="166"></textarea>
 					</div>
-				</form>
-
-
-
+					<div style="float: right;">
+						<input type="button" class="btn btn-grey btn-sm"
+							id="write-comment" value="쓰기" disabled="disabled"> <input
+							type="button" class="btn btn-grey btn-sm" id="gomain" value="목록">
+					</div>
+				</div>
 			</div>
-
 		</div>
 
 		<!-- user info -->
@@ -372,14 +411,15 @@ body {
 			<aside id="aside">
 				<section class="container border-bottom-line mt-4">
 					<img style="vertical-align: super;"
-						src="https://images.pexels.com/photos/607894/pexels-photo-607894.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+						src="resources/images/${writer.photo}"
 						class="vertical-align-none avatar rounded-circle z-depth-1-half">
 					<ul class="info">
-						<li>이슬</li>
-						<li>24 디자인학과</li>
-						<li><i class="fa fa-map-marker"></i> 연남동, 서울</li>
+						<li>${writer.name}</li>
+						<li>${writer.age}${writer.state}</li>
 						<li>
-							<button class="btn btn-elegant btn-sm">+ Fan</button>
+							
+							
+							
 						</li>
 					</ul>
 				</section>
@@ -393,11 +433,13 @@ body {
 							<c:forEach var="item" items="${list}">
 								<div class="clothesinfo">
 									<li class="mb-2">
-										<div>${item.tag_name}</div>
 										<div>
-											<a href=${item.tag_url } target="_blank">${item.tag_brand}</a>
+											<a href=${item.tag_url } target="_blank">${item.tag_name}</a>
+										</div>
+										<div>
+											<a href="#">${item.tag_brand}</a>
 											<c:if test="${!empty item.tag_store }">
-												<a href="">in ${item.tag_store}</a>
+												<a href="#">in ${item.tag_store}</a>
 											</c:if>
 										</div>
 									</li>
@@ -406,59 +448,260 @@ body {
 						</ol>
 					</section>
 				</c:if>
-
-				<div>
-					<!-- you may like these users -->
-					<div class="mt-4 mb-3">
-						<strong> 당신이 좋아할만한 유저 </strong>
-					</div>
-
-					<ol class="list-style-none">
-						<li class="mt-3"><img
-							class="vertical-align-none z-depth-1-half rounded-circle"
-							alt="Primark" height="75"
-							src="http://s3cdn-test-lookbooknu.netdna-ssl.com/files/users/small/6484472_image.jpg?1531857217">
-
-
-							<ol class="info">
-								<li class="ml-2"><a href=#>김연아</a></li>
-
-								<li class="ml-2">18 항공승무원 부산</li>
-								<li>
-									<button class="btn btn-elegant btn-sm">+ Fan</button>
-								</li>
-							</ol></li>
-						<li class="mt-3"><img
-							class="vertical-align-none z-depth-1-half rounded-circle"
-							alt="Zaful" height="75"
-							src="http://s3cdn-test-lookbooknu.netdna-ssl.com/files/users/small/3348731_velvet_playsuit_seite_gesicht.jpg?1407499836"
-							width="75">
-
-							<ol class="info">
-								<li class="ml-2"><a href=#>안졸리나</a></li>
-
-								<li class="ml-2">23 수학과 서울</li>
-
-								<li>
-									<button class="inline-block btn btn-elegant btn-sm">+
-										Fan</button>
-								</li>
-							</ol></li>
-
-					</ol>
-					</li>
-					</ul>
-
-
-					</ol>
-					</section>
-
-				</div>
 		</div>
 
 
 	</div>
+	<!-- saveModal -->
+		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead mb-0">컬렉션으로 저장하기</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<!--Body-->
+					<div class="modal-body">
+						<div id="modalbtnarea">
+							<button class="btn btn-itso" data-toggle="modal"
+								data-target="#createModal">
+								<i class="fa fa-plus"></i> 컬렉션 생성
+							</button>
+							<button class="btn btn-indigo" id="managebtn">컬렉션 관리</button>
+						</div>
+
+						<c:choose>
+							<c:when test="${not empty collectionList }">
+								<div id="collectionarea" class="mt-2">
+									<c:set var="num" value="0"></c:set>
+									<c:forEach items="${collectionList}" var="clist">
+
+										<div class="collectionItem z-depth-1 mt-2">
+											<h4 class="mt-1 mb-1 text-truncate">${clist.collection_title }</h4>
+											<h6 class="text-truncate">${clist.collection_contents }</h6>
+											<input type="hidden" class="collectionseq"
+												value="${clist.collection_seq }" />
+											<div class="collectionPhoto">
+
+												<c:set var="num" value="0" />
+
+												<c:forEach items="${photoList }" var="plist"
+													varStatus="status">
+													<c:choose>
+														<c:when test="${num < 4 }">
+															<c:if
+																test="${plist.collection_seq == clist.collection_seq }">
+																<c:set var="num" value="${num+1 }" />
+
+																<div class="collectionPhotoItem">
+																	<img src="/upload/social/${plist.photo }" alt=""><input
+																		type="hidden" class="socialseq"
+																		value="${plist.social_seq }" />
+																</div>
+															</c:if>
+														</c:when>
+														<c:otherwise>
+															<c:if
+																test="${plist.collection_seq == clist.collection_seq }">
+																<div class="collectionPhotoItem" style="display: none;">
+																	<img src="/upload/social/${plist.photo }" alt=""><input
+																		type="hidden" class="socialseq"
+																		value="${plist.social_seq }" />
+																</div>
+															</c:if>
+														</c:otherwise>
+
+													</c:choose>
+
+												</c:forEach>
+											</div>
+											<h6 class="mb-0" style="height: 19px;"></h6>
+										</div>
+									</c:forEach>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+
+
+		<!-- createModal -->
+		<div class="modal fade" id="createModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Header-->
+					<div class="modal-header">
+						<p class="heading lead mb-0">컬렉션 생성</p>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+
+					<!--Body-->
+					<div class="modal-body">
+						<div class="md-form">
+							<input type="text" id="inputMD" class="form-control"
+								name="collection_title" maxlength="30"> <label
+								for="inputMD">컬렉션 이름</label>
+						</div>
+						<div class="md-form mt-1">
+							<textarea id="form7" class="md-textarea form-control" rows="3"
+								name="collection_contents"></textarea>
+							<label for="form7">컬렉션 상세 설명</label>
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<button class="btn btn-itso" data-toggle="modal"
+							data-target="#modal" id="createcolbtn">생성</button>
+						<button class="btn btn-outline-itso waves-effect"
+							data-dismiss="modal">취소</button>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
 	<script>
+		$("#managebtn").on("click", function () {
+		    window.open('mypage.go?view=collection', '_blank');
+		})
+
+		social_seq = 0;
+		$('.savebtn').on("click", function () {
+		    social_seq = $(this).siblings(".socialseq").val();
+		    console.log(social_seq);
+
+		    var clistsize = "${fn:length(collectionList)}";
+
+		    for (var i = 1; i <= clistsize; i++) {
+		        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
+		        var plistsize = cursor.find(".collectionPhotoItem").length;
+
+		        for (var j = 1; j <= plistsize; j++) {
+		            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
+		            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
+		            if (social_seq == collection_socialseq) {
+		                cursor.addClass("active");
+		                console.log("true");
+		                break;
+		            }
+		        }
+		    }
+		})
+		$("#collectionarea").on("click", ".collectionItem", function () {
+		    var cursor = $(this);
+		    cursor.toggleClass('active');
+		    var collection_seq = $(this).children(".collectionseq").val();
+		    console.log("collection_seq: " + collection_seq);
+		    console.log("social_seq: " + social_seq);
+
+		    var num = $(this).find(".collectionPhotoItem").length;
+		    $.ajax({
+		        url: "saveCollection.ajax",
+		        type: "post",
+		        data: {
+		            collection_seq: collection_seq,
+		            social_seq: social_seq
+		        },
+		        success: function (data) {
+		            console.log("ajax: " +
+		                data.photo + "," +
+		                data.social_seq)
+		            if (data.photo != null) {
+		                console.log("여기");
+		                cursor.find(".collectionPhoto").append(
+		                    '<div class="collectionPhotoItem">' +
+		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		                    '</div>');
+		                if (num > 4) {
+		                    cursor.find(".collectionPhoto:last").attr("display", "none");
+		                }
+		            } else {
+		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
+		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
+
+		    });
+
+		})
+
+		$("#createcolbtn")
+		    .on('click', function () {
+		        var collection_title = $("input[name='collection_title']").val();
+		        var collection_contents = $("textarea[name='collection_contents']").val();
+
+		        $.ajax({
+		            url: "createCollection.ajax",
+		            type: "post",
+		            data: {
+		                collection_title: collection_title,
+		                collection_contents: collection_contents
+		            },
+		            success: function (data) {
+		                console.log("생성" + data);
+		                var dto = JSON.parse(data);
+		                $("input[name='collection_title']").val("");
+		                $("textarea[name='collection_contents']").val("");
+		                $("#createModal").hide();
+
+		                $("#collectionarea").append(
+		                    '<div class="collectionItem z-depth-1 mt-2">' +
+		                    '<h4 class="mt-1 mb-1 text-truncate">' +
+		                    dto.collection_title +
+		                    '</h4><h6 class="text-truncate">' +
+		                    dto.collection_contents +
+		                    '</h6>' +
+		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
+		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+
+		                $("#saveModal").show();
+
+		            }
+		        });
+		    });
+		$("#createModal").on('show.bs.modal', function () {
+		    $("#saveModal").hide();
+		});
+
+		$("#createModal").on('hidden.bs.modal', function () {
+		    $("#saveModal").show();
+		});
+
+		$("#saveModal").on('hidden.bs.modal', function () {
+		    console.log("닫힘");
+		    $(".collectionItem").removeClass("active");
+		});
+
+		</script>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+	<script type="text/javascript"
+		src="<c:url value='/jquery.easypin.js'/>"></script>
+	<script>
+    	document.title = "${content.social_title}";
    		var $j  = jQuery.noConflict();
         $j(document).ready(function () {
         	if("${dataflag}" === "true"){
@@ -487,27 +730,24 @@ body {
 	            	$j(".clothesinfo")[index].style.backgroundColor = "white";
 	        	});
         	};
-
         });
     </script>
 	<c:if test="${sessionScope.user.seq == content.social_writer}">
 		<script>
         document.getElementById("modify").onclick = function() {
         	location.href = "modifySocial.go?seq="+${content.social_seq};
-        }
+        };
         
        	document.getElementById("delete").onclick = function() {
        		let delcheck = confirm("글을 삭제하시겠습니까?");
        		if(delcheck) {
 	       		location.href = "deleteSocial.go?seq="+${content.social_seq};
        		}
-       	}    	
+       	};   	
    	</script>
 	</c:if>
 	<link rel="stylesheet"
-		href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-		integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-		crossorigin="anonymous">
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Bootstrap core CSS -->
 	<link
 		href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -522,6 +762,93 @@ body {
 	<!-- JQuery -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+    	document.getElementById("gomain").onclick = function() {
+    		location.href = "main.go";
+    	}
+    </script>
+	<c:if test="${!empty sessionScope.user.seq}">
+		<script>
+    	$(document).ready(function(){
+    		$("#commentarea").attr("placeholder","댓글 쓰기");
+    		$("#write-comment").attr("disabled",false);
+    		
+    		$("#write-comment").click(function(){
+    			var blank_pattern = /^\s+|\s+$/g;
+    			if($("#commentarea").val().replace(blank_pattern,"") == ""){
+    				alert("내용을 입력해주세요!");
+    			}else{
+    				$.ajax({
+    					url : "procSocialComment.go",
+    					dataType : "JSON",
+    					method : "post",
+    					data : {
+    						comment : $("#commentarea").val(),
+    						seq : "${content.social_seq}"
+    					},
+    					
+    					success : function(data){
+    						showComment(data);
+    					}
+    				});
+    			}
+    		});
+    		
+    		function showComment(data) {
+    			let html = '<table id="comment" cellpadding="5">';
+    			$.each(data, function(index,item){
+    				html += '<tr>';
+    				html += '	<td>';
+    				html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'">';
+    				html += '	</td>';
+    				html += '	<td>';
+    				html += '		<div>';
+    				html += '			<a href="#">' + item.name + '</a>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="user-comment">';
+    				html += 				item.social_comment_contents;
+    				html +=	'			</span>';
+    				html += '		</div>';
+    				html += '		<div>';
+    				html += '			<span class="comment-date">'+item.social_comment_time;
+    				if(item.user_seq == item.writer){
+    					html += '			<span><a href="javascript:void(0)" class="delete" data-seq="'+item.social_comment_seq+'" data-social="'+item.social_seq+'"><i class="fa fa-times" aria-hidden="true"></i></a></span>';
+    				}
+    				html += '			</span>';
+    				html += '		</div>';
+    				html += '	</td>';
+    				html += ''
+    			});
+    			$("#commentarea").val("");
+    			$("#comment-container").html(html);
+    		}
+    		
+    		$(document).on('click','.delete',function(){
+    			let comment_seq = $(this).data("seq");
+    			let social_seq = $(this).data("social");
+				
+    			let deleteCheck = confirm("댓글을 삭제 하시겠습니까?");
+    			
+    			if(deleteCheck) {
+    				$.ajax({
+    					url : "deleteComment.go",
+    					dataType : "JSON",
+    					method : "post",
+    					data : {
+    						comment_seq : comment_seq,
+    						social_seq : social_seq
+    					},
+    					
+    					success : function(data) {
+    						showComment(data);
+    					}
+    				});
+    			}
+    		})
+    	});
+    </script>
+	</c:if>
 	<!-- Bootstrap core JavaScript -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -552,11 +879,11 @@ body {
 	
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-	var titletext = '${list.social_title}';
+	var titletext = '${content.social_title}';
 	
 	console.log("<c:out value='${param.mode}'/>");
 
-	var mode = "<c:out value='${list.social_title}'/>";
+	var mode = "<c:out value='${content.social_title}'/>";
 
 		
 	

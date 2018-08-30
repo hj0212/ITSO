@@ -22,11 +22,7 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	public int insertUserData(MemberDTO dto) {
-		dto.setPart("home");
-		dto.setBlock("n");
-		dto.setState(" ");
-		dto.setPhoto("1.jpge");
-		dto.setWithdrawal("n");
+		
 		return this.dao.insertUserData(dto);
 	}
 	
@@ -71,4 +67,8 @@ public class MemberServiceImpl implements IMemberService {
 		return this.dao.deleteFollowData(dto);
 	}
 
+	@Override
+	public MemberDTO selectSocialWrtier(int social_seq) {
+		return this.dao.selectSocialWriter(social_seq);
+	}
 }

@@ -30,8 +30,12 @@
 		select * from collection_content where social_seq = #{social_seq} and collection_seq = #{collection_seq}
 	</select>
 	
+	<select id="getCollectionSeq" resultType="CollectionDTO">
+		select * from collection where collection_title = #{collection_title} and collection_contents = #{collection_contents} and collection_writer = #{collection_writer}
+	</select>
+	
 	<insert id="insertCollection" parameterType="CollectionDTO">
-		insert into collection values (collection_seq.nextval, #{collection_title}, #{collection_contents}, #{writer})
+		insert into collection values (collection_seq.nextval, #{collection_title}, #{collection_contents}, #{collection_writer})
 	</insert>
 	
 	<delete id="deleteCollection">
