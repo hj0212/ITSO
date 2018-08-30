@@ -421,7 +421,7 @@
 							src="resources/images/${writer.photo }"
 							alt="Generic placeholder image">
 						<div class="media-body mt-2">
-							<span>${writer.name}</span><br> <span>"${writer.state}"</span>
+							<span><a href="userpage.go?seq=${writer.seq }">${writer.name}</a></span><br> <span>"${writer.state}"</span>
 						</div>
 						<c:choose>
 							<c:when test="${writer.seq eq sessionScope.user.seq}">
