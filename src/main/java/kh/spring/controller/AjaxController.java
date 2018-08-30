@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
@@ -70,6 +72,31 @@ public class AjaxController {
 		return msg;
 	}
 
+	@RequestMapping("/notificaiton.ajax")
+	public @ResponseBody String notifiNavi(int user_seq,HttpSession session,NotificationDTO dto,HttpServletResponse response){
+		try {
+			int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
+			if(user_seq == sessionSeq) {
+				NotificationDTO ndto = new NotificationDTO(sessionSeq);
+				List<NotificationDTO> notiList = this.noservice.selectNotification(ndto);
+				ObjectMapper mapper = new ObjectMapper();	
+					
+				String jsonString = mapper.writeValueAsString(notiList);					
+				return jsonString;
+   			   
+			}
+		
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	
+		
+	}
+	
+	
 	@RequestMapping("/mainHeart.ajax")
 	public @ResponseBody int mainHeart(int social_seq,int social_writer,HttpServletResponse response,HttpSession session) {				
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();

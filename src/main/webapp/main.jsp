@@ -841,11 +841,7 @@ button.dropdown-toggle {
 													+ "," + data.social_seq)
 											if (data.photo != null) {
 												console.log("여기");
-												$(this)
-														.find(
-																".collectionPhoto")
-														.append(
-																'<div class="collectionPhotoItem">'
+												$(this).find(".collectionPhoto").append('<div class="collectionPhotoItem">'
 																		+ '<img src="/upload/social/'+data.photo+'"> <input type="hidden" class="socialseq" value="'+data.social_seq+'">'
 																		+ '</div>');
 												if (num > 4) {

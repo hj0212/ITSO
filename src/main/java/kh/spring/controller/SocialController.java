@@ -189,17 +189,17 @@ public class SocialController {
 
 
 		try {
-			int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
+			/*int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
 			NotificationDTO ndto = new NotificationDTO(sessionSeq);
-			/*System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());*/
-			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);
+			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
+			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);*/
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
 			
-			mav.addObject("u-seq",sessionSeq);
-			mav.addObject("notiList",notiList);
+			/*mav.addObject("u-seq",sessionSeq);
+			mav.addObject("notiList",notiList);*/
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
@@ -260,6 +260,7 @@ public class SocialController {
 		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
 
 		String[] writeDate = dto.getSocial_date().toString().split("-");
+		
 		
 		int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
 		NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");

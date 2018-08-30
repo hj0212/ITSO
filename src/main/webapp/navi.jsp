@@ -306,9 +306,9 @@ nav {
 				var obj = JSON.parse(msg.data);
 
 				if (obj.noti_read == 'n') {
-					var notification = "<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+					var notification = "<div class='notification-item read-n' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
 				} else {
-					var notification = "<div class='notification-item' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+					var notification = "<div class='notification-item read-Y' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
 				}
 				notification += "<div class='img-left'>";
 				notification += "<img src='/upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
@@ -342,50 +342,6 @@ nav {
 
 
 	<div class="notification-list" id="notification_list">
-		<c:choose>
-			<c:when test="${notiList ne null}">
-				<c:forEach var="tmp" items="${notiList}">
-					<c:if test="${tmp.user_seq eq u-seq}">
-						<c:if test="${tmp.noti_read eq 'n'}">
-							<div class="notification-item read-n" id="${tmp.noti_seq}"
-								seq="${tmp.article_seq}">
-								<div class="img-left">
-									<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
-										class="user-image rounded-circle">
-								</div>
-								<div class="user-content">
-									<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}
-												님이</b></span>${tmp.noti_contents}&nbsp;&nbsp;</span>
-									<p class="comment-time">${tmp.noti_date}</p>
-								</div>
-								
-							</div>
-						</c:if>
-						<script>
-							console.log("${tmp.noti_read}");
-						</script>
-						<c:if test="${tmp.noti_read eq 'y'}">
-							<div class="notification-item read-Y" id="${tmp.noti_seq}"
-								seq="${tmp.article_seq}">
-								<div class="img-left">
-									<img src="/upload/profile/${tmp.noti_user_photo}" alt=""
-										class="user-image rounded-circle">
-								</div>
-								<div class="user-content">
-									<span class="user-info"><span class="user-name"><b>${tmp.noti_user_name}
-												님이</b></span>${tmp.noti_contents}&nbsp;&nbsp;</span>
-									<p class="comment-time">${tmp.noti_date}</p>
-								</div>
-							</div>
-						</c:if>
-					</c:if>
-				
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<div class="notification-item">게시물이 없습니다.</div>
-			</c:otherwise>
-		</c:choose>
 
 
 	</div>
@@ -440,7 +396,56 @@ nav {
 		}
 	});
 
+	$("#tooltip").click(function() {
+		var seq = "${sessionScope.user.seq}"
+		console.log(seq);
+		let contents = document.getElementById("notification-info");
+		
+	
+		$.ajax({
+			url : "notificaiton.ajax",
+			type : "post",
+			data : {
+				user_seq : seq
+			},
+			success : function(data) {
+				showNotification(data);
+			}
+	
+		});
+	});
+
+	function showNotification(data) {
+		var notItem = "";
+		var sessionSeq = "${sessionScope.user.seq}";
+		$.each(JSON.parse(data),function(index, item) {
+							if (item.user_seq == sessionSeq) {
+								if (item.noti_read == 'y') {
+									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+								} else {
+									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+								}
+								notItem += "<div class='img-left'>";
+								notItem += "<img src='/upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
+								notItem += "</div>";
+								notItem += "<div class='user-content'>";
+								notItem += "<span class='user-info'> <span class='user-name'><b>"
+										+ item.noti_user_name
+										+ "님이&nbsp;</b></span>";
+								notItem += item.noti_contents;
+								notItem += "&nbsp;&nbsp;</span>";
+								notItem += "<p class='comment-time'>"
+										+ item.noti_date + "</p>";
+								notItem += "</div>";
+								notItem += "</div>";
+							}
+						});
+		$("#notification_list").prepend(notItem).trigger("create");
+
+	}
+
 	function toggleTooltip() {
+
 		let contents = document.getElementById("notification-info");
 		if (contents.style.display === "none") {
 			contents.style.display = "block";
@@ -468,7 +473,7 @@ nav {
 				var seq = $(this).attr("seq");
 				var noti_seq = $(this).attr("id");
 				$(location).attr("href",
-						"readSocial.go?seq="+ seq + "&noti_seq="+ noti_seq);
+						"readSocial.go?seq=" + seq + "&noti_seq=" + noti_seq);
 
 			});
 </script>
