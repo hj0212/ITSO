@@ -49,13 +49,13 @@ public class AjaxController {
 
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
-		
+
 		List<MemberDTO> emailcheck = service.emailExist(email);
 		String msg =null;
 
-		
+
 		if(emailcheck.size()==0) {
-		
+
 			msg= "fa fa-check prefix";
 
 		}else {
@@ -80,30 +80,30 @@ public class AjaxController {
 				NotificationDTO ndto = new NotificationDTO(sessionSeq);
 				List<NotificationDTO> notiList = this.noservice.selectNotification(ndto);
 				ObjectMapper mapper = new ObjectMapper();	
-					
+
 				String jsonString = mapper.writeValueAsString(notiList);					
 				return jsonString;
-   			   
+
 			}
-		
-			
+
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
-	
-		
+
+
 	}
-	
-	
+
+
 	@RequestMapping("/mainHeart.ajax")
 	public @ResponseBody int mainHeart(int social_seq,int social_writer,HttpServletResponse response,HttpSession session) {				
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		GoodDTO gdto = new GoodDTO(social_seq,user_seq);
 
 		int goodCount = sbService.selectGoodCount(gdto);
-	
+
 
 		if(goodCount>0) {
 			int delete = sbService.deleteGoodCount(gdto);
@@ -113,13 +113,13 @@ public class AjaxController {
 			if(user_seq != social_writer) {
 				NotificationDTO nodto = new NotificationDTO(social_writer,user_seq,"good","좋아요를 눌렀습니다.","n","아무거나",social_seq);
 				List<NotificationDTO> data = noservice.notificationData(nodto);
-			
+
 
 				try {
-				
+
 					if(data.size()==0) {
 						int noInsert = noservice.insertNotification(nodto);
-					
+
 						NotificationDTO list = noservice.selectNotification(nodto).get(0);		
 						System.out.println(list.getNoti_date());
 						ObjectMapper mapper = new ObjectMapper();
@@ -178,9 +178,9 @@ public class AjaxController {
 		int result = sservice.insertCollection(dto);
 		String resultmsg = result>0?"생성성공":"생성실패";
 		System.out.println(resultmsg);
-		
+
 		dto = sservice.getCollectionSeq(dto);
-		
+
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString="";
 		try {
@@ -211,10 +211,15 @@ public class AjaxController {
 	@RequestMapping("/followUser.ajax")
 	public @ResponseBody String followProc(int seq, String text, HttpSession session, HttpServletResponse resp) {
 		FollowDTO dto = new FollowDTO();
-		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		try {
+			System.out.println("seq:" + seq);
+			int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+			dto.setUser_seq(user_seq);
+			dto.setFollowing_seq(seq);
+		}catch(Exception e) {
+			System.out.println("로그인x");
+		}
 
-		dto.setUser_seq(user_seq);
-		dto.setFollowing_seq(seq);
 
 		System.out.println("text:" + text);
 		String resultmsg = "";
@@ -229,7 +234,7 @@ public class AjaxController {
 		}
 		return resultmsg;
 	}
-	
+
 	@RequestMapping("/fbLogin.ajax")
 	public @ResponseBody String fbLogin(String data, HttpSession session) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -237,7 +242,7 @@ public class AjaxController {
 		String returnstr;
 		try {
 			map = mapper.readValue(data, new TypeReference<Map<String, String>>(){});
-			
+
 			MemberDTO dto = new MemberDTO();
 			dto.setName(map.get("name"));
 			dto.setEmail(map.get("email"));
@@ -249,9 +254,9 @@ public class AjaxController {
 			dto.setWithdrawal("n");
 			dto.setAge(0);
 			dto.setGender(" ");
-			
+
 			List<MemberDTO> list = service.loginExist(dto);
-			
+
 			if(list.size()>0) {
 				System.out.println("페북 로그인 성공");
 				session.setMaxInactiveInterval(60*60);
@@ -263,14 +268,14 @@ public class AjaxController {
 				System.out.println(result>0?"페북 가입 성공":"페북 가입 실패");
 				returnstr = "main.go";
 			}
-			
+
 			return returnstr;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
-	
+
+
 }

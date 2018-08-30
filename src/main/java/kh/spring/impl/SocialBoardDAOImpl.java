@@ -110,6 +110,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.selectOne("Collection.getCollectionSeq", dto);
 	}
 	
+	@Override
+	public CollectionDTO getCollectionInfo(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionInfo", dto);
+	}
+	
 	
 	//���ƿ� 
 	@Override
@@ -188,4 +193,6 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		
 		return template.selectList("SocialBoard.showHashTagFollowBoardList", map);
 	}
+
+	
 }

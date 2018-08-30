@@ -218,6 +218,15 @@ body {
 	float: right;
 	margin-top: 15px;
 }
+
+.btn-group button {
+	width: 30px;
+	height: 30px;
+}
+
+#social_contents a {
+	color: dodgerblue;
+}
 </style>
 </head>
 
@@ -297,8 +306,6 @@ body {
 											<i class="fa fa-comment"></i>
 										</button>
 										
-										
-										
 								</div>
 							</div>
 						</div>
@@ -309,11 +316,18 @@ body {
 						<header class="container p-0">
 							<h3>${content.social_title}</h3>
 							<span class="time">${date[1]} ${date[2]}, ${date[0]}</span>
+							<div style="float: right;" class="mt-1">
+								<c:if test="${sessionScope.user.seq == content.social_writer}">
+									<button id="modify" class="btn btn-grey btn-sm">수정</button>
+									<button id="delete" class="btn btn-grey btn-sm">삭제</button>
+								</c:if>
+							</div>
+							<div class="instafilta-target mt-1">
+							${content.comment_count } <i class="fa fa-comment-o"></i>
+						</div>
 						</header>
 
-						<div class="instafilta-target mt-1">
-							2 <i class="fa fa-comment-o"></i>
-						</div>
+						
 
 						<div>
 							<!-- image -->
@@ -346,12 +360,7 @@ body {
 							<!-- user-context -->
 
 							<div class="container m-0 p-0" id="social_contents">
-								${content.social_contents}</div>
-							<div style="float: right;">
-								<c:if test="${sessionScope.user.seq == content.social_writer}">
-									<button id="modify" class="btn btn-grey btn-sm">수정</button>
-									<button id="delete" class="btn btn-grey btn-sm">삭제</button>
-								</c:if>
+								${content.social_contents}
 							</div>
 						</div>
 
@@ -580,7 +589,7 @@ body {
 		</div>
 	<script>
 		$("#managebtn").on("click", function () {
-		    window.open('mypage.go?view=collection', '_blank');
+		    window.open('userpage.go?view=collection', '_blank');
 		})
 
 		social_seq = 0;

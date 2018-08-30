@@ -248,7 +248,7 @@ nav {
 			</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-default"
 					aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="mypage.go">마이페이지</a> <a
+					<a class="dropdown-item" href="userpage.go">마이페이지</a> <a
 						class="dropdown-item" href="#">Another action</a> <a
 						class="dropdown-item" href="logout.do">로그아웃</a>
 				</div></li>

@@ -61,7 +61,7 @@ body {
 		});
 		
 		$("#backbtn").click(function() {
-			location.href = "mypage.go";
+			location.href = "userpage.go";
 		})
 	});
 </script>
@@ -119,7 +119,6 @@ body {
 				<!-- Button -->
 
 			</div>
-
 		</div>
 	</div>
 </body>

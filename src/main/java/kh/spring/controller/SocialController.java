@@ -226,10 +226,12 @@ public class SocialController {
 	public ModelAndView showCollectionList(int seq) {
 		CollectionDTO dto = new CollectionDTO();
 		dto.setCollection_seq(seq);
+		dto = service.getCollectionInfo(dto);
 		List<CollectionDTO> clist = service.getCollectionData(dto);
 		List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("content", dto);
 		mav.addObject("collectionList", clist);
 		mav.addObject("socialList", list);
 		mav.setViewName("collection.jsp");
@@ -248,6 +250,7 @@ public class SocialController {
 		try {
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+			
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 		}  catch (Exception e) {
@@ -908,7 +911,6 @@ public class SocialController {
 			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
 
 			contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?word="+"$2'>"+"$1"+"</a>");
-			System.out.println("여기-------------------!!!!!!!!!!!!!!!!!"+contents);
 			dto.setSocial_contents(contents);
 		}
 		return list;

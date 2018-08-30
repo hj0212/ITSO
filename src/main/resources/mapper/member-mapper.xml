@@ -29,6 +29,10 @@
 	<select id="selectFollowing" resultType="dto">
 		select u.* from (select * from follow where user_seq = #{seq}) f, users u where  f.following_seq = u.seq
 	</select>
+	<select id="selectFollow">
+		select follow_seq
+	</select>
+	
 	<select id="selectUserData" resultType="dto">
 		select * from users where seq = #{seq}
 	</select>
