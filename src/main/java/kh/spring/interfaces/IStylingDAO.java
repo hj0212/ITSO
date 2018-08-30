@@ -34,4 +34,9 @@ public interface IStylingDAO {
 	public List<StylingVoteResultDTO> getStylingVoteResult(int styling_vote_seq);
 	
 	public int deleteStylingVoteItem(int styling_vote_item_seq);
+	
+	public StylingVoteItemDTO selectsvitemDTO(String styling_vote_item_photo);
+
+	public int modifyStylingVoteItem(StylingVoteItemDTO svitemDTO);
+
 }

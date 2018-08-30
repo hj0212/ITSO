@@ -1,7 +1,5 @@
 package kh.spring.impl;
 
-
-
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -90,6 +88,16 @@ public class StylingDAOImpl implements IStylingDAO{
 	@Override
 	public int deleteStylingVoteItem(int styling_vote_item_seq) {
 		return template.delete("Styling.deleteStylingVoteItem",styling_vote_item_seq);
+	}
+
+	@Override
+	public StylingVoteItemDTO selectsvitemDTO(String styling_vote_item_photo) {
+		return template.selectOne("Styling.selectsvitemDTO",styling_vote_item_photo);
+	}
+
+	@Override
+	public int modifyStylingVoteItem(StylingVoteItemDTO svitemDTO) {
+		return template.update("Styling.modifyStylingVoteItem",svitemDTO);
 	}
 	
 }

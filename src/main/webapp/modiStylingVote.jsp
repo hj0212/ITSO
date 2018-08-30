@@ -132,6 +132,10 @@ input[type="file"] {
 				</div>
 			</div>
 			<hr />
+			<input type="hidden" name="styling_writer" value="${votedto.styling_writer}">
+			<input type="hidden" name ="styling_writedate" value="${votedto.styling_writedate}">
+			<input type="hidden" name="styling_viewcount" value="${votedto.styling_viewcount}">
+			
 
 			<div class="row">
 				<h4 class="mb-0">투표항목</h4>
@@ -203,13 +207,13 @@ input[type="file"] {
 				<!-- Group of default radios - option 1 -->
 				<!-- 	<div class="col-md-12 ml-5"> -->
 				<div class="col custom-control custom-radio col-md-3  ml-2">
-					<input type="radio" class="custom-control-input"
+					<input type="radio" class="custom-control-input" 
 						name="styling_endsel" id="defaultGroupExample1" value="1">
 					<label class="custom-control-label" for="defaultGroupExample1">기간</label><i
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="styling_endterm" disabled
+					<input type="text" id="datepicker" name="styling_endtermtxt" disabled
 						class="form-control form-control-sm col-md-4" value="${votedto.styling_endterm}">
 				</div>
 			</div>
@@ -225,12 +229,12 @@ input[type="file"] {
 				<c:choose>
 				<c:when test="${votedto.styling_voternum eq 0}">
 				<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum">
+						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}"+"명">
 				</c:when>	
 				
 				<c:otherwise>
 					<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}명">
+						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}"+"명">
 				</c:otherwise>
 				</c:choose>
 				</div>
@@ -283,7 +287,17 @@ input[type="file"] {
 			return false;
 		};
 		
+		document.getElementById("votenum").oninput = function() { 
+            var txt = document.getElementById("votenum").value;
+            var regex = /[^0-9]/; 
+            if (regex.test(txt) == true) {
+                document.getElementById("votenum").value = "";
+            } else {}
+        }
+		
 		count = $("#itemtable tr").length-1;
+		
+		
 		
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
@@ -347,7 +361,7 @@ input[type="file"] {
 			$(this).closest("tr").remove();
 			count--;
 			var delseq = $(this).parent().parent().parent().prev('th').children('input').val();
-			$('input[name ="deletedsvitem[]"]').val(delseq);
+			$('#modiform').append('<input type="hidden" name="deletedsvitem[]" value="'+delseq+'">');	
 			/* var arr = wraptr.nextAll('tr').children('th');
 			for(i=0 i<arr.size i++){
 				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜
@@ -383,6 +397,8 @@ input[type="file"] {
 			} else if ($(this).val() == 1) {
 				$('#votenum').attr('readOnly', true);
 				$("#datepicker").attr('disabled',false);
+				$("#datepicker").attr('readOnly',false);
+				$("#datepicker").css("background-color","white");
 				$(function() {
 					$("#datepicker").datepicker(
 							{
@@ -455,10 +471,12 @@ input[type="file"] {
 							if($('#itemtable tr:nth-of-type('+i+')').find('.filesel').val() == ""){
 								var ori = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();
 								var pho = $('#itemtable tr:nth-of-type('+i+')').find('.oriphotovalue').val();
-								$('#modiform').append('<input type="hidden" name="voteitemori[]" value="'+ori+'">');
-								
+								$('#modiform').append('<input type="hidden" name="voteitemori[]" value="'+ori+'">');	
 								$('#modiform').append('<input type="hidden" name="itemphotos[]" value="${"'+pho+'"}">');
 							/* 	voteitemnew.push($('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val());	 */						
+								console.log(ori);
+								console.log(pho);
+							
 							}else{
 								var newitem = $('#itemtable tr:nth-of-type('+i+')').find('.itemconttext').val();								
 								$('#modiform').append('<input type="hidden" name="voteitemnew[]" value="'+newitem+'">');	

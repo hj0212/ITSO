@@ -120,7 +120,7 @@ public class StylingController {
 		ModelAndView mav = new ModelAndView();
 		System.out.println(styling_vote_seq);
 		int delresult = styservice.deleteStylingVote(styling_vote_seq);
-
+		
 		mav.addObject("delresult",delresult);	
 		mav.setViewName("stylingBoard.style");
 		return mav;
@@ -168,16 +168,67 @@ public class StylingController {
 			System.out.println("글 주제수정완료"+modiresul);
 
 		}
-		//--------------후보수정
+		//-----------------후보수정//삭제
 		System.out.println(delseqs.size()+"개 지울거임");
 		 
-		for(int i =1; i<delseqs.size();i++) {
-			int tmpseq = Integer.parseInt(delseqs.get(i));		
-			styservice.deleteStylingVoteItem(tmpseq);		
+		if(delseqs.size() > 1) {
+			for(int i =1; i<delseqs.size();i++) {
+				int tmpseq = Integer.parseInt(delseqs.get(i));	
+				System.out.println(tmpseq);
+				styservice.deleteStylingVoteItem(tmpseq);		
+			}
 		}
-		System.out.println("삭제다음 단계----");
+		//-----------------원래 있던 사진 update
+		if(svitemphotos.size()>1) {
+			for(int i =1; i<svitemphotos.size();i++) {
+				String tmpname = svitemphotos.get(i);
+				String oricont = oriconts.get(i);
+				StylingVoteItemDTO svitemDTO =styservice.selectsvitemDTO(tmpname);
+				System.out.println("있던사진이름1:"+tmpname);
+				System.out.println("1의 내용:"+oricont);
+				
+				svitemDTO.setStyling_vote_item_contents(oricont);
+				int updateresult= styservice.modifyStylingVoteItem(svitemDTO);
+				System.out.println("있던 사진 업데이트 결과:"+updateresult);			
+			}		
+		}
 		
-		
+		//-----------------새로운 사진 upload
+				
+		if(uploadfiles.size( )>0) {		 
+			List<String> itemnames = new ArrayList<String>();
+			for(int i =0; i<uploadfiles.size();i++) {				
+				File file = new File(path);
+				for(MultipartFile uploadfile: uploadfiles) {			
+					String ofileName = uploadfile.getOriginalFilename();
+					String sfileName = "";
+					if (ofileName != null && !ofileName.equals("")) {
+						if(file.exists()) {
+							sfileName = System.currentTimeMillis() + "_" + ofileName;
+							itemnames.add(sfileName);														
+						}
+					}
+					try {
+						byte[] data = uploadfile.getBytes();
+						FileOutputStream fos = new FileOutputStream(path + "/" + sfileName);
+						fos.write(data);
+						fos.close();	
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}		
+			}
+			for(int i=0; i<uploadfiles.size();i++) {
+				int j=i+1;
+				StylingVoteItemDTO svitemDTO = new StylingVoteItemDTO();
+				svitemDTO.setStyling_vote_item_photo(itemnames.get(i));
+				svitemDTO.setStyling_vote_item_contents(newconts.get(j));
+				svitemDTO.setStyling_vote_seq(styling_vote_seq);
+				System.out.println("sfileName:내용//" +svitemDTO.getStyling_vote_item_contents());
+				styservice.insertStylingVoteItem(svitemDTO);
+			}		
+		}
+			
 		mav.setViewName("readStylingVote.style?styling_vote_seq="+styling_vote_seq);
 		return mav;
 	}
