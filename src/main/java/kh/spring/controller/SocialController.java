@@ -279,9 +279,12 @@ public class SocialController {
 		}
 		
 		int social_seq = dto.getSocial_seq();
+		
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		GoodDTO gdto = new GoodDTO(social_seq,user_seq);		
 		int goodCount = service.selectGoodCount(gdto);
+		int allgoodCount = service.allGoodCount(gdto);
+		mav.addObject("allgoodCount",allgoodCount);
 		mav.addObject("countGood",goodCount);
 		
 		

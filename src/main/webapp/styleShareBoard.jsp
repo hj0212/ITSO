@@ -243,7 +243,7 @@ body {
 												
 													<i class="fa fa-heart red-text heart" aria-hidden="true"
 																	style="float: left; font-size: 25px;"
-																	value="${content.social_seq}"><font color="black">${countGood}
+																	value="${content.social_seq}"><font color="black">${allgoodCount}
 																</font></i>
 												</c:when>
 											
@@ -251,7 +251,7 @@ body {
 											<i class="fa fa-heart-o red-text heart"
 																		aria-hidden="true"
 																		style="float: left; font-size: 25px;"
-																		value="${content.social_seq}"><font color="black">${countGood}
+																		value="${content.social_seq}"><font color="black">${allgoodCount}
 																	</font></i>
 											</c:otherwise>
 										</c:choose>
@@ -760,7 +760,7 @@ body {
 	<c:if test="${!empty sessionScope.user.seq}">
 		<script>
     	$(document).ready(function(){
-    		cosole.log($(".socailseq").attr("writer"));
+    	
     		
     		$(".heart").click(function() {
 				var heartVal = $(this).attr("class");
@@ -771,14 +771,14 @@ body {
 				}
 			});
 			$(".heart").on('click', function() {
-				var seq = $(".socialseq").attr("value");
-				var writer	= $(".socialseq").attr("writer");
+				var seq = $(".socialseq").val();
+				var writer= $(".writerseq").val();
 				var font = $(this).children('font');
 				console.log("숫자: " + $(this).children('font').html());
 				console.log(seq);
 				console.log(writer);
 				$.ajax({
-					url : "boardHeart.ajax",
+					url : "mainHeart.ajax",
 					type : "post",
 					data : {
 						social_seq : seq , 
