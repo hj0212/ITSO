@@ -1,6 +1,7 @@
 package kh.spring.controller;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -89,16 +90,19 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			List<SocialBoardDTO> socialList = this.sservice.getMySocialList((MemberDTO) session.getAttribute("user"));
+			socialList = makeHashTag(socialList);
 			List<CollectionDTO> collectionList = this.sservice
 					.getCollectionList((MemberDTO) session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.sservice
 					.getCollectionPhotoList((MemberDTO) session.getAttribute("user"));
+			List<SocialBoardDTO> goodList = this.sservice.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followerList = this.mservice.getFollowerList((MemberDTO) session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mservice.getFollowingList((MemberDTO) session.getAttribute("user"));
 			followCheck(followerList, followingList);
 			mav.addObject("socialList", socialList);
 			mav.addObject("collectionList", collectionList);
 			mav.addObject("photoList", photoList);
+			mav.addObject("goodList", goodList);
 			mav.addObject("followerList", followerList);
 			mav.addObject("followingList", followingList);
 		} catch (Exception e) {
@@ -163,6 +167,19 @@ public class MemberController {
 				}
 			}
 		}
+	}
+	
+	private List<SocialBoardDTO> makeHashTag(List<SocialBoardDTO> list) {
+		for(SocialBoardDTO dto: list) {
+			String contents = dto.getSocial_contents();
+			
+			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
+
+			contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?word="+"$2'>"+"$1"+"</a>");
+			System.out.println("여기-------------------!!!!!!!!!!!!!!!!!"+contents);
+			dto.setSocial_contents(contents);
+		}
+		return list;
 	}
 
 }
