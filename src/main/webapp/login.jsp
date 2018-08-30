@@ -403,6 +403,7 @@ $(document).ready(function () {
 
     $("#login").click(function () {
     	$('#loading-wrapper').show();
+    	
     	setTimeout(function(){
     		 $("#userform").attr("action", "login.do");
     		 $("#userform").submit();

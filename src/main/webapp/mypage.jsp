@@ -447,7 +447,9 @@ table .profilearea {
 				<br>
 				<p class="h4-responsive mb-0 nanumB">"${sessionScope.user.state }"</p>
 				<br>
+			
 				<button id="myinfobtn" class="btn btn-itso btn-sm">프로필 수정</button>
+				<button id="myMsbtn" class="btn btn-itso btn-sm">메세지 보내기</button>
 			</div>
 			<div id="profilestat" class="">
 				<div class="" style="border-left: 1px solid black;">
