@@ -1,7 +1,5 @@
 package kh.spring.dto;
 
-import java.sql.Date;
-
 public class SocialCommentDTO {
 	private int social_comment_seq;
 	private int social_seq;

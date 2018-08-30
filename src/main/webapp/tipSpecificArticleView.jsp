@@ -7,17 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>팁 보기 | ITSO</title>
 <!-- Font Awesome 4.7-->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
-	rel="stylesheet">
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
 <style>
 .btn-itso {
 	background-color: #1B0946;
@@ -123,12 +117,9 @@ img {
 
 	<!-- To write reply -->
 	<div class="mt-4 container">
-		<textarea class="form-control" name="tip_comment_contents"
-			id="tip_comment_contents"></textarea>
-		<input type="hidden" class="form-control"
-			value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
-		<button id="insertTipCommentBtn" type="button"
-			class="btn btn-sm btn-itso">댓글 쓰기</button>
+		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents" placeholder="로그인이 필요합니다."></textarea>
+		<input type="hidden" class="form-control" value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
+		<button id="insertTipCommentBtn" type="button" class="btn btn-sm btn-itso" disabled="disabled">댓글 쓰기</button>
 	</div>
 
 	<!-- like btn -->
@@ -217,9 +208,7 @@ img {
 				let html = '<table id="comment">';
 				html += '<tbody>'
 				$
-						.each(
-								data,
-								function(index, item) {
+						.each(data,function(index, item) {
 									html += '<tr>';
 									html += '<td>';
 									html += '<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'"/>';
@@ -326,6 +315,12 @@ img {
 			});
 			</script>
 
+	<c:if test="${!empty sessionScope.user.seq}">
+		<script>
+			$("#tip_comment_contents").attr("placeholder","댓글 쓰기");
+			$("#insertTipCommentBtn").attr("disabled",false);
+	</c:if>
+		</script>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

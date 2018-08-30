@@ -105,6 +105,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.update("Collection.updateCollection", dto);
 	}
 	
+	@Override
+	public CollectionDTO getCollectionSeq(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionSeq", dto);
+	}
+	
 	
 	//���ƿ� 
 	@Override

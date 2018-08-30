@@ -134,11 +134,12 @@ public class TipController {
 	@RequestMapping("insertTipCommentProc.tip")
 	public void insertTipCommentProc(@RequestBody TipCommentDTO dto, HttpServletRequest request, HttpServletResponse response) {
 		try {
-			System.out.println(1);
-			System.out.println(dto.toString());
+			System.out.println("댓글 등록~");
 
-			int result = service.insertTipCommentProc(dto);
 			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+			System.out.println(dto.getUser_seq());
+			System.out.println(writer);
+			int result = service.insertTipCommentProc(dto);
 			
 			ObjectMapper om = new ObjectMapper();
 			List<TipCommentDTO> commentList = service.getCommentsFromTip(dto.getTip_seq());

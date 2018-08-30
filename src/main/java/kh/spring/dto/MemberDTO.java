@@ -12,14 +12,16 @@ public class MemberDTO {
 	private String photo;
 	private String withdrawal;
 	private String state;
+	private String gender;
 	private String followcheck; // 팔로우여부
 	
 	
-	public MemberDTO(String email, String pw, String name,Integer age) {
+	public MemberDTO(String email, String pw, String name,Integer age, String gender) {
 		this.email = email;
 		this.pw = pw;
 		this.name = name;
 		this.age = age;
+		this.gender = gender;
 	}
 	public MemberDTO(int seq) {
 		this.seq = seq;
@@ -98,9 +100,14 @@ public class MemberDTO {
 		this.followcheck = followcheck;
 	}
 
-	public MemberDTO(int seq, Integer age, String email, String pw, String name,
-			String part, String create_Date, String block, String photo, String withdrawal, String state,
-			String followcheck) {
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public MemberDTO(int seq, Integer age, String email, String pw, String name, String part, String create_Date,
+			String block, String photo, String withdrawal, String state, String gender, String followcheck) {
 		super();
 		this.seq = seq;
 		this.age = age;
@@ -113,9 +120,9 @@ public class MemberDTO {
 		this.photo = photo;
 		this.withdrawal = withdrawal;
 		this.state = state;
+		this.gender = gender;
 		this.followcheck = followcheck;
 	}
-
 	public MemberDTO() {
 		super();
 	}
