@@ -407,7 +407,9 @@ body {
 						<li>${writer.name}</li>
 						<li>${writer.age}${writer.state}</li>
 						<li>
-							<button class="btn btn-elegant btn-sm">+ Fan</button>
+							
+							
+							
 						</li>
 					</ul>
 				</section>
@@ -902,10 +904,10 @@ body {
 			+ window.location.pathname;
 	/* var titletext = '${content.social_title}'; */
 	
-	/* console.log("<c:out value='${param.mode}'/>");*/
-/* 
-	var mode = "<c:out value='${list.social_title}'/>"; 
- */
+	console.log("<c:out value='${param.mode}'/>");
+
+	var mode = "<c:out value='${content.social_title}'/>";
+
 		
 	
 	//트위터 공유 
