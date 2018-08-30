@@ -95,6 +95,9 @@ input[type="file"] {
 	color: white;
 	text-align: center;
 }
+.board{
+	line-spacing:none;
+}
 
 </style>
 
@@ -109,7 +112,7 @@ input[type="file"] {
 				쓰기</button></h4>
 		
 		<hr />
-		<div class="row my-2">
+		<div class="row my-2 board">
 			<c:choose>
 				<c:when test="${fn:length(svdtos) > 0}">
 
@@ -141,12 +144,24 @@ input[type="file"] {
 									<p class='card-text'>		
 											<a class="text-muted amber-text">${svdto.styling_writedate}</a>
 											<c:choose>
-											<c:when test="${svdto.ddate < 0 or svdto.ddate <= 0}">
+											<c:when test="${svdto.styling_end==1 and svdto.ddate < 0}">
 											<span class="badge mdb-color lighten-2 ml-2">투표 종료</span>
 											</c:when>
-											<c:when test="${svdto.ddate >= 0 or svdto.ddate > 0}">
+											
+											<c:when test="${svdto.styling_end==2 and svdto.dnum <=0}">
+											<span class="badge mdb-color lighten-2 ml-2">투표 종료</span>
+											</c:when>
+											
+											<c:when test="${svdto.styling_end==1 and svdto.ddate>= 0}">
 											<span class="badge cyan ml-2">투표 진행중</span>
 											</c:when>
+											
+											<c:when test="${svdto.styling_end==2 and svdto.dnum >0}">
+											<span class="badge cyan ml-2">투표 진행중</span>
+											</c:when>
+											<c:when test="${svdto.styling_end==3}">
+											<span class="badge cyan ml-2">투표 진행중</span>
+											</c:when>				
 											</c:choose>
 									</p>
 									

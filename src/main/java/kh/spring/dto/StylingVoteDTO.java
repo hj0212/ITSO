@@ -18,7 +18,7 @@ public class StylingVoteDTO {
 	private String styling_writeip;
 	private String styling_delete_flag;
 	private Date styling_lastdate;
-	private String styling_endtermtxt;
+	public String styling_endtermtxt;
 	
 	//망할지도 몰라-------------------------
 	private int ddate;
@@ -51,7 +51,7 @@ public class StylingVoteDTO {
 	
 	
 	
-	//----------------망팟생성자
+	//----------------망팟생성자 보드 출력
 	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
 			Date styling_writedate, int styling_viewcount, int styling_end, Date styling_endterm, int styling_voternum,
 			String photo, String styling_writername, int ddate, int voter, int dnum) {
@@ -75,7 +75,7 @@ public class StylingVoteDTO {
 	
 
 	public StylingVoteDTO(int styling_vote_seq, String styling_title, String styling_contents, int styling_writer,
-			Date styling_writedate, int styling_viewcount, int styling_end, Date styling_endterm, int styling_voternum,
+			Date styling_writedate, int styling_viewcount, int styling_end,int styling_voternum,
 			String photo, String styling_writername, String styling_writeip, String styling_delete_flag,
 			Date styling_lastdate, String styling_endtermtxt) {
 		super();
@@ -86,7 +86,6 @@ public class StylingVoteDTO {
 		this.styling_writedate = styling_writedate;
 		this.styling_viewcount = styling_viewcount;
 		this.styling_end = styling_end;
-		this.styling_endterm = styling_endterm;
 		this.styling_voternum = styling_voternum;
 		this.photo = photo;
 		this.styling_writername = styling_writername;

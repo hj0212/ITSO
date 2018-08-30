@@ -86,6 +86,7 @@ input[type="file"] {
 	box-shadow: 0px;
 	width: 10%;
 }
+
 </style>
 
 </head>
@@ -96,9 +97,7 @@ input[type="file"] {
 	<div class="row my-5"></div>
 	<div id="wrapper" class="container-fluid col-md-8">
 
-		<script>
-			var count = 1;
-		</script>
+		<%-- <c:set var="counter" value="1" type="integer"> --%>
 		<div class="row my-2"></div>
 		<form method="post" action="insertStylingVote.style" id="voteform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
@@ -108,7 +107,7 @@ input[type="file"] {
 						<input type="text" id="votetitleid" name="styling_title"
 							class="form-control col-md-9 float-right" maxlength="50"> <label
 							for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
-							id="votelabel">투표 주제를 입력해주세요.</label>
+							id="votelabel">제목을 입력해주세요.</label>
 					</div>
 					<div class="md-form form-md form-group">
 						<input type="text" id="votecontentsid" name="styling_contents"
@@ -129,8 +128,7 @@ input[type="file"] {
 			<div class="row">
 				<h4 class="mb-0">투표항목</h4>
 				<a class="btn btn-outline-indigo btn-sm waves-effect px-0 py-0"
-					id="addvotebtn"> <i class="fa fa-plus i-indigo fa-1x"
-					aria-hidden="true"></i>
+					id="addvotebtn"> <i class="fa fa-plus" aria-hidden="true"></i>
 				</a>
 				<div class="md-form form-lg col-md-12 mt-0">
 					<table class="table table-borderless">
@@ -142,7 +140,7 @@ input[type="file"] {
 						</thead>
 						<tbody id="itemlist">
 							<tr class="z-depth-3 hoverable">
-								<th scope="row">1</th>
+								<th scope="row">counter</th>
 								<td>
 									<div class="media">
 										<div class="media-img">
@@ -166,7 +164,7 @@ input[type="file"] {
 											<div class="md-form form-sm">
 												<input type="text" id="vitemtext" class="form-control itemconts"
 													name="styling_vote_item_contents[]"> <label
-													for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
+													for="vitemtext">아이템을 소개해 주세요.</label>
 											</div>
 										</div>
 									</div>
@@ -194,9 +192,9 @@ input[type="file"] {
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="styling_endtermtxt" disabled
+					<input type="text" id="datepicker" name="datepickerval" disabled readOnly
 						class="form-control form-control-sm col-md-4"> <input
-						type="hidden" name="styling_endterm2" id="realterm">
+						type="hidden" name="styling_endtermtxt" id="realterm">
 				</div>
 			</div>
 			<!-- </div> -->
@@ -209,7 +207,7 @@ input[type="file"] {
 				</div>
 				<div class="col">
 					<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum">
+						readOnly id="votenum" placeholder="명" name="styling_voternumtxt">
 				</div>
 
 			</div>
@@ -335,10 +333,10 @@ input[type="file"] {
 			var wrapprev = $(this).closest('tr').prev('tr');
 			var number = parseInt($(this).closest('td').siblings('th').text());
 			wraptr.insertBefore(wraptr.prev());
-			/* if (number > 1) {
+			 if (number > 1) {
 				wrapprev.children('th').text(number);
 				$(this).closest('td').siblings('th').text(number - 1);
-			} */
+			} 
 		})
 
 		$(document).on('click', '.downvotebtn', function() {
@@ -347,21 +345,19 @@ input[type="file"] {
 			var number = parseInt($(this).closest('td').siblings('th').text());
 			wraptr.insertAfter(wraptr.next());
 			wrapnext.children('th').text(number);
-			/* if (number < count) {
+			 if (number < count) {
 				$(this).closest('td').siblings('th').text(number + 1);
-			} */
+			} 
 		})
 
-		$(document).on(
-				'click',
-				'.custom-control-input',
-				function() {
+		$(document).on('click','.custom-control-input',function() {
 					if ($(this).val() == 2) {
 						$('#votenum').attr('readOnly', false);
 						$("#datepicker").attr('disabled', true);
 					} else if ($(this).val() == 1) {
 						$('#votenum').attr('readOnly', true);
 						$("#datepicker").attr('disabled', false);
+						$("#datepicker").css('background-color','white');
 						$(function() {
 							$("#datepicker").datepicker(
 									{
@@ -400,7 +396,8 @@ input[type="file"] {
 					}else{
 						$('#radioresult').val(radioval);
 						console.log($('input[name = "styling_end"]').val());		
-						console.log($('#datepicker').val());	
+						console.log($('#datepicker').val());
+						$('#realterm').val($('#datepicker').val());
 						
 						if($('#votetitleid').val() == "" || $('#imgfile0').val() == "" || $('#votecontentsid').val() == "" || $('.file-upload-input, .filesel').val() == "" || $('.itemconts').val() == "" ){
 							alert("항목을 모두 입력해 주세요.");
@@ -408,13 +405,27 @@ input[type="file"] {
 							alert("종료 날짜를 선택해 주세요.");			
 						}else if(radioval==2 && $('#votenum').val()==""){
 							alert("참여 인원을 입력해 주세요.");	
-						}else if($('#datepicker').val()=="" && $('#votenum').val()==""){
+						}else if($('#datepicker').val()=="" && $('#votenum').val()=="" && radioval!=3){
 							alert("투표종료 조건을 입력해 주세요.");
 						}else if($('.filesel').length<2){
 							alert("투표항목은 2개 이상 입력해 주세요.");
 						}else{
-							  $('#voteform').submit();  
-							/*  console.log("submit");  */
+							if(radioval==3){
+								$('#realterm').val("blank");
+								$('#votenum').val(0);
+								console.log($('#realterm:styling_endtermtxt 값').val()); 
+							}
+							
+							if(radioval==2){
+								$('#realterm').val("blank");
+								console.log($('#realterm:styling_endtermtxt 값').val()); 
+							}
+							if(radioval==1){
+								$('#votenum').val(0);
+								console.log($('#realterm:styling_endtermtxt 값').val()); 
+							}
+							  console.log("submit");  
+							   $('#voteform').submit();  
 						}
 					}						
 					console.log(radioval+"번 종료조건 선택 함");

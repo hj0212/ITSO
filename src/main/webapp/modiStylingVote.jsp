@@ -87,11 +87,15 @@ input[type="file"] {
 	box-shadow: 0px;
 	width: 10%;
 }
+
+.settxt{
+font-size:15px;
+}
+
 </style>
 
 </head>
-
-
+			
 <body>
 	<%@include file="navi.jsp"%>
 	<div class="row my-5"></div>
@@ -103,7 +107,8 @@ input[type="file"] {
 		<div class="row my-2"></div>
 		<form method="post" action="modifyStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}" id="modiform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
-				<h4>투표주제</h4><span>  작성자: ${votedto.styling_writer}</span><span>  조회수: ${styling_viewcount}</span>
+				<h4>투표주제</h4>&nbsp;<span class="text-muted text-sm settxt">(작성자: ${votedto.styling_writer}</span>
+				&nbsp;<span class="text-muted text-sm settxt"><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${votedto.styling_viewcount})</span>
 				<input type="hidden" value="${votedto.styling_writer}" id="votewriterid" name ="styling_writer">
 			<input type="hidden" name="styling_vote_seq" value="${votedto.styling_vote_seq}">
 			<input type="hidden" name="styling_viewcount" value="${votedto.styling_viewcount}">
@@ -113,7 +118,7 @@ input[type="file"] {
 						<input type="text" id="votetitleid" name="styling_title"
 							class="form-control col-md-9 float-right" value="${votedto.styling_title}" maxlength="50"> <label
 							for="votetitleid" class="offset-md-3 my-0 font-weight-bold"
-							id="votelabel">투표 주제를 입력해주세요.</label>
+							id="votelabel">제목을 입력해주세요.</label>
 					</div>
 					<div class="md-form form-md form-group">
 						<input type="text" id="votecontentsid"
@@ -141,8 +146,7 @@ input[type="file"] {
 				<h4 class="mb-0">투표항목</h4>
 				
 				<a class="btn btn-outline-indigo btn-sm waves-effect px-0 py-0"
-					id="addvotebtn"> <i class="fa fa-plus i-indigo fa-1x"
-					aria-hidden="true"></i>
+					id="addvotebtn"> <i class="fa fa-plus" aria-hidden="true"></i></i>
 				</a>
 				<div class="md-form form-lg col-md-12 mt-0">
 					<table class="table table-borderless" id="itemtable">
@@ -163,8 +167,8 @@ input[type="file"] {
 										<c:set var="itemphoto" value="${item.styling_vote_item_photo}"/>
 										<c:set var="leng" value="${fn:length(itemphoto)}"/>
 										
-											<img class="d-flex mr-3 selimg" src="upload/stylingvote/${item.styling_vote_item_photo}" alt="후보사진"> <input
-												type="file" name="voteimgfile[]" id="imgfile${status.count}"
+											<img class="d-flex mr-3 selimg" src="upload/stylingvote/${item.styling_vote_item_photo}" alt="후보사진"> 
+											<input type="file" id="imgfile${status.count}"
 												class="file-upload-input form-control filesel"
 												onchange="readURL(this);" accept="image/*">
 												<input type="hidden" class="oriphotovalue" value="${item.styling_vote_item_photo}">
@@ -183,7 +187,7 @@ input[type="file"] {
 											</a><br>
 											<div class="md-form form-sm">
 												<input type="text" id="vitemtext" class="form-control itemconttext" value="${item.styling_vote_item_contents}">
-												<label for="vitemtext">아이템의 특징을 간단히 적어주세요.</label>
+												<label for="vitemtext">아이템을 소개해 주세요.</label>
 											</div>
 										</div>
 									</div>
@@ -213,8 +217,9 @@ input[type="file"] {
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="styling_endtermtxt" disabled
+					<input type="text" id="datepicker" name="datepickervalue" disabled
 						class="form-control form-control-sm col-md-4" value="${votedto.styling_endterm}">
+						<input type="hidden" name="styling_endtermtxt" id="realterm">
 				</div>
 			</div>
 			<!-- </div> -->
@@ -229,12 +234,12 @@ input[type="file"] {
 				<c:choose>
 				<c:when test="${votedto.styling_voternum eq 0}">
 				<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}"+"명">
+						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}">
 				</c:when>	
 				
 				<c:otherwise>
 					<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}"+"명">
+						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}">
 				</c:otherwise>
 				</c:choose>
 				</div>
@@ -327,6 +332,11 @@ input[type="file"] {
 				removeUpload();
 			}
 		}
+		
+		$('.filesel').on('change', function(){
+			$(this).attr('name',"voteimgfile[]");
+			
+		})
 		 
 		$("#addvotebtn")
 				.on(
@@ -438,7 +448,7 @@ input[type="file"] {
 				$('#radioresult').val(radioval);
 				console.log($('input[name = "styling_end"]').val());		
 				console.log($('#datepicker').val());
-				
+				$('#realterm').val($('#datepicker').val());
 				if($('#votetitleid').val() == "" || ($('#imgfile0').val() == "" && $('#voteitemimg').attr('src')=="") || $('#votecontentsid').val() == "" || $('.itemconts').val() == "" ){
 					alert("항목을 모두 입력해 주세요.");
 					breakflag=true;
@@ -493,10 +503,23 @@ input[type="file"] {
 						console.log("사진값(있던사진):"+$('input[name="itemphotos[]"]').val());
 						console.log("dto 분해 -투표주제:작성자/"+$('#votetitleid').val()+":"+$('#votewriterid').val());
 						console.log($('#showdto').val());
+						if(radioval==3){
+							$('#realterm').val("blank");
+							$('#votenum').val(0);
+							console.log($('#realterm:styling_endtermtxt 값').val()); 
+						}
 						
-						 /*  $('#modiform').submit();  */   
-						
-					  console.log("submit");  
+						if(radioval==2){
+							$('#realterm').val("blank");
+							console.log($('#datepicker').val()); 
+						}
+						if(radioval==1){
+							$('#votenum').val(0);
+							console.log($('#realterm:styling_endtermtxt 값').val()); 
+						}
+						  console.log("submit");  		    
+						   $('#modiform').submit();     			
+					 
 				}		
 			}
 		})

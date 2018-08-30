@@ -92,6 +92,9 @@ input[type="file"] {
 	color: white;
 	text-align: center;
 }
+.settxt{
+font-size:15px;
+}
 
 .media-img {
 	
@@ -105,8 +108,11 @@ input[type="file"] {
 	<%@include file="navi.jsp"%>
 	<div class="row my-5"></div>
 	<div id="wrapper" class="container-fluid col-md-8">
-		<h4>
-			투표 <span>(${votedto.voter}명 참여중)</span>
+		<div>
+		<h4>투표
+			&nbsp;<span class="text-muted text-sm settxt"><i class="fa fa-bar-chart" aria-hidden="true"></i>${votedto.voter}명 참여중 </span>
+			 &nbsp;<span class="text-muted text-sm settxt"><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${votedto.styling_viewcount}</span>
+			
 			<script>
 				console.log("${sessionScope.user.seq}");
 			</script>
@@ -142,11 +148,12 @@ input[type="file"] {
 					<button class="btn btn-indigo btn-md float-right" type="button"
 						id="votebtn" disabled>투표완료</button>
 				</c:when>
-			</c:choose>
-		</h4>
+			</c:choose>		
 		<input type="hidden" id="sequenceId"
 			value="${votedto.styling_vote_seq}">
-
+		 </h4>
+		</div>
+		
 		<hr />
 		<div class="row my-2">
 			<div class="md-form form-lg col-4 mx-0">
@@ -169,9 +176,9 @@ input[type="file"] {
 				<table class="table table-borderless">
 					<thead>
 						<tr>
-							<th scope="col" style="width: 10%">번호</th>
+							<th scope="col" style="width: 10%">아이템</th>
 							<th scope="col" style="width: 70%">아이템 소개</th>
-							<th scope="col" style="width: 20%">결과</th>
+							<th scope="col" style="width: 20%" class="text-center">결과</th>
 						</tr>
 					</thead>
 					<tbody id="itemlist">
@@ -210,12 +217,13 @@ input[type="file"] {
 										</div>
 									</div>
 								</td>
-								<td>
+								<td class="text-center">
 								
 									<div class="progress">
 										<div class="progress-bar" style="width:${voteresults[status.index].eachrate}%" role="progressbar" aria-valuenow="0"
 											aria-valuemin="0" aria-valuemax="100"></div>
-									</div><a>${voteresults[status.index].eachrate} %</a> <br>
+									</div>							
+									<a>${voteresults[status.index].eachrate} </a> <br>
 								</td>
 							</tr>
 						</c:forEach>
@@ -224,7 +232,7 @@ input[type="file"] {
 				</table>
 			</div>
 		</div>
-		<div class="row">--</div>
+		<div class="row"></div>
 
 		<div class="col-md-2 offset-md-10">
 			<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1"
