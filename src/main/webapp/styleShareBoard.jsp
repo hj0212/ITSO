@@ -282,18 +282,20 @@ body {
 										</button>
 										<!--facebook-->
 										<button type="button" class="btn-floating btn-sm btn-fb share"
-											style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
+											style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											onclick="facebookgo()">
 											<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
 										</button>
 										<!--twitter-->
 										<button type="button" class="btn-floating btn-sm btn-tw share"
-											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
+											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											onclick="twittergo()">
 											<i class="fa fa-twitter" title="트위터로 공유하기"></i>
 										</button>
 										<!--kakao-->
 										<button type="button" class="btn-floating btn-sm share "
 											style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
-											title="카카오로 공유하기">
+											title="카카오로 공유하기" onclick="kakaogo()" id="kakao-link-btn">
 											<i class="fa fa-comment"></i>
 										</button>
 										
@@ -884,8 +886,9 @@ body {
 	console.log("<c:out value='${param.mode}'/>");
 
 	var mode = "<c:out value='${content.social_title}'/>";
-
-		
+	
+	console.log("좋아요카운트 : " + "${goodCount}");
+	
 	
 	//트위터 공유 
 	function twittergo(url, text) {
@@ -896,7 +899,7 @@ body {
 		
 		console.log("와우에 오는 깃 : " + wow);
 		console.log("text에 오는 것: " + text);
-		console.log('${goodList.social_good_seq}');
+	
 		
 		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="+ url, "", "width=700, height=400");
 	}
@@ -937,9 +940,9 @@ body {
 	//페이스북
 	function facebookgo() {
 		//var url =  window.location.host + window.location.pathname;
-		var url = document.location.href;
+		//var url = document.location.href;
 		//var url = 'http://192.168.20.35/controller/main.go'//test용이라 주소 직접 입력해놓음
-		//var url ='http://192.168.20.35:8080/controller/readSocial.go?seq=186';
+		var url ='http://192.168.20.35:8080/controller/readSocial.go?seq=186';
 		var encodeUrl = encodeURIComponent(url);
 		var facebook = 'https://www.facebook.com/sharer/sharer.php?u=';
 		var link = facebook + encodeUrl;
