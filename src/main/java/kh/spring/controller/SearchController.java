@@ -27,8 +27,10 @@ public class SearchController {
 		
 		for(SearchedUserInfoDTO dto : userList) {
 			System.out.println(dto.getName());
+			System.out.println(dto.getPhoto());
 		}
 		
+		mav.addObject("userList", userList);
 		mav.setViewName("searchResults.jsp");
 		return mav;
 	}

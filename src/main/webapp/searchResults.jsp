@@ -405,7 +405,7 @@
 			<section class="secondSection col-md-12 mt-3">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link active" id="user-tab" data-toggle="tab" href="#userdiv" role="tab" aria-controls="userdiv" aria-selected="true">사용자</a>
+						<a class="nav-link active" id="user-tab" data-toggle="tab" href="#userdiv" role="tab" aria-controls="userdiv" aria-selected="true">사용자 (${userList.size()})</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" id="tag-tab" data-toggle="tab" href="#tagdiv" role="tab" aria-controls="tagdiv" aria-selected="false">태그</a>
@@ -415,19 +415,28 @@
 					<div class="tab-pane fade show active" id="userdiv" role="tabpanel" aria-labelledby="user-tab">
 						<div class="col-md-12 search-users mt-3">
 							<table style="width : 100%;">
-								<tr>
-									<td class="user-image"><img src="resources/images/background.jpg" alt=""></td>
-									<td class="user-info">
-										<div class="user-name">
-											<b>무함마드</b>
-										</div>
-										<div class="status-message">
-											안뇽하세요
-										</div>
-									</td>
-									<td class="user-fans">511 fans</td>
-									<td class="user-looks">23 looks</td>
-								</tr>			
+								<c:choose>
+									<c:when test="${!empty userList}">
+										<c:forEach var="userList" items="${userList}">
+											<tr>
+												<td class="user-image">
+													<img src="resources/images/${userList.photo}" alt="" onerror="this.src='resources/images/background.jpg'">
+												</td>
+												<td class="user-info">
+													<div class="user-name">
+														<b>${userList.name}</b>
+													</div>
+													<div class="status-message">${userList.state}</div>
+												</td>
+												<td class="user-fans">511 fans</td>
+												<td class="user-looks">23 looks</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										검색 결과가 없습니다.
+									</c:otherwise>
+								</c:choose>
 							</table>
 						</div>
 					</div>

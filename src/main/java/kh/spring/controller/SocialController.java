@@ -265,7 +265,7 @@ public class SocialController {
 		Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
 		Matcher m = p.matcher(contents);
 
-		contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?word="+"$2'>"+"$1"+"</a>");
+		contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?search="+"$2'>"+"$1"+"</a>");
 		dto.setSocial_contents(contents);
 
 		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
@@ -887,6 +887,10 @@ public class SocialController {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
 			
+			for(SocialBoardDTO abc : result) {
+				System.out.println(abc.getSocial_contents());
+			}
+			
 			mav.addObject("search", search);
 			mav.addObject("feed",feed);
 			mav.addObject("goodCount",goodCount);
@@ -907,7 +911,7 @@ public class SocialController {
 			
 			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
 
-			contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?word="+"$2'>"+"$1"+"</a>");
+			contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?search="+"$2'>"+"$1"+"</a>");
 			System.out.println("여기-------------------!!!!!!!!!!!!!!!!!"+contents);
 			dto.setSocial_contents(contents);
 		}
