@@ -261,11 +261,11 @@ public class SocialController {
 
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
-		
+		if(request.getParameter("noti_seq") != null) {
 		int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
 		NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");
 		int update_noti =this.nosevice.updateNotification(nodto);
-		
+		}
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
 		// image_db -> {} -> 0 : {}, 1 : {}
