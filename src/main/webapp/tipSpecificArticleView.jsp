@@ -224,9 +224,7 @@ $("#tipModifyBtn").click(function(){
 				let html = '<table id="comment">';
 				html += '<tbody>'
 				$
-						.each(
-								data,
-								function(index, item) {
+						.each(data,function(index, item) {
 									html += '<tr>';
 									html += '<td>';
 									html += '<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'"/>';

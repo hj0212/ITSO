@@ -189,17 +189,17 @@ public class SocialController {
 
 
 		try {
-			int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
+			/*int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
 			NotificationDTO ndto = new NotificationDTO(sessionSeq);
-			/*System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());*/
-			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);
+			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
+			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);*/
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
 			
-			mav.addObject("u-seq",sessionSeq);
-			mav.addObject("notiList",notiList);
+			/*mav.addObject("u-seq",sessionSeq);
+			mav.addObject("notiList",notiList);*/
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
@@ -228,6 +228,7 @@ public class SocialController {
 		dto.setCollection_seq(seq);
 		List<CollectionDTO> clist = service.getCollectionData(dto);
 		List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("collectionList", clist);
 		mav.addObject("socialList", list);
@@ -271,10 +272,11 @@ public class SocialController {
 
 		String[] writeDate = dto.getSocial_date().toString().split("-");
 		
+		if(request.getParameter("noti_seq") != null) {
 		int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
 		NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");
 		int update_noti =this.nosevice.updateNotification(nodto);
-		
+		}
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
 		// image_db -> {} -> 0 : {}, 1 : {}

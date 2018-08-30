@@ -44,10 +44,6 @@ body {
 	margin: 0px auto !important;
 }
 
-.follow:hover {
-	background-color: #e9e9e9 !important;
-}
-
 .heart {
 	cursor: pointer;
 }
@@ -339,7 +335,7 @@ button.dropdown-toggle {
 						function() {
 							var seq = $(this).siblings('.writerseq').val();
 							var text = $(this).find('.show').text();
-							console.log("text: " + text);
+							console.log("seq: " + seq);
 							var btn = $(".writerseq[value='" + seq + "']")
 									.siblings("button.followbtn");
 							var span = btn.find('span');
@@ -453,16 +449,21 @@ button.dropdown-toggle {
 											<a class="writer-a"><b class="writerName"
 												style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;
 											<span class="state"><font color="gray">"${list.userState}"</font></span>
-										</div> <c:choose>
-											<c:when test="${!empty followingList }">
-												<c:forEach var="flist" items="${followingList }">
-													<c:choose>
-														<c:when
-															test="${list.social_writer eq sessionScope.user.seq}">
-														</c:when>
-														<c:otherwise>
+										</div> 
+										<input type="hidden" class="writerseq" value="${list.social_writer }" />
+										<c:choose>
+											<c:when test="${list.social_writer eq sessionScope.user.seq}">
+
+											</c:when>
+											<c:otherwise>
+												<c:choose>
+													
+													<c:when test="${!empty followingList }">
+														<c:forEach var="flist" items="${followingList }">
+
 															<c:choose>
 																<c:when test="${flist.seq eq list.social_writer}">
+																
 																	<button type="button" class="btn btn-itso followbtn">
 																		<span class="unfollow show"
 																			style="font-family: 'NanumbarunpenR';"><i
@@ -473,6 +474,7 @@ button.dropdown-toggle {
 																	</button>
 																</c:when>
 																<c:otherwise>
+																
 																	<button type="button" class="btn btn-indigo followbtn">
 																		<span class="follow show"
 																			style="font-family: 'NanumbarunpenR';"><i
@@ -483,18 +485,20 @@ button.dropdown-toggle {
 																	</button>
 																</c:otherwise>
 															</c:choose>
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
-											</c:when>
-											<c:otherwise>
-												<button type="button" class="btn btn-indigo followbtn">
-													<span class="unfollow hidden"
-														style="font-family: 'NanumbarunpenR';"><i
-														class="fa fa-check" /></i> 언팔로우</span> <span class="follow show"
-														style="font-family: 'NanumbarunpenR';"><i
-														class="fa fa-plus" /></i> 팔로우</span>
-												</button>
+														</c:forEach>
+													</c:when>
+													
+													<c:otherwise>
+														<button type="button" class="btn btn-indigo followbtn">
+															<span class="unfollow hidden"
+																style="font-family: 'NanumbarunpenR';"><i
+																class="fa fa-check" /></i> 언팔로우</span> <span class="follow show"
+																style="font-family: 'NanumbarunpenR';"><i
+																class="fa fa-plus" /></i> 팔로우</span>
+														</button>
+													</c:otherwise>
+												</c:choose>
+
 											</c:otherwise>
 										</c:choose></li>
 									<li>
