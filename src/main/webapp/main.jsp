@@ -933,12 +933,12 @@ button.dropdown-toggle {
 <script>
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-	var titletext = '${list.social_title}';
+/* 	var titletext = '${list.social_title}'; */
 
-	console.log("<c:out value='${param.mode}'/>");
+/* 	console.log("<c:out value='${param.mode}'/>");
 
 	var mode = "<c:out value='${list.social_title}'/>";
-
+ */
 	//트위터 공유  
 	function twittergo(url, text) {
 		var url = window.location.protocol + window.location.host

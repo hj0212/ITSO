@@ -239,29 +239,19 @@ body {
 							<div class="goodarea" style="margin-top: 17px; float: left;">
 										<c:set var="loop_flag" value="false" />
 										<c:choose>
-											<c:when test="${goodCount > 0 }">
-												<c:choose>
-												<c:when test="${goodStatus eq true }">
+											<c:when test="${countGood > 0 }">
+												
 													<i class="fa fa-heart red-text heart" aria-hidden="true"
 																	style="float: left; font-size: 25px;"
-																	value="${content.social_seq}"><font color="black">${goodCount}
+																	value="${content.social_seq}"><font color="black">${countGood}
 																</font></i>
 												</c:when>
-												<c:otherwise>
-													<i class="fa fa-heart-o red-text heart"
-																		aria-hidden="true"
-																		style="float: left; font-size: 25px;"
-																		value="${content.social_seq}"><font color="black"> 0
-																	</font></i>
-												</c:otherwise>
-												</c:choose>
-												
-											</c:when>
+											
 											<c:otherwise>
 											<i class="fa fa-heart-o red-text heart"
 																		aria-hidden="true"
 																		style="float: left; font-size: 25px;"
-																		value="${content.social_seq}"><font color="black"> 0
+																		value="${content.social_seq}"><font color="black">${countGood}
 																	</font></i>
 											</c:otherwise>
 										</c:choose>
@@ -501,7 +491,7 @@ body {
 																<div class="collectionPhotoItem">
 																	<img src="/upload/social/${plist.photo }" alt=""><input
 																		type="hidden" class="socialseq"
-																		value="${plist.social_seq }" />
+																		value="${plist.social_seq }" writer="${plist.social_writer}"/>
 																</div>
 															</c:if>
 														</c:when>
@@ -511,7 +501,7 @@ body {
 																<div class="collectionPhotoItem" style="display: none;">
 																	<img src="/upload/social/${plist.photo }" alt=""><input
 																		type="hidden" class="socialseq"
-																		value="${plist.social_seq }" />
+																		value="${plist.social_seq }" writer="${plist.social_writer}" />
 																</div>
 															</c:if>
 														</c:otherwise>
@@ -768,6 +758,39 @@ body {
 	<c:if test="${!empty sessionScope.user.seq}">
 		<script>
     	$(document).ready(function(){
+    		cosole.log($(".socailseq").attr("writer"));
+    		
+    		$(".heart").click(function() {
+				var heartVal = $(this).attr("class");
+				if (heartVal == "fa fa-heart red-text heart") {
+					$(this).attr("class", "fa fa-heart-o red-text heart");
+				} else {
+					$(this).attr("class", "fa fa-heart red-text heart");
+				}
+			});
+			$(".heart").on('click', function() {
+				var seq = $(".socialseq").attr("value");
+				var writer	= $(".socialseq").attr("writer");
+				var font = $(this).children('font');
+				console.log("숫자: " + $(this).children('font').html());
+				console.log(seq);
+				console.log(writer);
+				$.ajax({
+					url : "boardHeart.ajax",
+					type : "post",
+					data : {
+						social_seq : seq , 
+						social_writer :writer
+					},
+					success : function(data) {
+						console.log("들어옴" + data), font.html(data)
+					}
+				});
+			});
+    		
+    		
+ 		
+    		
     		$("#commentarea").attr("placeholder","댓글 쓰기");
     		$("#write-comment").attr("disabled",false);
     		
@@ -877,12 +900,12 @@ body {
 	
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-	var titletext = '${content.social_title}';
+	/* var titletext = '${content.social_title}'; */
 	
-	console.log("<c:out value='${param.mode}'/>");
-
-	var mode = "<c:out value='${list.social_title}'/>";
-
+	/* console.log("<c:out value='${param.mode}'/>");*/
+/* 
+	var mode = "<c:out value='${list.social_title}'/>"; 
+ */
 		
 	
 	//트위터 공유 

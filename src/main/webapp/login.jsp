@@ -261,21 +261,6 @@ $(document).ready(function () {
         $("#userform").attr("action", "login.do");
         $("#userform").submit();
     });
-    
-    /* 엔터키 이벤 */
-    $(document).keydown(function(key) {	
-		if (key.keyCode == 13) {
-			var userid = $("#inputIconEx1").val();
-			var password = $("#inputValidationEx2").val();
-			if(userid==""){
-				alert("Email을 입력해주세요");
-			}else if(password==""){
-				alert("Password를 입력해주세요");
-			}else if($("#login").text()=="User Login") {
-				$("#userform").attr('action','login.do').submit();
-			}
-		  }
-	  });
 
     /* 페이스북 로그인 */
     var checkLoginStatus = function (response) {

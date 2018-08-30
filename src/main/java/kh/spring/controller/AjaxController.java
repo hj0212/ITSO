@@ -143,6 +143,46 @@ public class AjaxController {
 		System.out.println("누른사람 번호"+user_seq);
 		return count;
 	}
+	
+	@RequestMapping("/boardHeart.ajax")
+	public @ResponseBody int boardHeart(int social_seq,int social_writer, HttpServletResponse response,HttpSession session) {
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		GoodDTO gdto = new GoodDTO(social_seq,user_seq);
+
+		int goodCount = 0;
+	
+
+		if(goodCount>0) {
+			int delete = sbService.deleteGoodCount(gdto);
+			goodCount = sbService.selectGoodCount(gdto);
+		}else {
+			int insert = sbService.insertGoodCount(gdto);
+			goodCount = sbService.selectGoodCount(gdto);
+
+			if(user_seq != social_writer) {
+				NotificationDTO nodto = new NotificationDTO(social_writer,user_seq,"good","좋아요를 눌렀습니다.","n","아무거나",social_seq);
+				List<NotificationDTO> data = noservice.notificationData(nodto);	
+				try {
+				
+					if(data.size()==0) {
+						int noInsert = noservice.insertNotification(nodto);
+					
+						NotificationDTO list = noservice.selectNotification(nodto).get(0);		
+						System.out.println(list.getNoti_date());
+						ObjectMapper mapper = new ObjectMapper();
+						String jsonString  = mapper.writeValueAsString(list);	
+						System.out.println(jsonString);
+						EchoHandler.users.get(nodto.getUser_seq()).getBasicRemote().sendText(jsonString);
+					}else {
+						System.out.println("있음");
+					}
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return goodCount;
+	}
 
 
 	@RequestMapping("/saveCollection.ajax")
