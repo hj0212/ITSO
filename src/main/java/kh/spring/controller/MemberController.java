@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
@@ -89,37 +90,48 @@ public class MemberController {
 	public ModelAndView goMypage(HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		MemberDTO tmp = null;
-
+		int user_seq = 0;
+		
 		try {
-			int seq = Integer.parseInt(request.getParameter("seq"));
-			tmp = new MemberDTO();
-			tmp.setSeq(seq);
-		}catch(Exception e) {
+			// 본인
 			tmp = (MemberDTO) session.getAttribute("user");
-		}
-
-		try {
-			List<SocialBoardDTO> socialList = this.sservice.getMySocialList(tmp);
-			socialList = makeHashTag(socialList);
-			List<CollectionDTO> collectionList = this.sservice
-					.getCollectionList(tmp);
-			List<SocialBoardDTO> photoList = this.sservice
-					.getCollectionPhotoList(tmp);
-			List<SocialBoardDTO> goodList = this.sservice.getMyGoodSocialList(tmp);
-			List<MemberDTO> followerList = this.mservice.getFollowerList(tmp);
-			List<MemberDTO> followingList = this.mservice.getFollowingList(tmp);
-			MemberController.followCheck(followerList, followingList);
-			mav.addObject("socialList", socialList);
-			mav.addObject("collectionList", collectionList);
-			mav.addObject("photoList", photoList);
-			mav.addObject("goodList", goodList);
-			mav.addObject("followerList", followerList);
-			mav.addObject("followingList", followingList);
+			user_seq = tmp.getSeq();
 		} catch (Exception e) {
 			System.out.println("로그인x");
 			mav.setViewName("login.go");
 			return mav;
 		}
+
+		int result = 0;
+		try {
+			// 다른사람
+			int seq = Integer.parseInt(request.getParameter("seq"));
+			tmp = new MemberDTO();
+			tmp.setSeq(seq);
+			tmp = mservice.getUserData(tmp).get(0);
+			result = mservice.checkFollow(new FollowDTO(user_seq, seq));
+		}catch(Exception e) {
+
+		}
+
+		List<SocialBoardDTO> socialList = this.sservice.getMySocialList(tmp);
+		socialList = makeHashTag(socialList);
+		List<CollectionDTO> collectionList = this.sservice.getCollectionList(tmp);
+		List<SocialBoardDTO> photoList = this.sservice.getCollectionPhotoList(tmp);
+		List<SocialBoardDTO> goodList = this.sservice.getMyGoodSocialArticleList((MemberDTO) session.getAttribute("user"));
+		List<MemberDTO> followerList = this.mservice.getFollowerList(tmp);
+		List<MemberDTO> followingList = this.mservice.getFollowingList(tmp);
+		MemberController.followCheck(followerList, followingList);
+		mav.addObject("followcheck", result);
+		mav.addObject("seq", tmp.getSeq());
+		mav.addObject("member", tmp);
+		mav.addObject("socialList", socialList);
+		mav.addObject("collectionList", collectionList);
+		mav.addObject("photoList", photoList);
+		mav.addObject("goodList", goodList);
+		mav.addObject("followerList", followerList);
+		mav.addObject("followingList", followingList);
+
 
 		if (request.getParameter("view") == null) {
 			mav.setViewName("userpage.jsp");

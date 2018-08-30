@@ -42,4 +42,5 @@ public interface ISocialBoardDAO {
 	public int deleteGoodCount(GoodDTO gdto);
 	public int allGoodCount(GoodDTO gdto);
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto);
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto);
 }

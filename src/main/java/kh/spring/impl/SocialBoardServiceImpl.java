@@ -173,5 +173,10 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.showHashTagFollowBoardList(pAge, pGender, user_seq, search);
 	}
 
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto) {
+		return this.dao.getMyGoodSocialArticleList(dto);
+	}
+
 	
 }

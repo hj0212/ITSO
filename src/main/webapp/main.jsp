@@ -528,7 +528,7 @@ button.dropdown-toggle {
 											<c:when test="${empty goodList }">
 												<i class="fa fa-heart-o red-text heart " aria-hidden="true"
 													style="float: right; font-size: 25px;"
-													value="${list.social_seq}"><font color="black"> ${heart[status.index].toString()}
+													value="${list.social_seq}"> <font color="black"> ${heart[status.index].toString()}
 												</font></i>
 											</c:when>
 											<c:otherwise>
@@ -540,7 +540,7 @@ button.dropdown-toggle {
 															<c:when test="${good.social_seq == list.social_seq }">
 																<i class="fa fa-heart red-text heart" aria-hidden="true"
 																	style="float: left; font-size: 25px;"
-																	value="${list.social_seq}"><font color="black"> ${heart[status.index].toString()}
+																	value="${list.social_seq}"> <font color="black"> ${heart[status.index].toString()}
 																</font></i>
 
 																<c:set var="loop_flag" value="true" />
@@ -550,7 +550,7 @@ button.dropdown-toggle {
 																	<i class="fa fa-heart-o red-text heart"
 																		aria-hidden="true"
 																		style="float: left; font-size: 25px;"
-																		value="${list.social_seq}"><font color="black"> ${heart[status.index].toString()}
+																		value="${list.social_seq}"> <font color="black"> ${heart[status.index].toString()}
 																	</font></i>
 
 

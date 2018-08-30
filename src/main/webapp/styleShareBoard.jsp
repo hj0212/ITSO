@@ -323,7 +323,7 @@ body {
 								</c:if>
 							</div>
 							<div class="instafilta-target mt-1">
-							${content.comment_count } <i class="fa fa-comment-o"></i>
+							<span id="commentcount">${content.comment_count }</span> <i class="fa fa-comment-o"></i>
 						</div>
 						</header>
 
@@ -798,6 +798,7 @@ body {
     					
     					success : function(data){
     						showComment(data);
+    						$("#commentcount").text($("#comment tr").length);
     					}
     				});
     			}
@@ -851,6 +852,7 @@ body {
     					
     					success : function(data) {
     						showComment(data);
+    						$("#commentcount").text($("#comment tr").length);
     					}
     				});
     			}

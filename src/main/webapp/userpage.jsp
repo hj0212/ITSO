@@ -78,7 +78,6 @@ body {
 	float: left;
 	font-size: 18px;
 	padding-left: 5px;
-	border-right: 1px solid black;
 }
 
 #profilestat div p:first-of-type {
@@ -159,6 +158,10 @@ table .profilearea {
 	.state {
 		display: none;
 	}
+}
+
+.tab-content a {
+	color: black;
 }
 
 #social_contents a {
@@ -249,6 +252,14 @@ table .profilearea {
 
 .hidden {
 	display: none;
+}
+
+.writerName:hover {
+	color: aqua;
+}
+
+.followbtn {
+	margin-top: 12px;
 }
 </style>
 
@@ -436,7 +447,7 @@ table .profilearea {
 										},
 										success : function(data) {
 											console.log("들어옴" + data), font
-													.html(data)
+													.html( data)
 										}
 									});
 								});
@@ -452,29 +463,79 @@ table .profilearea {
 		<!-- 프로필 정보 영역 -->
 		<div class="row z-depth-1 mb-3" id="profile">
 			<div id="imgarea" class="mr-2">
-				<img src="/upload/profile/${sessionScope.user.photo}" alt=""
-					class="profileimg">
+				<img src="/upload/profile/${member.photo}" alt="" class="profileimg">
 			</div>
 			<div id="infoarea" class="col">
-				<p class="h4-responsive mb-0 nanumB">${sessionScope.user.name }</p>
-				<p class="h6-responsive">${sessionScope.user.email }</p>
+				<p class="h4-responsive mb-0 nanumB">${member.name}</p>
+				<p class="h6-responsive">${member.email}</p>
 				<br>
-				<p class="h4-responsive mb-0 nanumB">"${sessionScope.user.state }"</p>
+				<p class="h4-responsive mb-0 nanumB">"${member.state}"</p>
 				<br>
-				<button id="myinfobtn" class="btn btn-itso btn-sm">프로필 수정</button>
+
+				<c:choose>
+					<c:when test="${seq eq sessionScope.user.seq }">
+						<!-- 본인 -->
+						<button id="myinfobtn" class="btn btn-itso btn-sm">프로필 수정</button>
+					</c:when>
+					<c:otherwise>
+						<!-- 다른사람 -->
+						<c:if test="${followcheck == 0 }">
+							<!-- 팔로우x -->
+							<button type="button" class="btn btn-indigo btn-sm followbtn">
+								<span class="follow show" style="font-family: 'NanumbarunpenR';"><i
+									class="fa fa-plus" /></i> 팔로우</span> <span class="unfollow hidden"
+									style="font-family: 'NanumbarunpenR';"><i
+									class="fa fa-check" /></i> 언팔로우</span>
+							</button>
+						</c:if>
+						<c:if test="${followcheck > 0 }">
+							<!-- 팔로우o -->
+							<button type="button" class="btn btn-itso btn-sm followbtn">
+								<span class="unfollow show"
+									style="font-family: 'NanumbarunpenR';"><i
+									class="fa fa-check" /></i> 언팔로우</span> <span class="follow hidden"
+									style="font-family: 'NanumbarunpenR';"><i
+									class="fa fa-plus" /></i> 팔로우</span>
+							</button>
+						</c:if>
+						<input type="hidden" value="${ferlist.seq }" id="seq" />
+						<button id="messagebtn" class="btn btn-itso btn-sm">
+							<i class="fa fa-envelope-o" aria-hidden="true"></i> 메시지 보내기
+						</button>
+					</c:otherwise>
+				</c:choose>
+
 			</div>
 			<div id="profilestat" class="">
-				<div class="" style="border-left: 1px solid black;">
+				<ul class="nav md-pills nav-justified pills-secondary">
+					<li class="nav-item"><p class="mb-0">스타일</p> <a
+						data-toggle="tab" href="#socialPanel" role="tab">${fn:length(socialList) }</a></li>
+					<c:if test="${seq eq sessionScope.user.seq }">
+						<li class="nav-item"><p class="mb-0">좋아요</p> <a
+							data-toggle="tab" href="#goodPanel" role="tab">${fn:length(goodList) }</a></li>
+					</c:if>
+					<li class="nav-item"><p class="mb-0">컬렉션</p> <a
+						data-toggle="tab" href="#collectionPanel" role="tab">${fn:length(collectionList) }</a></li>
+					<li class="nav-item"><p class="mb-0">팔로워</p> <a
+						data-toggle="tab" href="#followerPanel" role="tab">${fn:length(followerList) }</a></li>
+					<li class="nav-item"><p class="mb-0">팔로잉</p> <a
+						data-toggle="tab" href="#followingPanel" role="tab">${fn:length(followingList) }</a></li>
+
+				</ul>
+
+				<%-- <div>
 					<p class="mb-0">스타일</p>
-					<p>1</p>
+					<p><a class="" data-toggle="tab"
+						href="#socialPanel" role="tab">${fn:length(socialList) }</a></p>
 				</div>
 				<div class="">
 					<p class="mb-0">좋아요</p>
-					<p>2</p>
+					<p>${fn:length(socialList) }</p>
 				</div>
 				<div class="">
 					<p class="mb-0">팔로워</p>
-					<p>${fn:length(followerList) }</p>
+					<p><a class="" data-toggle="tab"
+						href="#socialPanel" role="tab">${fn:length(followerList) }</a></p>
 				</div>
 				<div class="">
 					<p class="mb-0">팔로잉</p>
@@ -483,7 +544,7 @@ table .profilearea {
 				<div class="">
 					<p class="mb-0">컬렉션</p>
 					<p>${fn:length(collectionList) }</p>
-				</div>
+				</div> --%>
 			</div>
 		</div>
 
@@ -493,6 +554,10 @@ table .profilearea {
 				<ul class="nav md-pills nav-justified pills-secondary" id="tablist">
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#socialPanel" role="tab">스타일</a></li>
+					<c:if test="${seq eq sessionScope.user.seq }">
+						<li class="nav-item"><a class="nav-link" data-toggle="tab"
+							href="#goodPanel" role="tab">좋아요</a></li>
+					</c:if>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#collectionPanel" role="tab">컬렉션</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -500,7 +565,7 @@ table .profilearea {
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#followingPanel" role="tab">팔로잉</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#boardPanel" role="tab">내가 쓴 글</a></li>
+						href="#boardPanel" role="tab">게시판</a></li>
 				</ul>
 
 				<!-- Tab panels -->
@@ -524,16 +589,19 @@ table .profilearea {
 													<ul class="list-unstyled">
 														<li class="media align-middle"><img
 															class="d-flex mr-3 rounded-circle "
-															src="/upload/profile/${sessionScope.user.photo}"
+															src="/upload/profile/${list.user_photo}"
 															style="width: 50px; height: 50px; margin-top: 10px">
 															<div class="media-body" style="margin: 0px auto">
-																<a class="writer-a"><b class="writerName"
-																	style="font-size: 20px;">${sessionScope.user.name}</b></a>&nbsp;&nbsp;
-																<span class="state"><font color="gray">"${sessionScope.user.state}"</font></span>
+																<a class="writer-a"
+																	href="userpage.go?seq=${list.social_writer }"><b
+																	class="writerName" style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;
+																<span class="state"><font color="gray">"${list.userState}"</font></span>
 															</div></li>
 														<li>
 															<!--Text-->
-															<p class="mb-0">${list.social_title}</p>
+															<p class="mb-0">
+																<a href="readSocial.go?seq=${list.social_seq}">${list.social_title}</a>
+															</p>
 															<p class="mb-0">
 																<font color="gray"><span>${list.social_date }
 																</span><i class="fa fa-comment"></i> ${list.comment_count } </font>
@@ -559,8 +627,8 @@ table .profilearea {
 																	<i class="fa fa-heart-o red-text heart "
 																		aria-hidden="true"
 																		style="float: right; font-size: 25px;"
-																		value="${list.social_seq}"><font color="black"> ${heart[status.index].toString()}
-																	</font></i>
+																		value="${list.social_seq}"> <font color="black">
+																			0 </font></i>
 																</c:when>
 																<c:otherwise>
 																	<c:forEach items="${goodList }" var="good"
@@ -573,8 +641,8 @@ table .profilearea {
 																					<i class="fa fa-heart red-text heart"
 																						aria-hidden="true"
 																						style="float: left; font-size: 25px;"
-																						value="${list.social_seq}"><font color="black"> ${heart[status.index].toString()}
-																					</font></i>
+																						value="${list.social_seq}"> <font color="black">
+																							${good.good_count } </font></i>
 
 																					<c:set var="loop_flag" value="true" />
 																				</c:when>
@@ -583,9 +651,9 @@ table .profilearea {
 																						<i class="fa fa-heart-o red-text heart"
 																							aria-hidden="true"
 																							style="float: left; font-size: 25px;"
-																							value="${list.social_seq}"><font
-																							color="black"> ${heart[status.index].toString()}
-																						</font></i>
+																							value="${list.social_seq}"> <font
+																							color="black">
+																								${good.good_count } </font></i>
 
 
 																					</c:if>
@@ -606,28 +674,11 @@ table .profilearea {
 															<input type="hidden" value="${list.social_writer }"
 																class="writerseq" /> <input type="hidden"
 																value="${list.social_seq }" class="socialseq" />
-
-															<!-- 
-															<button type="button" class="btn-floating btn-sm share "
-																style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
-																title="카카오로 공유하기">
-																<i class="fa fa-comment"></i>
-															</button>
-															<button type="button"
-																class="btn-floating btn-sm btn-tw share"
-																style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-																<i class="fa fa-twitter" title="트위터로 공유하기"></i>
-															</button>
-															<button type="button"
-																class="btn-floating btn-sm btn-fb share"
-																style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-																<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
-															</button> -->
 															<button type="button" class="btn-floating btn-sm savebtn"
 																style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
 																title="컬렉션에 저장" data-toggle="modal"
-																data-target="#saveModal">컬렉션에 저장
-																<i class="fa fa-download"></i>
+																data-target="#saveModal">
+																컬렉션에 저장 <i class="fa fa-download"></i>
 															</button>
 														</div>
 													</div>
@@ -646,7 +697,149 @@ table .profilearea {
 
 					</div>
 					<!--/.Panel 1-->
+					<!--Panel 1-->
+					<c:if test="${seq eq sessionScope.user.seq }">
+						<div class="tab-pane fade" id="goodPanel" role="tabpanel">
 
+							<div class="row gb" style="margin: 0xp auto;">
+								<!-- Grid column -->
+								<c:choose>
+									<c:when test="${empty goodList }">
+									좋아요한 글이 없습니다.
+								</c:when>
+									<c:otherwise>
+										<c:forEach var="list" items="${goodList }">
+											<div class="col-12">
+												<div class="row">
+													<div class="mainItem py-2">
+														<!--Title-->
+														<ul class="list-unstyled">
+															<li class="media align-middle"><img
+																class="d-flex mr-3 rounded-circle "
+																src="/upload/profile/${list.user_photo}"
+																style="width: 50px; height: 50px; margin-top: 10px">
+																<div class="media-body" style="margin: 0px auto">
+																	<a class="writer-a"
+																		href="userpage.go?seq=${list.social_writer }"><b
+																		class="writerName" style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;
+																	<span class="state"><font color="gray">"${list.userState}"</font></span>
+																</div> <c:choose>
+																	<c:when
+																		test="${list.social_writer eq sessionScope.user.seq}">
+
+																	</c:when>
+																	<c:otherwise>
+																		<c:choose>
+
+																			<c:when test="${!empty followingList }">
+																				<c:forEach var="flist" items="${followingList }">
+
+																					<c:choose>
+																						<c:when test="${flist.seq eq list.social_writer}">
+
+																							<button type="button"
+																								class="btn btn-itso followbtn">
+																								<span class="unfollow show"
+																									style="font-family: 'NanumbarunpenR';"><i
+																									class="fa fa-check" /></i> 언팔로우</span> <span
+																									class="follow hidden"
+																									style="font-family: 'NanumbarunpenR';"><i
+																									class="fa fa-plus" /></i> 팔로우</span>
+																							</button>
+																						</c:when>
+																						<c:otherwise>
+
+																							<button type="button"
+																								class="btn btn-indigo followbtn">
+																								<span class="follow show"
+																									style="font-family: 'NanumbarunpenR';"><i
+																									class="fa fa-plus" /></i> 팔로우</span> <span
+																									class="unfollow hidden"
+																									style="font-family: 'NanumbarunpenR';"><i
+																									class="fa fa-check" /></i> 언팔로우</span>
+																							</button>
+																						</c:otherwise>
+																					</c:choose>
+																				</c:forEach>
+																			</c:when>
+
+																			<c:otherwise>
+																				<button type="button"
+																					class="btn btn-indigo followbtn">
+																					<span class="unfollow hidden"
+																						style="font-family: 'NanumbarunpenR';"><i
+																						class="fa fa-check" /></i> 언팔로우</span> <span
+																						class="follow show"
+																						style="font-family: 'NanumbarunpenR';"><i
+																						class="fa fa-plus" /></i> 팔로우</span>
+																				</button>
+																			</c:otherwise>
+																		</c:choose>
+
+																	</c:otherwise>
+																</c:choose> <input type="hidden" value="${list.social_writer }"
+																id="seq" /></li>
+															<li>
+																<!--Text-->
+																<p class="mb-0">
+																	<a href="readSocial.go?seq=${list.social_seq}">${list.social_title}</a>
+																</p>
+																<p class="mb-0">
+																	<font color="gray"><span>${list.social_date }
+																	</span><i class="fa fa-comment"></i> ${list.comment_count } </font>
+																</p>
+															</li>
+														</ul>
+														<!--image-->
+														<div class="view">
+															<img src="/upload/social/${list.photo}"
+																class="card-img-top" alt="photo"> <a
+																href="readSocial.go?seq=${list.social_seq}"> </a>
+														</div>
+
+														<div class="container m-0 p-0" id="social_contents">
+															${list.social_contents}</div>
+
+														<div class="btnarea my-1">
+															<div class="goodarea"
+																style="margin-top: 13px; float: left;">
+
+																<i class="fa fa-heart red-text heart" aria-hidden="true"
+																	style="float: left; font-size: 25px;"
+																	value="${list.social_seq}"> <font color="black">
+																		${list.good_count } </font></i>
+															</div>
+
+
+
+															<div class="sharebtnarea"
+																style="margin-top: 8px; margin-bottom: 8px; float: right;">
+																<input type="hidden" value="${list.social_writer }"
+																	class="writerseq" /> <input type="hidden"
+																	value="${list.social_seq }" class="socialseq" />
+																<button type="button"
+																	class="btn-floating btn-sm savebtn"
+																	style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
+																	title="컬렉션에 저장" data-toggle="modal"
+																	data-target="#saveModal">
+																	컬렉션에 저장 <i class="fa fa-download"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</c:forEach>
+
+									</c:otherwise>
+								</c:choose>
+
+								<!-- Grid column -->
+							</div>
+
+						</div>
+					</c:if>
+					<!--/.Panel 1-->
 					<!--Panel 2-->
 					<div class="tab-pane fade" id="collectionPanel" role="tabpanel">
 						<table class="table">
@@ -658,7 +851,8 @@ table .profilearea {
 											<tr>
 												<td width=190><h4>
 														<a href="collection.go?seq=${clist.collection_seq }">
-														<div class="collectiontitle">${clist.collection_title }</div></a>
+															<div class="collectiontitle">${clist.collection_title }</div>
+														</a>
 													</h4>
 													<div class="collectioncontents">${clist.collection_contents }</div>
 													<div class="linkarea mt-2">
@@ -719,24 +913,34 @@ table .profilearea {
 												</div> <input type="hidden" value="${ferlist.seq }" />
 											</td>
 											<td style="height: 100px; vertical-align: middle"><h6
-													class="mt-1">${ferlist.name }</h6> <c:if
-													test="${ferlist.followcheck eq 'n' }">
-													<button type="button" class="btn btn-indigo followbtn">
-														<span class="follow show"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-plus" /></i> 팔로우</span> <span class="unfollow hidden"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-check" /></i> 언팔로우</span>
-													</button>
-												</c:if> <c:if test="${ferlist.followcheck eq 'y' }">
-													<button type="button" class="btn btn-itso followbtn">
-														<span class="unfollow show"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-check" /></i> 언팔로우</span> <span class="follow hidden"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-plus" /></i> 팔로우</span>
-													</button>
-												</c:if> <input type="hidden" value="${ferlist.seq }" id="seq" /></td>
+													class="mt-1">${ferlist.name }</h6> <c:choose>
+													<c:when test="${ferlist.seq eq sessionScope.user.seq }">
+
+													</c:when>
+													<c:otherwise>
+														<c:if test="${ferlist.followcheck eq 'n' }">
+															<button type="button" class="btn btn-indigo followbtn">
+																<span class="follow show"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-plus" /></i> 팔로우</span> <span
+																	class="unfollow hidden"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-check" /></i> 언팔로우</span>
+															</button>
+														</c:if>
+														<c:if test="${ferlist.followcheck eq 'y' }">
+															<button type="button" class="btn btn-itso followbtn">
+																<span class="unfollow show"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-check" /></i> 언팔로우</span> <span
+																	class="follow hidden"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-plus" /></i> 팔로우</span>
+															</button>
+														</c:if>
+														<input type="hidden" value="${ferlist.seq }" id="seq" />
+													</c:otherwise>
+												</c:choose></td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -764,27 +968,35 @@ table .profilearea {
 											</td>
 
 											<td style="height: 100px; vertical-align: middle">
-											<h6 class="mt-1">${finglist.name }</h6> 
-											<c:if test="${ferlist.followcheck eq 'n' }">
-													<button type="button" class="btn btn-indigo followbtn">
-														<span class="follow show"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-plus" /></i> 팔로우</span> <span class="unfollow hidden"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-check" /></i> 언팔로우</span>
-													</button>
-											</c:if> 
-												
-											<c:if test="${finglist.followcheck eq 'y' }">
-													<button type="button" class="btn btn-itso followbtn">
-														<span class="unfollow show"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-check" /></i> 언팔로우</span> <span class="follow hidden"
-															style="font-family: 'NanumbarunpenR';"><i
-															class="fa fa-plus" /></i> 팔로우</span>
-													</button>
-											</c:if> 
-											<input type="hidden" value="${finglist.seq }" id="seq" /></td>
+												<h6 class="mt-1">${finglist.name }</h6> <c:choose>
+													<c:when test="${ferlist.seq eq sessionScope.user.seq }">
+
+													</c:when>
+													<c:otherwise>
+														<c:if test="${finglist.followcheck eq 'n' }">
+															<button type="button" class="btn btn-indigo followbtn">
+																<span class="follow show"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-plus" /></i> 팔로우</span> <span
+																	class="unfollow hidden"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-check" /></i> 언팔로우</span>
+															</button>
+														</c:if>
+														<c:if test="${finglist.followcheck eq 'y' }">
+															<button type="button" class="btn btn-itso followbtn">
+																<span class="unfollow show"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-check" /></i> 언팔로우</span> <span
+																	class="follow hidden"
+																	style="font-family: 'NanumbarunpenR';"><i
+																	class="fa fa-plus" /></i> 팔로우</span>
+															</button>
+														</c:if>
+														<input type="hidden" value="${ferlist.seq }" id="seq" />
+													</c:otherwise>
+												</c:choose>
+											</td>
 
 										</tr>
 

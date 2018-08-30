@@ -66,9 +66,15 @@ public class MemberServiceImpl implements IMemberService {
 	public int deleteFollowData(FollowDTO dto) {
 		return this.dao.deleteFollowData(dto);
 	}
+	
+	@Override
+	public int checkFollow(FollowDTO dto) {
+		return this.dao.checkFollow(dto);
+	}
 
 	@Override
 	public MemberDTO selectSocialWrtier(int social_seq) {
 		return this.dao.selectSocialWriter(social_seq);
 	}
+
 }
