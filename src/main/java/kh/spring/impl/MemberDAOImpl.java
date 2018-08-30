@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SearchedUserInfoDTO;
 import kh.spring.interfaces.IMemberDAO;
 
 @Repository
@@ -75,5 +76,10 @@ public class MemberDAOImpl implements IMemberDAO{
 	@Override
 	public MemberDTO selectSocialWriter(int social_seq) {
 		return template.selectOne("Member.selectSocialWriter", social_seq);
+	}
+
+	@Override
+	public List<SearchedUserInfoDTO> getSearchedUserList(String word) {
+		return template.selectList("Member.searchedUserInfo",word);
 	}
 }

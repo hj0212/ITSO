@@ -390,9 +390,8 @@ nav {
 		if (input == "") {
 			$("#searchIcon").toggle("fast");
 			$("#searchinput").toggle("slow");
-
 		} else {
-			console.log("search");
+			location.href = "searchWord.se?word="+input;
 		}
 	});
 

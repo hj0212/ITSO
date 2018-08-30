@@ -310,11 +310,6 @@ body {
 							<h3>${content.social_title}</h3>
 							<span class="time">${date[1]} ${date[2]}, ${date[0]}</span>
 						</header>
-
-						<div class="instafilta-target mt-1">
-							2 <i class="fa fa-comment-o"></i>
-						</div>
-
 						<div>
 							<!-- image -->
 							<br>
@@ -410,17 +405,10 @@ body {
 		<div id="right-side" class="col">
 			<aside id="aside">
 				<section class="container border-bottom-line mt-4">
-					<img style="vertical-align: super;"
-						src="resources/images/${writer.photo}"
-						class="vertical-align-none avatar rounded-circle z-depth-1-half">
+					<img src="resources/images/${writer.photo}" class="vertical-align-none avatar rounded-circle z-depth-1-half">
 					<ul class="info">
 						<li>${writer.name}</li>
 						<li>${writer.age}${writer.state}</li>
-						<li>
-							
-							
-							
-						</li>
 					</ul>
 				</section>
 

@@ -15,6 +15,7 @@
 		<typeAlias type="kh.spring.dto.SocialCommentDTO" alias="scdto"/>
 		<typeAlias type="kh.spring.dto.FollowDTO" alias="FollowDTO"/>	
 		<typeAlias type="kh.spring.dto.SocialHashTagDTO" alias="shtdto"/>
+		<typeAlias type="kh.spring.dto.SearchedUserInfoDTO" alias="suidto"/>
 	</typeAliases>
 </configuration>
 

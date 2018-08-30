@@ -391,18 +391,17 @@
 </head>
 <body>
 	<%@include file="navi.jsp"%>
-		<!-- Grid row -->
+	<!-- Grid row -->
+	<section class="firstSection">
+	<div class="mainIntro">
+		<p>
+			<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
+			the people you like to personalize you feed.
+		</p>
+	</div>
+	</section>
 	<div id="wrapper" class="container">
 		<div class="row">
-			<section class="firstSection col-md-12">
-				<div class="mainIntro">
-					<p>
-						<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
-						the people you like to personalize you feed.
-					</p>
-				</div>
-			</section>
-			
 			<section class="secondSection col-md-12 mt-3">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item">
@@ -423,12 +422,12 @@
 											<b>무함마드</b>
 										</div>
 										<div class="status-message">
-											안뇽하세요 친구들~
+											안뇽하세요
 										</div>
 									</td>
-									<td class="user-fans">dsss</td>
-									<td class="user-looks">dsss</td>
-								</tr>							
+									<td class="user-fans">511 fans</td>
+									<td class="user-looks">23 looks</td>
+								</tr>			
 							</table>
 						</div>
 					</div>

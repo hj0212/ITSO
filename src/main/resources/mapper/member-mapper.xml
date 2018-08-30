@@ -36,4 +36,8 @@
 	<select id="selectSocialWriter" parameterType="int" resultType="dto">
 		select u.* from social s, users u where s.social_seq = #{social_seq} and s.social_writer = u.seq
 	</select>
+	
+	<select id="searchedUserInfo" parameterType="String" resultType="suidto">
+		select seq,email,name,photo,state from users where state like '%'||#{0}||'%'
+	</select>
 </mapper>
