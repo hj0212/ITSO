@@ -228,6 +228,7 @@ public class SocialController {
 		dto.setCollection_seq(seq);
 		List<CollectionDTO> clist = service.getCollectionData(dto);
 		List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("collectionList", clist);
 		mav.addObject("socialList", list);

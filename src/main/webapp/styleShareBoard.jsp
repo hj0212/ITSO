@@ -417,7 +417,9 @@ body {
 						<li>${writer.name}</li>
 						<li>${writer.age}${writer.state}</li>
 						<li>
-							<button class="btn btn-elegant btn-sm">+ Fan</button>
+							
+							
+							
 						</li>
 					</ul>
 				</section>
@@ -881,7 +883,7 @@ body {
 	
 	console.log("<c:out value='${param.mode}'/>");
 
-	var mode = "<c:out value='${list.social_title}'/>";
+	var mode = "<c:out value='${content.social_title}'/>";
 
 		
 	
