@@ -360,7 +360,7 @@ button.dropdown-toggle {
 											console.log("DB Failed")
 										}
 									});
-						})
+						});
 			});
 </script>
 </head>

@@ -73,7 +73,7 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
-	public MemberDTO selectSocialWrtier(int social_seq) {
+	public MemberDTO selectSocialWriter(int social_seq) {
 		return this.dao.selectSocialWriter(social_seq);
 	}
 

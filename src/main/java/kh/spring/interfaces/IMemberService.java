@@ -17,5 +17,5 @@ public interface IMemberService {
   public List<MemberDTO> getFollowerList(MemberDTO dto);
   public List<MemberDTO> getFollowingList(MemberDTO dto);
   public int checkFollow(FollowDTO dto);
-  public MemberDTO selectSocialWrtier(int social_seq);
+  public MemberDTO selectSocialWriter(int social_seq);
 }

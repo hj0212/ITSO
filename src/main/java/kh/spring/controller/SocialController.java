@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.FollowDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.NotificationDTO;
@@ -247,21 +248,30 @@ public class SocialController {
 		// json에 넣을 순번
 		int i = 0;
 		
+		MemberDTO user = (MemberDTO)session.getAttribute("user");
+		int user_seq = user.getSeq();
+		
 		try {
-			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
-			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+			List<CollectionDTO> collectionList = this.service.getCollectionList(user);
+			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList(user);
 			
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
+			
 		}  catch (Exception e) {
 			System.out.println("로그인x");
 			mav.setViewName("login.go");
 			return mav;
 		}
 
+		
+		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
-		MemberDTO mdto = this.mService.selectSocialWrtier(seq);
+		MemberDTO mdto = this.mService.selectSocialWriter(seq);
+		
+		int follow = mService.checkFollow(new FollowDTO(user_seq,mdto.getSeq()));
+		mav.addObject("followcheck", follow);
 
 		String contents = dto.getSocial_contents();
 
