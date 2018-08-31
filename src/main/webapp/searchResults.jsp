@@ -539,6 +539,16 @@ a#MOVE_TOP_BTN {
 .photoContainerHoverWriter a, .photoContainerHoverTitle a {
 	color: black;
 }
+
+/* collection-div */
+.textbtn {
+	font-size: 12px;
+	display: inline;
+	margin-right: 5px;
+	border: none;
+	background: transparent;
+	padding: 8px;
+}
 </style>
 <script>
 		$(document).ready(function() {
@@ -651,7 +661,15 @@ a#MOVE_TOP_BTN {
 					aria-selected="false">태그(<c:choose>
 							<c:when test="${empty socialList}">0</c:when>
 							<c:otherwise>${socialList.size()}</c:otherwise>
-						</c:choose>)</a></li>
+						</c:choose>)
+				</a></li>
+				<li class="nav-item"><a class="nav-link" id="tip-tab"
+					data-toggle="tab" href="#collectiondiv" role="tab"
+					aria-controls="collectiondiv" aria-selected="false"> 컬렉션(<c:choose>
+							<c:when test="${empty searchedCollectionList}">0</c:when>
+							<c:otherwise>${searchedCollectionList.size()}</c:otherwise>
+						</c:choose>)
+				</a></li>
 				<li class="nav-item"><a class="nav-link" id="tip-tab"
 					data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv"
 					aria-selected="false"> 팁 게시글(<c:choose>
@@ -792,18 +810,68 @@ a#MOVE_TOP_BTN {
 									</div>
 					</div>
 					</c:forEach> </c:when> <c:otherwise>
-						<tr>
-							<td colspan="3">게시글이 없습니다</td>
-						</tr>
+						<div class="col-md-12">검색 결과가 없습니다.</div>
 					</c:otherwise> </c:choose>
 				</div>
 			</section>
 			<!-- 포토컨테이너종료 -->
 
-
-
-
 		</div>
+
+		<div class="tab-pane fade" id="collectiondiv" role="tabpanel"
+			aria-labelledby="collection-tab">
+			<table class="table">
+				<tbody>
+					<c:choose>
+						<c:when test="${!empty searchedCollectionList }">
+							<c:set var="num" value="0" />
+							<c:forEach var="clist" items="${searchedCollectionList }">
+								<tr>
+									<td width=190><h4>
+											<a href="collection.go?seq=${clist.collection_seq }">
+												<div class="collectiontitle">${clist.collection_title }</div>
+											</a>
+										</h4>
+										<div class="collectioncontents">${clist.collection_contents }</div>
+										<div class="linkarea mt-2">
+											<button class="btn btn-itso btn-sm ml-0"
+												style="padding-left: 8px; padding-right: 8px;">
+												<a href="collection.go?seq=${clist.collection_seq }"
+													style="color: white;">보기</a>
+											</button>
+											<button class="textbtn editbtn" data-toggle="modal"
+												data-target="#editCollectionModal">수정</button>
+											<button class="textbtn removebtn">삭제</button>
+											<input type="hidden" value="${clist.collection_seq }"
+												name="collectionseq" />
+										</div></td>
+									<td><c:set var="loop" value="true" /> <c:set var="num"
+											value="0" /> <c:forEach var="slist" items="${searchedPhotoList }">
+											<c:if test="${loop eq true }">
+												<c:if
+													test="${slist.collection_seq eq clist.collection_seq }">
+													<c:set var="num" value="${num+1 }" />
+													<div class="rect">
+														<img src="upload/social/${slist.photo }" alt="" />
+													</div>
+													<c:if test="${num > 3 }">
+														<c:set var="loop" value="false" />
+													</c:if>
+												</c:if>
+											</c:if>
+										</c:forEach></td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td>생성한 컬렉션이 없습니다.
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+		</div>
+
 		<div class="tab-pane fade" id="tipdiv" role="tabpanel"
 			aria-labelledby="tip-tab">
 			<div class="col-md-12 search-tip mt-3">
@@ -840,7 +908,7 @@ a#MOVE_TOP_BTN {
 	</section>
 	</div>
 	</div>
-	
+
 	<!-- saveModal -->
 	<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">

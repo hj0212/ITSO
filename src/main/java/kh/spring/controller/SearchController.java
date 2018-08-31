@@ -19,7 +19,6 @@ import kh.spring.dto.SocialBoardDTO;
 import kh.spring.exception.NotLoginException;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
-import kh.spring.interfaces.ISocialTagService;
 import kh.spring.interfaces.ITipService;
 
 @Controller
@@ -51,6 +50,8 @@ public class SearchController {
 			List<SearchedUserInfoDTO> userList = null;
 			List<SearchedTipDTO> tipList = null;
 			List<SocialBoardDTO> result = null;
+			List<CollectionDTO> searchedCollectionList = null;
+			List<SocialBoardDTO> searchedPhotoList = null;
 			
 			List<Integer> ggdto = new ArrayList<>();
 			List<MemberDTO> mdto = new ArrayList<>();
@@ -59,6 +60,8 @@ public class SearchController {
 				userList = this.service.getSearchedUserList(word);
 				tipList = this.tipService.getSearchedTipList(word);
 				result = this.socialService.getsearchedTagSocialList(word);
+				searchedCollectionList = this.socialService.getSearchedCollectionList(word);
+				searchedPhotoList = this.socialService.getSearchedCollectionPhotoList(word);
 
 				for(SocialBoardDTO sdd : result) {	
 					GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
@@ -80,7 +83,9 @@ public class SearchController {
 				List<SocialBoardDTO> goodList = this.socialService.getMyGoodSocialList((MemberDTO)request.getSession().getAttribute("user"));
 				List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)request.getSession().getAttribute("user"));
 				
-				mav.addObject("collectionList",collectionList);
+				mav.addObject("searchedCollectionList", searchedCollectionList);
+				mav.addObject("searchedPhotoList", searchedPhotoList);
+				mav.addObject("collectionList", collectionList);
 				mav.addObject("photoList",photoList);
 				mav.addObject("goodList", goodList);
 				mav.addObject("followingList", followingList);

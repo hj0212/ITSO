@@ -30,6 +30,8 @@ public interface ISocialBoardDAO {
 	public int updateCollection(CollectionDTO dto);
 	public CollectionDTO getCollectionSeq(CollectionDTO dto);
 	public CollectionDTO getCollectionInfo(CollectionDTO dto);
+	public List<CollectionDTO> getSearchedCollectionList(String word);
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word);
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);

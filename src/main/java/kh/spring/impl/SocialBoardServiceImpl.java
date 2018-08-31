@@ -181,4 +181,14 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
 		return this.dao.getsearchedTagSocialList(word);
 	}
+
+	@Override
+	public List<CollectionDTO> getSearchedCollectionList(String word) {
+		return this.dao.getSearchedCollectionList(word);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
+		return this.dao.getSearchedCollectionPhotoList(word);
+	}
 }

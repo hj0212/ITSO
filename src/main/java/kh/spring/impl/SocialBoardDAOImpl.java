@@ -203,4 +203,14 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
 		return template.selectList("SocialBoard.searchedTagSocialList", word);
 	}
+
+	@Override
+	public List<CollectionDTO> getSearchedCollectionList(String word) {
+		return template.selectList("Collection.getSearchedCollectionList", word);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
+		return template.selectList("Collection.getSearchedCollectionPhotoList", word);
+	}
 }
