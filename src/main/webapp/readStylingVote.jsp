@@ -217,11 +217,18 @@ font-size:15px;
 										</div>
 									</div>
 								</td>
-								<td class="text-center">
-								
+								<td class="text-center">	
 									<div class="progress">
-										<div class="progress-bar" style="width:${voteresults[status.index].eachrate}%" role="progressbar" aria-valuenow="0"
+									<c:forEach var="eachrate" items="voteresults" >
+									<c:choose>
+									<c:when test="${eachrate.vote_value eq svitemdto.styling_vote_item_seq}">
+									<div class="progress-bar" style="width:${eachrate.eachrate}%" role="progressbar" aria-valuenow="0"
 											aria-valuemin="0" aria-valuemax="100"></div>
+											<a>${eachrate.eachrate}</a>
+									</c:when>
+									</c:choose>
+									
+									</c:forEach>
 									</div>							
 									<a>${voteresults[status.index].eachrate} </a> <br>
 								</td>

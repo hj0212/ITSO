@@ -170,7 +170,7 @@ public class AjaxController {
 		votedto.setStyling_vote_seq(styling_vote_seq);
 		
 		int voteresult = styservice.doStylingVote(votedto);
-		System.out.println("투표ajax 결과-"+voteresult);
+		System.out.println(value+"에 투표ajax 결과-"+voteresult);
 	}
 	
 	@RequestMapping("/updateStylingViewcount.ajax")

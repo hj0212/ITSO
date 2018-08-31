@@ -6,16 +6,22 @@ public class StylingVoteResultDTO {
 	private int eachcount;
 	private int totalcount;
 	private Double eachrate;
+	private int vote_value;
 	
 	public StylingVoteResultDTO() {}
 
-	public StylingVoteResultDTO(int styling_vote_seq, int eachcount, int totalcount, Double eachrate) {
+	
+
+	public StylingVoteResultDTO(int styling_vote_seq, int eachcount, int totalcount, Double eachrate, int vote_value) {
 		super();
 		this.styling_vote_seq = styling_vote_seq;
 		this.eachcount = eachcount;
 		this.totalcount = totalcount;
 		this.eachrate = eachrate;
+		this.vote_value = vote_value;
 	}
+
+
 
 	public int getStyling_vote_seq() {
 		return styling_vote_seq;
@@ -47,6 +53,18 @@ public class StylingVoteResultDTO {
 
 	public void setEachrate(Double eachrate) {
 		this.eachrate = eachrate;
+	}
+
+
+
+	public int getVote_value() {
+		return vote_value;
+	}
+
+
+
+	public void setVote_value(int vote_value) {
+		this.vote_value = vote_value;
 	}
 	
 }
