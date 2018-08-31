@@ -254,6 +254,22 @@ table .profilearea {
 	line-height: 70px;
 	margin-top: 10px;
 }
+
+.msg {
+	background: #f5f5f5;
+	min-width: 10px;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 3px 2px 3px 3px rgba(0, 0, 0, 0.07);
+}
+
+.other-msg {
+	background: #c0c0c0;
+	min-width: 10px;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 3px 2px 3px 3px rgba(0, 0, 0, 0.07);
+}
 </style>
 
 <script>
@@ -449,7 +465,7 @@ table .profilearea {
 				<br>
 			
 				<button id="myinfobtn" class="btn btn-itso btn-sm">프로필 수정</button>
-				<button id="myMsbtn" class="btn btn-itso btn-sm">메세지 보내기</button>
+				<button id="myMsbtn" class="btn btn-itso btn-sm" data-toggle="modal" data-target="#centralModalSuccess" >메세지 보내기</button>
 			</div>
 			<div id="profilestat" class="">
 				<div class="" style="border-left: 1px solid black;">
@@ -925,46 +941,55 @@ table .profilearea {
 		</div>
 
 
-		<!-- createModal -->
-		<div class="modal fade" id="createModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-sm" role="document">
-				<!--Content-->
-				<div class="modal-content">
-					<!--Header-->
-					<div class="modal-header">
-						<p class="heading lead mb-0">컬렉션 생성</p>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
+		
+	
+		<div class="modal fade right" id="modalPoll" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true"
+	data-backdrop="false">
+	<div
+		class="modal-dialog modal-full-height modal-right modal-notify modal-info"
+		role="document" style="width: 700px">
+		<div class="modal-content">
+			<!--Header-->
+			<div class="modal-header" style="background-color: #fff">
+				<p class="heading lead" style="color: #1B0946">채팅 목록</p>
 
-					<!--Body-->
-					<div class="modal-body">
-						<div class="md-form">
-							<input type="text" id="inputMD" class="form-control"
-								name="collection_title" maxlength="30"> <label
-								for="inputMD">컬렉션 이름</label>
-						</div>
-						<div class="md-form mt-1">
-							<textarea id="form7" class="md-textarea form-control" rows="3"
-								name="collection_contents"></textarea>
-							<label for="form7">컬렉션 상세 설명</label>
-						</div>
-					</div>
-
-					<!--Footer-->
-					<div class="modal-footer justify-content-center">
-						<button class="btn btn-itso" data-toggle="modal"
-							data-target="#modal" id="createcolbtn">생성</button>
-						<button class="btn btn-outline-itso waves-effect"
-							data-dismiss="modal">취소</button>
-					</div>
-				</div>
-				<!--/.Content-->
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true" style="color: #1B0946">×</span>
+				</button>
 			</div>
+
+			<!--Body-->
+			<div class="modal-body" style="overflow: auto;">
+				<ul class="list-unstyled friend-list w-100 p-2">
+
+					<li class="w-100 p-2 h-25 d-inline-block"><a href="#"
+						class="d-flex justify-content-between h-25 d-inline-block"
+						data-toggle="modal" data-target="#centralModalSuccess"> <img
+							src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1"
+							alt="avatar"
+							class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 "
+							style="width: 50px; height: 50px;">
+							<div class="text-md-left align-middle">
+								<strong>Danny Smith</strong>
+								<p class="last-message text-muted">Lorem ipsum dolor sit.</p>
+							</div>
+							<div class="chat-footer">
+								<p class="text-smaller text-muted mb-0">5 min ago</p>
+								<span class="text-muted float-right"><i
+									class="fa fa-mail-reply" aria-hidden="true"></i></span>
+							</div>
+					</a></li>
+
+
+				</ul>
+			</div>
+
 		</div>
+		<!-- Grid column -->
+	</div>
+</div>
 		<script>
 		$("#managebtn").on("click", function () {
 		    window.open('mypage.go?view=collection', '_blank');

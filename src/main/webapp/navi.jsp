@@ -3,6 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
+* {
+	box-sizing: border-box;
+}
+
 .notification-counter {
 	position: absolute;
 	top: 2px;
@@ -80,6 +84,36 @@ nav {
 	height: 400px;
 }
 
+/* 모달 */
+.modal-heading {
+	height: 30px;
+	line-height: 30px;
+}
+
+.modal-heading .heading-left {
+	text-align: left;
+	padding-left: 30px;
+	float: left;
+}
+
+.modal-heading .heading-right {
+	text-align: right;
+	padding-right: 30px;
+	float: right;
+}
+
+.modal-list .modal-item {
+	display: grid;
+	grid-template-columns: 0fr 1fr 0fr;
+	padding-top: 5px;
+	cursor: pointer;
+}
+
+.modal-list {
+	overflow: auto;
+	height: 400px;
+}
+
 .user-name {
 	color: #1B0946;
 }
@@ -112,8 +146,44 @@ nav {
 	}
 }
 
+@media ( max-width :575px) {
+	.modal-info {
+		border-radius: 5px;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+		color: #27303d;
+		min-width: 300px;
+		top: 200px;
+		right: auto;
+		right: 100px;
+		transform: translate(-50%, 0);
+		position: absolute;
+		box-sizing: border-box;
+		display: none;
+		background-color: #fff;
+		z-index: 1000;
+	}
+}
+
 @media ( min-width : 576px) {
 	.notification-info {
+		border-radius: 5px;
+		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+		color: #27303d;
+		min-width: 300px;
+		top: 61px;
+		right: 0;
+		left: auto;
+		transform: translate(-50%, 0);
+		position: absolute;
+		box-sizing: border-box;
+		display: none;
+		background-color: #fff;
+		z-index: 1000;
+	}
+}
+
+@media ( min-width : 576px) {
+	.modal-info {
 		border-radius: 5px;
 		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
 		color: #27303d;
@@ -190,6 +260,26 @@ nav {
 		position: inherit;
 	}
 }
+
+.d-inline-block {
+	border-bottom: 1px black;
+}
+
+.msg {
+	background: #f5f5f5;
+	min-width: 10px;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 3px 2px 3px 3px rgba(0, 0, 0, 0.07);
+}
+
+.other-msg {
+	background: #c0c0c0;
+	min-width: 10px;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 3px 2px 3px 3px rgba(0, 0, 0, 0.07);
+}
 </style>
 
 <nav class="navbar navbar-expand-sm navbar-dark" id="nav1">
@@ -233,7 +323,7 @@ nav {
 					id="notification-counter">0</span>
 			</a></li>
 
-			<li class="nav-item"><a
+			<li class="nav-item" id="tooltip2"><a
 				class="nav-link waves-effect waves-light"> <i
 					class="fa fa-envelope"></i> 메시지
 			</a></li>
@@ -291,6 +381,8 @@ nav {
 	</div>
 
 
+
+
 	<script type="text/javascript">
 		var notificationcounter = 0;
 		if ("WebSocket" in window) {
@@ -341,11 +433,136 @@ nav {
 	</script>
 
 
-	<div class="notification-list" id="notification_list">
+	<div class="notification-list" id="notification_list"></div>
+</div>
 
 
+
+<div class="modal-info" id="modal-info" style="display: none;">
+	<div class="modal-heading">
+		<div class="heading-left">
+			<span>알림</span>
+		</div>
+		<div class="heading-right">
+			<a href="#" class="notification-link" data-toggle="modal"
+				data-target="#modalPoll">모든 채팅리스트 열기</a>
+		</div>
+	</div>
+	<div class="modal-list" id="modal_list"></div>
+</div>
+
+<!-- Modal: modalPoll -->
+<div class="modal fade right" id="modalPoll" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true"
+	data-backdrop="false">
+	<div
+		class="modal-dialog modal-full-height modal-right modal-notify modal-info"
+		role="document" style="width: 700px">
+		<div class="modal-content">
+			<!--Header-->
+			<div class="modal-header" style="background-color: #fff">
+				<p class="heading lead" style="color: #1B0946">채팅 목록</p>
+
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true" style="color: #1B0946">×</span>
+				</button>
+			</div>
+
+			<!--Body-->
+			<div class="modal-body" style="overflow: auto;">
+				<ul class="list-unstyled friend-list w-100 p-2">
+
+					<li class="w-100 p-2 h-25 d-inline-block"><a href="#"
+						class="d-flex justify-content-between h-25 d-inline-block"
+						data-toggle="modal" data-target="#centralModalSuccess"> <img
+							src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1"
+							alt="avatar"
+							class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 "
+							style="width: 50px; height: 50px;">
+							<div class="text-md-left align-middle">
+								<strong>Danny Smith</strong>
+								<p class="last-message text-muted">Lorem ipsum dolor sit.</p>
+							</div>
+							<div class="chat-footer">
+								<p class="text-smaller text-muted mb-0">5 min ago</p>
+								<span class="text-muted float-right"><i
+									class="fa fa-mail-reply" aria-hidden="true"></i></span>
+							</div>
+					</a></li>
+
+
+				</ul>
+			</div>
+
+		</div>
+		<!-- Grid column -->
 	</div>
 </div>
+</div>
+
+<!-- Modal: modalPoll -->
+
+
+<!-- Central Modal Medium Success -->
+<div class="modal fade" id="centralModalSuccess" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+	style="height: 100%;">
+	<div class="modal-dialog modal-notify modal-success" role="document"
+		style="height: 60%;">
+		<!--Content-->
+		<div class="modal-content" id="modal-content" style="height: 100%;">
+			<!--Header-->
+			<div class="modal-header">
+				<img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1"
+					alt="avatar"
+					class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 "
+					style="width: 50px; height: 50px;">
+				<p class="heading lead">김형섭</p>
+
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true" class="white-text">&times;</span>
+				</button>
+			</div>
+
+			<!--Body-->
+			<div class="modal-body"
+				style="overflow: auto; padding-top: 10px; padding-bottom: 10px;"id="modal-body">
+
+				<div class="msg col-md-6 ml-auto"
+					style="width: 100%; margin-bottom: 20px;">
+					<p class="text-sm">Lorem ipsum dolor sit amet, consectetur
+						adipisicing elit. Impedit iusto nulla aperiam blanditiis ad
+						consequatur in dolores culpa, dignissimos, eius non possimus
+						fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
+				</div>
+
+
+				<div class="other-msg col-md-6"
+					style="width: 100%; margin-bottom: 20px;">
+					<p class="text-sm">Lorem ipsum dolor sit amet, consectetur
+						adipisicing elit. Impedit iusto nulla aperiam blanditiis ad
+						consequatur in dolores culpa, dignissimos, eius non possimus
+						fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
+				</div>
+
+			</div>
+			<!--Footer-->
+			
+				<textarea class="form-control rounded-0"
+					id="exampleFormControlTextarea2" rows="3"
+					style="margin: 0xp; padding: 0px; max-height: 94px; z-index: 100000;"></textarea>
+					<!-- <button type="button" style="float: right">send</button> -->
+					<a style="right: 10px;font-size: 20px; "><i class="fa fa-send" style="float:right;"></i></a>		
+		</div>
+		<!--/.Content-->
+	</div>
+</div>
+<!-- Central Modal Medium Success-->
+
+
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
@@ -400,8 +617,7 @@ nav {
 		var seq = "${sessionScope.user.seq}"
 		console.log(seq);
 		let contents = document.getElementById("notification-info");
-		
-	
+
 		$.ajax({
 			url : "notificaiton.ajax",
 			type : "post",
@@ -411,14 +627,17 @@ nav {
 			success : function(data) {
 				showNotification(data);
 			}
-	
+
 		});
 	});
 
 	function showNotification(data) {
 		var notItem = "";
 		var sessionSeq = "${sessionScope.user.seq}";
-		$.each(JSON.parse(data),function(index, item) {
+		$
+				.each(
+						JSON.parse(data),
+						function(index, item) {
 							if (item.user_seq == sessionSeq) {
 								if (item.noti_read == 'y') {
 									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
@@ -442,15 +661,32 @@ nav {
 						});
 		$("#notification_list").prepend(notItem).trigger("create");
 
-	}
+	};
+
+	$("#tooltip2").click(function() {
+		var style = $("#modal-info").attr("style");
+		$('#modal-body').scrollTop($('#modal-body').prop('scrollHeight'));
+
+		if (style == "display:none;") {
+			console.log(style);
+			$("#modal-info").attr("style", "display:block;");
+			$("#nofification-info").attr("style", "display:none;")
+		} else {
+			$("#modal-info").attr("style", "display:none;");
+		}
+
+	});
 
 	function toggleTooltip() {
-
 		let contents = document.getElementById("notification-info");
+		$('#modal-body').scrollTop($('#modal-body').prop('scrollHeight'));
+
 		if (contents.style.display === "none") {
+			$("#modal-info").attr("style", "display:none;");
 			contents.style.display = "block";
 			$("#notification-counter").hide();
 			$("#notification-counter").text("0");
+
 			notificationcounter = 0;
 		} else {
 			contents.style.display = "none";
@@ -464,6 +700,13 @@ nav {
 		$("#notification-counter").hide();
 	};
 
+	
+
+
+
+
+	
+	
 	$(document).on(
 			'click',
 			".notification-item",
