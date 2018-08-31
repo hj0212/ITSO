@@ -29,6 +29,7 @@ public interface ISocialBoardService {
 	public int deleteCollection(CollectionDTO dto);
 	public int updateCollection(CollectionDTO dto);
 	public CollectionDTO getCollectionSeq(CollectionDTO dto);
+	public CollectionDTO getCollectionInfo(CollectionDTO dto);
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
@@ -41,4 +42,6 @@ public interface ISocialBoardService {
 	public int deleteGoodCount(GoodDTO gdto);
 	public int allGoodCount(GoodDTO gdto);
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto);
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto);
+	
 }

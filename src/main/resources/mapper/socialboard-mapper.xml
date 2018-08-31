@@ -85,7 +85,7 @@
 	</insert>
 	
 	<select id="selectSocialBoard" parameterType="int" resultType="sdto">
-		select * from social where social_seq = #{0}
+		select s.*, nvl(sc.count,'0') comment_count from social s, (select social_seq, count(*) count from social_comment group by social_seq) sc where s.social_seq = sc.social_seq(+) and s.social_seq = #{0}
 	</select>
 	
 	<update id="updateSocialBoard" parameterType="sdto">
@@ -101,7 +101,7 @@
 	</select>
 	
 	<select id="getMySocialList" parameterType ="dto" resultType="sdto">
-		select s.*, u.name social_writerName, u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq and s.social_writer=#{seq} order by social_date desc
+		select s.*, u.name writerName, u.photo user_photo, u.state userState, nvl(sc.comcount,'0') comment_count from social s, users u, (select social_seq, count(*) comcount from social_comment group by social_seq)sc where s.social_writer = u.seq and s.social_seq = sc.social_seq(+) and s.social_writer=#{seq} order by social_date desc
 	</select>
 	
 	<select id="getSocialBoardcurrval" resultType="int">
@@ -128,5 +128,7 @@
 	<select id="getMyGoodSocialList" resultType="sdto">
 		select social_seq from social_good where user_seq = #{seq}
 	</select>
-	
+	<select id="getMyGoodSocialArticleList" resultType="sdto">
+		select s.*, u.photo user_photo, u.state userState, u.name writerName, nvl(sc.comcount,'0') comment_count, nvl(sg.goodcount,'0') good_count from social s, users u, (select social_seq, count(*) comcount from social_comment group by social_seq)sc, (select social_seq, count(*) goodcount from social_good group by social_seq)sg where s.social_writer = u.seq and s.social_seq = sc.social_seq(+) and s.social_seq = sg.social_seq(+) and s.social_seq in (select social_seq from social_good where user_seq=#{seq}) order by 5 desc
+	</select>
 </mapper>

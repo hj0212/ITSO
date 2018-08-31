@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
+import kh.spring.dto.FollowDTO;
 import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.NotificationDTO;
@@ -119,21 +120,7 @@ public class SocialController {
 			age="모든연령";
 		}
 
-		try {
-			main = request.getParameter("main");
-			if(main.equals("full")) {
-				mav.setViewName("main.jsp");
-			}else if(main.equals("thumbnail")) {
-				mav.setViewName("main3.jsp");
-			}else {
-				mav.setViewName("main.jsp");
-			}
-
-
-		}catch(Exception e4) {
-			mav.setViewName("main.jsp");
-		}
-
+	
 
 		SocialBoardDTO sdto = new SocialBoardDTO(pAge,pGender,user_seq);
 
@@ -218,6 +205,21 @@ public class SocialController {
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
 			mav.addObject("socialList",result);
+			try {
+				main = request.getParameter("main");
+				if(main.equals("full")) {
+					mav.setViewName("main.jsp");
+				}else if(main.equals("thumbnail")) {
+					mav.setViewName("main3.jsp");
+				}else {
+					mav.setViewName("main.jsp");
+				}
+
+
+			}catch(Exception e4) {
+				mav.setViewName("main.jsp");
+			}
+
 		}
 		return mav;
 	}
@@ -226,10 +228,12 @@ public class SocialController {
 	public ModelAndView showCollectionList(int seq) {
 		CollectionDTO dto = new CollectionDTO();
 		dto.setCollection_seq(seq);
+		dto = service.getCollectionInfo(dto);
 		List<CollectionDTO> clist = service.getCollectionData(dto);
 		List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
 		
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("content", dto);
 		mav.addObject("collectionList", clist);
 		mav.addObject("socialList", list);
 		mav.setViewName("collection.jsp");
@@ -245,20 +249,36 @@ public class SocialController {
 		// json에 넣을 순번
 		int i = 0;
 		
+		MemberDTO user = (MemberDTO)session.getAttribute("user");
+		int user_seq = user.getSeq();
+		
 		try {
-			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
-			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
+			List<CollectionDTO> collectionList = this.service.getCollectionList(user);
+			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList(user);
+			
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
+			
 		}  catch (Exception e) {
 			System.out.println("로그인x");
 			mav.setViewName("login.go");
 			return mav;
 		}
 
+		
+		
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
-		MemberDTO mdto = this.mService.selectSocialWrtier(seq);
+		MemberDTO mdto = this.mService.selectSocialWriter(seq);
+		
+		try {
+		int follow = mService.checkFollow(new FollowDTO(user_seq,mdto.getSeq()));
+		mav.addObject("followcheck", follow);
+		}  catch (Exception e) {
+			System.out.println("로그인x");
+			mav.setViewName("login.go");
+			return mav;
+		}
 
 		String contents = dto.getSocial_contents();
 

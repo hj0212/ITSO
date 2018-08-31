@@ -225,31 +225,29 @@ section .follow-action .follow-button {
 	height: 350px;
 	object-fit: cover;
 }
+
+#colnav {
+	background-color: #fff;
+
+}
 </style>
 </head>
 <body>
 	<%@include file="navi.jsp"%>
 
 	<div class="wrapper">
-		<c:forEach var="clist" items="${collectionList }">
 		
 		<div class="container">
 			<div class="collection-top">
-				<div class="collection-meta">
-					by <a href="#">${clist.writerName }</a> <span class="sep">•</span> updated
-					over 2 years ago <span class="sep">•</span> 12 looks
-				</div>
-				<div class="follow">
-					<button type="button" class="btn">+Follow</button>
+				<div class="collection-meta py-2">
+					by <a href="userpage.go?${content.collection_writer}">${content.writerName }</a><span class="sep"> •</span> ${content.count} looks
 				</div>
 			</div>
 			<div class="collection-description">
-				<a href="#">${clist.collection_title }</a>
-				<h4 class="mb-3">${clist.collection_contents }</h4>
-				<p>Page 1 of 3</p>
+				${content.collection_title }
+				<h4 class="mb-5">${content.collection_contents }</h4>
 			</div>
 		</div>
-		</c:forEach>
 	</div>
 
 	<section>
@@ -265,32 +263,55 @@ section .follow-action .follow-button {
 						<div class="card">
 							<div class="view overlay">
 								<img src="/upload/social/${slist.photo }" alt="Card image cap">
-								<a href="#">
+								<a href="readSocial.go?seq=${slist.social_seq}">
 									<div class="mask rgba-stylish-light text-left card-text">
-										<h2>White bohemian dress.</h2>
-										<p>Zara Pumps</p>
-										<p>Romwe White Dress</p>
-										<p>Forever 21 Jackets</p>
+										<h2>${slist.social_title }</h2>
+										<p>contents</p>
+										<p>${slist.social_date }</p>
 									</div>
 								</a>
 							</div>
 
 							<div class="card-body">
-								<button type="button" class="btn btn-elegant" id="good-button">good</button>
-								<span class="badge good-count" id="good-count">123</span>
 								<div class="user-activity">
-									<div class="avatar">
-										<img src="/upload/social/${slist.photo }" alt="" class="card-image">
+									<div class="avatar ml-0 mr-2">
+										<img src="/upload/profile/${slist.photo }" alt="" class="card-image rounded-circle">
 									</div>
 									<div class="user-action">
 										<div class="user-name">
-											<a href="#">${slist.writerName } </a>
+											<a href="userpage.go?seq=${slist.social_writer }">${slist.writerName } </a>
 										</div>
-										<div class="timestamp">${slist.social_date }</div>
+										<div >${slist.userState }</div>
 									</div>
-									<div class="follow-action">
-										<button type="button" id="follow-button"
-											class="follow-button btn">+Follow</button>
+									<div class="goodarea" style="margin-top: 6px; float: right;">
+										<c:set var="loop_flag" value="false" />
+										<c:choose>
+											<c:when test="${goodCount > 0 }">
+												<c:choose>
+												<c:when test="${goodStatus eq true }">
+													<i class="fa fa-heart red-text heart" aria-hidden="true"
+																	style="float: left; font-size: 25px;"
+																	value="${content.social_seq}"><font color="black">${goodCount}
+																</font></i>
+												</c:when>
+												<c:otherwise>
+													<i class="fa fa-heart-o red-text heart"
+																		aria-hidden="true"
+																		style="float: left; font-size: 25px;"
+																		value="${content.social_seq}"><font color="black"> 0
+																	</font></i>
+												</c:otherwise>
+												</c:choose>
+												
+											</c:when>
+											<c:otherwise>
+											<i class="fa fa-heart-o red-text heart"
+																		aria-hidden="true"
+																		style="float: left; font-size: 25px;"
+																		value="${content.social_seq}"><font color="black"> 0
+																	</font></i>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</div>
 							</div>
@@ -306,7 +327,8 @@ section .follow-action .follow-button {
 	</div>
 	</section>
 
-	<nav class="pagination justify-content-center" id="colnav"
+	<!-- 페이지네이션
+	 <nav class="pagination justify-content-center" id="colnav"
 		aria-label="pagination example">
 	<ul class="pagination pagination-lg">
 		<li class="page-item"><a class="page-link" href="#"
@@ -318,13 +340,13 @@ section .follow-action .follow-button {
 		<li class="page-item"><a class="page-link" href="#">2</a></li>
 		<li class="page-item"><a class="page-link" href="#">3</a></li>
 
-		<!--Arrow right-->
+		Arrow right
 		<li class="page-item"><a class="page-link" href="#"
 			aria-label="Next"> <span aria-hidden="true">&raquo;</span> <span
 				class="sr-only">Next</span>
 		</a></li>
 	</ul>
-	</nav>
+	</nav> -->
 </body>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"

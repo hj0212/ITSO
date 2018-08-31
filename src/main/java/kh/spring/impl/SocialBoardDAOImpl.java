@@ -110,6 +110,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.selectOne("Collection.getCollectionSeq", dto);
 	}
 	
+	@Override
+	public CollectionDTO getCollectionInfo(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionInfo", dto);
+	}
+	
 	
 	//���ƿ� 
 	@Override
@@ -137,6 +142,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	@Override
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		return template.selectList("SocialBoard.getMyGoodSocialList", dto);
+	}
+	
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto) {
+		return template.selectList("SocialBoard.getMyGoodSocialArticleList", dto);
 	}
 	
 	//인기
@@ -188,4 +198,5 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		
 		return template.selectList("SocialBoard.showHashTagFollowBoardList", map);
 	}
+	
 }
