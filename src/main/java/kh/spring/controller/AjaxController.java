@@ -32,6 +32,7 @@ import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.IStylingService;
 import kh.spring.websocket.EchoHandler;
 
 @Controller

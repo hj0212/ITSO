@@ -178,9 +178,7 @@ font-size:15px;
 				<p>" ${votedto.styling_contents} "</p>
 			</div>
 		</div>
-
-
-		<div class="row my-2">
+		<div class="row">
 			<hr />
 		</div>
 		<div class="row">
