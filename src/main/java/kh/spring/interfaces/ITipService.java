@@ -52,4 +52,5 @@ public interface ITipService {
 	public List<TipDTO> getTipBoardList(String category);
 	public int getTipBoardCount(String category);
 	public List<TipDTO> getTipBoardListRange(String category, int start, int end);
+	
 }

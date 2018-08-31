@@ -1012,7 +1012,35 @@ table .profilearea {
 					<!--/.Panel 4-->
 
 					<!--Panel 5-->
-					<div class="tab-pane fade" id="boardPanel" role="tabpanel"></div>
+					<div class="tab-pane fade" id="boardPanel" role="tabpanel">
+						<table style="width: 100%">
+					<c:choose>
+						<c:when test="${!empty tipList}">
+							<c:forEach var="tipList" items="${tipList}">
+								<tr>
+									<td class="tip-image"><img
+										src="resources/images/${tipList.photo}" alt=""
+										onerror="this.src='resources/images/background.jpg'" /></td>
+									<td class="user-name"><a
+										href="userpage.go?seq=${tipList.tip_writer}">${tipList.name}</a>
+									</td>
+									<td class="tip-info"><a
+										href="getSpecificTipView.tip?seq=${tipList.tip_seq}">[${tipList.category}]${tipList.tip_title}</a>
+									</td>
+									<td class="tip-like" style="text-align: left;"><i
+										class=" fa fa-heart red-text"></i>${tipList.tip_like_count}</td>
+									<td class="view-count" style="text-align: left"><i
+										class="fa  fa-eye"></i>${tipList.tip_viewcount}</td>
+									<td>${tipList.tip_date}</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+										검색 결과가 없습니다.
+									</c:otherwise>
+					</c:choose>
+				</table>
+					</div>
 					<!--/.Panel 5-->
 
 					<!-- Modal -->
