@@ -460,7 +460,7 @@ a#MOVE_TOP_BTN {
 													style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px; padding-right: 0;"
 													title="컬렉션에 저장" data-toggle="modal"
 													data-target="#saveModal">
-													컬렉션에 저장 <i class="fa fa-upload"></i>
+													컬렉션에 저장 <i class="fa fa-download"></i>
 												</button>
 												<input type="hidden" class="socialseq"
 													value="${list.social_seq }" />
@@ -612,7 +612,6 @@ a#MOVE_TOP_BTN {
 
 	<!-- Button trigger modal -->
 	<div class="text-center"></div>
-	</div>
 
 
 </body>
