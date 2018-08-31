@@ -324,9 +324,6 @@
 									class="fa fa-comment-o"></i>
 							</div>
 						</header>
-
-
-
 						<div>
 							<!-- image -->
 							<br>

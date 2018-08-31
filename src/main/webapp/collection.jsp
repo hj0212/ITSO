@@ -228,7 +228,6 @@ section .follow-action .follow-button {
 
 #colnav {
 	background-color: #fff;
-
 }
 </style>
 </head>
@@ -236,95 +235,107 @@ section .follow-action .follow-button {
 	<%@include file="navi.jsp"%>
 
 	<div class="wrapper">
-		
+
 		<div class="container">
 			<div class="collection-top">
 				<div class="collection-meta py-2">
-					by <a href="userpage.go?${content.collection_writer}">${content.writerName }</a><span class="sep"> •</span> ${content.count} looks
+					by <a href="userpage.go?${content.collection_writer}">${content.writerName }</a><span
+						class="sep"> •</span> ${content.count} looks
 				</div>
 			</div>
 			<div class="collection-description">
-				${content.collection_title }
+				<h2>${content.collection_title }</h2>
 				<h4 class="mb-5">${content.collection_contents }</h4>
 			</div>
 		</div>
 	</div>
 
 	<section>
-	<div class="container">
-		<div class="row">
-			<c:choose>
-				<c:when test="${empty socialList }">
+		<div class="container">
+			<div class="row">
+				<c:choose>
+					<c:when test="${empty socialList }">
                   		컬렉션에 추가된 글이 없습니다.
                 </c:when>
-				<c:otherwise>
-					<c:forEach var="slist" items="${socialList }">
-					<div class="col-sm-4 mb-3">
-						<div class="card">
-							<div class="view overlay">
-								<img src="/upload/social/${slist.photo }" alt="Card image cap">
-								<a href="readSocial.go?seq=${slist.social_seq}">
-									<div class="mask rgba-stylish-light text-left card-text">
-										<h2>${slist.social_title }</h2>
-										<p>contents</p>
-										<p>${slist.social_date }</p>
+					<c:otherwise>
+						<c:forEach var="slist" items="${socialList }">
+							<div class="col-sm-4 mb-3">
+								<div class="card">
+									<div class="view overlay">
+										<img src="/upload/social/${slist.photo }" alt="Card image cap">
+										<a href="readSocial.go?seq=${slist.social_seq}">
+											<div class="mask rgba-stylish-light text-left card-text">
+												<h2>${slist.social_title }</h2>
+												<p>${slist.social_contents }</p>
+												<p>${slist.social_date }</p>
+											</div>
+										</a>
 									</div>
-								</a>
-							</div>
 
-							<div class="card-body">
-								<div class="user-activity">
-									<div class="avatar ml-0 mr-2">
-										<img src="/upload/profile/${slist.photo }" alt="" class="card-image rounded-circle">
-									</div>
-									<div class="user-action">
-										<div class="user-name">
-											<a href="userpage.go?seq=${slist.social_writer }">${slist.writerName } </a>
-										</div>
-										<div >${slist.userState }</div>
-									</div>
-									<div class="goodarea" style="margin-top: 6px; float: right;">
-										<c:set var="loop_flag" value="false" />
-										<c:choose>
-											<c:when test="${goodCount > 0 }">
-												<c:choose>
-												<c:when test="${goodStatus eq true }">
-													<i class="fa fa-heart red-text heart" aria-hidden="true"
-																	style="float: left; font-size: 25px;"
-																	value="${content.social_seq}"><font color="black">${goodCount}
-																</font></i>
+									<div class="card-body">
+										<div class="user-activity">
+											<div class="avatar ml-0 mr-2">
+												<img src="/upload/profile/${slist.photo }" alt=""
+													class="card-image rounded-circle">
+											</div>
+											<div class="user-action">
+												<div class="user-name">
+													<a href="userpage.go?seq=${slist.social_writer }">${slist.writerName }
+													</a>
+												</div>
+												<div>${slist.userState }</div>
+											</div>
+											<div class="goodarea" style="float: right; margin-top: 5px;">
+											<input type="hidden" class="writerseq" value="${slist.social_writer }" />
+											<c:choose>
+												<c:when test="${empty goodList }">
+													<i class="fa fa-heart-o red-text heart " aria-hidden="true"
+														style="float: right; font-size: 25px;"
+														value="${slist.social_seq}"> <font color="black">
+															0 </font></i>
 												</c:when>
 												<c:otherwise>
-													<i class="fa fa-heart-o red-text heart"
+													<c:set var="loop_flag" value="false" />
+													<c:forEach items="${goodList }" var="good" varStatus="gstatus">
+														<c:if test="${loop_flag == false }">
+															<c:choose>
+																<c:when test="${good.social_seq == slist.social_seq }">
+																	<i class="fa fa-heart red-text heart"
 																		aria-hidden="true"
 																		style="float: left; font-size: 25px;"
-																		value="${content.social_seq}"><font color="black"> 0
-																	</font></i>
+																		value="${slist.social_seq}"> <font color="black">
+																			${good.good_count } </font></i>
+																	<c:set var="loop_flag" value="true" />
+																</c:when>
+																<c:otherwise>
+																	<c:if test="${gstatus.last }">
+																		<i class="fa fa-heart-o red-text heart"
+																			aria-hidden="true"
+																			style="float: left; font-size: 25px;"
+																			value="${slist.social_seq}"> <font color="black">
+																				${good.good_count } </font></i>
+																	</c:if>
+																</c:otherwise>
+															</c:choose>
+														</c:if>
+
+													</c:forEach>
 												</c:otherwise>
-												</c:choose>
-												
-											</c:when>
-											<c:otherwise>
-											<i class="fa fa-heart-o red-text heart"
-																		aria-hidden="true"
-																		style="float: left; font-size: 25px;"
-																		value="${content.social_seq}"><font color="black"> 0
-																	</font></i>
-											</c:otherwise>
-										</c:choose>
+
+											</c:choose>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
 
 
 
+			</div>
 		</div>
-	</div>
 	</section>
 
 	<!-- 페이지네이션
@@ -347,6 +358,34 @@ section .follow-action .follow-button {
 		</a></li>
 	</ul>
 	</nav> -->
+	<script>
+		$(".heart").click(function() {
+			var heartVal = $(this).attr("class");
+			if (heartVal == "fa fa-heart red-text heart") {
+				$(this).attr("class", "fa fa-heart-o red-text heart");
+			} else {
+				$(this).attr("class", "fa fa-heart red-text heart");
+			}
+		});
+		$(".heart").on('click', function() {
+			var seq = $(this).attr("value");
+			var writer = $(".writerseq").val();
+			var font = $(this).children('font');
+			console.log("숫자: " + $(this).children('font').html());
+			console.log(seq);
+			$.ajax({
+				url : "mainHeart.ajax",
+				type : "post",
+				data : {
+					social_seq : seq,
+					social_writer : writer
+				},
+				success : function(data) {
+					console.log("들어옴" + data), font.html(data)
+				}
+			});
+		});
+	</script>
 </body>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript"
