@@ -598,13 +598,10 @@ button.dropdown-toggle {
 						</div>
 					</div>
 					<!-- Grid column -->
-
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<tr>
-					<td colspan="3">게시글이 없습니다,</td>
-				</tr>
+				검색 결과가 없습니다.
 			</c:otherwise>
 		</c:choose>
 

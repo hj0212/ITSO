@@ -131,4 +131,8 @@
 	<select id="getMyGoodSocialArticleList" resultType="sdto">
 		select s.*, u.photo user_photo, u.state userState, u.name writerName, nvl(sc.comcount,'0') comment_count, nvl(sg.goodcount,'0') good_count from social s, users u, (select social_seq, count(*) comcount from social_comment group by social_seq)sc, (select social_seq, count(*) goodcount from social_good group by social_seq)sg where s.social_writer = u.seq and s.social_seq = sc.social_seq(+) and s.social_seq = sg.social_seq(+) and s.social_seq in (select social_seq from social_good where user_seq=#{seq}) order by 5 desc
 	</select>
+	
+	<select id="searchedTagSocialList" resultType="sdto" parameterType="String">
+		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u, social_hash_tag sht where s.social_writer = u.seq and s.social_seq = sht.social_seq	and sht.social_hash_tag_contents like '%'||#{0}||'%'
+	</select>
 </mapper>

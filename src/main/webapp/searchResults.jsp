@@ -455,7 +455,7 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="tagdiv" role="tabpanel" aria-labelledby="tag-tab">
-						Run
+	
 					</div>
 					<div class="tab-pane fade" id="tipdiv" role="tabpanel" aria-labelledby="tip-tab">
 						<div class="col-md-12 search-tip mt-3">
@@ -477,7 +477,7 @@
 													<i class=" fa fa-heart red-text"></i>${tipList.tip_like_count}
 												</td>
 												<td class="view-count" style="text-align : left">
-													<i class="fa fa-eye"></i>${tipList.tip_viewcount}
+													<i class="fa  fa-eye"></i>${tipList.tip_viewcount}
 												</td>
 												<td>
 													${tipList.tip_date}
