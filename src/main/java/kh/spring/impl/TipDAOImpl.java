@@ -130,4 +130,18 @@ public class TipDAOImpl implements ITipDAO {
 	public List<TipDTO> getTipBoardList(String category) {
 		return template.selectList("TipBoard.getTipBoardList",category);
 	}
+
+	@Override
+	public int getTipBoardCount(String category) {
+		return template.selectOne("TipBoard.getTipBoardCount", category);
+	}
+
+	@Override
+	public List<TipDTO> getTipBoardListRange(String category, int start, int end) {
+		Map<String,String> map = new HashMap<>();
+		map.put("category",category);
+		map.put("start", start+"");
+		map.put("end", end+"");
+		return template.selectList("TipBoard.getTipBoardListRange", map);
+	}
 }

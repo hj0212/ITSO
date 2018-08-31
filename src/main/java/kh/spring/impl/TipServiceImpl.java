@@ -117,4 +117,14 @@ public class TipServiceImpl implements ITipService {
 	public List<TipDTO> getTipBoardList(String category) {
 		return this.dao.getTipBoardList(category);
 	}
+
+	@Override
+	public int getTipBoardCount(String category) {
+		return this.dao.getTipBoardCount(category);
+	}
+
+	@Override
+	public List<TipDTO> getTipBoardListRange(String category, int start, int end) {
+		return this.dao.getTipBoardListRange(category, start, end);
+	}
 }
