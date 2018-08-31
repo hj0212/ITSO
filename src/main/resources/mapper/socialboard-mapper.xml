@@ -51,7 +51,7 @@
 			<!-- 연령순 -->
 			and s.age=#{pAge}
 		</if>
-		<if test="pGender !=null and gender !='g'.toString() ">
+		<if test="pGender !=null and pGender !='g'.toString() ">
 			<!--성별  -->
 			and s.gender = #{pGender}
 		</if>		
@@ -63,7 +63,7 @@
 			<if test="pAge gt 0">
 			 	and s.AGE= #{pAge}
 			</if>
-			<if test="pGender !=null and gender !='g'.toString()">
+			<if test="pGender !=null and pGender !='g'.toString()">
 				and s.GENDER=#{pGender}
 			</if> 
 		ORDER by count desc
@@ -74,7 +74,7 @@
 		<if test="pAge gt 0">
 			and s.AGE=#{pAge}
 		</if>
-		<if test="pGender !=null and gender !='g'.toString()">
+		<if test="pGender !=null and pGender !='g'.toString()">
 			and s.GENDER=#{pGender}
 		</if>
 		order by s.social_date desc

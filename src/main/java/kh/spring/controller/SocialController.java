@@ -215,6 +215,10 @@ public class SocialController {
 				}else if(main.equals("thumbnail")) {
 					mav.addObject("socialList",result);
 					mav.setViewName("main3.jsp");
+				}else {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("main.jsp");
 				}
 				
 
@@ -924,7 +928,29 @@ public class SocialController {
 			mav.addObject("pGender",pGender);
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
-			mav.addObject("socialList",result);
+			
+			
+			try {
+				main = request.getParameter("main");
+				
+				if(main.equals("full")) {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag.jsp");
+				}else if(main.equals("thumbnail")) {
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag2.jsp");
+				}else {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag.jsp");
+				}
+				
+			}catch(Exception e4) {
+				result = makeHashTag(result);
+				mav.addObject("socialList",result);
+				mav.setViewName("searchTag.jsp");
+			}
 		}
 		return mav;
 	}

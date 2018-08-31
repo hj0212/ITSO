@@ -288,8 +288,8 @@
 		}
 		
 		.user-image img{
-			width : 100px;
-			height: 100px;
+			width : 60px;
+			height: 60px;
 			border-radius: 50%;
 		}
 
@@ -413,7 +413,9 @@
 						<a class="nav-link" id="tag-tab" data-toggle="tab" href="#tagdiv" role="tab" aria-controls="tagdiv" aria-selected="false">태그</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" id="tip-tab" data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv" aria-selected="false">팁 게시글</a>
+						<a class="nav-link" id="tip-tab" data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv" aria-selected="false">
+							팁 게시글(<c:choose><c:when test="${empty tipList}">0</c:when><c:otherwise>${tipList.size()}</c:otherwise></c:choose>)
+						</a>
 					</li>
 				</ul>
 				<div class="tab-content text-center" id="myTabContent">
@@ -429,12 +431,13 @@
 												</td>
 												<td class="user-info">
 													<div class="user-name">
-														<b>${userList.name}</b>
+														<a href="userpage.go?seq=${userList.seq}"><b>${userList.name}</b></a>
 													</div>
 													<div class="status-message">${userList.state}</div>
 												</td>
-												<td class="user-fans">511 fans</td>
-												<td class="user-looks">23 looks</td>
+												<td class="user-fans">
+													<button class="btn btn-indigo btn-sm followbtn waves-effect waves-light">+FOLLOW</button>
+												</td>
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -449,7 +452,22 @@
 						Run
 					</div>
 					<div class="tab-pane fade" id="tipdiv" role="tabpanel" aria-labelledby="tip-tab">
-						Awolnation
+						<div class="col-md-12 search-tip mt-3">
+							<table style="width : 100%">
+								<c:choose>
+									<c:when test="${!empty tipList}">
+										<c:forEach var="tipList" items="${tipList}">
+											<tr>
+												<td>${tipList.photo}</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										검색 결과가 없습니다.
+									</c:otherwise>
+								</c:choose>
+							</table>
+						</div>
 					</div>
 				</div>
 			</section>		

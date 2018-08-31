@@ -143,5 +143,11 @@ order by t.tip_seq desc
 update tip set tip_contents = #{tip_contents}, tip_title = #{tip_title}  where tip_seq = #{tip_seq}
 </update>
 
+<select id="searchedTipBoard" resultType="searchedtipdto" parameterType="String">
+	select t.tip_seq, t.tip_title, t.tip_writer, t.tip_date, t.tip_viewcount, t.category, tg.tip_like_count, u.name, u.photo from users u, tip t left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq 
+	left outer join (select tip_seq, count(*) tip_comment_count from tip_comment group by tip_seq) tc on t.tip_seq = tc.tip_seq
+	where u.SEQ = t.tip_writer and tip_title like '%'||#{0}||'%' order by t.tip_seq desc
+</select>
+
 
 </mapper>
