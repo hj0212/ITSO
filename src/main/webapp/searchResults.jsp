@@ -839,11 +839,6 @@ a#MOVE_TOP_BTN {
 												<a href="collection.go?seq=${clist.collection_seq }"
 													style="color: white;">보기</a>
 											</button>
-											<button class="textbtn editbtn" data-toggle="modal"
-												data-target="#editCollectionModal">수정</button>
-											<button class="textbtn removebtn">삭제</button>
-											<input type="hidden" value="${clist.collection_seq }"
-												name="collectionseq" />
 										</div></td>
 									<td><c:set var="loop" value="true" /> <c:set var="num"
 											value="0" /> <c:forEach var="slist" items="${searchedPhotoList }">
