@@ -281,9 +281,15 @@ public class SocialController {
 
 
 		int seq = Integer.parseInt(request.getParameter("seq"));
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
 		MemberDTO mdto = this.mService.selectSocialWriter(seq);
-
+		GoodDTO gdto = new GoodDTO(seq, user_seq);
+		int goodCount = service.allGoodCount(gdto);
+		mav.addObject("goodCount", goodCount);
+		int goodStatus = service.selectGoodCount(gdto);
+		mav.addObject("goodStatus", goodStatus);
+		
 		fdto.setFollowing_seq(seq);
 		Integer follow = mService.checkFollow(fdto);
 		mav.addObject("followcheck", follow);

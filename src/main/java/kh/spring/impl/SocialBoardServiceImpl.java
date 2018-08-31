@@ -61,7 +61,7 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	
 	//醫뗭븘�슂
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return this.dao.selectGoodCount(gdto);
 	}
 

@@ -37,7 +37,7 @@ public interface ISocialBoardService {
 	public int selectSocialWriter(int seq);
 	
 	//醫뗭븘�슂
-	public int selectGoodCount(GoodDTO gdto);
+	public Integer selectGoodCount(GoodDTO gdto);
 	public int insertGoodCount(GoodDTO gdto);
 	public int deleteGoodCount(GoodDTO gdto);
 	public int allGoodCount(GoodDTO gdto);

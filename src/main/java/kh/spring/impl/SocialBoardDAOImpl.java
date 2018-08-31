@@ -118,7 +118,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	
 	//���ƿ� 
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return template.selectOne("SocialBoard.selectGoodCount", gdto);
 	}
 
