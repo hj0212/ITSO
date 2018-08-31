@@ -237,7 +237,7 @@ public class TipController {
 	}
 	
 	
-	@RequestMapping("deleteTipComment.tip")
+	@RequestMapping("deleteTipComment.tip") //창영 댓글 지우기 기능
 	public void deleteTipComment(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ObjectMapper om = new ObjectMapper();

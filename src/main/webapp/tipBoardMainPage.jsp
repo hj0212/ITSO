@@ -58,6 +58,12 @@ table {
 	margin-bottom: 60px;
 }
 
+.tip-card-thumbnail img {
+	width: 100%;
+	height: 30vh;
+	margin: 0 auto;
+}
+
 /* Carousel */
 .carousel-cell {
 	width: 100%;
@@ -68,12 +74,13 @@ table {
 @media screen and ( min-width: 768px ) {
 	/* half-width cells for larger devices */
 	.carousel-cell {
-		width: 30%;
+		width: 40vh;
 	}
 }
 
 .carousel-cell.is-selected {
 	background: #ED2;
+	z-index: 0;
 }
 
 /* position dots up a bit */
@@ -93,6 +100,10 @@ table tr {
 }
 
 .tip-title {
+	text-align: center;
+}
+
+.text-center {
 	text-align: center;
 }
 </style>
@@ -124,8 +135,16 @@ table tr {
 								alt="Card image cap"> <a href="#!"> </a>
 						</div>
 
-						<!--Card content-->
-						<div class="card-body">
+						<form class="reportForm">
+							<span> by <a href="" class="" data-toggle="modal"
+								name="${status.index}" class="userName"
+								data-target="#reportModal">${upvotingArticles.name}</a> <input
+								type="hidden" name="${status.index}" class="userSeq"
+								value="${upvotingArticles.tip_writer}"> <input
+								type="hidden" class="sessionUser"
+								value="${sessionScope.user.seq}">
+							</span>
+						</form>
 
 							<!--Title-->
 							<h4 class="card-title">${upvotingArticles.tip_title}</h4>
@@ -140,15 +159,15 @@ table tr {
 				
 							<span>by ${upvotingArticles.name}</span>
 
-							<!--Text-->
-							<p class="card-text">${upvotingArticles.category}</p>
-							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 
-							<div>
-								<button id=best-tip-read-btn type="button"
-									onclick="javascript:location.href='getSpecificTipView.tip?seq=${upvotingArticles.tip_seq}'"
-									class=" btn btn-itso btn-md">읽기</button>
-							</div>
+						<!--Text-->
+						<p class="card-text">${upvotingArticles.category}</p>
+						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+
+						<div>
+							<button id=best-tip-read-btn type="button"
+								onclick="javascript:location.href='getSpecificTipView.tip?seq=${upvotingArticles.tip_seq}'"
+								class=" btn btn-itso btn-md">읽기</button>
 						</div>
 					</div>
 				</c:forEach>

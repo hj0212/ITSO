@@ -2,18 +2,47 @@ package kh.spring.dto;
 
 public class AdminPageDTO {
 
-	String gender;
 	int femaleUsers;
 	int maleUsers;
 	int user_seq;
 	int report_count;
+	int reporting_user;
+
+
+	String gender;
 	String report_reason;
 	String name;
 	String email;
 	String create_date;
 	String block;
+	String user_name;
 
 	
+
+	public int getReporting_user() {
+		return reporting_user;
+	}
+
+	public void setReporting_user(int reporting_user) {
+		this.reporting_user = reporting_user;
+	}
+	
+	@Override
+	public String toString() {
+		return "AdminPageDTO [femaleUsers=" + femaleUsers + ", maleUsers=" + maleUsers + ", user_seq=" + user_seq
+				+ ", report_count=" + report_count + ", reporting_user=" + reporting_user + ", gender=" + gender
+				+ ", report_reason=" + report_reason + ", name=" + name + ", email=" + email + ", create_date="
+				+ create_date + ", block=" + block + ", user_name=" + user_name + "]";
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
 	public int getUser_seq() {
 		return user_seq;
 	}
@@ -94,31 +123,38 @@ public class AdminPageDTO {
 		this.gender = gender;
 	}
 
+	
+
 	/**
-	 * @param gender
 	 * @param femaleUsers
 	 * @param maleUsers
 	 * @param user_seq
 	 * @param report_count
+	 * @param reporting_user
+	 * @param gender
 	 * @param report_reason
 	 * @param name
 	 * @param email
 	 * @param create_date
 	 * @param block
+	 * @param user_name
 	 */
-	public AdminPageDTO(String gender, int femaleUsers, int maleUsers, int user_seq, int report_count,
-			String report_reason, String name, String email, String create_date, String block) {
+	public AdminPageDTO(int femaleUsers, int maleUsers, int user_seq, int report_count, int reporting_user,
+			String gender, String report_reason, String name, String email, String create_date, String block,
+			String user_name) {
 		super();
-		this.gender = gender;
 		this.femaleUsers = femaleUsers;
 		this.maleUsers = maleUsers;
 		this.user_seq = user_seq;
 		this.report_count = report_count;
+		this.reporting_user = reporting_user;
+		this.gender = gender;
 		this.report_reason = report_reason;
 		this.name = name;
 		this.email = email;
 		this.create_date = create_date;
 		this.block = block;
+		this.user_name = user_name;
 	}
 
 	public AdminPageDTO() {

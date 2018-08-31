@@ -12,16 +12,24 @@ public class TipDTO {
 	int tip_like_count;
 	String name;
 	int tip_comment_count;
+	String thumbnail;
+	
+	
+	public String getThumbnail() {
+		return thumbnail;
+	}
 
-	
-	
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
 	
 	@Override
 	public String toString() {
 		return "TipDTO [tip_seq=" + tip_seq + ", tip_title=" + tip_title + ", tip_contents=" + tip_contents
 				+ ", tip_writer=" + tip_writer + ", tip_date=" + tip_date + ", tip_viewcount=" + tip_viewcount
 				+ ", category=" + category + ", tip_like_count=" + tip_like_count + ", name=" + name
-				+ ", tip_comment_count=" + tip_comment_count + "]";
+				+ ", tip_comment_count=" + tip_comment_count + ", thumbnail=" + thumbnail + "]";
 	}
 
 	public int getTip_comment_count() {
@@ -120,9 +128,12 @@ public class TipDTO {
 	 * @param tip_like_count
 	 * @param name
 	 * @param tip_comment_count
+	 * @param thumbnail
 	 */
 	public TipDTO(int tip_seq, String tip_title, String tip_contents, int tip_writer, String tip_date,
-			String tip_viewcount, String category, int tip_like_count, String name, int tip_comment_count) {
+			String tip_viewcount, String category, int tip_like_count, String name, int tip_comment_count,
+			String thumbnail) {
+		super();
 		this.tip_seq = tip_seq;
 		this.tip_title = tip_title;
 		this.tip_contents = tip_contents;
@@ -133,8 +144,9 @@ public class TipDTO {
 		this.tip_like_count = tip_like_count;
 		this.name = name;
 		this.tip_comment_count = tip_comment_count;
+		this.thumbnail = thumbnail;
 	}
 
-	
+
 	
 }

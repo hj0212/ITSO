@@ -75,6 +75,13 @@ public class AdminServiceImpl implements IAdminService{
 	public int blockUserReleasing(int userSeq) {
 		return this.dao.blockUserReleasing(userSeq);
 	}
-	
+
+
+	@Override
+	public int reportProc(AdminPageDTO dto) {
+		return this.dao.reportProc(dto);
+	}
+
+
 	
 }
