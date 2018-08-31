@@ -30,16 +30,15 @@
 
 
 <!-- flickity carousel css / js -->
-<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<link rel="stylesheet"
+	href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
 
 <style>
-.lpadding-40{
-padding-left:40px;
-}
 ul {
 	list-style-type: none;
+	padding-left: 0px;
 }
 
 .card-img-top, .card {
@@ -54,38 +53,39 @@ ul {
 table {
 	width: 100%;
 }
-#bestTipList{
-margin-bottom:60px;
+
+#bestTipList {
+	margin-bottom: 60px;
 }
 
-
 /* Carousel */
-
 .carousel-cell {
-  width: 100%;
-  height: 500px;
-  margin-right: 10px;
+	width: 100%;
+	height: 500px;
+	margin-right: 10px;
 }
 
 @media screen and ( min-width: 768px ) {
-  /* half-width cells for larger devices */
-  .carousel-cell { width: 30%; }
+	/* half-width cells for larger devices */
+	.carousel-cell {
+		width: 30%;
+	}
 }
 
 .carousel-cell.is-selected {
-  background: #ED2;
+	background: #ED2;
 }
 
 /* position dots up a bit */
 .flickity-page-dots {
-  bottom: -22px;
+	bottom: -22px;
 }
 /* dots are lines */
 .flickity-page-dots .dot {
-  height: 4px;
-  width: 40px;
-  margin: 0;
-  border-radius: 0;
+	height: 4px;
+	width: 40px;
+	margin: 0;
+	border-radius: 0;
 }
 </style>
 
@@ -95,206 +95,210 @@ margin-bottom:60px;
 
 <body>
 
+
+
+
 	<!-- navi -->
 	<%@include file="navi.jsp"%>
 
+<!-- <button class="btn btn-itso" onclick="javascript:location.href='goAdminPageWithAllAnalysisData.adm'">관리자 페이지</button> -->
 
 
-	<!-- tip board main page -->
+	<div id="wrapper" class="container-fluid col-md-8">
+
+		<!-- tip board main page -->
 		<div id="bestTipList" class="mt-4">
 			<div class="container-fluid">
 				<h1 class="mb-3">
-				<i class="fa fa-thumbs-o-up align-top"></i> 
-					베스트 팁
+					<i class="fa fa-thumbs-o-up align-top"></i> 베스트 팁
 				</h1>
 			</div>
 			<!-- Card deck -->
-			<div class="container-fluid main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'>
-					<!-- Card1 -->
-					<c:forEach items="${upvotingArticles}" var="upvotingArticles">
-						<div class="mb-4 carousel-cell">
-							<!--Card image-->
-							<div class="view overlay">
-								<img class="card-img-top"
-									src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
-									alt="Card image cap"> <a href="#!"> </a>
+			<div class="container-fluid main-carousel"
+				data-flickity='{ "cellAlign": "left", "contain": true }'>
+				<!-- Card1 -->
+				<c:forEach items="${upvotingArticles}" var="upvotingArticles">
+					<div class="mb-4 carousel-cell">
+						<!--Card image-->
+						<div class="view overlay">
+							<img class="card-img-top"
+								src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
+								alt="Card image cap"> <a href="#!"> </a>
+						</div>
+
+						<!--Card content-->
+						<div class="card-body">
+
+							<!--Title-->
+							<h4 class="card-title">${upvotingArticles.tip_title}</h4>
+							<div>
+								<a><i class=" fa fa-heart red-text" aria-hidden="true"></i>
+									${upvotingArticles.tip_like_count} </a> 
+<!-- 									<a><i class="fa fa-share-alt green-text" aria-hidden="true"></i>82</a>  -->
+									<a><i
+									class="fa fa-comment amber-text" aria-hidden="true"></i>${upvotingArticles.tip_comment_count}</a>
+								<a><i class="fa  fa-eye" aria-hidden="true"></i>${upvotingArticles.tip_viewcount}</a>
 							</div>
+				
+				
+							<span>by ${upvotingArticles.name}</span>
 
-							<!--Card content-->
-							<div class="card-body">
+							<!--Text-->
+							<p class="card-text">${upvotingArticles.category}</p>
+							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 
-								<!--Title-->
-								<h4 class="card-title">${upvotingArticles.tip_title}</h4>
-								<span>by ${upvotingArticles.name}</span>
-
-								<!--Text-->
-								<p class="card-text">${upvotingArticles.category}</p>
-								<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-
-								<div>
-									<button id=best-tip-read-btn type="button"
-										onclick="javascript:location.href='getSpecificTipView.tip?seq=${upvotingArticles.tip_seq}'"
-										class=" btn btn-itso btn-md">읽기</button>
-									<a><i class=" fa mr-2 fa-heart red-text" aria-hidden="true"></i>${upvotingArticles.tip_like_count}</a>
-									<a><i class="fa mr-2 fa-share-alt green-text"
-										aria-hidden="true"></i>82</a> <a><i
-										class="fa mr-2 fa-comment amber-text" aria-hidden="true"></i>82</a>
-									<a><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${upvotingArticles.tip_viewcount}</a>
-								</div>
+							<div>
+								<button id=best-tip-read-btn type="button"
+									onclick="javascript:location.href='getSpecificTipView.tip?seq=${upvotingArticles.tip_seq}'"
+									class=" btn btn-itso btn-md">읽기</button>
 							</div>
 						</div>
-					</c:forEach>
+					</div>
+				</c:forEach>
 
-				</div>
-			</div>
-
-<!-- 	<!-- isUpvoting list --> 
-<!-- 	<div id="isUpvotingList" class="container"> -->
-<!-- 		<h2>주목받고 있는 팁</h2> -->
-<!-- 		<div class="row mb-4"> -->
-
-<!-- 			<div class="card col"></div> -->
-
-<!-- 		</div> -->
-<!-- 	</div> -->
-
-
-	<!-- recent tip list -->
-	<div id="unVotedListWrapper ">
-		<!-- unvotedListWrapper  -->
-		<div class=" row  mb-4">
-
-			<div class="container col ">
-				<div class="" id="beautyTipList">
-					<h2 class="lpadding-40">뷰티</h2>
-					<ul>
-						<li>
-							<table>
-								<!-- for each jstl 적용될 부분 -->
-								<c:forEach items="${beautyTipData}" var="beautyTipData">
-									<tr class="clearfix">
-										<!-- left title -->
-										<td class="float-left"><a class="mr-2"
-											href="getSpecificTipView.tip?seq=${beautyTipData.tip_seq}">${beautyTipData.tip_title}</a>by
-											${beautyTipData.name}</td>
-										<!-- right info -->
-										<td class="float-right"><i
-											class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
-										<td class="float-right"><i class=" fa fa-heart red-text"
-											aria-hidden="true"></i>${beautyTipData.tip_like_count}</td>
-										<td class="float-right"><i class="fa fa-eye"
-											aria-hidden="true"></i>${beautyTipData.tip_viewcount}</td>
-									</tr>
-								</c:forEach>
-								<!-- 적용 끝 -->
-							</table>
-						</li>
-					</ul>
-
-				</div>
-
-
-				<div class="" id="dietTipList">
-					<h2 class="lpadding-40">다이어트</h2>
-					<ul>
-						<li>
-							<table>
-								<!-- for each jstl 적용될 부분 -->
-
-								<c:forEach items="${dietTipData}" var="dietTipData">
-									<tr class="clearfix">
-										<td class="float-left"><a class="mr-2"
-											href="getSpecificTipView.tip?seq=${dietTipData.tip_seq}">${dietTipData.tip_title}</a>by
-											${dietTipData.name}</td>
-
-										<td class="float-right"><i
-											class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
-										<td class="float-right"><i class="fa fa-heart red-text"
-											aria-hidden="true"></i>${dietTipData.tip_like_count}</td>
-										<td class="float-right"><i class="fa fa-eye"
-											aria-hidden="true"></i>${dietTipData.tip_viewcount}</td>
-									</tr>
-								</c:forEach>
-								<!-- 적용 끝 -->
-							</table>
-
-						</li>
-					</ul>
-
-				</div>
-
-			</div>
-
-
-			<div class="col container">
-				<div class=" " id="fashionTipList">
-					<h2 class="lpadding-40">패션</h2>
-					<ul>
-						<li>
-							<table>
-								<!-- for each jstl 적용될 부분 -->
-								<c:forEach items="${fashionTipData}" var="fashionTipData">
-									<tr class="clearfix">
-
-										<td class="float-left"><a class="mr-2"
-											href="getSpecificTipView.tip?seq=${fashionTipData.tip_seq}">${fashionTipData.tip_title}</a>by
-											${fashionTipData.name}</td>
-
-
-										<td class="float-right"><i
-											class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
-										<td class="float-right"><i class="fa fa-heart red-text"
-											aria-hidden="true"></i>${fashionTipData.tip_like_count}</td>
-										<td class="float-right"><i class="fa fa-eye"
-											aria-hidden="true"></i>${fashionTipData.tip_viewcount}</td>
-									</tr>
-								</c:forEach>
-								<!-- 적용 끝 -->
-							</table>
-
-						</li>
-					</ul>
-				</div>
-
-
-				<div class="" id="businessTipList">
-					<h2 class="lpadding-40">직장생활</h2>
-					<ul>
-						<li>
-							<table>
-								<!-- for each jstl 적용될 부분 -->
-								<c:forEach items="${businessTipData}" var="businessTipData">
-									<tr class="clearfix">
-										<td class="float-left"><a class="mr-2"
-											href="getSpecificTipView.tip?seq=${businessTipData.tip_seq}">${businessTipData.tip_title}</a>by
-											${businessTipData.name}</td>
-
-
-										<td class="float-right"><i
-											class="fa fa-comment amber-text" aria-hidden="true"></i>15</td>
-										<td class="float-right"><i class="fa fa-heart red-text"
-											aria-hidden="true"></i>${businessTipData.tip_like_count}</td>
-										<td class="float-right"><i class="fa fa-eye"
-											aria-hidden="true"></i>${businessTipData.tip_viewcount}</td>
-
-									</tr>
-								</c:forEach>
-								<!-- 적용 끝 -->
-							</table>
-
-						</li>
-					</ul>
-				</div>
 			</div>
 		</div>
 
 
-		<div class=container>
+		<!-- recent tip list -->
+		<div id="unVotedListWrapper ">
+			<!-- unvotedListWrapper  -->
+			<div class=" row  mb-4">
 
-			<button class="btn btn-itso"
-				onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
-		
+				<div class="container col ">
+					<div class="" id="beautyTipList">
+						<h2 class="">뷰티</h2>
+						<ul>
+							<li>
+								<table>
+									<!-- for each jstl 적용될 부분 -->
+									<c:forEach items="${beautyTipData}" var="beautyTipData">
+										<tr class="clearfix">
+											<!-- left title -->
+											<td class="float-left"><a class="mr-2"
+												href="getSpecificTipView.tip?seq=${beautyTipData.tip_seq}">${beautyTipData.tip_title}</a>by
+												${beautyTipData.name}</td>
+											<!-- right info -->
+											<td class="float-right"><i
+												class="fa fa-comment amber-text" aria-hidden="true"></i>${beautyTipData.tip_comment_count}</td>
+											<td class="float-right"><i class=" fa fa-heart red-text"
+												aria-hidden="true"></i>${beautyTipData.tip_like_count}</td>
+											<td class="float-right"><i class="fa fa-eye"
+												aria-hidden="true"></i>${beautyTipData.tip_viewcount}</td>
+										</tr>
+									</c:forEach>
+									<!-- 적용 끝 -->
+								</table>
+							</li>
+						</ul>
+
+					</div>
+
+
+					<div class="" id="dietTipList">
+						<h2 class="">다이어트</h2>
+						<ul>
+							<li>
+								<table>
+									<!-- for each jstl 적용될 부분 -->
+
+									<c:forEach items="${dietTipData}" var="dietTipData">
+										<tr class="clearfix">
+											<td class="float-left"><a class="mr-2"
+												href="getSpecificTipView.tip?seq=${dietTipData.tip_seq}">${dietTipData.tip_title}</a>by
+												${dietTipData.name}</td>
+
+											<td class="float-right"><i
+												class="fa fa-comment amber-text" aria-hidden="true"></i>${dietTipData.tip_comment_count}</td>
+											<td class="float-right"><i class="fa fa-heart red-text"
+												aria-hidden="true"></i>${dietTipData.tip_like_count}</td>
+											<td class="float-right"><i class="fa fa-eye"
+												aria-hidden="true"></i>${dietTipData.tip_viewcount}</td>
+										</tr>
+									</c:forEach>
+									<!-- 적용 끝 -->
+								</table>
+
+							</li>
+						</ul>
+
+					</div>
+
+				</div>
+
+
+				<div class="col container">
+					<div class=" " id="fashionTipList">
+						<h2 class="">패션</h2>
+						<ul>
+							<li>
+								<table>
+									<!-- for each jstl 적용될 부분 -->
+									<c:forEach items="${fashionTipData}" var="fashionTipData">
+										<tr class="clearfix">
+
+											<td class="float-left"><a class="mr-2"
+												href="getSpecificTipView.tip?seq=${fashionTipData.tip_seq}">${fashionTipData.tip_title}</a>by
+												${fashionTipData.name}</td>
+
+
+											<td class="float-right"><i
+												class="fa fa-comment amber-text" aria-hidden="true"></i>${fashionTipData.tip_comment_count}</td>
+											<td class="float-right"><i class="fa fa-heart red-text"
+												aria-hidden="true"></i>${fashionTipData.tip_like_count}</td>
+											<td class="float-right"><i class="fa fa-eye"
+												aria-hidden="true"></i>${fashionTipData.tip_viewcount}</td>
+										</tr>
+									</c:forEach>
+									<!-- 적용 끝 -->
+								</table>
+
+							</li>
+						</ul>
+					</div>
+
+
+					<div class="" id="businessTipList">
+						<h2 class="">직장생활</h2>
+						<ul>
+							<li>
+								<table>
+									<!-- for each jstl 적용될 부분 -->
+									<c:forEach items="${businessTipData}" var="businessTipData">
+										<tr class="clearfix">
+											<td class="float-left"><a class="mr-2"
+												href="getSpecificTipView.tip?seq=${businessTipData.tip_seq}">${businessTipData.tip_title}</a>by
+												${businessTipData.name}</td>
+
+
+											<td class="float-right"><i
+												class="fa fa-comment amber-text" aria-hidden="true"></i>${businessTipData.tip_comment_count}</td>
+											<td class="float-right"><i class="fa fa-heart red-text"
+												aria-hidden="true"></i>${businessTipData.tip_like_count}</td>
+											<td class="float-right"><i class="fa fa-eye"
+												aria-hidden="true"></i>${businessTipData.tip_viewcount}</td>
+
+										</tr>
+									</c:forEach>
+									<!-- 적용 끝 -->
+								</table>
+
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+			<div class=container>
+
+				<button class="btn btn-itso"
+					onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
+
+			</div>
+
 		</div>
+
 
 	</div>
 

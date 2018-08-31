@@ -4,6 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="og:site_name" content="ITSO"/>
+<meta property="og:title" content="IS THIS STYLE OK?">
+<meta property="og:image"
+	content="https://image.ibb.co/cvb5k9/itso_12.png">
+<meta property="og:description" content="ITSO MAIN PAGE">
 <title>Insert title here</title>
 <!-- Font Awesome -->
 <link rel="stylesheet"

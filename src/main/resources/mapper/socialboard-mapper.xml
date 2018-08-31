@@ -4,22 +4,25 @@
 <mapper namespace="SocialBoard">
 	<!--최신  -->
 	<select id="showSocialBoardList" resultType="sdto">
-		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq		
+		 select su.*,nvl(sg.count, '0') good_count,nvl(sc.comcount, '0') comment_count from (select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq) su
+        left outer join (select social_seq,count(*) count from social_good group by social_seq) sg on su.social_seq = sg.social_seq
+         left outer join (select social_seq,count(*) comcount from social_comment group by social_seq) sc on su.social_seq = sc.social_seq
 		<if test="age gt 0">
 			<!-- 연령순 -->
-			and age=#{age}
+			and s.age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
-
-			and gender = #{gender}
-			
+			and s.gender = #{gender}
 		</if>		
 		order by social_date desc
 	</select>
 	
 	<select id="showSocialHotBoardList" resultType="sdto">
-		select s.*,sg.count count from social s,(select social_seq,count(*) count from social_good GROUP by social_seq)sg where s.SOCIAL_SEQ = sg.social_seq
+		 select su.*,nvl(sg.count, '0') good_count,nvl(sc.comcount, '0') comment_count 
+		 from (select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq) su
+        left outer join (select social_seq,count(*) count from social_good group by social_seq) sg on su.social_seq = sg.social_seq
+         left outer join (select social_seq,count(*) comcount from social_comment group by social_seq) sc on su.social_seq = sc.social_seq
 		
 			<if test="age gt 0">
 			 	and s.AGE= #{age}
@@ -27,11 +30,11 @@
 			<if test="gender !=null and gender !='g'.toString()">
 				and s.GENDER=#{gender}
 			</if> 
-		ORDER by count desc
+		ORDER by good_count desc
 	</select>
 	
 	<select id="showSocialFollowBoardList" resultType="sdto">
-	select s.*from(select following_seq from follow where USER_SEQ =#{social_seq})f,SOCIAL s where f.following_seq = s.SOCIAL_WRITER
+	select s.*, nvl(sc.count, '0') comment_count, u.name writerName,u.photo user_photo, u.state userState from(select following_seq from follow where USER_SEQ = #{social_seq})f,SOCIAL s, users u where f.following_seq = s.SOCIAL_WRITER and s.social_writer = u.seq
 		<if test="age gt 0">
 			and s.AGE=#{age}
 		</if>
@@ -41,12 +44,48 @@
 		order by s.social_date desc
 	</select>
 	
+		<!--최신  -->
+	<select id="showHashTagBoardList" resultType="sdto" parameterType="map">
+		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u, social_hash_tag sht where s.social_writer = u.seq and s.social_seq = sht.social_seq	and sht.social_hash_tag_contents = #{search}	
+		<if test="pAge gt 0">
+			<!-- 연령순 -->
+			and s.age=#{pAge}
+		</if>
+		<if test="pGender !=null and gender !='g'.toString() ">
+			<!--성별  -->
+			and s.gender = #{pGender}
+		</if>		
+		order by social_date desc
+	</select>
+	
+	<select id="showHashTagHotBoardList" resultType="sdto" parameterType="map">
+		select s.*,sg.count count from social s,(select social_seq,count(*) count from social_good GROUP by social_seq)sg, social_hash_tag sht where s.SOCIAL_SEQ = sg.social_seq and sht.social_hash_tag_contents=#{search} and s.social_seq = sht.social_seq
+			<if test="pAge gt 0">
+			 	and s.AGE= #{pAge}
+			</if>
+			<if test="pGender !=null and gender !='g'.toString()">
+				and s.GENDER=#{pGender}
+			</if> 
+		ORDER by count desc
+	</select>
+	
+	<select id="showHashTagFollowBoardList" resultType="sdto" parameterType="map">
+	select s.*from(select following_seq from follow where USER_SEQ =#{user_seq})f,SOCIAL s, social_hash_tag sht where f.following_seq = s.SOCIAL_WRITER and sht.social_hash_tag_contents=#{search} and s.social_seq = sht.social_seq
+		<if test="pAge gt 0">
+			and s.AGE=#{pAge}
+		</if>
+		<if test="pGender !=null and gender !='g'.toString()">
+			and s.GENDER=#{pGender}
+		</if>
+		order by s.social_date desc
+	</select>
+	
 	<insert id="insertSocialBoard" parameterType="sdto">
 		insert into social values(social_seq.nextval, #{social_title}, #{social_contents}, #{social_writer}, sysdate, #{photo},#{gender},#{age})
 	</insert>
 	
 	<select id="selectSocialBoard" parameterType="int" resultType="sdto">
-		select * from social where social_seq = #{0}
+		select s.*, nvl(sc.count,'0') comment_count from social s, (select social_seq, count(*) count from social_comment group by social_seq) sc where s.social_seq = sc.social_seq(+) and s.social_seq = #{0}
 	</select>
 	
 	<update id="updateSocialBoard" parameterType="sdto">
@@ -62,7 +101,7 @@
 	</select>
 	
 	<select id="getMySocialList" parameterType ="dto" resultType="sdto">
-		select s.*, u.name social_writerName from social s, users u where s.social_writer = u.seq and s.social_writer=#{seq} order by social_date desc
+		select s.*, u.name writerName, u.photo user_photo, u.state userState, nvl(sc.comcount,'0') comment_count from social s, users u, (select social_seq, count(*) comcount from social_comment group by social_seq)sc where s.social_writer = u.seq and s.social_seq = sc.social_seq(+) and s.social_writer=#{seq} order by social_date desc
 	</select>
 	
 	<select id="getSocialBoardcurrval" resultType="int">
@@ -89,5 +128,7 @@
 	<select id="getMyGoodSocialList" resultType="sdto">
 		select social_seq from social_good where user_seq = #{seq}
 	</select>
-	
+	<select id="getMyGoodSocialArticleList" resultType="sdto">
+		select s.*, u.photo user_photo, u.state userState, u.name writerName, nvl(sc.comcount,'0') comment_count, nvl(sg.goodcount,'0') good_count from social s, users u, (select social_seq, count(*) comcount from social_comment group by social_seq)sc, (select social_seq, count(*) goodcount from social_good group by social_seq)sg where s.social_writer = u.seq and s.social_seq = sc.social_seq(+) and s.social_seq = sg.social_seq(+) and s.social_seq in (select social_seq from social_good where user_seq=#{seq}) order by 5 desc
+	</select>
 </mapper>

@@ -39,4 +39,7 @@ public interface ITipDAO {
 
 	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser);
 
+	public int deleteTipComment(int seq);
+
+	int tipModifyProc(TipDTO dto);
 }

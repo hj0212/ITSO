@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="getCollectionSocialList" resultType="sdto">
-		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, s.social_date,  s.photo, s.gender, s.age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, s.social_date,  s.photo, s.gender, s.age, u.name writerName, u.state userState from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
 	</select>
 	
 	<select id="getCollectionData" resultType="CollectionDTO">
@@ -30,8 +30,16 @@
 		select * from collection_content where social_seq = #{social_seq} and collection_seq = #{collection_seq}
 	</select>
 	
+	<select id="getCollectionSeq" resultType="CollectionDTO">
+		select * from collection where collection_title = #{collection_title} and collection_contents = #{collection_contents} and collection_writer = #{collection_writer}
+	</select>
+	
+	<select id="getCollectionInfo" resultType="CollectionDTO">
+		select c.*, cc.count, u.name writerName, u.photo user_photo, u.state userState from collection c, users u, (select collection_seq, count(*) count from collection_content group by collection_seq) cc where c.collection_seq = cc.collection_seq(+) and u.seq = c.collection_writer and c.collection_seq = #{collection_seq}
+	</select>
+	
 	<insert id="insertCollection" parameterType="CollectionDTO">
-		insert into collection values (collection_seq.nextval, #{collection_title}, #{collection_contents}, #{writer})
+		insert into collection values (collection_seq.nextval, #{collection_title}, #{collection_contents}, #{collection_writer})
 	</insert>
 	
 	<delete id="deleteCollection">

@@ -14,6 +14,12 @@ public class FollowDTO {
 		this.user_seq = user_seq;
 		this.following_seq = following_seq;
 	}
+	
+	public FollowDTO(int user_seq, int following_seq) {
+		super();
+		this.user_seq = user_seq;
+		this.following_seq = following_seq;
+	}
 	public int getFollow_seq() {
 		return follow_seq;
 	}

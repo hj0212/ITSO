@@ -6,9 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="jquery.easypin.js"></script>
     <title>Document</title>
     <style>
         @font-face {
@@ -69,7 +66,7 @@
     </style>
 </head>
 <body>
-    <div>네비게이션으로 넣을곳!</div>
+	<%@include file="navi.jsp"%>
     <div class="container">
         <form id="submitInfo" method="post" action="modifySocialProc.go?seq=${sbdto.social_seq}">
             <div class="row" name="top">
@@ -151,9 +148,9 @@
 					<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
 				</div>
 				<div class="required">
-					<input type="text" class="form-control" name="brand" placeholder="브랜드" />
+					<input type="text" class="form-control" name="brand" placeholder="상품명" />
 				</div>
-				<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
+				<input type="text" class="form-control" name="store" placeholder="브랜드" /> 
 				<input type="text" class="form-control" name="url" placeholder="URL" />
 				<select name="category" id="category" class="form-control">
 					<option value="not" disabled selected>카테고리 선택</option>
@@ -173,6 +170,9 @@
 			<div style="width: 100%; text-align: center;">{[name]}</div>
 		</div>
     </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
   	<script>	
 		var $j = jQuery.noConflict();
 	    var $instance = $j('.mpin').easypin({
