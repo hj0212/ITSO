@@ -30,5 +30,8 @@ public	List<AdminPageDTO> getAllAnalysisData();
 
 	public int blockUserReleasing(int userSeq);
 
+	public int reportProc(AdminPageDTO dto);
+
+
 
 }
