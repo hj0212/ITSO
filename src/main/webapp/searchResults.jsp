@@ -304,6 +304,12 @@
 		.user-fans, .user-looks {
 			font-size: 18px;
 		}
+		
+		.tip-image img{
+			width : 60px;
+			height: 60px;
+			border-radius: 50%;
+		}
 	</style>
 	<script>
 		$(document).ready(function() {
@@ -458,7 +464,24 @@
 									<c:when test="${!empty tipList}">
 										<c:forEach var="tipList" items="${tipList}">
 											<tr>
-												<td>${tipList.photo}</td>
+												<td class="tip-image">
+													<img src="resources/images/${tipList.photo}" alt="" onerror="this.src='resources/images/background.jpg'" />
+												</td>
+												<td class="user-name">
+													<a href="userpage.go?seq=${tipList.tip_writer}">${tipList.name}</a>
+												</td>
+												<td class="tip-info">
+													<a href="getSpecificTipView.tip?seq=${tipList.tip_seq}">[${tipList.category}]${tipList.tip_title}</a>
+												</td>
+												<td class="tip-like" style="text-align : left;">
+													<i class=" fa fa-heart red-text"></i>${tipList.tip_like_count}
+												</td>
+												<td class="view-count" style="text-align : left">
+													<i class="fa fa-eye"></i>${tipList.tip_viewcount}
+												</td>
+												<td>
+													${tipList.tip_date}
+												</td>
 											</tr>
 										</c:forEach>
 									</c:when>
