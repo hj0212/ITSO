@@ -502,9 +502,9 @@ table .profilearea {
 									class="fa fa-plus" /></i> 팔로우</span>
 							</button>
 						</c:if>
-						<input type="hidden" value="${ferlist.seq }" id="seq" />
+						<input type="hidden" value="${ferlist.seq}" id="message-seq" />
 						<button id="messagebtn" class="btn btn-itso btn-sm">
-							<i class="fa fa-envelope-o" aria-hidden="true"></i> 메시지 보내기
+							<i class="fa fa-envelope-o" aria-hidden="true" ></i> 메시지 보내기
 						</button>
 					</c:otherwise>
 				</c:choose>
@@ -782,7 +782,7 @@ table .profilearea {
 
 																	</c:otherwise>
 																</c:choose> <input type="hidden" value="${list.social_writer }"
-																id="seq" /></li>
+																 /></li>
 															<li>
 																<!--Text-->
 																<p class="mb-0">
@@ -1346,6 +1346,30 @@ table .profilearea {
 			console.log("닫힘");
 			$(".collectionItem").removeClass("active");
 		});
+		
+		$("#messagebtn").click(function(){
+			var seq	="${seq}";
+			alert(seq);
+			var message=""
+			$.ajax({
+			    url :"messageList.ajax",
+			    type: "post",
+			    data: {
+			    	seq :seq
+			    },
+			    success : function(data){
+			    	
+			    }
+				
+				
+			});
+			
+	
+			$("#messagebtn").attr("data-toggle","modal");
+			$("#messagebtn").attr("data-target","#centralModalSuccess");
+		});
+	
+		
 	</script>
 </body>
 <!-- Bootstrap tooltips -->

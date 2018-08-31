@@ -146,23 +146,7 @@ nav {
 	}
 }
 
-@media ( max-width :575px) {
-	.modal-info {
-		border-radius: 5px;
-		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-		color: #27303d;
-		min-width: 300px;
-		top: 200px;
-		right: auto;
-		right: 100px;
-		transform: translate(-50%, 0);
-		position: absolute;
-		box-sizing: border-box;
-		display: none;
-		background-color: #fff;
-		z-index: 1000;
-	}
-}
+
 
 @media ( min-width : 576px) {
 	.notification-info {
@@ -182,23 +166,7 @@ nav {
 	}
 }
 
-@media ( min-width : 576px) {
-	.modal-info {
-		border-radius: 5px;
-		box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-		color: #27303d;
-		min-width: 300px;
-		top: 61px;
-		right: 0;
-		left: auto;
-		transform: translate(-50%, 0);
-		position: absolute;
-		box-sizing: border-box;
-		display: none;
-		background-color: #fff;
-		z-index: 1000;
-	}
-}
+
 
 .read-n:hover {
 	background: #e9e9e9;
@@ -279,6 +247,9 @@ nav {
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 3px 2px 3px 3px rgba(0, 0, 0, 0.07);
+}
+.modal-list:hover{
+background-color: #f4f4f4;
 }
 </style>
 
@@ -434,19 +405,6 @@ nav {
 
 
 
-<div class="modal-info" id="modal-info" style="display: none;">
-	<div class="modal-heading">
-		<div class="heading-left">
-			<span>알림</span>
-		</div>
-		<div class="heading-right">
-			<a href="#" class="notification-link" data-toggle="modal"
-				data-target="#modalPoll">모든 채팅리스트 열기</a>
-		</div>
-	</div>
-	<div class="modal-list" id="modal_list"></div>
-</div>
-
 <!-- Modal: modalPoll -->
 <div class="modal fade right" id="modalPoll" tabindex="-1" role="dialog"
 	aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -468,10 +426,8 @@ nav {
 			<!--Body-->
 			<div class="modal-body" style="overflow: auto;">
 				<ul class="list-unstyled friend-list w-100 p-2">
-
-					<li class="w-100 p-2 h-25 d-inline-block"><a href="#"
-						class="d-flex justify-content-between h-25 d-inline-block"
-						data-toggle="modal" data-target="#centralModalSuccess"> <img
+					<li class="w-100 p-2 h-25 d-inline-block modal-list" ><a href="#"
+						class="d-flex justify-content-between h-25 d-inline-block"> <img
 							src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1"
 							alt="avatar"
 							class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 "
@@ -484,18 +440,15 @@ nav {
 								<p class="text-smaller text-muted mb-0">5 min ago</p>
 								<span class="text-muted float-right"><i
 									class="fa fa-mail-reply" aria-hidden="true"></i></span>
-							</div>
+							</div>		
 					</a></li>
-
-
 				</ul>
 			</div>
-
 		</div>
 		<!-- Grid column -->
 	</div>
 </div>
-</div>
+
 
 <!-- Modal: modalPoll -->
 
@@ -523,7 +476,7 @@ nav {
 			</div>
 
 			<!--Body-->
-			<div class="modal-body"
+			<div class="modal-body message-list"
 				style="overflow: auto; padding-top: 10px; padding-bottom: 10px;"id="modal-body">
 
 				<div class="msg col-md-6 ml-auto"
@@ -659,17 +612,18 @@ nav {
 	};
 
 	$("#tooltip2").click(function() {
-		var style = $("#modal-info").attr("style");
-		$('#modal-body').scrollTop($('#modal-body').prop('scrollHeight'));
+		/* data-toggle="modal"
+			data-target="#modalPoll" */	
+			$("#tooltip2").attr("data-toggle",'modal');
+			$("#tooltip2").attr("data-target",'#modalPoll');
 
-		if (style == "display:none;") {
-			console.log(style);
-			$("#modal-info").attr("style", "display:block;");
-			$("#nofification-info").attr("style", "display:none;")
-		} else {
-			$("#modal-info").attr("style", "display:none;");
-		}
-
+	});
+	
+	$(".modal-list").on("click",function(){
+	/* 	data-toggle="modal" data-target="#centralModalSuccess" */
+		$(".modal-list").attr("data-toggle","modal");
+		$(".modal-list").attr("data-target","#centralModalSuccess");
+		
 	});
 
 	function toggleTooltip() {

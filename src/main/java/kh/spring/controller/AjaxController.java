@@ -47,6 +47,8 @@ public class AjaxController {
 
 
 
+	
+	
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
 
@@ -71,6 +73,8 @@ public class AjaxController {
 		}
 		return msg;
 	}
+	
+	
 
 	@RequestMapping("/notificaiton.ajax")
 	public @ResponseBody String notifiNavi(int user_seq,HttpSession session,NotificationDTO dto,HttpServletResponse response){
@@ -95,6 +99,16 @@ public class AjaxController {
 
 
 	}
+	
+	@RequestMapping("/messageList.ajax")
+	public @ResponseBody String messageList(int seq,HttpServletResponse response,HttpSession session) {
+		int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		
+		
+		
+		return null;
+	}
+	
 
 
 	@RequestMapping("/mainHeart.ajax")
@@ -236,6 +250,10 @@ public class AjaxController {
 		}
 		return resultmsg;
 	}
+	
+
+
+	
 
 	@RequestMapping("/fbLogin.ajax")
 	public @ResponseBody String fbLogin(String data, HttpSession session) {
