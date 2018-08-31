@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +16,6 @@ import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
-import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
 
 @Controller
@@ -40,8 +37,6 @@ public class MemberController {
 			MemberDTO user = result.get(0);
 			session.setAttribute("user", user);
 
-
-			System.out.println("result.get(0) : " + result.get(0).getEmail() + " : " + result.get(0).getPw());
 			String userId = result.get(0).getEmail();
 			String userPw = result.get(0).getPw();
 
@@ -52,14 +47,12 @@ public class MemberController {
 				// usual users account redirect syntax
 				mav.addObject("result", result.size());
 				mav.setViewName("loginProc.jsp");
-				System.out.println(result.size());
 			}
-			//			log.debug("로그인");
+			//	log.debug("로그인");
 		} else {
 			mav.setViewName("loginProc.jsp");
 		}
 		mav.addObject("result",result.size());
-		System.out.println(result.size());
 		mav.setViewName("loginProc.jsp");
 		return mav;
 
