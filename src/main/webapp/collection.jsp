@@ -285,6 +285,7 @@ section .follow-action .follow-button {
 												</div>
 												<div>${slist.userState }</div>
 											</div>
+											<script>console.log("${empty goodList }")</script>
 											<c:choose>
 												<c:when test="${empty goodList }">
 													<i class="fa fa-heart-o red-text heart " aria-hidden="true"
@@ -294,10 +295,11 @@ section .follow-action .follow-button {
 												</c:when>
 												<c:otherwise>
 													<c:forEach items="${goodList }" var="good" varStatus="gstatus">
-
+														<script>console.log("${good.social_seq == list.social_seq }")</script>
 														<c:if test="${loop_flag == false }">
 															<c:choose>
 																<c:when test="${good.social_seq == list.social_seq }">
+																<script>console.log("여기: 같음")</script>	
 																	<i class="fa fa-heart red-text heart"
 																		aria-hidden="true"
 																		style="float: left; font-size: 25px;"
@@ -307,6 +309,7 @@ section .follow-action .follow-button {
 																	<c:set var="loop_flag" value="true" />
 																</c:when>
 																<c:otherwise>
+																	<script>console.log("여기: ${gstatus.last }")</script>
 																	<c:if test="${gstatus.last }">
 																		<i class="fa fa-heart-o red-text heart"
 																			aria-hidden="true"
