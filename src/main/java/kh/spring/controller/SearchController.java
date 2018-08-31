@@ -21,13 +21,10 @@ public class SearchController {
 	public ModelAndView searchWord(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		String word = request.getParameter("word");
-		System.out.println(word);
+		List<SearchedUserInfoDTO> userList = null;
 		
-		List<SearchedUserInfoDTO> userList = this.service.getSearchedUserList(word);
-		
-		for(SearchedUserInfoDTO dto : userList) {
-			System.out.println(dto.getName());
-			System.out.println(dto.getPhoto());
+		if(!word.trim().equals("")) {
+			userList = this.service.getSearchedUserList(word);
 		}
 		
 		mav.addObject("userList", userList);

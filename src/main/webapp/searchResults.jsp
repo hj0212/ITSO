@@ -405,7 +405,9 @@
 			<section class="secondSection col-md-12 mt-3">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link active" id="user-tab" data-toggle="tab" href="#userdiv" role="tab" aria-controls="userdiv" aria-selected="true">사용자 (${userList.size()})</a>
+						<a class="nav-link active" id="user-tab" data-toggle="tab" href="#userdiv" role="tab" aria-controls="userdiv" aria-selected="true">
+							사용자 (<c:choose><c:when test="${empty userList}">0</c:when><c:otherwise>${userList.size()}</c:otherwise></c:choose>)
+						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" id="tag-tab" data-toggle="tab" href="#tagdiv" role="tab" aria-controls="tagdiv" aria-selected="false">태그</a>

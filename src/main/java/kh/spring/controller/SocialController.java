@@ -886,11 +886,7 @@ public class SocialController {
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
-			
-			for(SocialBoardDTO abc : result) {
-				System.out.println(abc.getSocial_contents());
-			}
-			
+			result = makeHashTag(result);
 			mav.addObject("search", search);
 			mav.addObject("feed",feed);
 			mav.addObject("goodCount",goodCount);
