@@ -54,8 +54,9 @@ public class StylingController {
 	}
 	@Transactional
 	@RequestMapping("/readStylingVote.style")
-	public ModelAndView goStylingBoard(HttpSession session, @RequestParam(value="styling_vote_seq") int styling_vote_seq) {
+	public ModelAndView goStylingBoard(HttpSession session, @RequestParam(value="styling_vote_seq") int styling_vote_seq, @RequestParam(value="state")String state) {
 		ModelAndView mav = new ModelAndView();
+		System.out.println(state);
 		try {	
 			/*int result =styservice.updateStylingViewcount(styling_vote_seq);
 			System.out.println(result);
@@ -66,25 +67,43 @@ public class StylingController {
 			System.out.println(svitemdtos.size()+"개의 voteItemdto 생성완료");
 			
 			List<StylingVoteResultDTO> resultdtos =styservice.getStylingVoteResult(styling_vote_seq);
+			System.out.println(resultdtos.size()+"개의 투표결과가 검색됨");
 			if(resultdtos.size()==0) {
-				System.out.println(resultdtos.size()+"개의 투표결과가 컨트롤러 는 무사히..지나감");
+				System.out.println("검색결과가 0개라서 임의의 dto생성 시작");
 				for(int i=0; i<svitemdtos.size();i++) {
-					StylingVoteResultDTO dto = new StylingVoteResultDTO();
-					dto.setEachrate((double)0);			
+					StylingVoteResultDTO dto = new StylingVoteResultDTO(styling_vote_seq,0,0,(double)0,svitemdtos.get(i).getStyling_vote_item_seq());	
 					resultdtos.add(dto);
+					System.out.println(i+"번째 voteresultdto 생성완료");
 				}
 			}else if(resultdtos.size()<svitemdtos.size()) {
-				for(int i=0; i< svitemdtos.size()-resultdtos.size();i++) {}
-				StylingVoteResultDTO dto = new StylingVoteResultDTO();
-				dto.setEachrate((double)0);			
-				resultdtos.add(dto);
-			}
-			
+				System.out.println("검색결과가 아이템개수보다 작아서 임의의 dto생성 시작");
+				int loopnum = svitemdtos.size()-resultdtos.size();
+				System.out.println(loopnum+":loopnum");
+				List<Integer> empdtos = new ArrayList<>();
+				
+				for(int i=0; i<svitemdtos.size(); i++) {
+					int stopflag = 0;
+					int tmpseq =svitemdtos.get(i).getStyling_vote_item_seq();
+					
+					for(int j =0; j<resultdtos.size(); j++) {
+						int compseq = resultdtos.get(j).getVote_value();
+						if(compseq == tmpseq) {							
+						stopflag =1;
+						}else {} 		
+					}
+					
+					if(stopflag == 0) {
+						StylingVoteResultDTO dto = new StylingVoteResultDTO(styling_vote_seq,0,0,(double)0,tmpseq);					
+						resultdtos.add(dto);	
+						System.out.println(i+"번째 임의의dto 생성");
+					}	
+				}
+			}		
 			int seq=((MemberDTO)session.getAttribute("user")).getSeq();		
 			int didvote = styservice.selectDidVote(seq,styling_vote_seq);		
 			System.out.println(styling_vote_seq +"번글 투표했냐"+didvote);
 			/*List<StylingVoteResultDTO>styservice.selectVoteResult(styling_vote_seq);*/
-
+			mav.addObject("votestate",state);
 			mav.addObject("didVote",didvote);
 			mav.addObject("voteitems",svitemdtos);
 			mav.addObject("votedto",votedto);

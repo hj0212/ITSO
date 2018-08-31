@@ -163,7 +163,7 @@ input[type="file"] {
 											<span class="badge cyan ml-2">투표 진행중</span>
 											</c:when>				
 											</c:choose>
-									</p>
+									</p> 
 									
 									<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 									<button type="button" class="btn btn-light-blue btn-md gobtn">투표
@@ -252,6 +252,13 @@ input[type="file"] {
 
 		$('.gobtn').click(function() {
 			var seq = $(this).next('input').val();
+			var state = "";
+			console.log($(this).prev('p').find('span').text());
+			if($(this).prev('p').find('span').text() =='투표 진행중' ){
+				state = "ing";
+			}else if($(this).prev('p').find('span').text() =='투표 종료' ){
+				state = "done";
+			}
 			$.ajax({
 				method : "POST",
 				url : "updateStylingViewcount.ajax",			
@@ -265,7 +272,7 @@ input[type="file"] {
 					console.log("AJAX 조회수 up");
 				}
 			});
-			location.href = "readStylingVote.style?styling_vote_seq=" + seq;
+			location.href = "readStylingVote.style?styling_vote_seq=" + seq+"&state="+state;
 		})
 		
 		$(function() {

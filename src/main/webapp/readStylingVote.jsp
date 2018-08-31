@@ -121,11 +121,12 @@ font-size:15px;
 			</script>
 			<script>
 				console.log("투표여부:${didVote}");
+				console.log("종료여부:${votestate}")
 			</script>
 
 			<c:if test="${sessionScope.user.seq eq votedto.styling_writer}">
 			<c:choose>
-			<c:when test="${votedto.voter eq 0}">
+			<c:when test="${votedto.voter eq 0 and votestate eq 'ing'}">
 				<button class="btn btn-indigo btn-md float-right" type="button"
 					id="modibtn">글 수정</button>
 				<button class="btn btn-indigo btn-md float-right" type="button"
@@ -135,18 +136,29 @@ font-size:15px;
 				<button class="btn btn-indigo btn-md float-right" type="button"
 					id="delbtn">글 삭제</button>
 			</c:when>
+			<c:when test="${votedto.voter eq 0 and votestate eq 'done'}">			
+				<button class="btn btn-indigo btn-md float-right" type="button"
+					id="delbtn">글 삭제</button>
+			</c:when>
 			</c:choose>
 				
 			</c:if>
-
 			<c:choose>
-				<c:when test="${didVote eq 0}">
+				<c:when test="${didVote eq 0 && votestate eq 'ing'}">
 					<button class="btn btn-indigo btn-md float-right" type="button"
 						id="votebtn">투표하기</button>
 				</c:when>
-				<c:when test="${didVote >= 1}">
+				<c:when test="${didVote >= 1 && votestate eq 'ing'}">
 					<button class="btn btn-indigo btn-md float-right" type="button"
 						id="votebtn" disabled>투표완료</button>
+				</c:when>
+				<c:when test="${didVote eq 0 && votestate eq 'done'}">
+					<button class="btn btn-indigo btn-md float-right" type="button"
+						id="votebtn" disabled>투표종료</button>
+				</c:when>
+				<c:when test="${didVote >= 1 && votestate eq 'done'}">
+					<button class="btn btn-indigo btn-md float-right" type="button"
+						id="votebtn" disabled>투표종료</button>
 				</c:when>
 			</c:choose>		
 		<input type="hidden" id="sequenceId"
@@ -189,13 +201,14 @@ font-size:15px;
 								<th scope="col">
 									<div class="custom-control custom-radio"
 										id="test${status.index}">
+										 ${svitemdto.styling_vote_item_seq}
 										<input type="radio" class="custom-control-input"
 											id="defaultGroupExample${status.index}"
 											name="styling_votesel"
 											value="${svitemdto.styling_vote_item_seq}"> <span
 											class="custom-control" for="test${status.index}"> </span> <label
 											class="custom-control-label"
-											for="defaultGroupExample${status.index}"> </label>
+											for="defaultGroupExample${status.index}"></label>
 									</div>
 								</th>
 								<td>
@@ -217,13 +230,26 @@ font-size:15px;
 										</div>
 									</div>
 								</td>
-								<td class="text-center">
-								
-									<div class="progress">
-										<div class="progress-bar" style="width:${voteresults[status.index].eachrate}%" role="progressbar" aria-valuenow="0"
-											aria-valuemin="0" aria-valuemax="100"></div>
-									</div>							
-									<a>${voteresults[status.index].eachrate} </a> <br>
+								<td class="text-center">									
+										<c:choose>
+										<c:when test="${not empty voteresults}">								
+											<c:forEach var="item" items="${voteresults}">
+												<c:if test="${svitemdto.styling_vote_item_seq eq item.vote_value}">
+												<div class="progress">
+													<div class="progress-bar" style="width:${item.eachrate}%" role="progressbar">
+													</div>
+												</div>
+												<a class="text-muted">${item.eachcount}명 (${item.eachrate}%)</a>
+												</c:if>
+											</c:forEach>
+										</c:when>
+										<%--   <c:otherwise>
+										<div class="progress">
+											<div class="progress-bar" style="width:0%" role="progressbar"></div>
+										</div>
+										<a class="text-muted">0명 (0%)</a>
+										</c:otherwise>	 	 --%>							
+										</c:choose>	 															
 								</td>
 							</tr>
 						</c:forEach>
