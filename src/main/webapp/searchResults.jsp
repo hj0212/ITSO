@@ -648,7 +648,10 @@ a#MOVE_TOP_BTN {
 				</a></li>
 				<li class="nav-item"><a class="nav-link" id="tag-tab"
 					data-toggle="tab" href="#tagdiv" role="tab" aria-controls="tagdiv"
-					aria-selected="false">태그</a></li>
+					aria-selected="false">태그(<c:choose>
+							<c:when test="${empty socialList}">0</c:when>
+							<c:otherwise>${socialList.size()}</c:otherwise>
+						</c:choose>)</a></li>
 				<li class="nav-item"><a class="nav-link" id="tip-tab"
 					data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv"
 					aria-selected="false"> 팁 게시글(<c:choose>
