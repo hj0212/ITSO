@@ -932,7 +932,6 @@ public class SocialController {
 			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
 
 			contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?search="+"$2'>"+"$1"+"</a>");
-			System.out.println("여기-------------------!!!!!!!!!!!!!!!!!"+contents);
 			dto.setSocial_contents(contents);
 		}
 		return list;

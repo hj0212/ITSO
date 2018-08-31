@@ -389,7 +389,7 @@ a#MOVE_TOP_BTN {
 
 							<div class="gridPhoto">
 
-								<a href="#"> <!-- <img src="resources/images/background.jpg"
+								<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
 									src="upload/social/${list.photo}" class="img-fluid z-depth-5"
 									alt="Responsive image">
@@ -397,19 +397,21 @@ a#MOVE_TOP_BTN {
 								</a>
 								<div class="photoContainer">
 									<div class="photoContainerHover z-depth-2">
-										<h3 class="photoContainerHoverTitle"><a href="readSocial.go?seq=${list.social_seq}">${list.social_title}</a></h3>
-										<p class="photoContainerHoverWriter">by <a href="userpage.go?seq=${list.social_writer }">${list.writerName}</a></p>
-										<a href="readSocial.go?seq=${list.social_seq}">
-											<img src="upload/social/${list.photo}"
-												class="img-fluid z-depth-2" alt="Responsive image">
-										</a>
+										<input type="hidden" class="read" value="readSocial.go?seq=${list.social_seq}" /> 
+										<input type="hidden" class="user" value="userpage.go?seq=${list.social_writer }" />
+										<h3 class="photoContainerHoverTitle title">${list.social_title}</h3>
+										<p class="photoContainerHoverWriter writer">by ${list.writerName}</p>
+										<img src="upload/social/${list.photo}"
+											class="img-fluid z-depth-2 image" alt="Responsive image">
 										<div class="hashtagarea mt-1" style="margin-left: 5px;">
-											<span onclick="hashtag()">${list.social_contents}</span>
+											<span class="contents">${list.social_contents}</span>
 										</div>
 										<c:if test="${!empty sessionScope.user }">
 											<div class="btnarea " style="display: block; height: 31px;">
-												<div class="goodarea" style="margin-top: 3px;margin-left: 5px; float: left;">
-													<input type="hidden" class="writerseq" value="${list.social_writer }"/>
+												<div class="goodarea"
+													style="margin-top: 3px; margin-left: 5px; float: left;">
+													<input type="hidden" class="writerseq"
+														value="${list.social_writer }" />
 													<c:set var="loop_flag" value="false" />
 													<c:choose>
 														<c:when test="${empty goodList }">
@@ -460,10 +462,11 @@ a#MOVE_TOP_BTN {
 													data-target="#saveModal">
 													컬렉션에 저장 <i class="fa fa-upload"></i>
 												</button>
-												<input type="hidden" class="socialseq" value="${list.social_seq }" />
+												<input type="hidden" class="socialseq"
+													value="${list.social_seq }" />
 										</c:if>
 									</div>
-									
+
 								</div>
 							</div>
 			</div>
@@ -623,32 +626,47 @@ a#MOVE_TOP_BTN {
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 <script>
-$(".heart").click(function() {
-	var heartVal = $(this).attr("class");
-	if (heartVal == "fa fa-heart red-text heart") {
-		$(this).attr("class", "fa fa-heart-o red-text heart");
-	} else {
-		$(this).attr("class", "fa fa-heart red-text heart");
-	}
-});
-$(".heart").on('click', function() {
-	var seq = $(this).attr("value");
-	var writer	= $(".writerseq").val();
-	var font = $(this).children('font');
-	console.log("숫자: " + $(this).children('font').html());
-	console.log(seq);
-	$.ajax({
-		url : "mainHeart.ajax",
-		type : "post",
-		data : {
-			social_seq : seq , 
-			social_writer :writer
-		},
-		success : function(data) {
-			console.log("들어옴" + data), font.html(data)
+	
+	$(".photoContainerHover").on("click", ".image, .title, .contents", 
+	function readSocial() {
+		var cursor = $(this);
+		var src = cursor.siblings(".read").val();
+		location.href = src;
+	});
+	
+	$(".photoContainerHover").on("click", ".writer", 
+	function userpage() {
+		var cursor = $(this);
+		var src = cursor.siblings(".user").val();
+		location.href = src;
+	});
+	
+	$(".heart").click(function() {
+		var heartVal = $(this).attr("class");
+		if (heartVal == "fa fa-heart red-text heart") {
+			$(this).attr("class", "fa fa-heart-o red-text heart");
+		} else {
+			$(this).attr("class", "fa fa-heart red-text heart");
 		}
 	});
-});
+	$(".heart").on('click', function() {
+		var seq = $(this).attr("value");
+		var writer = $(".writerseq").val();
+		var font = $(this).children('font');
+		console.log("숫자: " + $(this).children('font').html());
+		console.log(seq);
+		$.ajax({
+			url : "mainHeart.ajax",
+			type : "post",
+			data : {
+				social_seq : seq,
+				social_writer : writer
+			},
+			success : function(data) {
+				console.log("들어옴" + data), font.html(data)
+			}
+		});
+	});
 
 	$(function() {
 		$(window).scroll(function() {
