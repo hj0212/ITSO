@@ -7,12 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
     <style>
         @font-face {
 			font-family: 'NanumbarunpenR';
@@ -155,9 +149,9 @@
 					<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
 				</div>
 				<div class="required">
-					<input type="text" class="form-control" name="brand" placeholder="브랜드" />
+					<input type="text" class="form-control" name="brand" placeholder="상품명" />
 				</div>
-				<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
+				<input type="text" class="form-control" name="store" placeholder="브랜드" /> 
 				<input type="text" class="form-control" name="url" placeholder="URL" />
 				<select name="category" id="category" class="form-control">
 					<option value="not" disabled selected>카테고리 선택</option>
@@ -257,11 +251,17 @@
 		            setTimeout(function(){
 		            	window.location = window.location + '#loaded';
 			            window.location.reload();
-		            },1000);
+		            },1500);
 		        }
 	        }
 	    }
 	</script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <!-- JQuery -->
