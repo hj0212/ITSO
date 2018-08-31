@@ -56,27 +56,18 @@ public class TipController {
 	}
 
 	@RequestMapping("tipBoardMainPage.tip")
-	public ModelAndView tipBoardMainPageWithAllData() {
+	public ModelAndView tipBoardMainPageWithAllData(HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
-		List<TipDTO> beautyTipData = service.getBeautyTipData();
-		List<TipDTO> dietTipData = service.getDietTipData();
-		List<TipDTO> fashionTipData = service.getFashionTipData();
-		List<TipDTO> businessTipData = service.getBusinessTipData();
-		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
-
-		if (beautyTipData != null) {
-			System.out.println(beautyTipData.toString());
-
-		} else {
-			return null;
+		String category = null;
+		List<TipDTO> tipBoardList = service.getTipBoardList(category);
+		
+		for(TipDTO dto : tipBoardList) {
+			System.out.println(dto.getName());
 		}
 
-		mav.addObject("beautyTipData", beautyTipData);
-		mav.addObject("dietTipData", dietTipData);
-		mav.addObject("fashionTipData", fashionTipData);
-		mav.addObject("businessTipData", businessTipData);
+		mav.addObject("tipBoardList", tipBoardList);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;

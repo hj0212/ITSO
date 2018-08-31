@@ -125,4 +125,9 @@ public class TipDAOImpl implements ITipDAO {
 	public List<SearchedTipDTO> getSearchedTipList(String word) {
 		return template.selectList("TipBoard.searchedTipBoard", word);
 	}
+
+	@Override
+	public List<TipDTO> getTipBoardList(String category) {
+		return template.selectList("TipBoard.getTipBoardList",category);
+	}
 }

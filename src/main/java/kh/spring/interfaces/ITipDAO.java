@@ -45,4 +45,5 @@ public interface ITipDAO {
 	int tipModifyProc(TipDTO dto);
 	
 	public List<SearchedTipDTO> getSearchedTipList(String word);
+	public List<TipDTO> getTipBoardList(String category);
 }

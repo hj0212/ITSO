@@ -112,4 +112,9 @@ public class TipServiceImpl implements ITipService {
 	public List<SearchedTipDTO> getSearchedTipList(String word) {
 		return this.dao.getSearchedTipList(word);
 	}
+
+	@Override
+	public List<TipDTO> getTipBoardList(String category) {
+		return this.dao.getTipBoardList(category);
+	}
 }
