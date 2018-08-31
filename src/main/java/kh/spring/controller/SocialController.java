@@ -195,7 +195,6 @@ public class SocialController {
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
-			result = makeHashTag(result);
 			mav.addObject("feed",feed);
 			mav.addObject("goodCount",goodCount);
 			mav.addObject("heart",ggdto);
@@ -204,22 +203,27 @@ public class SocialController {
 			mav.addObject("pGender",pGender);
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
-			mav.addObject("socialList",result);
+			
+			
 			try {
 				main = request.getParameter("main");
+				
 				if(main.equals("full")) {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
 					mav.setViewName("main.jsp");
 				}else if(main.equals("thumbnail")) {
+					mav.addObject("socialList",result);
 					mav.setViewName("main3.jsp");
-				}else {
-					mav.setViewName("main.jsp");
 				}
-
+				
 
 			}catch(Exception e4) {
+				result = makeHashTag(result);
+				mav.addObject("socialList",result);
 				mav.setViewName("main.jsp");
 			}
-
+			
 		}
 		return mav;
 	}
