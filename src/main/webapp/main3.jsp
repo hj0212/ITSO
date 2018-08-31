@@ -576,7 +576,7 @@ a#MOVE_TOP_BTN {
 	let hypeBtn2 = document.getElementById("hypeBtn2");
 
 	// HYPE버튼에 마우스 대면 옆에쪽 버튼에 +1 시키기
-	function hypeOn() {
+	function hypeOn() { 
 		hypeBtn2.innerHTML = "+1";
 	}
 	//기본디폴트설정

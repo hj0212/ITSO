@@ -298,6 +298,7 @@ button.dropdown-toggle {
 	text-align:center;
 	width:150px !important;
 	height:50px !important;
+	background-image:linear-gradient (90deg, #ea4c89, #ee9b83);
 }
 
 </style>
@@ -599,7 +600,7 @@ button.dropdown-toggle {
 										
 										<button type="button" class="btn btn-indigo savebtn"
 											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
-											<i class="fa fa-upload"></i>
+											<i class="fa fa-plus">COLLECTION</i>
 										</button>
 									</div>
 								</div>
