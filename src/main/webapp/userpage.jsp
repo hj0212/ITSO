@@ -80,6 +80,10 @@ body {
 	padding-left: 5px;
 }
 
+#profilestat a.active, #tablist a.active {
+	font-weight:normal;
+}
+
 #profilestat div p:first-of-type {
 	font-weight: bold;
 }
