@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -120,4 +121,27 @@ public class TipDAOImpl implements ITipDAO {
 		return template.update("TipBoard.tipModifyProc",dto);
 	}
 
+	@Override
+	public List<SearchedTipDTO> getSearchedTipList(String word) {
+		return template.selectList("TipBoard.searchedTipBoard", word);
+	}
+
+	@Override
+	public List<TipDTO> getTipBoardList(String category) {
+		return template.selectList("TipBoard.getTipBoardList",category);
+	}
+
+	@Override
+	public int getTipBoardCount(String category) {
+		return template.selectOne("TipBoard.getTipBoardCount", category);
+	}
+
+	@Override
+	public List<TipDTO> getTipBoardListRange(String category, int start, int end) {
+		Map<String,String> map = new HashMap<>();
+		map.put("category",category);
+		map.put("start", start+"");
+		map.put("end", end+"");
+		return template.selectList("TipBoard.getTipBoardListRange", map);
+	}
 }

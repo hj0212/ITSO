@@ -43,4 +43,5 @@ public interface ISocialBoardDAO {
 	public int allGoodCount(GoodDTO gdto);
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto);
 	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto);
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word);
 }

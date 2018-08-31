@@ -474,7 +474,7 @@ a#MOVE_TOP_BTN {
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="3">게시글이 없습니다,</td>
+					<td colspan="3">게시글이 없습니다</td>
 				</tr>
 			</c:otherwise>
 			</c:choose>

@@ -56,27 +56,65 @@ public class TipController {
 	}
 
 	@RequestMapping("tipBoardMainPage.tip")
-	public ModelAndView tipBoardMainPageWithAllData() {
+	public ModelAndView tipBoardMainPageWithAllData(HttpServletRequest request) {
 
 		ModelAndView mav = new ModelAndView();
-		List<TipDTO> beautyTipData = service.getBeautyTipData();
-		List<TipDTO> dietTipData = service.getDietTipData();
-		List<TipDTO> fashionTipData = service.getFashionTipData();
-		List<TipDTO> businessTipData = service.getBusinessTipData();
-		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
-
-		if (beautyTipData != null) {
-			System.out.println(beautyTipData.toString());
-
-		} else {
-			return null;
+		String category = request.getParameter("category");
+		int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		
+		int totalCount = service.getTipBoardCount(category);
+		// 한 페이지당 들어갈 글 수
+		int countList = 10;
+		
+		int totalPage = totalCount / countList;
+		
+		if(totalCount > countList * totalPage) {
+			totalPage++;
 		}
+		
+		if(totalPage < page) {
+			page = totalPage;
+		}
+		
+		int countPage = 5;
+		
+		int startPage = ((page - 1) / countPage) * countPage + 1;
+		int endPage = startPage + countPage - 1;
+		
+		if(endPage > totalPage) {
+			endPage = totalPage;
+		}
+		
+		if(page > 1) {
+			System.out.println("<a href=\"page=" + (page-1) + "\">이전</a>");
+		}
+		
+		for (int i = startPage; i <= endPage; i++) {
+			if(i == page) {
+				System.out.println("<b>"+i+"</b>");
+			}else {
+				System.out.println(" " + i + " ");
+			}
+		}
+		
+		if(page < totalPage) {
+			System.out.println("<a href=\"?page=" + (page + 1)  + "\">다음</a>");
+		}
+		
+		int startCount = (page - 1) * countList + 1;
+		int endCount = page * countList;
+		List<TipDTO> tipBoardList = service.getTipBoardListRange(category, startCount, endCount);
+		
+		
+		
+		for(TipDTO dto : tipBoardList) {
+			System.out.println(dto.getName());
+		}
+		
+		
 
-		mav.addObject("beautyTipData", beautyTipData);
-		mav.addObject("dietTipData", dietTipData);
-		mav.addObject("fashionTipData", fashionTipData);
-		mav.addObject("businessTipData", businessTipData);
+		mav.addObject("tipBoardList", tipBoardList);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;

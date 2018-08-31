@@ -275,7 +275,7 @@
 			color: black;
 		}
 		
-		#user-tab, #tag-tab {
+		#user-tab, #tag-tab, #tip-tab {
 			color : black;
 		}
 		
@@ -288,8 +288,8 @@
 		}
 		
 		.user-image img{
-			width : 100px;
-			height: 100px;
+			width : 60px;
+			height: 60px;
 			border-radius: 50%;
 		}
 
@@ -303,6 +303,12 @@
 
 		.user-fans, .user-looks {
 			font-size: 18px;
+		}
+		
+		.tip-image img{
+			width : 60px;
+			height: 60px;
+			border-radius: 50%;
 		}
 	</style>
 	<script>
@@ -412,6 +418,11 @@
 					<li class="nav-item">
 						<a class="nav-link" id="tag-tab" data-toggle="tab" href="#tagdiv" role="tab" aria-controls="tagdiv" aria-selected="false">태그</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="tip-tab" data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv" aria-selected="false">
+							팁 게시글(<c:choose><c:when test="${empty tipList}">0</c:when><c:otherwise>${tipList.size()}</c:otherwise></c:choose>)
+						</a>
+					</li>
 				</ul>
 				<div class="tab-content text-center" id="myTabContent">
 					<div class="tab-pane fade show active" id="userdiv" role="tabpanel" aria-labelledby="user-tab">
@@ -426,12 +437,13 @@
 												</td>
 												<td class="user-info">
 													<div class="user-name">
-														<b>${userList.name}</b>
+														<a href="userpage.go?seq=${userList.seq}"><b>${userList.name}</b></a>
 													</div>
 													<div class="status-message">${userList.state}</div>
 												</td>
-												<td class="user-fans">511 fans</td>
-												<td class="user-looks">23 looks</td>
+												<td class="user-fans">
+													<button class="btn btn-indigo btn-sm followbtn waves-effect waves-light">+FOLLOW</button>
+												</td>
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -443,7 +455,42 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="tagdiv" role="tabpanel" aria-labelledby="tag-tab">
-						
+	
+					</div>
+					<div class="tab-pane fade" id="tipdiv" role="tabpanel" aria-labelledby="tip-tab">
+						<div class="col-md-12 search-tip mt-3">
+							<table style="width : 100%">
+								<c:choose>
+									<c:when test="${!empty tipList}">
+										<c:forEach var="tipList" items="${tipList}">
+											<tr>
+												<td class="tip-image">
+													<img src="resources/images/${tipList.photo}" alt="" onerror="this.src='resources/images/background.jpg'" />
+												</td>
+												<td class="user-name">
+													<a href="userpage.go?seq=${tipList.tip_writer}">${tipList.name}</a>
+												</td>
+												<td class="tip-info">
+													<a href="getSpecificTipView.tip?seq=${tipList.tip_seq}">[${tipList.category}]${tipList.tip_title}</a>
+												</td>
+												<td class="tip-like" style="text-align : left;">
+													<i class=" fa fa-heart red-text"></i>${tipList.tip_like_count}
+												</td>
+												<td class="view-count" style="text-align : left">
+													<i class="fa  fa-eye"></i>${tipList.tip_viewcount}
+												</td>
+												<td>
+													${tipList.tip_date}
+												</td>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										검색 결과가 없습니다.
+									</c:otherwise>
+								</c:choose>
+							</table>
+						</div>
 					</div>
 				</div>
 			</section>		

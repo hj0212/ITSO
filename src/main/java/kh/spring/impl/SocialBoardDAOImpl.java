@@ -198,5 +198,9 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		
 		return template.selectList("SocialBoard.showHashTagFollowBoardList", map);
 	}
-	
+
+	@Override
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
+		return template.selectList("SocialBoard.searchedTagSocialList", word);
+	}
 }
