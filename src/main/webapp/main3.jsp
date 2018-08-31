@@ -404,7 +404,7 @@ a#MOVE_TOP_BTN {
 										<img src="upload/social/${list.photo}"
 											class="img-fluid z-depth-2 image" alt="Responsive image">
 										<div class="hashtagarea mt-1" style="margin-left: 5px;">
-											<span class="contents">${list.social_contents}</span>
+											<span>${list.social_contents}</span>
 										</div>
 										<c:if test="${!empty sessionScope.user }">
 											<div class="btnarea " style="display: block; height: 31px;">
@@ -627,7 +627,7 @@ a#MOVE_TOP_BTN {
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 <script>
 	
-	$(".photoContainerHover").on("click", ".image, .title, .contents", 
+	$(".photoContainerHover").on("click", ".image, .title", 
 	function readSocial() {
 		var cursor = $(this);
 		var src = cursor.siblings(".read").val();
