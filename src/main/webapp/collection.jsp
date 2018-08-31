@@ -244,7 +244,7 @@ section .follow-action .follow-button {
 				</div>
 			</div>
 			<div class="collection-description">
-				${content.collection_title }
+				<h2>${content.collection_title }</h2>
 				<h4 class="mb-5">${content.collection_contents }</h4>
 			</div>
 		</div>
@@ -266,7 +266,7 @@ section .follow-action .follow-button {
 										<a href="readSocial.go?seq=${slist.social_seq}">
 											<div class="mask rgba-stylish-light text-left card-text">
 												<h2>${slist.social_title }</h2>
-												<p>contents</p>
+												<p>${slist.social_contents }</p>
 												<p>${slist.social_date }</p>
 											</div>
 										</a>
@@ -285,38 +285,35 @@ section .follow-action .follow-button {
 												</div>
 												<div>${slist.userState }</div>
 											</div>
-											<script>console.log("${empty goodList }")</script>
+											<div class="goodarea" style="float: right; margin-top: 5px;">
+											<input type="hidden" class="writerseq" value="${slist.social_writer }" />
 											<c:choose>
 												<c:when test="${empty goodList }">
 													<i class="fa fa-heart-o red-text heart " aria-hidden="true"
 														style="float: right; font-size: 25px;"
-														value="${list.social_seq}"> <font color="black">
+														value="${slist.social_seq}"> <font color="black">
 															0 </font></i>
 												</c:when>
 												<c:otherwise>
+													<c:set var="loop_flag" value="false" />
 													<c:forEach items="${goodList }" var="good" varStatus="gstatus">
-														<script>console.log("${good.social_seq == list.social_seq }")</script>
 														<c:if test="${loop_flag == false }">
 															<c:choose>
-																<c:when test="${good.social_seq == list.social_seq }">
-																<script>console.log("여기: 같음")</script>	
+																<c:when test="${good.social_seq == slist.social_seq }">
 																	<i class="fa fa-heart red-text heart"
 																		aria-hidden="true"
 																		style="float: left; font-size: 25px;"
-																		value="${list.social_seq}"> <font color="black">
+																		value="${slist.social_seq}"> <font color="black">
 																			${good.good_count } </font></i>
-
 																	<c:set var="loop_flag" value="true" />
 																</c:when>
 																<c:otherwise>
-																	<script>console.log("여기: ${gstatus.last }")</script>
 																	<c:if test="${gstatus.last }">
 																		<i class="fa fa-heart-o red-text heart"
 																			aria-hidden="true"
 																			style="float: left; font-size: 25px;"
-																			value="${list.social_seq}"> <font color="black">
+																			value="${slist.social_seq}"> <font color="black">
 																				${good.good_count } </font></i>
-
 																	</c:if>
 																</c:otherwise>
 															</c:choose>
@@ -326,6 +323,7 @@ section .follow-action .follow-button {
 												</c:otherwise>
 
 											</c:choose>
+											</div>
 										</div>
 									</div>
 								</div>
