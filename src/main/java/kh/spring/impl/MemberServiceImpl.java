@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SearchedUserInfoDTO;
 import kh.spring.interfaces.IMemberDAO;
 import kh.spring.interfaces.IMemberService;
 
@@ -77,4 +78,8 @@ public class MemberServiceImpl implements IMemberService {
 		return this.dao.selectSocialWriter(social_seq);
 	}
 
+	@Override
+	public List<SearchedUserInfoDTO> getSearchedUserList(String word) {
+		return this.dao.getSearchedUserList(word);
+	}
 }
