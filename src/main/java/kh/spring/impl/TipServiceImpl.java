@@ -38,8 +38,8 @@ public class TipServiceImpl implements ITipService {
 	}
 
 	@Override
-	public List<TipDTO> getBusinessTipData(){
-		return this.dao.getBusinessTipData();
+	public List<TipDTO> getETCTipData(){
+		return this.dao.getETCTipData();
 	}
 
 	@Override

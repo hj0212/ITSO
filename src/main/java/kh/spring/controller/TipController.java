@@ -62,10 +62,12 @@ public class TipController {
 		List<TipDTO> beautyTipData = service.getBeautyTipData();
 		List<TipDTO> dietTipData = service.getDietTipData();
 		List<TipDTO> fashionTipData = service.getFashionTipData();
-		List<TipDTO> businessTipData = service.getBusinessTipData();
-		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
+		List<TipDTO> etcTipData = service.getETCTipData();
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
-
+		
+		
+		
+		
 		if (beautyTipData != null) {
 			System.out.println(beautyTipData.toString());
 
@@ -76,7 +78,7 @@ public class TipController {
 		mav.addObject("beautyTipData", beautyTipData);
 		mav.addObject("dietTipData", dietTipData);
 		mav.addObject("fashionTipData", fashionTipData);
-		mav.addObject("businessTipData", businessTipData);
+		mav.addObject("etcTipData", etcTipData);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;
@@ -199,7 +201,7 @@ public class TipController {
 	}
 	
 	
-	@RequestMapping("deleteTipComment.tip")
+	@RequestMapping("deleteTipComment.tip") //창영 댓글 지우기 기능
 	public void deleteTipComment(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ObjectMapper om = new ObjectMapper();

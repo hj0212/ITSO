@@ -15,7 +15,7 @@ public interface ITipDAO {
 
 	public List<TipDTO> getFashionTipData();
 
-	public List<TipDTO> getBusinessTipData();
+	public List<TipDTO> getETCTipData();
 
 	public int deleteTipData(TipDTO dto);
 

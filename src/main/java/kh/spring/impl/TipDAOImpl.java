@@ -45,8 +45,8 @@ public class TipDAOImpl implements ITipDAO {
 	}
 
 	@Override
-	public List<TipDTO> getBusinessTipData() {
-		return template.selectList("TipBoard.getBusinessTipData");
+	public List<TipDTO> getETCTipData() {
+		return template.selectList("TipBoard.getETCTipData");
 	}
 
 	@Override

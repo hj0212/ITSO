@@ -16,7 +16,7 @@ public interface ITipService {
 
 	public List<TipDTO> getFashionTipData();
 
-	public List<TipDTO> getBusinessTipData();
+	public List<TipDTO> getETCTipData();
 
 	public List<TipDTO> getSpecificTipView(int seq);
 
