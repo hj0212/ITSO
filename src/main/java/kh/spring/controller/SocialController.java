@@ -120,21 +120,7 @@ public class SocialController {
 			age="모든연령";
 		}
 
-		try {
-			main = request.getParameter("main");
-			if(main.equals("full")) {
-				mav.setViewName("main.jsp");
-			}else if(main.equals("thumbnail")) {
-				mav.setViewName("main3.jsp");
-			}else {
-				mav.setViewName("main.jsp");
-			}
-
-
-		}catch(Exception e4) {
-			mav.setViewName("main.jsp");
-		}
-
+	
 
 		SocialBoardDTO sdto = new SocialBoardDTO(pAge,pGender,user_seq);
 
@@ -219,6 +205,21 @@ public class SocialController {
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
 			mav.addObject("socialList",result);
+			try {
+				main = request.getParameter("main");
+				if(main.equals("full")) {
+					mav.setViewName("main.jsp");
+				}else if(main.equals("thumbnail")) {
+					mav.setViewName("main3.jsp");
+				}else {
+					mav.setViewName("main.jsp");
+				}
+
+
+			}catch(Exception e4) {
+				mav.setViewName("main.jsp");
+			}
+
 		}
 		return mav;
 	}
@@ -270,8 +271,14 @@ public class SocialController {
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
 		MemberDTO mdto = this.mService.selectSocialWriter(seq);
 		
+		try {
 		int follow = mService.checkFollow(new FollowDTO(user_seq,mdto.getSeq()));
 		mav.addObject("followcheck", follow);
+		}  catch (Exception e) {
+			System.out.println("로그인x");
+			mav.setViewName("login.go");
+			return mav;
+		}
 
 		String contents = dto.getSocial_contents();
 
