@@ -275,7 +275,7 @@
 			color: black;
 		}
 		
-		#user-tab, #tag-tab {
+		#user-tab, #tag-tab, #tip-tab {
 			color : black;
 		}
 		
@@ -412,6 +412,9 @@
 					<li class="nav-item">
 						<a class="nav-link" id="tag-tab" data-toggle="tab" href="#tagdiv" role="tab" aria-controls="tagdiv" aria-selected="false">태그</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="tip-tab" data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv" aria-selected="false">팁 게시글</a>
+					</li>
 				</ul>
 				<div class="tab-content text-center" id="myTabContent">
 					<div class="tab-pane fade show active" id="userdiv" role="tabpanel" aria-labelledby="user-tab">
@@ -443,7 +446,10 @@
 						</div>
 					</div>
 					<div class="tab-pane fade" id="tagdiv" role="tabpanel" aria-labelledby="tag-tab">
-						
+						Run
+					</div>
+					<div class="tab-pane fade" id="tipdiv" role="tabpanel" aria-labelledby="tip-tab">
+						Awolnation
 					</div>
 				</div>
 			</section>		
