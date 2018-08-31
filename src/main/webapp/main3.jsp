@@ -391,7 +391,7 @@ a#MOVE_TOP_BTN {
 
 								<a href="#"> <!-- <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
-									src="/upload/social/${list.photo}" class="img-fluid z-depth-5"
+									src="upload/social/${list.photo}" class="img-fluid z-depth-5"
 									alt="Responsive image">
 
 								</a>
