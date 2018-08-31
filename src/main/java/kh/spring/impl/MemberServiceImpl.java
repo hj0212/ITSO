@@ -69,7 +69,7 @@ public class MemberServiceImpl implements IMemberService {
 	}
 	
 	@Override
-	public int checkFollow(FollowDTO dto) {
+	public Integer checkFollow(FollowDTO dto) {
 		return this.dao.checkFollow(dto);
 	}
 

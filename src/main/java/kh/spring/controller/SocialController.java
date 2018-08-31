@@ -52,7 +52,7 @@ public class SocialController {
 
 	@Autowired 
 	ISocialTagService tagService;
-	
+
 	@Autowired
 	private INotificationService nosevice;
 
@@ -120,7 +120,7 @@ public class SocialController {
 			age="모든연령";
 		}
 
-	
+
 
 		SocialBoardDTO sdto = new SocialBoardDTO(pAge,pGender,user_seq);
 
@@ -184,7 +184,7 @@ public class SocialController {
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
-			
+
 			/*mav.addObject("u-seq",sessionSeq);
 			mav.addObject("notiList",notiList);*/
 			mav.addObject("collectionList",collectionList);
@@ -225,18 +225,27 @@ public class SocialController {
 	}
 
 	@RequestMapping("/collection.go")
-	public ModelAndView showCollectionList(int seq) {
+	public ModelAndView showCollectionList(int seq, HttpSession session) {
 		CollectionDTO dto = new CollectionDTO();
 		dto.setCollection_seq(seq);
 		dto = service.getCollectionInfo(dto);
-		List<CollectionDTO> clist = service.getCollectionData(dto);
-		List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
-		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("content", dto);
-		mav.addObject("collectionList", clist);
-		mav.addObject("socialList", list);
-		mav.setViewName("collection.jsp");
+		try {
+			List<CollectionDTO> clist = service.getCollectionData(dto);
+			List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
+			List<SocialBoardDTO> goodList = service.getMyGoodSocialArticleList((MemberDTO) session.getAttribute("user"));
+
+			mav.addObject("content", dto);
+			mav.addObject("collectionList", clist);
+			mav.addObject("socialList", list);
+			mav.addObject("goodList", goodList);
+			mav.setViewName("collection.jsp");
+		} catch(Exception e) {
+			System.out.println("로그인x");
+			mav.setViewName("login.go");
+			return mav;
+		}
+
 		return mav;
 	}
 
@@ -248,37 +257,32 @@ public class SocialController {
 		long dummy = System.currentTimeMillis();
 		// json에 넣을 순번
 		int i = 0;
-		
+
 		MemberDTO user = (MemberDTO)session.getAttribute("user");
-		int user_seq = user.getSeq();
-		
+		FollowDTO fdto = new FollowDTO();
 		try {
+			fdto.setUser_seq(user.getSeq());
 			List<CollectionDTO> collectionList = this.service.getCollectionList(user);
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList(user);
-			
+
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
-			
+
 		}  catch (Exception e) {
-			System.out.println("로그인x");
+			System.out.println("로그인x1");
 			mav.setViewName("login.go");
 			return mav;
 		}
 
-		
-		
+
+
 		int seq = Integer.parseInt(request.getParameter("seq"));
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
 		MemberDTO mdto = this.mService.selectSocialWriter(seq);
-		
-		try {
-		int follow = mService.checkFollow(new FollowDTO(user_seq,mdto.getSeq()));
+
+		fdto.setFollowing_seq(seq);
+		Integer follow = mService.checkFollow(fdto);
 		mav.addObject("followcheck", follow);
-		}  catch (Exception e) {
-			System.out.println("로그인x");
-			mav.setViewName("login.go");
-			return mav;
-		}
 
 		String contents = dto.getSocial_contents();
 
@@ -291,11 +295,11 @@ public class SocialController {
 		List<SocialCommentDTO> commentList = comService.showCommentList(seq);
 
 		String[] writeDate = dto.getSocial_date().toString().split("-");
-		
+
 		if(request.getParameter("noti_seq") != null) {
-		int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
-		NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");
-		int update_noti =this.nosevice.updateNotification(nodto);
+			int noti_seq = Integer.parseInt( request.getParameter("noti_seq"));
+			NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");
+			int update_noti =this.nosevice.updateNotification(nodto);
 		}
 		int social_seq = dto.getSocial_seq();
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
@@ -362,7 +366,7 @@ public class SocialController {
 			mav.addObject("markerdata", json);
 			mav.addObject("dataflag","true");
 		}
-		
+
 		mav.addObject("writer", mdto);
 		mav.addObject("commentList",commentList);
 		mav.addObject("content",dto);
@@ -788,12 +792,12 @@ public class SocialController {
 			mav.setViewName("login.go");
 			return mav;
 		}
-		
+
 		String search = null;
 		String main = null;
 		String gender = null;
 		String age = null;
-		
+
 		String pGender = null;
 		int pAge = 0;
 		try {
@@ -802,7 +806,7 @@ public class SocialController {
 			search = "";
 			mav.setViewName("searchTag.jsp");
 		}
-		
+
 		try {
 			gender =	request.getParameter("gender");		 
 			pGender = request.getParameter("gender");
@@ -819,7 +823,7 @@ public class SocialController {
 		}catch(Exception e2) {
 			gender ="무관";			
 		}
-		
+
 		try {
 			pAge =Integer.parseInt(request.getParameter("age"));
 			age = request.getParameter("age");
@@ -841,7 +845,7 @@ public class SocialController {
 		}catch(Exception e3) {
 			age="모든연령";
 		}
-		
+
 		try {
 			main = request.getParameter("main");
 			if(main.equals("full")) {
@@ -854,12 +858,12 @@ public class SocialController {
 		}catch(Exception e4) {
 			mav.setViewName("searchTag.jsp");
 		}
-		
+
 		List<SocialBoardDTO> result = null;
 		String feed = null;
 		try {
 			feed = request.getParameter("feed");
-			
+
 			if(feed.equals("new")) {
 				result = this.service.showHashTagBoardList(pAge, pGender, user_seq, search);
 			}else if(feed.equals("hot")) {
@@ -871,10 +875,10 @@ public class SocialController {
 			result = this.service.showHashTagBoardList(pAge, pGender, user_seq, search);
 			feed="new";
 		}
-		
+
 		List<Integer> ggdto = new ArrayList<>();
 		List<MemberDTO> mdto = new ArrayList<>();
-		
+
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
 			MemberDTO mom =  new MemberDTO(sdd.getSocial_seq()); 
@@ -882,7 +886,7 @@ public class SocialController {
 			mdto.addAll( this.mService.getUserData(mom));
 			/*System.out.println(ggdto);*/
 		}
-		
+
 		List<Integer> goodCount = new ArrayList<>();
 		for(SocialBoardDTO sdd : result) {
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq(),user_seq);
@@ -896,13 +900,13 @@ public class SocialController {
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
 			List<MemberDTO> followingList = this.mService.getFollowingList((MemberDTO)session.getAttribute("user"));
-			
-			
+
+
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
 			mav.addObject("followingList", followingList);
-			
+
 		}catch(NullPointerException e) {
 			/*		System.out.println("濡쒓렇�씤x");*/
 		}finally {
@@ -924,7 +928,7 @@ public class SocialController {
 	private List<SocialBoardDTO> makeHashTag(List<SocialBoardDTO> list) {
 		for(SocialBoardDTO dto: list) {
 			String contents = dto.getSocial_contents();
-			
+
 			Pattern p = Pattern.compile("\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*)");
 
 			contents = contents.replaceAll("(\\#([0-9a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]*))", "<a href='searchTag.go?search="+"$2'>"+"$1"+"</a>");
