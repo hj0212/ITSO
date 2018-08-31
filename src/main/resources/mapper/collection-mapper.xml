@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="getCollectionSocialList" resultType="sdto">
-		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, s.social_date,  s.photo, s.gender, s.age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, s.social_date,  s.photo, s.gender, s.age, u.name writerName, u.state userState from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
 	</select>
 	
 	<select id="getCollectionData" resultType="CollectionDTO">
