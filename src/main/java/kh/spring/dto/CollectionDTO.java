@@ -8,6 +8,7 @@ public class CollectionDTO {
 	private int social_seq;
 	private String photo;
 	private String writerName; // 작성자 이름
+	private int count;	// 컨텐츠수
 	
 	public CollectionDTO() {
 		super();
@@ -23,6 +24,19 @@ public class CollectionDTO {
 		this.social_seq = social_seq;
 		this.photo = photo;
 		this.writerName = writerName;
+	}
+
+	public CollectionDTO(int collection_seq, String collection_title, String collection_contents, int collection_writer,
+			int social_seq, String photo, String writerName, int count) {
+		super();
+		this.collection_seq = collection_seq;
+		this.collection_title = collection_title;
+		this.collection_contents = collection_contents;
+		this.collection_writer = collection_writer;
+		this.social_seq = social_seq;
+		this.photo = photo;
+		this.writerName = writerName;
+		this.count = count;
 	}
 
 	public int getCollection_seq() {
@@ -79,6 +93,14 @@ public class CollectionDTO {
 
 	public void setWriterName(String writerName) {
 		this.writerName = writerName;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 }

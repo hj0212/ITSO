@@ -128,10 +128,14 @@ img {
 			onclick="javascript:location.replace('tipBoardMainPage.tip')">돌아가기</button>
 		<input type="hidden" id="sessionUser" value="${sessionScope.user.seq}">
 		<input id="tipDeleteBtn" class="btn btn-itso" value="지우기">
+		<input id="tipModifyBtn" class="btn btn-itso"  value="바꾸기">
 
+
+
+	</div>
 
 		<script>
-//
+//팁 삭제하기 버튼 나타나게하기
 		var tipWriter = $("#tip_writer").val();
 			var sessionUser = $("#sessionUser").val();
 
@@ -141,12 +145,24 @@ img {
 			
 			if (sessionUser == tipWriter) {
 				$("#tipDeleteBtn").attr("type", "button");
+				$("#tipModifyBtn").attr("type", "button");
+					
 			} else {
 				$("#tipDeleteBtn").hide();
+				$("#tipModifyBtn").hide();
 			}
 		</script>
+<script>
 
-	</div>
+var tipSeq = $("#tip_seq").html();
+console.log(tipSeq);
+
+$("#tipModifyBtn").click(function(){
+	location.href="tipModification.go?tipSeq=" + tipSeq;
+	
+})
+
+</script>
 	<script>
 		window.onload = function() {
 			// tip delete btn proc
@@ -315,12 +331,13 @@ img {
 			});
 			</script>
 
-	<c:if test="${!empty sessionScope.user.seq}">
+<c:if test="${!empty sessionScope.user.seq}">
 		<script>
 			$("#tip_comment_contents").attr("placeholder","댓글 쓰기");
 			$("#insertTipCommentBtn").attr("disabled",false);
-	</c:if>
 		</script>
+	</c:if>
+	
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

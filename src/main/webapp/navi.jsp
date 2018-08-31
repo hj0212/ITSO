@@ -302,18 +302,14 @@ nav {
             </div>
             <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
         </form> -->
-		<form class="form-inline lg-form form-lg" style="width: 400px;">
-			<input class="form-control form-control-sm mr-3 w-75" type="text"
-				placeholder="Search" aria-label="Search" id="searchinput"
-				style="display: none"> <i id="searchIcon"
-				class="fa fa-search" aria-hidden="true"
-				style="color: white; display: none"></i>
-		</form>
+		<div class="form-inline lg-form form-lg" style="width: 400px;">
+			<input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" id="searchinput" style="display: none"> 
+			<i id="searchIcon" class="fa fa-search" aria-hidden="true" style="color: white; display: none"></i>
+		</div>
 
 		<ul class="navbar-nav ml-auto nav-flex-icons">
 			<li class="nav-item" id="searchli"><a
-				class="nav-link waves-effect waves-light" id="searchshow"> <i
-					class="fa fa-search"></i>검색
+				class="nav-link waves-effect waves-light" id="searchshow"> <i class="fa fa-search"></i>검색
 			</a></li>
 
 
@@ -338,7 +334,7 @@ nav {
 			</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-default"
 					aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="mypage.go">마이페이지</a> <a
+					<a class="dropdown-item" href="userpage.go">마이페이지</a> <a
 						class="dropdown-item" href="#">Another action</a> <a
 						class="dropdown-item" href="logout.do">로그아웃</a>
 				</div></li>
@@ -607,9 +603,8 @@ nav {
 		if (input == "") {
 			$("#searchIcon").toggle("fast");
 			$("#searchinput").toggle("slow");
-
 		} else {
-			console.log("search");
+			location.href = "searchWord.se?word="+input;
 		}
 	});
 
@@ -719,4 +714,11 @@ nav {
 						"readSocial.go?seq=" + seq + "&noti_seq=" + noti_seq);
 
 			});
+	
+	// 검색창에서 enter 입력시 실행
+	$("#searchinput").keypress(function(e) {
+		if(e.keyCode == 13){
+			location.href = "searchWord.se?word="+$(this).val();
+		}
+	});
 </script>

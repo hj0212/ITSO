@@ -133,8 +133,9 @@ table {
 							<h4 class="card-title">${upvotingArticles.tip_title}</h4>
 							<div>
 								<a><i class=" fa fa-heart red-text" aria-hidden="true"></i>
-									${upvotingArticles.tip_like_count} </a> <a><i
-									class="fa fa-share-alt green-text" aria-hidden="true"></i>82</a> <a><i
+									${upvotingArticles.tip_like_count} </a> 
+<!-- 									<a><i class="fa fa-share-alt green-text" aria-hidden="true"></i>82</a>  -->
+									<a><i
 									class="fa fa-comment amber-text" aria-hidden="true"></i>${upvotingArticles.tip_comment_count}</a>
 								<a><i class="fa  fa-eye" aria-hidden="true"></i>${upvotingArticles.tip_viewcount}</a>
 							</div>
@@ -157,16 +158,6 @@ table {
 
 			</div>
 		</div>
-
-		<!-- 	<!-- isUpvoting list -->
-		<!-- 	<div id="isUpvotingList" class="container"> -->
-		<!-- 		<h2>주목받고 있는 팁</h2> -->
-		<!-- 		<div class="row mb-4"> -->
-
-		<!-- 			<div class="card col"></div> -->
-
-		<!-- 		</div> -->
-		<!-- 	</div> -->
 
 
 		<!-- recent tip list -->

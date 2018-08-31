@@ -48,6 +48,10 @@ body {
 	cursor: pointer;
 }
 
+a {
+	color: black;
+}
+
 .share {
 	cursor: pointer;
 }
@@ -56,7 +60,7 @@ body {
 	box-shadow: 1px 2px 2px 0px black;
 }
 
-@media ( max-width : 1100px) {
+@media ( max-width : 1334px) {
 	#rightfix {
 		display: none;
 	}
@@ -258,11 +262,6 @@ button.dropdown-toggle {
 	border-top: 1px solid #eee;
 }
 
-.sharebtnarea button {
-	width: 30px;
-	height: 30px;
-}
-
 @media ( max-width : 600px) {
 	.state {
 		display: none;
@@ -361,7 +360,7 @@ button.dropdown-toggle {
 											console.log("DB Failed")
 										}
 									});
-						})
+						});
 			});
 </script>
 </head>
@@ -443,10 +442,10 @@ button.dropdown-toggle {
 								<ul class="list-unstyled">
 									<li class="media align-middle"><img
 										class="d-flex mr-3 rounded-circle "
-										src="/upload/social/${list.user_photo}"
+										src="/upload/profile/${list.user_photo}"
 										style="width: 50px; height: 50px; margin-top: 10px">
 										<div class="media-body" style="margin: 0px auto">
-											<a class="writer-a"><b class="writerName"
+											<a class="writer-a" href="userpage.go?seq=${list.social_writer }"><b class="writerName"
 												style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;
 											<span class="state"><font color="gray">"${list.userState}"</font></span>
 										</div> 
@@ -503,7 +502,7 @@ button.dropdown-toggle {
 										</c:choose></li>
 									<li>
 										<!--Text-->
-										<p class="mb-0">${list.social_title}</p>
+										<p class="mb-0"><a href="readSocial.go?seq=${list.social_seq}">${list.social_title}</a></p>
 										<p class="mb-0">
 											<font color="gray"><span>${list.social_date } </span><i
 												class="fa fa-comment"></i> ${list.comment_count } </font>
@@ -529,7 +528,7 @@ button.dropdown-toggle {
 											<c:when test="${empty goodList }">
 												<i class="fa fa-heart-o red-text heart " aria-hidden="true"
 													style="float: right; font-size: 25px;"
-													value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+													value="${list.social_seq}"> <font color="black"> ${heart[status.index].toString()}
 												</font></i>
 											</c:when>
 											<c:otherwise>
@@ -541,7 +540,7 @@ button.dropdown-toggle {
 															<c:when test="${good.social_seq == list.social_seq }">
 																<i class="fa fa-heart red-text heart" aria-hidden="true"
 																	style="float: left; font-size: 25px;"
-																	value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+																	value="${list.social_seq}"> <font color="black"> ${heart[status.index].toString()}
 																</font></i>
 
 																<c:set var="loop_flag" value="true" />
@@ -551,7 +550,7 @@ button.dropdown-toggle {
 																	<i class="fa fa-heart-o red-text heart"
 																		aria-hidden="true"
 																		style="float: left; font-size: 25px;"
-																		value="${list.social_seq}"><font color="black">${heart[status.index].toString()}
+																		value="${list.social_seq}"> <font color="black"> ${heart[status.index].toString()}
 																	</font></i>
 
 
@@ -574,25 +573,23 @@ button.dropdown-toggle {
 											class="writerseq" /> <input type="hidden"
 											value="${list.social_seq }" class="socialseq" />
 
-										<!--instagram-->
+										<!-- 
 										<button type="button" class="btn-floating btn-sm share "
 											style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
 											title="카카오로 공유하기">
 											<i class="fa fa-comment"></i>
 										</button>
-										<!--twitter-->
 										<button type="button" class="btn-floating btn-sm btn-tw share"
 											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
 											<i class="fa fa-twitter" title="트위터로 공유하기"></i>
 										</button>
-										<!--facebook-->
 										<button type="button" class="btn-floating btn-sm btn-fb share"
 											style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
 											<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
-										</button>
+										</button> -->
 										<button type="button" class="btn-floating btn-sm savebtn"
 											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
-											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
+											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">컬렉션에 저장
 											<i class="fa fa-upload"></i>
 										</button>
 									</div>
@@ -794,7 +791,7 @@ button.dropdown-toggle {
 	</div>
 	<script>
 		$("#managebtn").on("click", function () {
-		    window.open('mypage.go?view=collection', '_blank');
+		    window.open('userpage.go?view=collection', '_blank');
 		})
 
 		social_seq = 0;

@@ -1,16 +1,14 @@
 package kh.spring.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SearchedUserInfoDTO;
 import kh.spring.interfaces.IMemberDAO;
 
 @Repository
@@ -75,5 +73,15 @@ public class MemberDAOImpl implements IMemberDAO{
 	@Override
 	public MemberDTO selectSocialWriter(int social_seq) {
 		return template.selectOne("Member.selectSocialWriter", social_seq);
+	}
+
+	@Override
+	public List<SearchedUserInfoDTO> getSearchedUserList(String word) {
+		return template.selectList("Member.searchedUserInfo",word);
+	}
+
+	@Override
+	public Integer checkFollow(FollowDTO dto) {
+		return template.selectOne("Member.checkFollow", dto);
 	}
 }

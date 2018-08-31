@@ -13,6 +13,17 @@ public class TipDTO {
 	String name;
 	int tip_comment_count;
 
+	
+	
+	
+	@Override
+	public String toString() {
+		return "TipDTO [tip_seq=" + tip_seq + ", tip_title=" + tip_title + ", tip_contents=" + tip_contents
+				+ ", tip_writer=" + tip_writer + ", tip_date=" + tip_date + ", tip_viewcount=" + tip_viewcount
+				+ ", category=" + category + ", tip_like_count=" + tip_like_count + ", name=" + name
+				+ ", tip_comment_count=" + tip_comment_count + "]";
+	}
+
 	public int getTip_comment_count() {
 		return tip_comment_count;
 	}
