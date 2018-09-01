@@ -61,7 +61,13 @@ public class TipController {
 		ModelAndView mav = new ModelAndView();
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
 		String category = request.getParameter("category");
+		
+		if(category != null) {
+			category = category.trim().equals("") ? null : category;
+		}
+		
 		int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		StringBuffer pagination = new StringBuffer();
 		
 		int totalCount = service.getTipBoardCount(category);
 		// 한 페이지당 들어갈 글 수
@@ -85,6 +91,7 @@ public class TipController {
 		if(endPage > totalPage) {
 			endPage = totalPage;
 		}
+		
 		
 		if(page > 1) {
 			System.out.println("<a href=\"page=" + (page-1) + "\">이전</a>");
@@ -112,8 +119,12 @@ public class TipController {
 			System.out.println(dto.getName());
 		}
 		
+		mav.addObject("category", category);
+		mav.addObject("page", page);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("totalPage",totalPage);
 		
-
 		mav.addObject("tipBoardList", tipBoardList);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");

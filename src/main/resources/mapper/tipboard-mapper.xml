@@ -167,7 +167,7 @@ update tip set tip_contents = #{tip_contents}, tip_title = #{tip_title}  where t
 	left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq 
 	left outer join (select tip_seq, count(*) tip_comment_count from tip_comment group by tip_seq) tc on t.tip_seq = tc.tip_seq
 	where u.SEQ = t.tip_writer
-	<if test="category != null">
+	<if test='category != null'>
 		 and category = #{category}
 	</if>
 	 order by recent asc) where recent between #{start} and #{end}
