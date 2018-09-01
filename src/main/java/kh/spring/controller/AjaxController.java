@@ -1,6 +1,7 @@
 package kh.spring.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import kh.spring.interfaces.IMessagesService;
 import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.websocket.EchoHandler;
+import kh.spring.websocket.MessageSocket;
 
 @Controller
 public class AjaxController {
@@ -160,6 +162,7 @@ public class AjaxController {
 		int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		
 		MessagesDTO medto = new MessagesDTO(sessionSeq,message_user_seq,message);
+	
 		int success = this.mservice.sendMessage(medto);
 		return success;
 	}

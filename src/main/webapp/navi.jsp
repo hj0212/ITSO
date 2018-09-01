@@ -664,7 +664,7 @@ background-color: #f4f4f4;
 			console.log(message_user_seq);
 			if(message != ""){
 				console.log("여기는 들어옴");
-			/*  ws.send(message); */
+			 socket.send(message);
 			 $.ajax({
 				 url :"sendMessage.ajax",
 				 type:"post",
@@ -687,17 +687,17 @@ background-color: #f4f4f4;
 
 	var notificationcounter = 0;
 	if ("WebSocket" in window) {
-		var ws = new WebSocket(
+		var socket = new WebSocket(
 				"ws://localhost:8080/socket?seq=${sessionScope.user.seq}");
 		var str;
 		var file = ""
-			ws.onopen = function() {
+			socket.onopen = function() {
 		
 			};
-		ws.onmessage = function(msg) {
+			socket.onmessage = function(msg) {
 		
 
-			console.log("이거 유저인데 :" + obj.user_seq + obj.noti_user_name);
+			console.log(msg);
 		};
 
 		ws.onclose = function() {
