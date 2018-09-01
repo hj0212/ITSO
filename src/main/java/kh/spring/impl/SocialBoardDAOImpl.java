@@ -1,6 +1,8 @@
 package kh.spring.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,10 +105,20 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.update("Collection.updateCollection", dto);
 	}
 	
+	@Override
+	public CollectionDTO getCollectionSeq(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionSeq", dto);
+	}
+	
+	@Override
+	public CollectionDTO getCollectionInfo(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionInfo", dto);
+	}
+	
 	
 	//���ƿ� 
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return template.selectOne("SocialBoard.selectGoodCount", gdto);
 	}
 
@@ -131,8 +143,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		return template.selectList("SocialBoard.getMyGoodSocialList", dto);
 	}
-
 	
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto) {
+		return template.selectList("SocialBoard.getMyGoodSocialArticleList", dto);
+	}
 	
 	//인기
 	@Override
@@ -150,4 +165,38 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	public int selectSocialWriter(int seq) {
 		return template.selectOne("SocialBoard.selectSocialWriter", seq);
 	}
+
+	@Override
+	public List<SocialBoardDTO> showHashTagBoardList(int pAge, String pGender, int user_seq, String search) {
+		Map<String, String> map = new HashMap<>();
+		map.put("pAge", pAge+"");
+		map.put("pGender", pGender);
+		map.put("user_seq", user_seq+"");
+		map.put("search", search);
+		
+		return template.selectList("SocialBoard.showHashTagBoardList", map);
+	}
+
+	@Override
+	public List<SocialBoardDTO> showHashTagHotBoardList(int pAge, String pGender, int user_seq, String search) {
+		Map<String, String> map = new HashMap<>();
+		map.put("pAge", pAge+"");
+		map.put("pGender", pGender);
+		map.put("user_seq", user_seq+"");
+		map.put("search", search);
+		
+		return template.selectList("SocialBoard.showHashTagHotBoardList",map);
+	}
+
+	@Override
+	public List<SocialBoardDTO> showHashTagFollowBoardList(int pAge, String pGender, int user_seq, String search) {
+		Map<String, String> map = new HashMap<>();
+		map.put("pAge", pAge+"");
+		map.put("pGender", pGender);
+		map.put("user_seq", user_seq+"");
+		map.put("search", search);
+		
+		return template.selectList("SocialBoard.showHashTagFollowBoardList", map);
+	}
+	
 }

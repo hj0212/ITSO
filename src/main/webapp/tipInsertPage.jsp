@@ -150,8 +150,8 @@
 							'editorTA',
 							{
 								extraPlugins : 'easyimage',
-								cloudServices_tokenUrl : 'https://34277.cke-cs.com/token/dev/A2fh69MdD6ZbneTSLEawfBh2LsSlsoSyzyN4vF3UziV89xsfCWH7ntLhAIBD',
-								cloudServices_uploadUrl : 'https://34277.cke-cs.com/easyimage/upload/'
+								cloudServices_tokenUrl : 'https://34598.cke-cs.com/token/dev/lskNq77H09eHZErE87Ttg5RBs0II9cxqG63kaPhAefdy7SGmI2BFAEdAukMa',
+								cloudServices_uploadUrl : 'https://34598.cke-cs.com/easyimage/upload/'
 
 							});
 

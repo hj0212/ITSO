@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
+.notification-counter {
+	position: absolute;
+	top: 2px;
+	left: 3px;
+	background-color: rgba(212, 19, 13, 1);
+	color: #fff;
+	border-radius: 3px;
+	padding: 1px 3px;
+	font: 8px Verdana;
+	background-color: rgba(212, 19, 13, 1);
+}
+
 @font-face {
 	font-family: 'NanumbarunpenR';
 	src: url('resources/fonts/nanumbarunpenr.ttf') format('truetype');
@@ -56,8 +70,14 @@ nav {
 
 .notification-list .notification-item {
 	display: grid;
-	grid-template-columns: 1fr 2fr;
+	grid-template-columns: 0fr 1fr 0fr;
 	padding-top: 5px;
+	cursor: pointer;
+}
+
+.notification-list {
+	overflow: auto;
+	height: 400px;
 }
 
 .user-name {
@@ -65,12 +85,13 @@ nav {
 }
 
 .user-image {
-	border-radius: 50%;
+	float: left;
 	width: 50px;
 }
 
 .user-content {
-	font-size: 15px;
+	width: 100%;
+	float: left;
 }
 
 @media ( max-width : 575px) {
@@ -109,12 +130,21 @@ nav {
 	}
 }
 
-.notification-item:hover {
+.read-n:hover {
 	background: #e9e9e9;
 }
 
 .img-left {
+	width: 60px;
 	text-align: center;
+}
+
+.read-Y {
+	background-color: #eae998;
+}
+
+.read-Y:hover {
+	background-color: #dbd97f;
 }
 
 @media ( min-width : 400px) {
@@ -182,21 +212,23 @@ nav {
             </div>
             <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
         </form> -->
-        <form class="form-inline lg-form form-lg" style="width: 600px;">
-			<input class="form-control form-control-sm mr-3 w-75" type="text"
-				placeholder="Search" aria-label="Search" id="searchinput">
-			<i id="searchIcon" class="fa fa-search" aria-hidden="true" style="color: white;"></i>
-		</form>
-        
+		<div class="form-inline lg-form form-lg" style="width: 400px;">
+			<input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" id="searchinput" style="display: none"> 
+			<i id="searchIcon" class="fa fa-search" aria-hidden="true" style="color: white; display: none"></i>
+		</div>
+
 		<ul class="navbar-nav ml-auto nav-flex-icons">
 			<li class="nav-item" id="searchli"><a
-				class="nav-link waves-effect waves-light" id="searchshow"> <i
-					class="fa fa-search"></i>검색
+				class="nav-link waves-effect waves-light" id="searchshow"> <i class="fa fa-search"></i>검색
 			</a></li>
+
+
 			<li class="nav-item" id="tooltip"><a
-				class="nav-link waves-effect waves-light"> <i class="fa fa-bell"></i>
-					알림
+				class="nav-link waves-effect waves-light" id="notibt"> <i
+					class="fa fa-bell"></i> 알림 <span class="notification-counter"
+					id="notification-counter">0</span>
 			</a></li>
+
 			<li class="nav-item"><a
 				class="nav-link waves-effect waves-light"> <i
 					class="fa fa-envelope"></i> 메시지
@@ -212,7 +244,7 @@ nav {
 			</a>
 				<div class="dropdown-menu dropdown-menu-right dropdown-default"
 					aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="mypage.go">마이페이지</a> <a
+					<a class="dropdown-item" href="userpage.go">마이페이지</a> <a
 						class="dropdown-item" href="#">Another action</a> <a
 						class="dropdown-item" href="logout.do">로그아웃</a>
 				</div></li>
@@ -243,7 +275,8 @@ nav {
 </nav>
 
 <!-- 알람 정보 -->
-<div class="notification-info" id="notification-info">
+<div class="notification-info" id="notification-info"
+	style="display: none;">
 	<div class="notification-heading">
 		<div class="heading-left">
 			<span>알림</span>
@@ -252,40 +285,61 @@ nav {
 			<a href="#" class="notification-link">모두 읽음 상태로 표시</a>
 		</div>
 	</div>
-	<div class="notification-list">
-		<div class="notification-item">
-			<div class="img-left">
-				<img src="/upload/profile/profile.png" alt="" class="user-image">
-			</div>
-			<div class="user-content">
-				<span class="user-info"> <span class="user-name"><b>Alexander</b></span>
-					left a comment.
-				</span>
-				<p class="comment-time">1 hours ago</p>
-			</div>
-		</div>
-		<div class="notification-item">
-			<div class="img-left">
-				<img src="/upload/profile/profile.png" alt="" class="user-image">
-			</div>
-			<div class="user-content">
-				<span class="user-info"> <span class="user-name"><b>Alexander</b></span>
-					left a comment.
-				</span>
-				<p class="comment-time">1 hours ago</p>
-			</div>
-		</div>
-		<div class="notification-item">
-			<div class="img-left">
-				<img src="/upload/profile/profile.png" alt="" class="user-image">
-			</div>
-			<div class="user-content">
-				<span class="user-info"> <span class="user-name"><b>Alexander</b></span>
-					left a comment.
-				</span>
-				<p class="comment-time">1 hours ago</p>
-			</div>
-		</div>
+
+
+	<script type="text/javascript">
+		var notificationcounter = 0;
+		if ("WebSocket" in window) {
+			var ws = new WebSocket(
+					"ws://localhost:8080/websocket?seq=${sessionScope.user.seq}");
+			var str;
+			var file = "";
+
+			ws.onopen = function() {
+				ws.send("${sessionScope.user.seq}");
+			};
+			ws.onmessage = function(msg) {
+				var obj = JSON.parse(msg.data);
+
+				if (obj.noti_read == 'n') {
+					var notification = "<div class='notification-item read-n' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+				} else {
+					var notification = "<div class='notification-item read-Y' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
+				}
+				notification += "<div class='img-left'>";
+				notification += "<img src='/upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
+				notification += "</div>";
+				notification += "<div class='user-content'>";
+				notification += "<span class='user-info'> <span class='user-name'><b>"
+						+ obj.noti_user_name + "님이&nbsp;</b></span>";
+				notification += obj.noti_contents;
+				notification += "&nbsp;&nbsp;</span>";
+				notification += "<p class='comment-time'>" + obj.noti_date
+						+ "</p>";
+				notification += "</div>";
+				notification += "</div>";
+
+				$("#notification_list").prepend(notification);
+				notificationcounter++;
+				$("#notification-counter").text(notificationcounter);
+				if ($("#notification-counter").text != "0") {
+					$("#notification-counter").show();
+				}
+				;
+
+				console.log("이거 유저인데 :" + obj.user_seq + obj.noti_user_name);
+			};
+
+			ws.onclose = function() {
+			};
+
+		}
+	</script>
+
+
+	<div class="notification-list" id="notification_list">
+
+
 	</div>
 </div>
 
@@ -318,9 +372,9 @@ nav {
 		}
 	});
 
-	$("#searchIcon").hide();
+	/* $("#searchIcon").hide();
 	$("#searchinput").hide();
-
+	 */
 	$("#searchshow").click(function() {
 		$("#searchIcon").toggle();
 		$("#searchinput").toggle();
@@ -332,20 +386,96 @@ nav {
 		if (input == "") {
 			$("#searchIcon").toggle("fast");
 			$("#searchinput").toggle("slow");
-
 		} else {
-			console.log("search");
+			location.href = "searchWord.se?word="+input;
 		}
 	});
 
+	$("#tooltip").click(function() {
+		var seq = "${sessionScope.user.seq}"
+		console.log(seq);
+		let contents = document.getElementById("notification-info");
+		
+	
+		$.ajax({
+			url : "notificaiton.ajax",
+			type : "post",
+			data : {
+				user_seq : seq
+			},
+			success : function(data) {
+				showNotification(data);
+			}
+	
+		});
+	});
+
+	function showNotification(data) {
+		var notItem = "";
+		var sessionSeq = "${sessionScope.user.seq}";
+		$.each(JSON.parse(data),function(index, item) {
+							if (item.user_seq == sessionSeq) {
+								if (item.noti_read == 'y') {
+									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+								} else {
+									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+								}
+								notItem += "<div class='img-left'>";
+								notItem += "<img src='/upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
+								notItem += "</div>";
+								notItem += "<div class='user-content'>";
+								notItem += "<span class='user-info'> <span class='user-name'><b>"
+										+ item.noti_user_name
+										+ "님이&nbsp;</b></span>";
+								notItem += item.noti_contents;
+								notItem += "&nbsp;&nbsp;</span>";
+								notItem += "<p class='comment-time'>"
+										+ item.noti_date + "</p>";
+								notItem += "</div>";
+								notItem += "</div>";
+							}
+						});
+		$("#notification_list").prepend(notItem).trigger("create");
+
+	}
+
 	function toggleTooltip() {
+
 		let contents = document.getElementById("notification-info");
 		if (contents.style.display === "none") {
 			contents.style.display = "block";
+			$("#notification-counter").hide();
+			$("#notification-counter").text("0");
+			notificationcounter = 0;
 		} else {
 			contents.style.display = "none";
 		}
-	}
+	};
 	let toggle = document.getElementById("tooltip");
 	toggle.addEventListener("click", toggleTooltip, false);
+
+	console.log($("#notification-counter").text());
+	if ($("#notification-counter").text() == 0) {
+		$("#notification-counter").hide();
+	};
+
+	$(document).on(
+			'click',
+			".notification-item",
+			function() {
+				console.log($(this).attr("id"));
+				console.log($(this).attr("seq"));
+				var seq = $(this).attr("seq");
+				var noti_seq = $(this).attr("id");
+				$(location).attr("href",
+						"readSocial.go?seq=" + seq + "&noti_seq=" + noti_seq);
+
+			});
+	
+	// 검색창에서 enter 입력시 실행
+	$("#searchinput").keypress(function(e) {
+		if(e.keyCode == 13){
+			location.href = "searchWord.se?word="+$(this).val();
+		}
+	});
 </script>

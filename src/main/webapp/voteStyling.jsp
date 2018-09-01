@@ -131,16 +131,16 @@ input[type="file"] {
 					id="addvotebtn"> <i class="fa fa-plus" aria-hidden="true"></i>
 				</a>
 				<div class="md-form form-lg col-md-12 mt-0">
-					<table class="table table-borderless">
+					<table class="table table-borderless" id="itemtb">
 						<thead>
 							<tr>
-								<th scope="col">seq</th>
-								<th scope="col">img</th>
+								<th scope="col">번호</th>
+								<th scope="col">아이템 소개</th>
 							</tr>
 						</thead>
 						<tbody id="itemlist">
 							<tr class="z-depth-3 hoverable">
-								<th scope="row">counter</th>
+								<th scope="row"></th>
 								<td>
 									<div class="media">
 										<div class="media-img">
@@ -264,7 +264,23 @@ input[type="file"] {
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
-
+		
+		/* $('.itemtb').on('change',function(){
+			$('#itemlist tr th').val($("#itemlist").prev('tr').length);
+		}) */
+		
+		function numbering(){
+			var totaltr = $('#itemlist tr').length;
+			console.log("tr 개수:"+totaltr);
+			for(var i=1; i<=totaltr+1; i++){
+				$('#itemlist').find('tr:nth-of-type('+i+')>th').text(i);
+			}
+		}
+		numbering();
+			
+		/* $('#addvotebtn, .upvotebtn, .downvotebtn, .delvotebtn').on('click',function(){
+			
+		}) */
 		function readURL(input) {
 			console.log(input.id);
 			console.log(input.files[0].name);
@@ -300,7 +316,7 @@ input[type="file"] {
 								$('#itemlist')
 										.append(
 												'<tr class="z-depth-3 hoverable"><th scope="row">'
-														+ count
+														+ 
 														+ '</th>'
 														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'
@@ -316,6 +332,7 @@ input[type="file"] {
 							} else if (count == 6) {
 								alert("투표 항목은 6개까지 추가할 수 있습니다.")
 							}
+							numbering();
 						})
 
 		$(document).on('click', '.delvotebtn', function() {
@@ -328,26 +345,41 @@ input[type="file"] {
 			} */
 		})
 
-		$(document).on('click', '.upvotebtn', function() {
-			var wraptr = $(this).closest('tr');
-			var wrapprev = $(this).closest('tr').prev('tr');
-			var number = parseInt($(this).closest('td').siblings('th').text());
-			wraptr.insertBefore(wraptr.prev());
-			 if (number > 1) {
-				wrapprev.children('th').text(number);
-				$(this).closest('td').siblings('th').text(number - 1);
-			} 
+		$(document).on('click', '.upvotebtn', function() {			
+			/* if($(this)==$('#itemlist >tr')){} */
+			var nowtr = $(this).closest('#itemlist tr');
+			var prevtr = $(this).closest('#itemlist tr').prev('tr');
+			console.log(prevtr);
+		
+			
+			if(nowtr != $('#itemlist > tr')){
+				var nowdata= $(this).closest('#itemlist tr').find('.media');
+				var prevdata= $(this).closest('#itemlist tr').prev('tr').find('.media');				
+				prevtr.find('td').html(nowdata);
+				nowtr.find('td').html(prevdata);
+			}
+				
+			/* var number = parseInt($(this).closest('td').siblings('th').text()); */
+			/* wraptr.find('td').insertBefore(wraptr.prev()); */		 
 		})
 
 		$(document).on('click', '.downvotebtn', function() {
-			var wraptr = $(this).closest('tr');
+			var nowtr = $(this).closest('tr');
+			var nexttr = $(this).closest('tr').next('tr');
+			
+			var nowdata= $(this).closest('tr').find('.media');
+			var nextdata= $(this).closest('tr').next('tr').find('.media');
+			
+			nexttr.find('td').html(nowdata);
+			nowtr.find('td').html(nextdata);		
+		/* 	var wraptr = $(this).closest('tr');
 			var wrapnext = $(this).closest('tr').next('tr');
 			var number = parseInt($(this).closest('td').siblings('th').text());
 			wraptr.insertAfter(wraptr.next());
 			wrapnext.children('th').text(number);
 			 if (number < count) {
 				$(this).closest('td').siblings('th').text(number + 1);
-			} 
+			}  */
 		})
 
 		$(document).on('click','.custom-control-input',function() {

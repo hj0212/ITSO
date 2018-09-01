@@ -55,16 +55,13 @@ public class StylingVoteResultDTO {
 		this.eachrate = eachrate;
 	}
 
-
-
 	public int getVote_value() {
 		return vote_value;
 	}
 
-
-
 	public void setVote_value(int vote_value) {
 		this.vote_value = vote_value;
 	}
+	
 	
 }

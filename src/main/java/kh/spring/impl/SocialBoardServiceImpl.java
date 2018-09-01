@@ -58,12 +58,10 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto) {
 		return this.dao.getCollectionPhotoList(dto);
 	}
-
-	
 	
 	//醫뗭븘�슂
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return this.dao.selectGoodCount(gdto);
 	}
 
@@ -149,6 +147,36 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.updateCollection(dto);
 	}
 
+	@Override
+	public CollectionDTO getCollectionSeq(CollectionDTO dto) {
+		return this.dao.getCollectionSeq(dto);
+	}
 	
+	@Override
+	public CollectionDTO getCollectionInfo(CollectionDTO dto) {
+		return this.dao.getCollectionInfo(dto);
+	}
 
+	
+	@Override
+	public List<SocialBoardDTO> showHashTagBoardList(int pAge, String pGender, int user_seq, String search) {
+		return this.dao.showHashTagBoardList(pAge, pGender, user_seq, search);
+	}
+
+	@Override
+	public List<SocialBoardDTO> showHashTagHotBoardList(int pAge, String pGender, int user_seq, String search) {
+		return this.dao.showHashTagHotBoardList(pAge, pGender, user_seq, search);
+	}
+
+	@Override
+	public List<SocialBoardDTO> showHashTagFollowBoardList(int pAge, String pGender, int user_seq, String search) {
+		return this.dao.showHashTagFollowBoardList(pAge, pGender, user_seq, search);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto) {
+		return this.dao.getMyGoodSocialArticleList(dto);
+	}
+
+	
 }

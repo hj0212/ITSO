@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,91 +7,75 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
 <!-- Font Awesome -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel= 
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-	crossorigin="anonymous">
-
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 <!-- Bootstrap core CSS -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet">	
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
-	rel="1-sheet">
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
 <style>
-@font-face {
-	font-family: 'NanumbarunpenR';
-	src: url('resources/fonts/nanumbarunpenr.ttf') format('truetype');
-}
-
-@font-face {
-	font-family: 'NanumbarunpenB';
-	src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
-}
-
-div {
-	/* border: 1px solid black;  */
-	box-sizing: border-box;
-}
-
-body {
-	margin: 0px;
-	font-family: 'NanumbarunpenR';
-	font-size: 20px;
-}
-
-#wrapper {
-	width: 100%;
-}
-
-#content {
-	height: 100vh;
-}
-
-#imgfile {
-	outline: 2px dashed #92b0b3;
-	outline-offset: -10px;
-	-webkit-transition: outline-offset .15s ease-in-out, background-color
-		.15s linear;
-	transition: outline-offset .15s ease-in-out, background-color .15s
-		linear;
-	padding: 120px 0px 85px 35%;
-	text-align: center !important;
-	margin: 0;
-	width: 100% !important;
-}
-
-#imgfile:focus {
-	outline: 2px dashed #92b0b3;
-	outline-offset: -10px;
-	-webkit-transition: outline-offset .15s ease-in-out, background-color
-		.15s linear;
-	transition: outline-offset .15s ease-in-out, background-color .15s
-		linear;
-	border: 1px solid #92b0b3;
-}
-
-#imgselected {
-	visibility: hidden;
-	width:50%;
-}
+	@font-face {
+		font-family: 'NanumbarunpenR';
+		src: url('resources/fonts/nanumbarunpenr.ttf') format('truetype');
+	}
+	
+	@font-face {
+		font-family: 'NanumbarunpenB';
+		src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
+	}
+	
+	div {
+		/* border: 1px solid black;  */
+		box-sizing: border-box;
+	}
+	
+	body {
+		margin: 0px;
+		font-family: 'NanumbarunpenR';
+		font-size: 20px;
+	}
+	
+	#wrapper {
+		width: 100%;
+	}
+	
+	#content {
+		height: 100vh;
+	}
+	
+	#imgfile {
+		outline: 2px dashed #92b0b3;
+		outline-offset: -10px;
+		-webkit-transition: outline-offset .15s ease-in-out, background-color
+			.15s linear;
+		transition: outline-offset .15s ease-in-out, background-color .15s
+			linear;
+		padding: 120px 0px 85px 35%;
+		text-align: center !important;
+		margin: 0;
+		width: 100% !important;
+	}
+	
+	#imgfile:focus {
+		outline: 2px dashed #92b0b3;
+		outline-offset: -10px;
+		-webkit-transition: outline-offset .15s ease-in-out, background-color
+			.15s linear;
+		transition: outline-offset .15s ease-in-out, background-color .15s
+			linear;
+		border: 1px solid #92b0b3;
+	}
+	
+	#imgselected {
+		visibility: hidden;
+		width:50%;
+	}
 </style>
 </head>
 
 <body>
+	<%@include file="navi.jsp"%>
 	<div id="wrapper" class="container-fluid col-md-8">
-		<div class="row">
-			<p>인클루드 네비</p>
-		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<h2>오늘 뭐 입었어요?</h2>
@@ -131,21 +115,6 @@ body {
 			</form>
 		</div>
 	</div>
-
-	<!-- JQuery -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Bootstrap tooltips -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
-	<!-- Bootstrap core JavaScript -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<!-- MDB core JavaScript -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js">
-	</script>
-
 	<script>
 	document.oncontextmenu = function(e) {
 		return false;
@@ -189,5 +158,13 @@ body {
 			/* $(location).attr('href', 'writeArticle2.jsp'); */
 		})
 	</script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 </body>
 </html>
