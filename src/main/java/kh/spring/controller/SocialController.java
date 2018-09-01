@@ -215,6 +215,10 @@ public class SocialController {
 				}else if(main.equals("thumbnail")) {
 					mav.addObject("socialList",result);
 					mav.setViewName("main3.jsp");
+				}else {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("main.jsp");
 				}
 				
 
@@ -281,9 +285,15 @@ public class SocialController {
 
 
 		int seq = Integer.parseInt(request.getParameter("seq"));
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		SocialBoardDTO dto = service.selectSocialBoard(seq);
 		MemberDTO mdto = this.mService.selectSocialWriter(seq);
-
+		GoodDTO gdto = new GoodDTO(seq, user_seq);
+		int goodCount = service.allGoodCount(gdto);
+		mav.addObject("goodCount", goodCount);
+		int goodStatus = service.selectGoodCount(gdto);
+		mav.addObject("goodStatus", goodStatus);
+		
 		fdto.setFollowing_seq(seq);
 		Integer follow = mService.checkFollow(fdto);
 		mav.addObject("followcheck", follow);
@@ -924,7 +934,29 @@ public class SocialController {
 			mav.addObject("pGender",pGender);
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
-			mav.addObject("socialList",result);
+			
+			
+			try {
+				main = request.getParameter("main");
+				
+				if(main.equals("full")) {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag.jsp");
+				}else if(main.equals("thumbnail")) {
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag2.jsp");
+				}else {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag.jsp");
+				}
+				
+			}catch(Exception e4) {
+				result = makeHashTag(result);
+				mav.addObject("socialList",result);
+				mav.setViewName("searchTag.jsp");
+			}
 		}
 		return mav;
 	}

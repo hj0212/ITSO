@@ -14,9 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.ITipService;
 
 @Controller
 public class MemberController {
@@ -24,6 +26,8 @@ public class MemberController {
 	private IMemberService mservice;
 	@Autowired
 	private ISocialBoardService sservice;
+	@Autowired
+	private ITipService tservice;
 
 	//	protected static Logger log = LoggerFactory.getLogger(MemberController.class);
 
@@ -112,6 +116,7 @@ public class MemberController {
 		socialList = makeHashTag(socialList);
 		List<CollectionDTO> collectionList = this.sservice.getCollectionList(tmp);
 		List<SocialBoardDTO> photoList = this.sservice.getCollectionPhotoList(tmp);
+//		List<SearchedTipDTO> tipList = this.tservice.getMyTipList(tmp);
 		List<SocialBoardDTO> goodList = this.sservice.getMyGoodSocialArticleList((MemberDTO) session.getAttribute("user"));
 		List<MemberDTO> followerList = this.mservice.getFollowerList(tmp);
 		List<MemberDTO> followingList = this.mservice.getFollowingList(tmp);

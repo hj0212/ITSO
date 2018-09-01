@@ -590,7 +590,7 @@ button.dropdown-toggle {
 										<button type="button" class="btn-floating btn-sm savebtn"
 											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
 											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">컬렉션에 저장
-											<i class="fa fa-upload"></i>
+											<i class="fa fa-download"></i>
 										</button>
 									</div>
 								</div>
@@ -598,13 +598,10 @@ button.dropdown-toggle {
 						</div>
 					</div>
 					<!-- Grid column -->
-
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<tr>
-					<td colspan="3">게시글이 없습니다,</td>
-				</tr>
+				검색 결과가 없습니다.
 			</c:otherwise>
 		</c:choose>
 

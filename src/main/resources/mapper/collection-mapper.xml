@@ -10,8 +10,16 @@
 		select c1.collection_seq, c2.social_seq, c2.photo from (select c.collection_seq, c.social_seq, s.photo from collection_content c, social s where c.social_seq = s.social_seq) c2, collection c1 where c2.collection_seq = c1.collection_seq and c1.collection_writer = #{seq}
 	</select>
 	
+	<select id="getSearchedCollectionList" parameterType="String" resultType="CollectionDTO">
+		select * from collection where collection_title like '%'||#{0}||'%' or collection_contents like '%'||#{0}||'%'
+	</select>
+	
+	<select id="getSearchedCollectionPhotoList" resultType="sdto" parameterType="String">
+		select c1.collection_seq, c2.social_seq, c2.photo from (select c.collection_seq, c.social_seq, s.photo from collection_content c, social s where c.social_seq = s.social_seq) c2, collection c1 where c2.collection_seq = c1.collection_seq and c1.collection_title like '%'||#{0}||'%' or c1.collection_contents like '%'||#{0}||'%'
+	</select>
+	
 	<select id="getCollectionSocialList" resultType="sdto">
-		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, s.social_date,  s.photo, s.gender, s.age, u.name writerName from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
+		select c.collection_seq, s.social_seq, s.social_title, s.social_contents, s.social_writer, s.social_date,  s.photo, s.gender, s.age, u.name writerName, u.state userState from collection_content c, social s, users u where c.social_seq = s.social_seq and s.social_writer=u.seq and c.collection_seq = #{collection_seq}
 	</select>
 	
 	<select id="getCollectionData" resultType="CollectionDTO">

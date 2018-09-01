@@ -27,15 +27,15 @@
 <meta name="twitter:creator" content="@트위터아이디" />
 
 <link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<!-- Bootstrap core CSS -->
-	<link
-		href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
-		rel="stylesheet">
-	<!-- Material Design Bootstrap -->
-	<link
-		href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
-		rel="stylesheet">
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap core CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
+	rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Montserrat"
 	rel="stylesheet">
 <script type="text/javascript"
@@ -45,7 +45,6 @@
 <script type="text/javascript" src="<c:url value='/jquery.easypin.js'/>"></script>
 <title>Style-Share | ITSO</title>
 <style>
-
 #wrapper {
 	min-height: 100%;
 	width: 980px;
@@ -247,20 +246,21 @@
 						<div id="lookAction" class=container>
 							<div class="goodarea" style="margin-top: 17px; float: left;">
 								<c:set var="loop_flag" value="false" />
+								<script>console.log("여기: ${goodCount}")</script>
 								<c:choose>
 									<c:when test="${goodCount > 0 }">
 										<c:choose>
-											<c:when test="${goodStatus eq true }">
+											<c:when test="${goodStatus > 0 }">
 												<i class="fa fa-heart red-text heart" aria-hidden="true"
 													style="float: left; font-size: 25px;"
-													value="${content.social_seq}"><font color="black">${goodCount}
+													value="${content.social_seq}"> <font color="black">${goodCount}
 												</font></i>
 											</c:when>
 											<c:otherwise>
 												<i class="fa fa-heart-o red-text heart" aria-hidden="true"
 													style="float: left; font-size: 25px;"
-													value="${content.social_seq}"><font color="black">
-														0 </font></i>
+													value="${content.social_seq}"> <font color="black">
+														${goodCount} </font></i>
 											</c:otherwise>
 										</c:choose>
 
@@ -268,7 +268,7 @@
 									<c:otherwise>
 										<i class="fa fa-heart-o red-text heart" aria-hidden="true"
 											style="float: left; font-size: 25px;"
-											value="${content.social_seq}"><font color="black">
+											value="${content.social_seq}"> <font color="black">
 												0 </font></i>
 									</c:otherwise>
 								</c:choose>
@@ -418,7 +418,8 @@
 							src="resources/images/${writer.photo }"
 							alt="Generic placeholder image">
 						<div class="media-body mt-2">
-							<span><a href="userpage.go?seq=${writer.seq }">${writer.name}</a></span><br> <span>"${writer.state}"</span>
+							<span><a href="userpage.go?seq=${writer.seq }">${writer.name}</a></span><br>
+							<span>"${writer.state}"</span>
 						</div>
 						<c:choose>
 							<c:when test="${writer.seq eq sessionScope.user.seq}">
@@ -605,6 +606,33 @@
 		</div>
 	</div>
 	<script>
+	$(".heart").click(function() {
+		var heartVal = $(this).attr("class");
+		if (heartVal == "fa fa-heart red-text heart") {
+			$(this).attr("class", "fa fa-heart-o red-text heart");
+		} else {
+			$(this).attr("class", "fa fa-heart red-text heart");
+		}
+	});
+	$(".heart").on('click', function() {
+		var seq = $(this).attr("value");
+		var writer	= $(".writerseq").val();
+		var font = $(this).children('font');
+		console.log("숫자: " + $(this).children('font').html());
+		console.log(seq);
+		$.ajax({
+			url : "mainHeart.ajax",
+			type : "post",
+			data : {
+				social_seq : seq , 
+				social_writer :writer
+			},
+			success : function(data) {
+				console.log("들어옴" + data), font.html(data)
+			}
+		});
+	});
+	
 		$("#managebtn").on("click", function() {
 			window.open('userpage.go?view=collection', '_blank');
 		})
@@ -826,7 +854,7 @@
 			};
 		</script>
 	</c:if>
-	
+
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
@@ -958,7 +986,7 @@
 							});
 		</script>
 	</c:if>
-	
+
 	<script>
 	$(".followbtn").on(
 			'click',
@@ -1029,7 +1057,7 @@
 		//var url = window.location.protocol + window.location.host				+ window.location.pathname;
 		var url = document.location.href;
 		var text = encodeURI('${content.social_title}');
-		var wow = encodeURI('${goodCount.social_good_seq}');
+		var wow = encodeURI('${goodCount}');
 
 		console.log("와우에 오는 깃 : " + wow);
 		console.log("text에 오는 것: " + text);

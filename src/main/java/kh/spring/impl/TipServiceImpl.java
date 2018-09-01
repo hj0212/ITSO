@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -107,5 +108,23 @@ public class TipServiceImpl implements ITipService {
 		return this.dao.tipModifyProc(dto);
 	}
 
+	@Override
+	public List<SearchedTipDTO> getSearchedTipList(String word) {
+		return this.dao.getSearchedTipList(word);
+	}
 
+	@Override
+	public List<TipDTO> getTipBoardList(String category) {
+		return this.dao.getTipBoardList(category);
+	}
+
+	@Override
+	public int getTipBoardCount(String category) {
+		return this.dao.getTipBoardCount(category);
+	}
+
+	@Override
+	public List<TipDTO> getTipBoardListRange(String category, int start, int end) {
+		return this.dao.getTipBoardListRange(category, start, end);
+	}
 }

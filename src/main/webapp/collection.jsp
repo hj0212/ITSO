@@ -139,8 +139,8 @@ body {
 }
 
 .avatar .card-image {
-	width: 33px;
-	height: 33px;
+	width: 38px;
+	height: 38px;
 }
 
 .user-activity .avatar, .user-activity .user-action {

@@ -118,7 +118,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	
 	//���ƿ� 
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return template.selectOne("SocialBoard.selectGoodCount", gdto);
 	}
 
@@ -198,5 +198,19 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		
 		return template.selectList("SocialBoard.showHashTagFollowBoardList", map);
 	}
-	
+
+	@Override
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
+		return template.selectList("SocialBoard.searchedTagSocialList", word);
+	}
+
+	@Override
+	public List<CollectionDTO> getSearchedCollectionList(String word) {
+		return template.selectList("Collection.getSearchedCollectionList", word);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
+		return template.selectList("Collection.getSearchedCollectionPhotoList", word);
+	}
 }

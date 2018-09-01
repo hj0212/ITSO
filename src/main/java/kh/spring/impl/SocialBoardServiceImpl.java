@@ -61,7 +61,7 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	
 	//醫뗭븘�슂
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return this.dao.selectGoodCount(gdto);
 	}
 
@@ -84,7 +84,6 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		return this.dao.getMyGoodSocialList(dto);
 	}
-
 	
 	//게시물 인기
 	@Override
@@ -178,5 +177,18 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.getMyGoodSocialArticleList(dto);
 	}
 
-	
+	@Override
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
+		return this.dao.getsearchedTagSocialList(word);
+	}
+
+	@Override
+	public List<CollectionDTO> getSearchedCollectionList(String word) {
+		return this.dao.getSearchedCollectionList(word);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
+		return this.dao.getSearchedCollectionPhotoList(word);
+	}
 }

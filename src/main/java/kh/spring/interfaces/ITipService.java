@@ -2,6 +2,7 @@ package kh.spring.interfaces;
 
 import java.util.List;
 
+import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
 import kh.spring.dto.TipGoodDTO;
@@ -46,4 +47,10 @@ public interface ITipService {
 
 
 	public int tipModifyProc(TipDTO dto);
+	
+	public List<SearchedTipDTO> getSearchedTipList(String word);
+	public List<TipDTO> getTipBoardList(String category);
+	public int getTipBoardCount(String category);
+	public List<TipDTO> getTipBoardListRange(String category, int start, int end);
+	
 }
