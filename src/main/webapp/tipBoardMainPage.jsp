@@ -95,8 +95,8 @@ table {
 	border-radius: 0;
 }
 
-table tr {
-	text-align: left;
+table th {
+	text-align : center;
 }
 
 .tip-title {
@@ -106,6 +106,16 @@ table tr {
 .text-center {
 	text-align: center;
 }
+
+.tip-date {
+	text-align : right;
+}
+
+#tipcategory {
+	background-color: #1B0946;
+}
+
+
 </style>
 
 
@@ -253,29 +263,70 @@ table tr {
 								aria-hidden="true"></i>${beautyTipData.tip_viewcount}</td>
 			</tr></c:forEach>
 			
+			<div class="col-md-12 mt-5 text-center">
 				<table style="width : 100%;" class="mt-2">
-				
-				
+					<th colspan="1">
+						<div class="dropdown">
+					        <button class="btn btn-sm dropdown-toggle" type="button" id="tipcategory" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					            	카테고리별 분류
+					        </button>
+					        <div class="dropdown-menu" aria-labelledby="tipcategory">
+					            <a class="dropdown-item" href="tipBoardMainPage.tip">전체보기</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=뷰티">뷰티</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=다이어트">다이어트</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=패션">패션</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=기타">기타</a>
+					        </div>
+					    </div>
+					</th>
 					<c:forEach items="${tipBoardList}" var="list">
 						<tr>
 							<td>[${list.category}]</td>
-							<td>${list.name}</td>
-							<td class="tip-title">${list.tip_title}</td>
+							<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
+							<td class="tip-title"><a href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
 							<td>
 								<i class=" fa fa-heart red-text" aria-hidden="true">${list.tip_like_count}</i>
 								<i class="fa fa-comment amber-text" aria-hidden="true">${list.tip_comment_count}</i>
 								<i class="fa  fa-eye" aria-hidden="true">${list.tip_viewcount}</i>
 							</td>
-							<td>${list.tip_date}</td>
+							<td class=tip-date>${list.tip_date}</td>
 						</tr>
 					</c:forEach>
 				</table>
-		</table>
-		</li>
-		</ul>
-		
-			</div>			
-			
+				<!--Pagination-->
+				<div aria-label="pagination example" class="mt-3">
+				    <ul class="pagination pg-blue justify-content-center">
+						<c:if test="${page > 1}">
+					        <li class="page-item">
+					            <a class="page-link" href="tipBoardMainPage.tip?page=${page-1}&category=${category}" aria-label="Previous">
+					                <span aria-hidden="true">&laquo;</span>
+					                <span class="sr-only">Previous</span>
+					            </a>
+					        </li>
+						</c:if>
+						
+						<c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
+							<c:choose>
+								<c:when test="${pageNum eq page}">
+									<li class="page-item active"><a class="page-link" href="tipBoardMainPage.tip?page=${pageNum}&category=${category}">${pageNum}</a></li>
+								</c:when>
+								<c:otherwise>
+									<li class="page-item"><a class="page-link" href="tipBoardMainPage.tip?page=${pageNum}&category=${category}">${pageNum}</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>				
+						
+						<c:if test="${page < totalPage }">
+							<li class="page-item">
+								<a class="page-link" href="tipBoardMainPage.tip?page=${page+1}&category=${category}" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span> 
+									<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</c:if>
+				    </ul>
+				</div>
+			</div>
 		<div class=container>
 			<button class="btn btn-itso" onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
 		</div>
