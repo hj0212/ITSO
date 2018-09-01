@@ -172,17 +172,19 @@ table th {
 					            	카테고리별 분류
 					        </button>
 					        <div class="dropdown-menu" aria-labelledby="tipcategory">
-					            <a class="dropdown-item" href="#">Action</a>
-					            <a class="dropdown-item" href="#">Another action</a>
-					            <a class="dropdown-item" href="#">Something else here</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip">전체보기</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=뷰티">뷰티</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=다이어트">다이어트</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=패션">패션</a>
+					            <a class="dropdown-item" href="tipBoardMainPage.tip?category=기타">기타</a>
 					        </div>
 					    </div>
 					</th>
 					<c:forEach items="${tipBoardList}" var="list">
 						<tr>
 							<td>[${list.category}]</td>
-							<td>${list.name}</td>
-							<td class="tip-title">${list.tip_title}</td>
+							<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
+							<td class="tip-title"><a href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
 							<td>
 								<i class=" fa fa-heart red-text" aria-hidden="true">${list.tip_like_count}</i>
 								<i class="fa fa-comment amber-text" aria-hidden="true">${list.tip_comment_count}</i>
@@ -197,7 +199,7 @@ table th {
 				    <ul class="pagination pg-blue justify-content-center">
 						<c:if test="${page > 1}">
 					        <li class="page-item">
-					            <a class="page-link" href="tipBoardMainPage.tip?page=${page-1}&category=${cateogry}" aria-label="Previous">
+					            <a class="page-link" href="tipBoardMainPage.tip?page=${page-1}&category=${category}" aria-label="Previous">
 					                <span aria-hidden="true">&laquo;</span>
 					                <span class="sr-only">Previous</span>
 					            </a>
@@ -207,17 +209,17 @@ table th {
 						<c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
 							<c:choose>
 								<c:when test="${pageNum eq page}">
-									<li class="page-item active"><a class="page-link" href="tipBoardMainPage.tip?page=${pageNum}&category=${cateogry}">${pageNum}</a></li>
+									<li class="page-item active"><a class="page-link" href="tipBoardMainPage.tip?page=${pageNum}&category=${category}">${pageNum}</a></li>
 								</c:when>
 								<c:otherwise>
-									<li class="page-item"><a class="page-link" href="tipBoardMainPage.tip?page=${pageNum}&category=${cateogry}">${pageNum}</a></li>
+									<li class="page-item"><a class="page-link" href="tipBoardMainPage.tip?page=${pageNum}&category=${category}">${pageNum}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>				
 						
 						<c:if test="${page < totalPage }">
 							<li class="page-item">
-								<a class="page-link" href="tipBoardMainPage.tip?page=${page+1}&category=${cateogry}" aria-label="Next">
+								<a class="page-link" href="tipBoardMainPage.tip?page=${page+1}&category=${category}" aria-label="Next">
 									<span aria-hidden="true">&raquo;</span> 
 									<span class="sr-only">Next</span>
 								</a>
