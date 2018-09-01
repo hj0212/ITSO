@@ -30,6 +30,18 @@ public class MessagesDTO {
 		this.message_icon = message_icon;
 		this.message_img = message_img;
 	}
+	
+	public MessagesDTO(int user_seq,int message_user_seq) {
+		this.user_seq = user_seq;
+		this.message_user_seq = message_user_seq;
+	}
+	
+	public MessagesDTO(int user_seq,int message_user_seq,String message_contents) {
+		this.user_seq = user_seq;
+		this.message_user_seq = message_user_seq;
+		this.message_contents = message_contents;
+	}
+	
 	public int getMessage_seq() {
 		return message_seq;
 	}

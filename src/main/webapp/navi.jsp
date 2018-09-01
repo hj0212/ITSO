@@ -462,13 +462,8 @@ background-color: #f4f4f4;
 		<!--Content-->
 		<div class="modal-content" id="modal-content" style="height: 100%;">
 			<!--Header-->
-			<div class="modal-header">
-				<img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1"
-					alt="avatar"
-					class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 "
-					style="width: 50px; height: 50px;">
-				<p class="heading lead">김형섭</p>
-
+			<div class="modal-header" id="message-header">
+			
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true" class="white-text">&times;</span>
@@ -479,22 +474,7 @@ background-color: #f4f4f4;
 			<div class="modal-body message-list"
 				style="overflow: auto; padding-top: 10px; padding-bottom: 10px;"id="modal-body">
 
-				<div class="msg col-md-6 ml-auto"
-					style="width: 100%; margin-bottom: 20px;">
-					<p class="text-sm">Lorem ipsum dolor sit amet, consectetur
-						adipisicing elit. Impedit iusto nulla aperiam blanditiis ad
-						consequatur in dolores culpa, dignissimos, eius non possimus
-						fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
-				</div>
-
-
-				<div class="other-msg col-md-6"
-					style="width: 100%; margin-bottom: 20px;">
-					<p class="text-sm">Lorem ipsum dolor sit amet, consectetur
-						adipisicing elit. Impedit iusto nulla aperiam blanditiis ad
-						consequatur in dolores culpa, dignissimos, eius non possimus
-						fugiat. Esse ratione fuga, enim, ab officiis totam.</p>
-				</div>
+	
 
 			</div>
 			<!--Footer-->
@@ -502,8 +482,8 @@ background-color: #f4f4f4;
 				<textarea class="form-control rounded-0"
 					id="exampleFormControlTextarea2" rows="3"
 					style="margin: 0xp; padding: 0px; max-height: 94px; z-index: 100000;"></textarea>
-					<!-- <button type="button" style="float: right">send</button> -->
-					<a style="right: 10px;font-size: 20px; "><i class="fa fa-send" style="float:right;"></i></a>		
+				
+					<a style="right: 10px;font-size: 20px;" id="sendMessage"><i class="fa fa-send" style="float:right;"></i></a>		
 		</div>
 		<!--/.Content-->
 	</div>
@@ -650,12 +630,6 @@ background-color: #f4f4f4;
 	};
 
 	
-
-
-
-
-	
-	
 	$(document).on(
 			'click',
 			".notification-item",
@@ -675,4 +649,65 @@ background-color: #f4f4f4;
 			location.href = "searchWord.se?word="+$(this).val();
 		}
 	});
+	
+	$("#sendMessage").click(function(){
+		var message = $("#exampleFormControlTextarea2").val();
+		if(message == ""){
+		 ws.send(message);
+		}
+		
+	});
+	$("#exampleFormControlTextarea2").keydown(function(key){
+		if(key.keyCode ==13){
+			var message = $("#exampleFormControlTextarea2").val();
+			var message_user_seq =$(".heading-name").attr("seq");
+			console.log(message_user_seq);
+			if(message != ""){
+				console.log("여기는 들어옴");
+			/*  ws.send(message); */
+			 $.ajax({
+				 url :"sendMessage.ajax",
+				 type:"post",
+				 data:{
+					 message:message,
+					 message_user_seq: message_user_seq
+				 },
+				 success: function(data){
+					 if(data >0){
+					 console.log("입력완료");
+					 }else{
+						 console.log("실패");
+					 }
+				 }
+			 });
+			 
+			}
+		}
+	});
+
+	var notificationcounter = 0;
+	if ("WebSocket" in window) {
+		var ws = new WebSocket(
+				"ws://localhost:8080/socket?seq=${sessionScope.user.seq}");
+		var str;
+		var file = ""
+			ws.onopen = function() {
+		
+			};
+		ws.onmessage = function(msg) {
+		
+
+			console.log("이거 유저인데 :" + obj.user_seq + obj.noti_user_name);
+		};
+
+		ws.onclose = function() {
+		};
+
+	}
+	
+	
+	
+	
+	
+	
 </script>

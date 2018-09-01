@@ -20,13 +20,13 @@ public class MessagesDAOImple implements IMessagesDAO  {
 	@Override
 	public int sendMessage(MessagesDTO medto) {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.template.insert("Messages.sendMessage",medto);
 	}
 
 	@Override
 	public List<MessagesDTO> selectMessage(MessagesDTO medto) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.template.selectList("Messages.selectMessage",medto);
 	}
 
 }

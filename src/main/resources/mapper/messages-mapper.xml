@@ -3,11 +3,14 @@
 <mapper namespace="Messages">
 
 <insert id="sendMessage" parameterType="MessagesDTO">
-	insert into 
+	insert into message values(message_seq.nextval,#{user_seq},#{message_contents},sysdate,#{message_user_seq},'n','n','n')
 </insert>
 	
-
-
-
-
+<select id="selectMessage" resultType="MessagesDTO">
+	select * from message where user_seq = #{user_seq} and message_user_seq= #{message_user_seq} or message_user_seq=#{user_seq} and user_seq= #{message_user_seq}
+</select>
+<!-- <select id="selectUserList" resultType="">
+	select DISTINCT(u.seq) user_seq ,u.photo photo,u.name name,m.message_contents message_contents  from users u,message m  where seq in(select user_seq  from message where user_seq =#{user_seq} or message_user_seq =#{user_seq}) and not u.seq =#{user_seq};
+</select>
+ -->
 </mapper>

@@ -19,13 +19,13 @@ public class MessagesServiceImple implements IMessagesService{
 	@Override
 	public int sendMessage(MessagesDTO medto) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.sendMessage(medto);
 	}
 
 	@Override
 	public List<MessagesDTO> selectMessage(MessagesDTO medto) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.selectMessage(medto);
 	}
 
 }
