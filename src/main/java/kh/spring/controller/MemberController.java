@@ -126,7 +126,7 @@ public class MemberController {
 		mav.addObject("followcheck", result);
 		mav.addObject("seq", tmp.getSeq());
 		mav.addObject("member", tmp);
-		mav.addObject("tipList", tipBoardList);
+//		mav.addObject("tipList", tipBoardList);
 		mav.addObject("socialList", socialList);
 		mav.addObject("collectionList", collectionList);
 		mav.addObject("photoList", photoList);
