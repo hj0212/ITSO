@@ -57,11 +57,16 @@ public class TipController {
 
 	@RequestMapping("tipBoardMainPage.tip")
 	public ModelAndView tipBoardMainPageWithAllData(HttpServletRequest request) {
-
 		ModelAndView mav = new ModelAndView();
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
 		String category = request.getParameter("category");
+		
+		if(category != null) {
+			category = category.trim().equals("") ? null : category;
+		}
+		
 		int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		StringBuffer pagination = new StringBuffer();
 		
 		int totalCount = service.getTipBoardCount(category);
 		// 한 페이지당 들어갈 글 수
@@ -86,34 +91,16 @@ public class TipController {
 			endPage = totalPage;
 		}
 		
-		if(page > 1) {
-			System.out.println("<a href=\"page=" + (page-1) + "\">이전</a>");
-		}
-		
-		for (int i = startPage; i <= endPage; i++) {
-			if(i == page) {
-				System.out.println("<b>"+i+"</b>");
-			}else {
-				System.out.println(" " + i + " ");
-			}
-		}
-		
-		if(page < totalPage) {
-			System.out.println("<a href=\"?page=" + (page + 1)  + "\">다음</a>");
-		}
-		
 		int startCount = (page - 1) * countList + 1;
 		int endCount = page * countList;
 		List<TipDTO> tipBoardList = service.getTipBoardListRange(category, startCount, endCount);
 		
+		mav.addObject("category", category);
+		mav.addObject("page", page);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("totalPage",totalPage);
 		
-		
-		for(TipDTO dto : tipBoardList) {
-			System.out.println(dto.getName());
-		}
-		
-		
-
 		mav.addObject("tipBoardList", tipBoardList);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
