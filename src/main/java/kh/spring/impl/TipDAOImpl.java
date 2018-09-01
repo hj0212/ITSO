@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
@@ -143,5 +144,10 @@ public class TipDAOImpl implements ITipDAO {
 		map.put("start", start+"");
 		map.put("end", end+"");
 		return template.selectList("TipBoard.getTipBoardListRange", map);
+	}
+
+	@Override
+	public List<TipDTO> getMyTipBoardList(MemberDTO dto) {
+		return template.selectList("TipBoard.getMyTipBoardList", dto);
 	}
 }

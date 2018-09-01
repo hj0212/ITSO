@@ -612,7 +612,8 @@ a#MOVE_TOP_BTN {
 
 	<!-- Button trigger modal -->
 	<div class="text-center"></div>
-
+	
+	<%@include file="footer.jsp"%>
 
 </body>
 <!-- Bootstrap tooltips -->

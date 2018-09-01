@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
@@ -126,5 +127,10 @@ public class TipServiceImpl implements ITipService {
 	@Override
 	public List<TipDTO> getTipBoardListRange(String category, int start, int end) {
 		return this.dao.getTipBoardListRange(category, start, end);
+	}
+
+	@Override
+	public List<TipDTO> getMyTipBoardList(MemberDTO dto) {
+		return this.dao.getMyTipBoardList(dto);
 	}
 }
