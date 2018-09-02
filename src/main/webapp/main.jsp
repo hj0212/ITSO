@@ -143,22 +143,6 @@ button.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
 
-#sidefooter {
-	width: 100%;
-	bottom: 0px;
-	border-top: 2px solid black;
-	text-align: center;
-}
-
-#sidefooter p {
-	font-style: oblique;
-}
-
-#sidefooter p a {
-	font-style: oblique;
-	color: black;
-}
-
 #MOVE_TOP_BTN {
 	position: fixed;
 	right: 5%;
@@ -173,14 +157,6 @@ button.dropdown-toggle {
 
 .writerName:hover {
 	color: aqua;
-}
-
-.btn-floating {
-	
-}
-
-.footer-brand {
-	width: 70px;
 }
 
 .hidden {
@@ -771,20 +747,9 @@ button.dropdown-toggle {
 			</ul>
 
 		</div>
-
-		<!--side footer -->
-		<div id="sidefooter">
-
-			<p>
-				<a class="footer-brand" href="#"><img id="logo" alt=""
-					src="resources/images/logo_black.png"></a>©2018 ItSo. All rights
-				reserved.
-			</p>
-			<p>
-				<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
-				<a href="#">advertise</a>· <a href="#">legal</a>
-			</p>
-		</div>
+		
+	<%@include file="footer.jsp"%>
+		
 	</div>
 	<script>
 		$("#managebtn").on("click", function () {

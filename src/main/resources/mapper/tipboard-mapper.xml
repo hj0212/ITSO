@@ -246,4 +246,12 @@
 		 and t.category = #{value}
 	</if>
 </select>
+
+<select id="getMyTipBoardList" resultType="TipDTO">
+select t.*, tg.tip_like_count, tc.tip_comment_count, u.name from 
+	users u, tip t 
+	left outer join (select tip_seq, count(*) tip_like_count from tip_good group by tip_seq) tg on t.tip_seq = tg.tip_seq 
+	left outer join (select tip_seq, count(*) tip_comment_count from tip_comment group by tip_seq) tc on t.tip_seq = tc.tip_seq
+	where u.SEQ = t.tip_writer and u.seq = #{seq} order by t.tip_seq desc
+</select>
 </mapper>
