@@ -190,21 +190,24 @@ table th {
 						</div>
 					</div>
 				</div>
-			</c:forEach>
-		</div>
-	</div>
-	
-	
+
 	
 	<!-- status.index 때문에, 이 line위치가 c:forEach를 벗어날 시 작동 X -->
 
 	<script>
 		$(document).ready(function() {
 
-			$("#reportSubmitBtn").click(function(e) {
-				var index = $(this).index();
+			$("#reportSubmitBtn").click(function report() {
 
-				console.log(index);
+				var user_name = $(".userName[name|=${status.index}]").html(),
+				var user_seq = $(".userSeq[name|=${status.index}]").val(),
+				var reporting_user = $(".sessionUser").val(),
+				var report_reason = $(".reportReason:checked").val()
+
+				console.log(user_name +" : "+ user_seq + " : " + reporting_user + " : " + report_reason);
+
+				
+				
 				var data = JSON.stringify({
 
 					user_name : $(".userName[name|=${status.index}]").html(),
@@ -224,7 +227,7 @@ table th {
 					contentType : "application/json;charset=UTF-8",
 					success : function(result) {
 						if (result > 0) {
-							alert(userName + "을 신고하였습니다.");
+							alert(data.userName + "을 신고하였습니다.");
 
 						}
 					},
@@ -238,6 +241,13 @@ table th {
 	</script>
 
 
+
+
+			</c:forEach>
+		</div>
+	</div>
+	
+	
 
 
 	<!-- recent tip list -->
