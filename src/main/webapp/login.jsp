@@ -370,7 +370,8 @@ $(document).ready(function () {
 
     /*password*/
     $("#inputValidationEx2")
-        .keypress(
+     
+    .keypress(
             function () {
                 var password = $(
                         "#inputValidationEx2")
@@ -600,7 +601,8 @@ $(document).ready(function () {
 			</form>
 			<div id="other-bt-group" style="text-align: center;">
 
-				<!-- Title -->
+				<!-- T
+				itle -->
 				<h4 class="card-title" style="color: #e9e9e9">
 					<strong>Other Login</strong>
 				</h4>
@@ -608,6 +610,7 @@ $(document).ready(function () {
 
 				<!-- Text -->
 				<p class="card-text"></p>
+				
 
 				<!-- Facebook -->
 				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">

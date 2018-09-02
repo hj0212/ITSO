@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 public class EchoHandler{
 
 		
-	public static Map<Integer,Session> users = Collections.synchronizedMap(new HashMap<>());
+	public static Map<Integer,Session> users = Collections.synchronizedMap(new HashMap());
 	
 	 
 	

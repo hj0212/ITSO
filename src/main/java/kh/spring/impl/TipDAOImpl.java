@@ -77,7 +77,7 @@ public class TipDAOImpl implements ITipDAO {
 
 	@Override
 	public int tipArticleLikeProc(int seq, int tipLikingUser) {
-		Map<String,Integer> map = new HashMap<>();
+		Map<String,Integer> map = new HashMap();
 		map.put("seq", seq);
 		map.put("tipLikingUser", tipLikingUser);
 		return template.insert("TipBoard.tipArticleLikeProc", map);
@@ -106,7 +106,7 @@ public class TipDAOImpl implements ITipDAO {
 
 	@Override
 	public List<TipGoodDTO> isThisLikeWhetherFirst(int tipSeq, int tipLikingUser) {
-		Map<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap();
 		map.put("tipSeq",tipSeq);
 		map.put("tipLikingUser", tipLikingUser);
 		return template.selectList("TipGood.isThisLikeWhetherFirst",map);
