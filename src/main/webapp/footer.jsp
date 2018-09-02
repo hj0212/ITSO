@@ -3,8 +3,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
+html, body {
+	height: 100%;
+}
+
 #sidefooter {
 	width: 100%;
+	height: 100px;
 	bottom: 0px;
 	border-top: 2px solid black;
 	text-align: center;
@@ -23,7 +28,6 @@
 	width: 70px;
 }
 </style>
-
 <div id="sidefooter">
 
 	<p>

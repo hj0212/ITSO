@@ -31,6 +31,12 @@ body {
 	background-color: #eeeeee;
 }
 
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 #wrapper div {
 	background-color: #fff;
 }
@@ -1218,6 +1224,9 @@ table .profilearea {
 			<!--/.Content-->
 		</div>
 	</div>
+	
+	<%@include file="footer.jsp"%>
+	
 	<script>
 		$("#managebtn").on("click", function() {
 			window.open('userpage.go?view=collection', '_blank');
