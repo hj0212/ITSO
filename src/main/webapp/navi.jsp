@@ -329,7 +329,7 @@ background-color: #f4f4f4;
 		<ul class="navbar-nav mr-auto hide">
 			<li class="nav-item"><a class="nav-link"
 				href="tipBoardMainPage.tip">팁 </a></li>
-			<li class="nav-item"><a class="nav-link" href="#">스타일링</a></li>
+			<li class="nav-item"><a class="nav-link" href="stylingBoard.style">스타일링</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
 		</ul>
 	</div>

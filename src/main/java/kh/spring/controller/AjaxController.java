@@ -16,6 +16,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,10 +32,12 @@ import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MessagesDTO;
 import kh.spring.dto.NotificationDTO;
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.IMessagesService;
 import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.IStylingService;
 import kh.spring.websocket.EchoHandler;
 import kh.spring.websocket.MessageSocket;
 
@@ -52,12 +55,12 @@ public class AjaxController {
 	private ISocialBoardService sbService;
 	
 	@Autowired
+	private IStylingService styservice; 
+	
+	@Autowired
 	private IMessagesService mservice;
 
 
-
-	
-	
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
 
@@ -337,6 +340,26 @@ public class AjaxController {
 		return resultmsg;
 	}
 	
+	@RequestMapping("/doStylingVote.ajax")
+	public @ResponseBody void doStylingVote(HttpSession session, int value, int styling_vote_seq) {
+		System.out.println("투표ajax실행시작-------------------");
+		StylingVoteUserDTO votedto = new StylingVoteUserDTO();
+		
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		votedto.setUser_seq(user_seq);
+		votedto.setVote_value(value);
+		votedto.setStyling_vote_seq(styling_vote_seq);
+		
+		int voteresult = styservice.doStylingVote(votedto);
+		System.out.println(value+"에 투표ajax 결과-"+voteresult);
+	}
+	
+	@RequestMapping("/updateStylingViewcount.ajax")
+	public @ResponseBody void updateStylingViewcount(HttpSession session, @RequestParam int styling_vote_seq) {
+		System.out.println(styling_vote_seq+"번글 조회수 up-------------------");
+		int result = styservice.updateStylingViewcount(styling_vote_seq);
+		System.out.println("ajax 조회수 up 완료");
+	}
 
 
 	
