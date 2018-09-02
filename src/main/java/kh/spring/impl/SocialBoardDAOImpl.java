@@ -1,5 +1,6 @@
 package kh.spring.impl;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,7 +169,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
@@ -179,7 +180,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagHotBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
@@ -190,7 +191,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagFollowBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");

@@ -152,13 +152,8 @@ input[type="file"] {
 
 										<div class="media-body image-upload-wrap form-group"
 											id="btnsdiv">
-											<a class="upvotebtn"> <i
-												class="fa fa-arrow-circle-o-up indigo-text fa-1x"
-												aria-hidden="true"></i>
-											</a> <a class="downvotebtn"> <i
-												class="fa fa-arrow-circle-o-down fa-1x indigo-text"
-												aria-hidden="true"></i>
-											</a> <a class="delvotebtn"> <i
+											
+											<a class="delvotebtn"> <i
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
@@ -323,9 +318,7 @@ input[type="file"] {
 														+ count
 														+ '" class="file-upload-input form-control filesel"'
 														+ 'onchange="readURL(this);" accept="image/*"></div>'
-														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
-														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
-														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
+														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'	
 														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
 														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control itemconts" name="styling_vote_item_contents[]"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
 														+ '</div></div></div></td></tr>');
@@ -339,6 +332,7 @@ input[type="file"] {
 			var wraptr = $(this).closest("tr");
 			$(this).closest("tr").remove();
 			count--;
+			numbering();
 			/* var arr = wraptr.nextAll('tr').children('th');
 			for(i=0 i<arr.size i++){
 				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜

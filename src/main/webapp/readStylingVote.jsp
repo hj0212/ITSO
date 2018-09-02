@@ -325,7 +325,7 @@ font-size:15px;
 		})
 		
 		$('#modibtn').click(function(){
-			location.href="modifyStylingVote.go?styling_vote_seq=${votedto.styling_vote_seq}";
+			location.href="modifyStylingVote.go?styling_vote_seq=${votedto.styling_vote_seq}&state=${votestate}";
 			console.log("${votedto.styling_vote_seq}번글 수정으로 go");
 		})
 

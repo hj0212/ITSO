@@ -140,7 +140,7 @@ font-size:15px;
 			<input type="hidden" name="styling_writer" value="${votedto.styling_writer}">
 			<input type="hidden" name ="styling_writedate" value="${votedto.styling_writedate}">
 			<input type="hidden" name="styling_viewcount" value="${votedto.styling_viewcount}">
-			
+			<input type="hidden" name="state" value="${state}">
 
 			<div class="row">
 				<h4 class="mb-0">투표항목</h4>
@@ -217,7 +217,7 @@ font-size:15px;
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="datepickervalue" disabled
+					<input type="text" id="datepicker" name="datepickervalue" disabled readOnly
 						class="form-control form-control-sm col-md-4" value="${votedto.styling_endterm}">
 						<input type="hidden" name="styling_endtermtxt" id="realterm">
 				</div>

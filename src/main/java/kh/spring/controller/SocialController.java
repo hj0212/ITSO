@@ -150,8 +150,8 @@ public class SocialController {
 
 
 
-		List<Integer> ggdto = new ArrayList<>();
-		List<MemberDTO> mdto = new ArrayList<>();
+		List<Integer> ggdto = new ArrayList();
+		List<MemberDTO> mdto = new ArrayList();
 
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
@@ -167,7 +167,7 @@ public class SocialController {
 		//		}
 
 
-		List<Integer> goodCount = new ArrayList<>();
+		List<Integer> goodCount = new ArrayList();
 		for(SocialBoardDTO sdd : result) {
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq(),user_seq);
 			goodCount.add(this.service.selectGoodCount(gdto));
@@ -886,8 +886,8 @@ public class SocialController {
 			feed="new";
 		}
 
-		List<Integer> ggdto = new ArrayList<>();
-		List<MemberDTO> mdto = new ArrayList<>();
+		List<Integer> ggdto = new ArrayList();
+		List<MemberDTO> mdto = new ArrayList();
 
 		for(SocialBoardDTO sdd : result) {	
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
@@ -897,7 +897,7 @@ public class SocialController {
 			/*System.out.println(ggdto);*/
 		}
 
-		List<Integer> goodCount = new ArrayList<>();
+		List<Integer> goodCount = new ArrayList();
 		for(SocialBoardDTO sdd : result) {
 			GoodDTO gdto = new GoodDTO(sdd.getSocial_seq(),user_seq);
 			goodCount.add(this.service.selectGoodCount(gdto));
