@@ -22,7 +22,7 @@ public class ReportDAOImpl implements IReportDAO {
 
 	@Override
 	public List<ReportDTO> checkReportData(ReportDTO dto) {
-		System.out.println(dto.getBoard_seq());
+		System.out.println(dto.getBoard_seq()+":"+dto.getReporting_user());
 		return template.selectList("Report.checkArticle");
 	}
 

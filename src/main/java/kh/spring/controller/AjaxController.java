@@ -416,7 +416,6 @@ public class AjaxController {
 			int result = tservice.insertReport(dto);
 			System.out.println(result>0?"신고 성공":"신고 실패");
 		}
-		
 	}
 
 }

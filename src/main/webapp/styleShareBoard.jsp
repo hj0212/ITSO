@@ -321,8 +321,8 @@
 								</c:if>
 							</div>
 							<div class="instafilta-target mt-1">
-								<span id="commentcount">${content.comment_count }</span> <i
-									class="fa fa-comment-o"></i>
+								<span id="commentcount"><i
+									class="fa fa-comment-o"></i> ${content.comment_count }</span> 
 							</div>
 						</header>
 						<div>
@@ -693,8 +693,8 @@
 	
 	$("#reportsubmitbtn").click(function() {
 		report_reason = $("input[name='reportreason']:checked").val();
-		var user_seq = ${tipContent.tip_writer};
-		var board_seq = ${tipContent.tip_seq};
+		var user_seq = $(".writerseq").val();
+		var board_seq = $(".socialseq").val();
 		
 		flag = true;
 		if(report_reason == "on") {

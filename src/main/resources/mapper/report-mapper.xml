@@ -8,7 +8,7 @@
 	</insert>
 	
 	<select id="checkArticle" resultType="ReportDTO">
-		select * from report where board_seq = #{board_seq, jdbcType=INTEGER} and reporting_user = #{reporting_user} and board = #{board}
+		select * from report where board_seq = #{board_seq, jdbcType=INTEGER} and reporting_user = #{reporting_user, jdbcType=INTEGER} and board = #{board}
 	</select>
 	
 	<select id="getAllData" resultType="kh.spring.dto.AdminPageDTO">
