@@ -353,7 +353,13 @@ public class SocialController {
 			NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");
 			int update_noti =this.nosevice.updateNotification(nodto);
 		}
+		
 		int social_seq = dto.getSocial_seq();
+		
+		
+		int allgoodCount = service.allGoodCount(gdto);
+		mav.addObject("allgoodCount",allgoodCount);
+		
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
 		// image_db -> {} -> 0 : {}, 1 : {}
 		ObjectNode infoNode = om.createObjectNode();
@@ -834,7 +840,7 @@ public class SocialController {
 		return mav;
 	}
 
-	@RequestMapping("searchTag.go")
+	@RequestMapping("/searchTag.go")
 	public ModelAndView searchTag(HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		int user_seq = 0;
