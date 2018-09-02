@@ -12,59 +12,54 @@
 
 <meta charset="UTF-8">
 
-<title>JSP</title>
+<title>It So Chat</title>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+.chat-room{
+	width: 50%;
+}
+.basic-textarea textarea {
+    height: auto;
+}
 
-<script type="text/javascript">
+.card.chat-room .friend-list li {
+  border-bottom: 1px solid #e0e0e0; }
+  .card.chat-room .friend-list li:last-of-type {
+    border-bottom: none; }
 
-    $(document).ready(function() {
+.card.chat-room img.rounded-circle {
+  border-radius: 50%; }
 
-        $("#sendBtn").click(function() {
+.card.chat-room img.avatar {
+  height: 3rem;
+  width: 3rem; }
 
-            send_Message();
+.card.chat-room .text-small {
+  font-size: 0.95rem; }
 
-        });
+.card.chat-room .text-smaller {
+  font-size: 0.75rem; }
+</style>
 
-    
-
-    var ws="";
-	function send_Message() {
-		ws = new WebSocket("ws://localhost:8080/websocket");
-		ws.onopen = function(event) {
-			onOpen(event);
-		};
-		ws.onmessage = function(event) {
-			onMessage(event)
-		};
-		ws.onerror = function(event) {
-			onError(event);
-		};
-	}
-		function onOpen(event){
-			console.log("onOpen");
-			ws.send($("#message").val());
-		}
-		function onMessage(event){
-			$("#data").text(event.data);
-			console.log("돌아왔어");
-		}
-		function onError(event){
-			console.log("에러입니다");
-		}
-	
-    });
-</script>
 
 </head>
 
 <body>
-
-    <input type="text" id="message" />
-
-    <input type="button" id="sendBtn" value="전송" />
-
-    <div id="data"></div>
+<!-- jquery  -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap core CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
+	rel="stylesheet">
 
 </body>
 
