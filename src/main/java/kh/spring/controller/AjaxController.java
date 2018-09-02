@@ -1,7 +1,5 @@
 package kh.spring.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -22,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
@@ -31,6 +27,7 @@ import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MessagesDTO;
 import kh.spring.dto.NotificationDTO;
+import kh.spring.dto.ReportDTO;
 import kh.spring.dto.SocialBoardDTO;
 import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IMemberService;
@@ -38,8 +35,8 @@ import kh.spring.interfaces.IMessagesService;
 import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.IStylingService;
+import kh.spring.interfaces.ITipService;
 import kh.spring.websocket.EchoHandler;
-import kh.spring.websocket.MessageSocket;
 
 @Controller
 public class AjaxController {
@@ -59,6 +56,9 @@ public class AjaxController {
 	
 	@Autowired
 	private IMessagesService mservice;
+	
+	@Autowired
+	private ITipService tservice;
 
 
 	@RequestMapping("/emailcheck.ajax")
@@ -361,9 +361,6 @@ public class AjaxController {
 		System.out.println("ajax 조회수 up 완료");
 	}
 
-
-	
-
 	@RequestMapping("/fbLogin.ajax")
 	public @ResponseBody String fbLogin(String data, HttpSession session) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -405,6 +402,21 @@ public class AjaxController {
 
 		return null;
 	}
-
+	
+	@RequestMapping("reportArticle.ajax")
+	public @ResponseBody void reportTipArticle(ReportDTO dto, HttpSession session) {
+		System.out.println("dto: " + dto.getBoard_seq());
+		int reporting_user = ((MemberDTO)session.getAttribute("user")).getSeq();
+		dto.setReporting_user(reporting_user);
+		List<ReportDTO> list = tservice.checkReportData(dto);
+		System.out.println("dto: " + dto.getBoard_seq());
+		if(list.size() > 0) {
+			System.out.println("이미 신고");
+		} else {
+			int result = tservice.insertReport(dto);
+			System.out.println(result>0?"신고 성공":"신고 실패");
+		}
+		
+	}
 
 }

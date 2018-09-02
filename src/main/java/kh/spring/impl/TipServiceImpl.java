@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.ReportDTO;
 import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
@@ -132,5 +133,15 @@ public class TipServiceImpl implements ITipService {
 	@Override
 	public List<TipDTO> getMyTipBoardList(MemberDTO dto) {
 		return this.dao.getMyTipBoardList(dto);
+	}
+
+	@Override
+	public int insertReport(ReportDTO dto) {
+		return this.dao.insertReport(dto);
+	}
+
+	@Override
+	public List<ReportDTO> checkReportData(ReportDTO dto) {
+		return this.dao.checkReportData(dto);
 	}
 }
