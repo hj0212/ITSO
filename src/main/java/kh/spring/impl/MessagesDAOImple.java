@@ -29,4 +29,16 @@ public class MessagesDAOImple implements IMessagesDAO  {
 		return this.template.selectList("Messages.selectMessage",medto);
 	}
 
+	@Override
+	public List<MessagesDTO> userList(MessagesDTO medto) {
+		// TODO Auto-generated method stub
+		return this.template.selectList("Messages.userList",medto);
+	}
+
+	@Override
+	public MessagesDTO userLastMessage(MessagesDTO medto) {
+		// TODO Auto-generated method stub
+		return this.template.selectOne("Messages.userLastMessage", medto);
+	}
+
 }

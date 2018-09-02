@@ -503,7 +503,7 @@ table .profilearea {
 							</button>
 						</c:if>
 						<input type="hidden" value="${ferlist.seq}" id="message-seq" />
-						<button id="messagebtn" class="btn btn-itso btn-sm">
+						<button id="messagebtn" class="btn btn-itso btn-sm" data-toggle="modal" data-target="#centralModalSuccess">
 							<i class="fa fa-envelope-o" aria-hidden="true" ></i> 메시지 보내기
 						</button>
 					</c:otherwise>
@@ -1351,6 +1351,7 @@ table .profilearea {
 			var seq	="${seq}";
 			alert(seq);
 			var message=""
+				
 			$.ajax({
 			    url :"messageUser.ajax",
 			    type: "post",
@@ -1363,41 +1364,16 @@ table .profilearea {
 			   	console.log(data.message[0].contents);
 			   	console.log(data.message[1].contents);
 			 
-			
+
 			    }
 				
 			});
 	
-			$("#messagebtn").attr("data-toggle","modal");
-			$("#messagebtn").attr("data-target","#centralModalSuccess");
+		
+			
 		});
 	
-		function showMessageList(data){
-			var list ="";
-			var sessionSeq = "${sessionScope.user.seq}"
-			$.each(data.message,function(index,item){
-				if(item.user_seq == sessionSeq){
-					list = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
-				}else{
-					list = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
-				}
-				$("#modal-body").append(list);
-			});
-			
-		}; 
-		 
- 	function showMessageUser(data){
-			var user ="";
 		
-		 	$.each(data.user,function(index,item){
-								
-				 user = '<img src="/upload/profile/"'+item.photo+'alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'
-				user += 	'<p class="heading lead heading-name" seq="'+item.seq+'">'+item.name+'</p>' 
-			
-			});	
-		 	$("#message-header").prepend(user);  
-			
-		}; 
 		 
 		
 	</script>

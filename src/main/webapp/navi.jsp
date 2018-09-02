@@ -425,24 +425,7 @@ background-color: #f4f4f4;
 
 			<!--Body-->
 			<div class="modal-body" style="overflow: auto;">
-				<ul class="list-unstyled friend-list w-100 p-2">
-					<li class="w-100 p-2 h-25 d-inline-block modal-list" ><a href="#"
-						class="d-flex justify-content-between h-25 d-inline-block"> <img
-							src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1"
-							alt="avatar"
-							class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 "
-							style="width: 50px; height: 50px;">
-							<div class="text-md-left align-middle">
-								<strong>Danny Smith</strong>
-								<p class="last-message text-muted">Lorem ipsum dolor sit.</p>
-							</div>
-							<div class="chat-footer">
-								<p class="text-smaller text-muted mb-0">5 min ago</p>
-								<span class="text-muted float-right"><i
-									class="fa fa-mail-reply" aria-hidden="true"></i></span>
-							</div>		
-					</a></li>
-				</ul>
+				<ul class="list-unstyled friend-list w-100 p-2 " id="user_list"></ul>
 			</div>
 		</div>
 		<!-- Grid column -->
@@ -464,19 +447,12 @@ background-color: #f4f4f4;
 			<!--Header-->
 			<div class="modal-header" id="message-header">
 			
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true" class="white-text">&times;</span>
-				</button>
+			
 			</div>
 
 			<!--Body-->
 			<div class="modal-body message-list"
-				style="overflow: auto; padding-top: 10px; padding-bottom: 10px;"id="modal-body">
-
-	
-
-			</div>
+				style="overflow: auto; padding-top: 10px; padding-bottom: 10px;"id="modal-body"></div>
 			<!--Footer-->
 			
 				<textarea class="form-control rounded-0"
@@ -592,17 +568,74 @@ background-color: #f4f4f4;
 	};
 
 	$("#tooltip2").click(function() {
-		/* data-toggle="modal"
-			data-target="#modalPoll" */	
+		
+			$.ajax({
+				 url :"userList.ajax",
+				 type:"post",
+				 data:{
+					seq:"${sessionScope.user.seq}"
+				 },
+				 success: function(data){
+					 console.log(data);
+					 showUserList(data); 
+				 }
+			});		
 			$("#tooltip2").attr("data-toggle",'modal');
 			$("#tooltip2").attr("data-target",'#modalPoll');
 
 	});
 	
-	$(".modal-list").on("click",function(){
-	/* 	data-toggle="modal" data-target="#centralModalSuccess" */
-		$(".modal-list").attr("data-toggle","modal");
-		$(".modal-list").attr("data-target","#centralModalSuccess");
+	function showUserList(data){
+		var userlist="";
+		var listget = $("#user_list").text();
+		console.log(listget);
+		$.each(data.list,function(index,item){			
+			if(listget==""){
+			userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">' ;
+			 userlist += '<img src="/upload/profile"'+item.photo+'alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'; 
+			userlist += '<div class="text-md-left align-middle">';
+			userlist += '<strong>'+item.name+'</strong>';
+			userlist += '<p class="last-message text-muted">'+item.contents+'</p>';
+			userlist += '</div>';
+			userlist += '<div class="chat-footer">';
+			userlist += '<p class="text-smaller text-muted mb-0">'+item.time+'</p>';
+			userlist += '<span class="text-muted float-right">';
+			userlist += '<i class="fa fa-mail-reply" aria-hidden="true"></i></span>';
+			userlist += '</div>'	;
+			userlist += '</a></li>';
+			}
+			$("#user_list").prepend(userlist);
+		});
+	};
+		var messageReset =0;
+	$(document).on("click",".modal-list",function(){
+		var listseq =$(this).attr("seq");
+		console.log(listseq);
+	/* 	$(".modal-list").attr("data-toggle","modal");
+		$(".modal-list").attr("data-target","#centralModalSuccess"); */
+		
+	
+		$.ajax({
+		    url :"messageUser.ajax",
+		    type: "post",
+		    data: {
+		    	seq :listseq
+		    },
+		    success : function(data){
+		     	
+		   	  showMessageUser(data);
+		   	 if(messageReset==0){		   	  
+		   	 $("#modal-body").text("");	
+		   	  showMessageList(data);
+		   	  messageReset =0;
+		   	 }
+		   	 	console.log(messageReset);
+		   	console.log(data.message[0].contents);
+		   	console.log(data.message[1].contents);
+		 
+		    }
+		});
+	 	
 		
 	});
 
@@ -652,10 +685,24 @@ background-color: #f4f4f4;
 	
 	$("#sendMessage").click(function(){
 		var message = $("#exampleFormControlTextarea2").val();
-		if(message == ""){
+		if(message != ""){
 		 ws.send(message);
+		 $.ajax({
+			 url :"sendMessage.ajax",
+			 type:"post",
+			 data:{
+				 message:message,
+				 message_user_seq: message_user_seq
+			 },
+			 success: function(data){
+				 if(data >0){
+				 console.log("입력완료");
+				 }else{
+					 console.log("실패");
+				 }
+			 }
+		 });	 	 
 		}
-		
 	});
 	$("#exampleFormControlTextarea2").keydown(function(key){
 		if(key.keyCode ==13){
@@ -704,9 +751,42 @@ background-color: #f4f4f4;
 		};
 
 	}
+
 	
 	
+	function showMessageList(data){
+		var list ="";
+		var sessionSeq = "${sessionScope.user.seq}"	
 	
+	
+		$.each(data.message,function(index,item){
+		
+			if(item.user_seq == sessionSeq){
+				list = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
+			}else{
+				list = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
+			}
+			 $("#modal-body").append(list);
+			
+		});
+	
+	}; 
+	 
+	function showMessageUser(data){
+		var user ="";
+	
+	 	$.each(data.user,function(index,item){
+							
+		user = '<img src="/upload/profile/"'+item.photo+'"alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'
+		user += '<p class="heading lead heading-name" seq="'+item.seq+'">'+item.name+'</p>'; 
+		user+=	'<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+		user+=	'<span aria-hidden="true" class="white-text">&times;</span>'
+			user+='	</button>'
+		});	
+	 	$("#message-header").html(user);  
+		
+	}; 
+
 	
 	
 	

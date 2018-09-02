@@ -108,11 +108,12 @@ public class AjaxController {
 
 
 	}
-	
+
 	@RequestMapping("/messageUser.ajax")
 	public @ResponseBody JSONObject messageUser(int seq,HttpServletResponse response,HttpSession session) {
 		try {
 		/*JSONObject jsonobject  = new JSONObject();*/
+	
 		int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();	
 		MemberDTO mdto = new MemberDTO(seq);
 		List<MemberDTO> user = this.service.getUserData(mdto);
@@ -148,14 +149,42 @@ public class AjaxController {
 		jsonobject.put("user", json);
 		System.out.println(jsonobject.toString());
 		
-		
+	
 		return jsonobject;
+	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		return null;
 	}
+	@RequestMapping("/userList.ajax")
+	public @ResponseBody JSONObject userList(int seq,HttpSession session) {
+		JSONObject jsonObject = new JSONObject();
+		MessagesDTO mdto = new MessagesDTO(seq);
+		List<MessagesDTO> userList = this.mservice.userList(mdto);
+		
+		
+		JSONArray json = new JSONArray();
+		
+		for(MessagesDTO tmp : userList) {
+			JSONObject obj = new JSONObject();
+			MessagesDTO list = new MessagesDTO(seq,tmp.getSeq());
+			MessagesDTO last = this.mservice.userLastMessage(list);
+			obj.put("user", tmp.getSeq());
+			obj.put("name",tmp.getName());
+			obj.put("photo", tmp.getPhoto());
+			obj.put("contents", last.getMessage_contents());
+			obj.put("time",last.getMessage_time());
+			
+			json.add(obj);
+		}
+		System.out.println(json.toString());
+		jsonObject.put("list",json);
+		
+		return jsonObject;
+	}
+	
 
 	@RequestMapping("/sendMessage.ajax")
 	public @ResponseBody int sendMessage(int message_user_seq,String message,HttpSession session) {

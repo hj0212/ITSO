@@ -28,4 +28,16 @@ public class MessagesServiceImple implements IMessagesService{
 		return dao.selectMessage(medto);
 	}
 
+	@Override
+	public List<MessagesDTO> userList(MessagesDTO medto) {
+		// TODO Auto-generated method stub
+		return dao.userList(medto);
+	}
+
+	@Override
+	public MessagesDTO userLastMessage(MessagesDTO medto) {
+		// TODO Auto-generated method stub
+		return dao.userLastMessage(medto);
+	}
+
 }

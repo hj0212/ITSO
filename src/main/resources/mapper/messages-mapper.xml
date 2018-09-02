@@ -9,8 +9,11 @@
 <select id="selectMessage" resultType="MessagesDTO">
 	select * from message where user_seq = #{user_seq} and message_user_seq= #{message_user_seq} or message_user_seq=#{user_seq} and user_seq= #{message_user_seq}
 </select>
-<!-- <select id="selectUserList" resultType="">
-	select DISTINCT(u.seq) user_seq ,u.photo photo,u.name name,m.message_contents message_contents  from users u,message m  where seq in(select user_seq  from message where user_seq =#{user_seq} or message_user_seq =#{user_seq}) and not u.seq =#{user_seq};
+<select id="userList" resultType="MessagesDTO">
+  select Distinct(seq ),u.name,u.photo from users u,message m where  not u.seq =#{user_seq} and (seq in(select message_user_seq from message where seq =#{user_seq})) or (seq in(select user_seq from message where message_user_seq =#{user_seq}))
 </select>
- -->
+<select id="userLastMessage" resultType="MessagesDTO">
+select * from(select * from message where (user_seq = #{user_seq} and message_user_seq =#{message_user_seq}) or (user_seq =#{message_user_seq} and message_user_seq =#{user_seq}) ORDER by message_time desc) where rownum =1
+</select>
+
 </mapper>
