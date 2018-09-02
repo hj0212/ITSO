@@ -12,7 +12,7 @@
 	</select>
 	
 	<select id="getAllData" resultType="kh.spring.dto.AdminPageDTO">
-		select user_seq, report_count, report_reason, name, email, create_date, block from report r, users u where r.USER_SEQ = u.seq
+		select user_seq, u.count report_count, report_reason, user_name, email, create_date, block from report r, (select u.*, rc.count from users u, (select user_seq, count(*) count from report group by user_seq) rc where u.seq = rc.count) u where r.USER_SEQ = u.seq
 	</select>
 	
 </mapper>

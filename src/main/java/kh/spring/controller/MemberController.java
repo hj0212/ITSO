@@ -48,7 +48,6 @@ public class MemberController {
 			// Admin Account Redirect syntax
 			if (userId.equals("itso@admin") && userPw.equals("itso@admin")) {
 				mav.setViewName("goAdminPageWithAllAnalysisData.adm");
-
 			} else {
 				// usual users account redirect syntax
 				mav.addObject("result", result.size());
