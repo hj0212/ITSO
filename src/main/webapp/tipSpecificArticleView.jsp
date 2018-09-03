@@ -63,29 +63,29 @@ img {
 	<%@include file="navi.jsp"%>
 	<!-- body -->
 	<table class="container">
-		<c:forEach items="${tipContent}" var="tipContent">
-			<tr>
-				<td>
-					<h1>${tipContent.tip_title}</h1>
-			</tr>
-			<tr>
-				<td><span id="tip_seq">${tipContent.tip_seq}</span> <span>${tipContent.category}</span>
-					<span> <i id="category-mark"></i>
-				</span> <span> <i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}</span>
-					<input id="tip_writer" type="hidden"
-					value="${tipContent.tip_writer}"> <span>${tipContent.name}</span>
-					<span>${tipContent.tip_date}</span>
-			</tr>
-			<tr>
-				<td><div class="container">${tipContent.tip_contents}</div></td>
-			</tr>
-		</c:forEach>
+		<tr>
+			<td>
+				<h1>${tipContent.tip_title}</h1>
+		</tr>
+		<tr>
+			<td><span id="tip_seq">${tipContent.tip_seq}</span> <span>${tipContent.category}</span>
+				<span> <i id="category-mark"></i>
+			</span> <span> <i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}</span>
+				<input id="tip_writer" type="hidden"
+				value="${tipContent.tip_writer}"> <span>${tipContent.name}</span>
+				<span>${tipContent.tip_date}</span>
+		</tr>
+		<tr>
+			<td><div class="container">${tipContent.tip_contents}</div></td>
+		</tr>
 	</table>
 
 	<div id=reaction>
 		<button id="like-btn" class="btn white btn-sm">
 			<i class=" fa fa-heart red-text" aria-hidden="true"></i>
 		</button>
+		<button class="btn btn-itso btn-sm" data-toggle="modal"
+			data-target="#reportModal">신고</button>
 	</div>
 
 	<!-- comments -->
@@ -133,10 +133,131 @@ img {
 		<input type="hidden" id="sessionUser" value="${sessionScope.user.seq}">
 		<input id="tipDeleteBtn" class="btn btn-itso" value="지우기"> <input
 			id="tipModifyBtn" class="btn btn-itso" value="바꾸기">
-
-
-
 	</div>
+
+	<!-- reportModal 신고-->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead mb-0">신고</p>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						<!-- <input type="hidden" name="user_seq" value="${id}"> -->
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="ex mb-3">이 글을 신고하는 이유를 선택하세요. 신고자 정보는 공개되지 않습니다.</div>
+					<div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios1" value="그냥 마음에 들지 않습니다." checked> <label
+								class="form-check-label" for="exampleRadios1"> 그냥 마음에 들지
+								않습니다. </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios2" value="스팸입니다."> <label
+								class="form-check-label" for="exampleRadios2"> 스팸입니다. </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios3" value="신체 노출, 나체 게시물 및 음란물"> <label
+								class="form-check-label" for="exampleRadios3"> 신체 노출, 나체
+								게시물 및 음란물 </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios4" value="편파적 발언 및 상징"> <label
+								class="form-check-label" for="exampleRadios4"> 편파적 발언 및
+								상징 </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios5"> <label class="form-check-label"
+								for="exampleRadios5"> 기타 </label>
+							<div class="md-form">
+								<textarea name="report_reason" id="form7"
+									class="md-textarea form-control pt-0" rows="3" readonly></textarea>
+							</div>
+
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<button class="btn btn-itso" data-dismiss="modal"
+							id="reportsubmitbtn">제출</button>
+						<button class="btn btn-outline-itso" data-dismiss="modal"
+							style="color: black;">취소</button>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$("input[name='reportreason']").click(function() {
+			var cursor = $(this).val();
+			console.log(cursor);
+			if (cursor == "on") {
+				$("#form7").attr("readonly", false);
+				$("#form7").focus();
+			} else {
+				$("#form7").attr("readonly", true);
+			}
+		})
+
+		$("#reportsubmitbtn").click(function() {
+			report_reason = $("input[name='reportreason']:checked").val();
+			var user_seq = $
+			{
+				tipContent.tip_writer
+			}
+			;
+			var board_seq = $
+			{
+				tipContent.tip_seq
+			}
+			;
+
+			flag = true;
+			if (report_reason == "on") {
+				report_reason = $("#form7").text();
+				if (report_reason == "") {
+					flag = false;
+					console.log("기타 비어있음: " + form);
+				}
+				console.log("기타: " + form);
+			}
+
+			if (flag) {
+				$.ajax({
+					url : "reportArticle.ajax",
+					type : "post",
+					data : {
+						report_reason : report_reason,
+						user_seq : user_seq,
+						board_seq : board_seq,
+						board : "tip"
+					},
+					success : function() {
+						console.log("성공");
+					},
+					error : function() {
+						console.log("실");
+					}
+				});
+			}
+		});
+	</script>
 
 	<script>
 		//팁 삭제하기 버튼 나타나게하기

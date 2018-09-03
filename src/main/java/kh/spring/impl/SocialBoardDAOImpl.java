@@ -1,5 +1,6 @@
 package kh.spring.impl;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +67,12 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	}
 
 	@Override
-	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto) {
-		return template.selectList("Collection.getCollectionSocialList",dto);
+	public List<SocialBoardDTO> getCollectionSocialList(int seq, int startCount, int endCount) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("seq", seq);
+		map.put("start", startCount);
+		map.put("end", endCount);
+		return template.selectList("Collection.getCollectionSocialList", map);
 	}
 
 	@Override
@@ -129,13 +134,11 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public int deleteGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return template.delete("SocialBoard.deleteGoodCount",gdto);
 	}
 
 	@Override
 	public int allGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return template.selectOne("SocialBoard.allGoodCount",gdto);
 	}
 
@@ -168,7 +171,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
@@ -179,7 +182,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagHotBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
@@ -190,7 +193,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagFollowBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
@@ -212,5 +215,10 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	@Override
 	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
 		return template.selectList("Collection.getSearchedCollectionPhotoList", word);
+	}
+
+	@Override
+	public Integer getCollectionCount(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionCount", dto);
 	}
 }

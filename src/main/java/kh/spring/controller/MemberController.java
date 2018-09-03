@@ -16,6 +16,7 @@ import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.TipDTO;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.ITipService;
@@ -47,7 +48,6 @@ public class MemberController {
 			// Admin Account Redirect syntax
 			if (userId.equals("itso@admin") && userPw.equals("itso@admin")) {
 				mav.setViewName("goAdminPageWithAllAnalysisData.adm");
-
 			} else {
 				// usual users account redirect syntax
 				mav.addObject("result", result.size());
@@ -111,7 +111,8 @@ public class MemberController {
 		}catch(Exception e) {
 
 		}
-
+		
+		List<TipDTO> tipBoardList = this.tservice.getMyTipBoardList(tmp);
 		List<SocialBoardDTO> socialList = this.sservice.getMySocialList(tmp);
 		socialList = makeHashTag(socialList);
 		List<CollectionDTO> collectionList = this.sservice.getCollectionList(tmp);
@@ -124,6 +125,7 @@ public class MemberController {
 		mav.addObject("followcheck", result);
 		mav.addObject("seq", tmp.getSeq());
 		mav.addObject("member", tmp);
+//		mav.addObject("tipList", tipBoardList);
 		mav.addObject("socialList", socialList);
 		mav.addObject("collectionList", collectionList);
 		mav.addObject("photoList", photoList);

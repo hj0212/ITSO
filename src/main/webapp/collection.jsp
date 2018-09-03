@@ -286,43 +286,45 @@ section .follow-action .follow-button {
 												<div>${slist.userState }</div>
 											</div>
 											<div class="goodarea" style="float: right; margin-top: 5px;">
-											<input type="hidden" class="writerseq" value="${slist.social_writer }" />
-											<c:choose>
-												<c:when test="${empty goodList }">
-													<i class="fa fa-heart-o red-text heart " aria-hidden="true"
-														style="float: right; font-size: 25px;"
-														value="${slist.social_seq}"> <font color="black">
-															0 </font></i>
-												</c:when>
-												<c:otherwise>
-													<c:set var="loop_flag" value="false" />
-													<c:forEach items="${goodList }" var="good" varStatus="gstatus">
-														<c:if test="${loop_flag == false }">
-															<c:choose>
-																<c:when test="${good.social_seq == slist.social_seq }">
-																	<i class="fa fa-heart red-text heart"
-																		aria-hidden="true"
-																		style="float: left; font-size: 25px;"
-																		value="${slist.social_seq}"> <font color="black">
-																			${good.good_count } </font></i>
-																	<c:set var="loop_flag" value="true" />
-																</c:when>
-																<c:otherwise>
-																	<c:if test="${gstatus.last }">
-																		<i class="fa fa-heart-o red-text heart"
+												<input type="hidden" class="writerseq"
+													value="${slist.social_writer }" />
+												<c:choose>
+													<c:when test="${empty goodList }">
+														<i class="fa fa-heart-o red-text heart "
+															aria-hidden="true" style="float: right; font-size: 25px;"
+															value="${slist.social_seq}"> <font color="black">
+																0 </font></i>
+													</c:when>
+													<c:otherwise>
+														<c:set var="loop_flag" value="false" />
+														<c:forEach items="${goodList }" var="good"
+															varStatus="gstatus">
+															<c:if test="${loop_flag == false }">
+																<c:choose>
+																	<c:when test="${good.social_seq == slist.social_seq }">
+																		<i class="fa fa-heart red-text heart"
 																			aria-hidden="true"
 																			style="float: left; font-size: 25px;"
 																			value="${slist.social_seq}"> <font color="black">
 																				${good.good_count } </font></i>
-																	</c:if>
-																</c:otherwise>
-															</c:choose>
-														</c:if>
+																		<c:set var="loop_flag" value="true" />
+																	</c:when>
+																	<c:otherwise>
+																		<c:if test="${gstatus.last }">
+																			<i class="fa fa-heart-o red-text heart"
+																				aria-hidden="true"
+																				style="float: left; font-size: 25px;"
+																				value="${slist.social_seq}"> <font color="black">
+																					${good.good_count } </font></i>
+																		</c:if>
+																	</c:otherwise>
+																</c:choose>
+															</c:if>
 
-													</c:forEach>
-												</c:otherwise>
+														</c:forEach>
+													</c:otherwise>
 
-											</c:choose>
+												</c:choose>
 											</div>
 										</div>
 									</div>
@@ -337,6 +339,41 @@ section .follow-action .follow-button {
 			</div>
 		</div>
 	</section>
+
+	<!--Pagination-->
+	<div aria-label="pagination example" class="mt-3">
+		<ul class="pagination pg-blue justify-content-center">
+			<c:if test="${page > 1}">
+				<li class="page-item"><a class="page-link"
+					href="collection.go?seq=${content.collection_seq }&page=${page-1}"
+					aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						<span class="sr-only">Previous</span>
+				</a></li>
+			</c:if>
+
+			<c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
+				<c:choose>
+					<c:when test="${pageNum eq page}">
+						<li class="page-item active"><a class="page-link"
+							href="collection.go?seq=${content.collection_seq }&page=${pageNum}">${pageNum}</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link"
+							href="collection.go?seq=${content.collection_seq }&page=${pageNum}">${pageNum}</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+			<c:if test="${page < totalPage }">
+				<li class="page-item">
+					<a class="page-link" href="collection.go?seq=${content.collection_seq }&page=${page+1}" aria-label="Next"> 
+						<span aria-hidden="true">&raquo;</span> 
+						<span class="sr-only">Next</span>
+					</a>
+				</li>
+			</c:if>
+		</ul>
+	</div>
 
 	<!-- 페이지네이션
 	 <nav class="pagination justify-content-center" id="colnav"
@@ -358,6 +395,8 @@ section .follow-action .follow-button {
 		</a></li>
 	</ul>
 	</nav> -->
+
+	<%@include file="footer.jsp"%>
 	<script>
 		$(".heart").click(function() {
 			var heartVal = $(this).attr("class");

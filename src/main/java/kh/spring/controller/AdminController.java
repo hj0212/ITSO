@@ -10,17 +10,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.HttpSessionMutexListener;
 
 import kh.spring.dto.AdminPageDTO;
-import kh.spring.dto.MemberDTO;
+import kh.spring.dto.ReportDTO;
 import kh.spring.interfaces.IAdminService;
+import kh.spring.interfaces.IReportService;
 
 @Controller
 public class AdminController {
 
 	@Autowired
 	IAdminService service;
+	
+	@Autowired
+	IReportService rservice;
 
 	@RequestMapping("/goAdminPageWithAllAnalysisData.adm")
 	public ModelAndView getAllAnalysisData() {
@@ -36,7 +39,7 @@ public class AdminController {
 		int forties = service.getFortiesCounts();
 
 		// getReportedUser
-		List<MemberDTO> reportedUsers = service.getReportedUser();
+		List<ReportDTO> reportedUsers = rservice.getAllData();
 
 		System.out.println(femaleUsers);
 		ModelAndView mav = new ModelAndView();

@@ -60,6 +60,4 @@ select block from users where seq=#{userSeq}
 insert into reported_users values(#{user_seq},#{report_reason},${reporting_user})
 </insert>
 
-
-
 </mapper>
