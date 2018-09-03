@@ -8,11 +8,11 @@
 	</insert>
 	
 	<select id="checkArticle" resultType="ReportDTO">
-		select * from report where board_seq = #{board_seq, jdbcType=INTEGER} and reporting_user = #{reporting_user, jdbcType=INTEGER} and board = #{board}
+		select * from report where board_seq = #{board_seq,jdbcType=INTEGER} and reporting_user = #{reporting_user,jdbcType=INTEGER} and board = #{board,jdbcType=VARCHAR}
 	</select>
 	
 	<select id="getAllData" resultType="kh.spring.dto.AdminPageDTO">
-		select user_seq, u.count report_count, report_reason, user_name, email, create_date, block from report r, (select u.*, rc.count from users u, (select user_seq, count(*) count from report group by user_seq) rc where u.seq = rc.count) u where r.USER_SEQ = u.seq
+		select user_seq, u.count report_count, report_reason, name, email, create_date, block from report r, (select u.*, rc.count from users u, (select user_seq, count(*) count from report group by user_seq) rc where u.seq = rc.user_seq) u where r.USER_SEQ = u.seq
 	</select>
 	
 </mapper>
