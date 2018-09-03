@@ -7,6 +7,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta property="fb:app_id" content="175142883151176" />
+<meta property="og:site_name" content="ITSO" />
+<meta property="og:title" content="${tipContent[0].tip_title}" />
+<meta property="og:description" content="ITSO TIPBOARD" />
+<meta property="article:author" content="${tipContent[0].tip_writer}" />
+<meta property="og:url" content="document.location.href" />
+<meta property="og:image" content="https://image.ibb.co/cvb5k9/itso_12.png" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:url" content="document.location.href" />
+<meta name="twitter:title" content="${tipContent[0].tip_title}" />
+<meta name="twitter:description" content="ITSO TIPBOARD" />
+<meta name="twitter:image" content="https://image.ibb.co/cvb5k9/itso_12.png" />
+<meta name="twitter:site" content="${tipContent[0].tip_writer}" />
+<meta name="twitter:creator" content="@트위터아이디" />
+
 <title>팁 보기 | ITSO</title>
 <!-- Font Awesome 4.7-->
 <link rel="stylesheet"
@@ -514,4 +531,83 @@ img {
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
+<!-- 카카오api -->
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- 페이스북api -->
+<div id="fb-root"></div>
+<script>
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id))
+			return;
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script>
+
+	//도큐멘트 title 값 제목값으로 변경
+	 
+	
+	var newURL = window.location.protocol + window.location.host
+			+ window.location.pathname;
+	var titletext = '${tipContent[0].tip_title}';	
+	
+	
+	//트위터 공유 
+	function twittergo(url, text) {
+		//var url = window.location.protocol + window.location.host				+ window.location.pathname;
+		var url=document.location.href;
+		var text = encodeURI('${tipContent[0].tip_title}');				
+		
+		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="+ url, "", "width=700, height=400");
+	}
+	
+	var kakaoURL = 'http://192.168.20.35:8080/controller/readSocial.go?seq=186';	
+	
+
+	//카카오톡공유 
+	Kakao.init('6f7ebead2317edc298ae9592c2996720');	
+	function kakaogo(){
+		 Kakao.Link.createDefaultButton({
+			 container: '#kakao-link-btn',
+		      objectType: 'feed',
+		      content: {
+		        title: '${tipContent[0].tip_title}',
+		        description: 'TIP BOARD',
+		        imageUrl: 'https://image.ibb.co/cvb5k9/itso_12.png',
+		        link: {
+		          webUrl: document.location.href,
+		          mobileWebUrl: document.location.href
+		        }
+		      },
+		      
+		      buttons: [
+		        {
+		          title: '웹에서보기',
+		          link: {
+		            mobileWebUrl: document.location.href,
+		            webUrl: document.location.href
+		          }
+		        }  
+		      ]
+		    });
+	}
+
+	//페이스북
+	function facebookgo() {
+		//var url =  window.location.host + window.location.pathname;
+		//var url = document.location.href;
+		//var url = 'http://192.168.20.35/controller/main.go'//test용이라 주소 직접 입력해놓음
+		var url ='http://192.168.20.35:8080/controller/readSocial.go?seq=186';
+		var encodeUrl = encodeURIComponent(url);
+		var facebook = 'https://www.facebook.com/sharer/sharer.php?u=';
+		var link = facebook + encodeUrl;
+		window.open(link, "", "width=700, height=400");
+	}	
+	
+</script>
 </html>

@@ -139,6 +139,7 @@ public class SocialController {
 
 			}else if(feed.equals("following")) { //팔로잉
 				result =this.service.showSocialFollowBoardList(sdto);
+				System.out.println(result.size());
 				//System.out.println("3");
 
 			}
@@ -1003,6 +1004,11 @@ public class SocialController {
 			}
 		}
 		return mav;
+	}
+	
+	@RequestMapping("/writeSocial.go")
+	public String loginMain() {
+		return "redirect:writeSocial.jsp";
 	}
 
 	private List<SocialBoardDTO> makeHashTag(List<SocialBoardDTO> list) {

@@ -21,6 +21,12 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
 	rel="stylesheet">
 <style>
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -1027,6 +1033,7 @@ a#MOVE_TOP_BTN {
 			<!--/.Content-->
 		</div>
 	</div>
+	<%@include file="footer.jsp"%>
 	<script>
 	$("#managebtn").on("click", function () {
 	    window.open('mypage.go?view=collection', '_blank');

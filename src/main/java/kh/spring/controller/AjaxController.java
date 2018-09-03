@@ -33,6 +33,7 @@ import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.IMessagesService;
 import kh.spring.interfaces.INotificationService;
+import kh.spring.interfaces.IReportService;
 import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.IStylingService;
 import kh.spring.interfaces.ITipService;
@@ -56,10 +57,12 @@ public class AjaxController {
 	
 	@Autowired
 	private IMessagesService mservice;
-	
+
 	@Autowired
 	private ITipService tservice;
-
+	
+	@Autowired
+	private IReportService rservice;
 
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
@@ -408,7 +411,7 @@ public class AjaxController {
 		System.out.println("dto: " + dto.getBoard_seq());
 		int reporting_user = ((MemberDTO)session.getAttribute("user")).getSeq();
 		dto.setReporting_user(reporting_user);
-		List<ReportDTO> list = tservice.checkReportData(dto);
+		List<ReportDTO> list = rservice.checkReportData(dto);
 		System.out.println("dto: " + dto.getBoard_seq());
 		if(list.size() > 0) {
 			System.out.println("이미 신고");

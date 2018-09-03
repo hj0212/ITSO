@@ -52,8 +52,15 @@ body {
 	src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
 }
 
+@media (max-width: 576px) {
+.btmrow{
+float:left;
+}
+}
+
 #wrapper {
 	width: 100%;
+	min-width: 500px;
 }
 
 #voteitemimg {
@@ -62,7 +69,7 @@ body {
 
 #voteitemdiv {
 	width: 100%;
-}
+} 
 
 img {
 	border: 0.3px solid lightgray;
@@ -92,6 +99,7 @@ input[type="file"] {
 font-size:15px;
 }
 
+
 </style>
 
 </head>
@@ -107,7 +115,7 @@ font-size:15px;
 		<div class="row my-2"></div>
 		<form method="post" action="modifyStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}" id="modiform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
-				<h4>투표주제</h4>&nbsp;<span class="text-muted text-sm settxt">(작성자: ${votedto.styling_writer}</span>
+				<h4>투표주제</h4>&nbsp;<span class="text-muted text-sm settxt">(작성자: ${votedto.styling_writername}</span>
 				&nbsp;<span class="text-muted text-sm settxt"><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${votedto.styling_viewcount})</span>
 				<input type="hidden" value="${votedto.styling_writer}" id="votewriterid" name ="styling_writer">
 			<input type="hidden" name="styling_vote_seq" value="${votedto.styling_vote_seq}">
@@ -160,7 +168,7 @@ font-size:15px;
 						<c:forEach var="item" items="${voteitems}" varStatus = "status">
 							<tr class="z-depth-3 hoverable" id="tr${status.index}">
 								<th scope="row">
-								<input type="text" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
+								<input type="hidden" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
 								<td>
 									<div class="media">
 										<div class="media-img">
@@ -176,13 +184,7 @@ font-size:15px;
 
 										<div class="media-body image-upload-wrap form-group"
 											id="btnsdiv">
-											<a class="upvotebtn"> <i
-												class="fa fa-arrow-circle-o-up indigo-text fa-1x"
-												aria-hidden="true"></i>
-											</a> <a class="downvotebtn"> <i
-												class="fa fa-arrow-circle-o-down fa-1x indigo-text"
-												aria-hidden="true"></i>
-											</a> <a class="delvotebtn"> <i
+											 <a class="delvotebtn"> <i
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
@@ -233,7 +235,7 @@ font-size:15px;
 				<div class="col">
 				<c:choose>
 				<c:when test="${votedto.styling_voternum eq 0}">
-				<input type="text" class="form-control form-control-sm col-md-4"
+				<input type="text" class="form-control form-control-sm col-md-4"  maxlength="12" oninput="maxLengthCheck(this)"
 						readOnly id="votenum" placeholder="명" name="styling_voternum" value="${votedto.styling_voternum}">
 				</c:when>	
 				
@@ -264,7 +266,7 @@ font-size:15px;
 			<input type="hidden" name ="deletedsvitem[]" value="del">
 			<input type="hidden" name ="itemphotos[]" value="photo">
 
-			<div class="row">
+			<div class="row btmrow">
 				<button class="btn btn-indigo" type="button" id="itsobtn">itso?</button>
 				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
@@ -302,8 +304,12 @@ font-size:15px;
 		
 		count = $("#itemtable tr").length-1;
 		
-		
-		
+		 function maxLengthCheck(object){
+			   if (object.value.length > object.maxLength){
+			    object.value = object.value.slice(0, object.maxLength);
+			   }    
+			  }
+			
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
@@ -356,8 +362,6 @@ font-size:15px;
 														+ '" class="file-upload-input form-control filesel"'
 														+ 'onchange="readURL(this);" accept="image/*"></div>'
 														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
-														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
-														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
 														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
 														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control itemconttext"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
 														+ '</div></div></div></td></tr>');
@@ -455,8 +459,8 @@ font-size:15px;
 				}else if(radioval==1 && $('#datepicker').val()==""){
 					alert("종료 날짜를 선택해 주세요.");
 					breakflag=true;
-				}else if(radioval==2 && $('#votenum').val()==""){
-					alert("참여 인원을 입력해 주세요.");
+				}else if(radioval==2 && $('#votenum').val()=="" || radioval==2 && $('#votenum').val()==0 || radioval==2 && $('#votenum').val()==1){
+					alert("참여 인원을 입력해 주세요(2명 이상).");
 					breakflag=true;
 				}else if($('#datepicker').val()=="" && $('#votenum').val()==""){			
 					alert("투표종료 조건을 입력해 주세요.");

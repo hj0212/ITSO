@@ -668,6 +668,18 @@ a#MOVE_TOP_BTN {
 		});
 	});
 
+	// HYPE버튼에 마우스 대면 옆에쪽 버튼에 +1 시키기
+	function hypeOn() {
+		hypeBtn2.innerHTML = "+1";
+	}
+	//기본디폴트설정
+	function hypeOut() {
+		hypeBtn2.innerHTML = "default";
+	}
+	function hashtag() {
+
+	}
+
 	$(function() {
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 500) {

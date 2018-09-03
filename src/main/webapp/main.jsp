@@ -6,6 +6,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta property="fb:app_id" content="175142883151176" />
+<meta property="og:site_name" content="ITSO" />
+<meta property="og:title" content="${content.social_title}" />
+<meta property="og:description" content="${content.social_contents}" />
+<meta property="article:author" content="${content.social_writer}" />
+<meta property="og:url" content="document.location.href" />
+<meta property="og:image"
+	content="https://image.ibb.co/cvb5k9/itso_12.png" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:url" content="document.location.href" />
+<meta name="twitter:title" content="${content.social_title}" />
+<meta name="twitter:description" content="${content.social_contents}" />
+<meta name="twitter:image"
+	content="https://image.ibb.co/cvb5k9/itso_12.png" />
+<meta name="twitter:site" content="${content.social_writer}"/>
+<meta name="twitter:creator" content="@트위터아이디" />
 <title>It So</title>
 <!-- jquery  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -27,6 +45,12 @@
 
 .text-small {
 	font-size: 0.75rem;
+}
+
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
 }
 
 body {
@@ -79,7 +103,7 @@ a {
 #rightfix {
 	width: 300px;
 	top: 30%;
-	right: 50px;
+	right: 30px;
 	position: fixed;
 }
 
@@ -251,6 +275,17 @@ button.dropdown-toggle {
 #social_contents a:hover {
 	color: black;
 }
+
+#rightfix button {
+	top: -15px;
+}
+.savebtn{
+	text-align:center;
+	width:150px !important;
+	height:50px !important;
+	background-image:linear-gradient (90deg, #ea4c89, #ee9b83);
+}
+
 </style>
 <script>
 	$(document).ready(
@@ -265,7 +300,7 @@ button.dropdown-toggle {
 				});
 				$(".heart").on('click', function() {
 					var seq = $(this).attr("value");
-					var writer	= $(".writerseq").val();
+					var writer = $(".writerseq").val();
 					var font = $(this).children('font');
 					console.log("숫자: " + $(this).children('font').html());
 					console.log(seq);
@@ -273,8 +308,8 @@ button.dropdown-toggle {
 						url : "mainHeart.ajax",
 						type : "post",
 						data : {
-							social_seq : seq , 
-							social_writer :writer
+							social_seq : seq,
+							social_writer : writer
 						},
 						success : function(data) {
 							console.log("들어옴" + data), font.html(data)
@@ -424,21 +459,20 @@ button.dropdown-toggle {
 											<a class="writer-a" href="userpage.go?seq=${list.social_writer }"><b class="writerName"
 												style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;
 											<span class="state"><font color="gray">"${list.userState}"</font></span>
-										</div> 
-										<input type="hidden" class="writerseq" value="${list.social_writer }" />
-										<c:choose>
+										</div> <input type="hidden" class="writerseq"
+										value="${list.social_writer }" /> <c:choose>
 											<c:when test="${list.social_writer eq sessionScope.user.seq}">
 
 											</c:when>
 											<c:otherwise>
 												<c:choose>
-													
+
 													<c:when test="${!empty followingList }">
 														<c:forEach var="flist" items="${followingList }">
 
 															<c:choose>
 																<c:when test="${flist.seq eq list.social_writer}">
-																
+
 																	<button type="button" class="btn btn-itso followbtn">
 																		<span class="unfollow show"
 																			style="font-family: 'NanumbarunpenR';"><i
@@ -449,7 +483,7 @@ button.dropdown-toggle {
 																	</button>
 																</c:when>
 																<c:otherwise>
-																
+
 																	<button type="button" class="btn btn-indigo followbtn">
 																		<span class="follow show"
 																			style="font-family: 'NanumbarunpenR';"><i
@@ -462,7 +496,7 @@ button.dropdown-toggle {
 															</c:choose>
 														</c:forEach>
 													</c:when>
-													
+
 													<c:otherwise>
 														<button type="button" class="btn btn-indigo followbtn">
 															<span class="unfollow hidden"
@@ -548,25 +582,10 @@ button.dropdown-toggle {
 										<input type="hidden" value="${list.social_writer }"
 											class="writerseq" /> <input type="hidden"
 											value="${list.social_seq }" class="socialseq" />
-
-										<!-- 
-										<button type="button" class="btn-floating btn-sm share "
-											style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
-											title="카카오로 공유하기">
-											<i class="fa fa-comment"></i>
-										</button>
-										<button type="button" class="btn-floating btn-sm btn-tw share"
-											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-											<i class="fa fa-twitter" title="트위터로 공유하기"></i>
-										</button>
-										<button type="button" class="btn-floating btn-sm btn-fb share"
-											style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-											<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
-										</button> -->
-										<button type="button" class="btn-floating btn-sm savebtn"
-											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
-											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">컬렉션에 저장
-											<i class="fa fa-download"></i>
+										
+										<button type="button" class="btn btn-indigo savebtn"
+											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
+											<i class="fa fa-plus">COLLECTION</i>
 										</button>
 									</div>
 								</div>
@@ -577,7 +596,7 @@ button.dropdown-toggle {
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				검색 결과가 없습니다.
+				<div style="height: 860px; padding-top: 100px; text-align: center;"> 검색 결과가 없습니다. </div>
 			</c:otherwise>
 		</c:choose>
 
@@ -712,34 +731,35 @@ button.dropdown-toggle {
 		<!-- 오른쪽 추천 follow  -->
 		<div id="rightfix" class="right-fixed">
 			<ul class="list-unstyled">
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
+				<li class="media"><img class="d-flex mr-3 rounded-circle  align-self-center"
 					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
 					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
+					<div class="media-body mt-0">
+						<h5 class="mt-0 font-weight-bold">List-based media
 							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
-					</div></li>
-				<li class="media my-4"><img class="d-flex mr-3 rounded-circle"
+					</div>
+					</li>
+				<li class="media my-4"><img class="d-flex mr-3 rounded-circle  align-self-center"
 					src="https://mdbootstrap.com/img/Photos/Others/placeholder6.jpg"
 					alt="An image">
 					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
+						<h5 class="mt-0 font-weight-bold">List-based media
 							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
 					</div></li>
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
+				<li class="media"><img class="d-flex mr-3 rounded-circle align-self-center"
 					src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg"
 					alt="Generic placeholder image">
 					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+						<h5 class="mt-0 font-weight-bold">List-based</h5>
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
@@ -747,126 +767,180 @@ button.dropdown-toggle {
 			</ul>
 
 		</div>
+		<div id="enters">
+		
+		</div>
 		
 	<%@include file="footer.jsp"%>
 		
 	</div>
 	<script>
+	$(window).scroll(function() {
+		console.log($(document).height()+":"+$(window).height()); 
+		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			console.log(++page);
+			for(var i=0; i < 10;i++){
+				$("#enters").append("내용내용내용내용내용</br>");
+			}
+		}
+	});
+	
 		$("#managebtn").on("click", function () {
 		    window.open('userpage.go?view=collection', '_blank');
 		})
 
 		social_seq = 0;
-		$('.savebtn').on("click", function () {
-		    social_seq = $(this).siblings(".socialseq").val();
-		    console.log(social_seq);
+		$('.savebtn')
+				.on(
+						"click",
+						function() {
+							social_seq = $(this).siblings(".socialseq").val();
+							console.log(social_seq);
 
-		    var clistsize = "${fn:length(collectionList)}";
+							var clistsize = "${fn:length(collectionList)}";
 
-		    for (var i = 1; i <= clistsize; i++) {
-		        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
-		        var plistsize = cursor.find(".collectionPhotoItem").length;
+							for (var i = 1; i <= clistsize; i++) {
+								var cursor = $(".collectionItem:nth-of-type("
+										+ i + ")");
+								var plistsize = cursor
+										.find(".collectionPhotoItem").length;
 
-		        for (var j = 1; j <= plistsize; j++) {
-		            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
-		            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
-		            if (social_seq == collection_socialseq) {
-		                cursor.addClass("active");
-		                console.log("true");
-		                break;
-		            }
-		        }
-		    }
-		})
-		$("#collectionarea").on("click", ".collectionItem", function () {
-		    var cursor = $(this);
-		    cursor.toggleClass('active');
-		    var collection_seq = $(this).children(".collectionseq").val();
-		    console.log("collection_seq: " + collection_seq);
-		    console.log("social_seq: " + social_seq);
+								for (var j = 1; j <= plistsize; j++) {
+									var collection_socialseq = $(cursor).find(
+											".collectionPhotoItem:nth-of-type("
+													+ j + ")").find(
+											".socialseq").val();
+									console.log("검사 : " + i + "," + j + ":"
+											+ social_seq + ":"
+											+ collection_socialseq);
+									if (social_seq == collection_socialseq) {
+										cursor.addClass("active");
+										console.log("true");
+										break;
+									}
+								}
+							}
+						})
+		$("#collectionarea")
+				.on(
+						"click",
+						".collectionItem",
+						function() {
+							var cursor = $(this);
+							cursor.toggleClass('active');
+							var collection_seq = $(this).children(
+									".collectionseq").val();
+							console.log("collection_seq: " + collection_seq);
+							console.log("social_seq: " + social_seq);
 
-		    var num = $(this).find(".collectionPhotoItem").length;
-		    $.ajax({
-		        url: "saveCollection.ajax",
-		        type: "post",
-		        data: {
-		            collection_seq: collection_seq,
-		            social_seq: social_seq
-		        },
-		        success: function (data) {
-		            console.log("ajax: " +
-		                data.photo + "," +
-		                data.social_seq)
-		            if (data.photo != null) {
-		                console.log("여기");
-		                cursor.find(".collectionPhoto").append(
-		                    '<div class="collectionPhotoItem">' +
-		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
-		                    '</div>');
-		                if (num > 4) {
-		                    cursor.find(".collectionPhoto:last").attr("display", "none");
-		                }
-		            } else {
-		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
-		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
-		            }
-		        },
-		        error: function (response) {
-		            console.log("DB Failed")
-		        }
+							var num = $(this).find(".collectionPhotoItem").length;
+							$
+									.ajax({
+										url : "saveCollection.ajax",
+										type : "post",
+										data : {
+											collection_seq : collection_seq,
+											social_seq : social_seq
+										},
+										success : function(data) {
+											console.log("ajax: " + data.photo
+													+ "," + data.social_seq)
+											if (data.photo != null) {
+												console.log("여기");
+												cursor
+														.find(
+																".collectionPhoto")
+														.append(
+																'<div class="collectionPhotoItem">'
+																		+ '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">'
+																		+ '</div>');
+												if (num > 4) {
+													cursor
+															.find(
+																	".collectionPhoto:last")
+															.attr("display",
+																	"none");
+												}
+											} else {
+												cursor
+														.find(
+																".collectionseq[value='"
+																		+ collection_seq
+																		+ "']")
+														.siblings(
+																".collectionPhoto")
+														.find(
+																".socialseq[value='"
+																		+ social_seq
+																		+ "']")
+														.parent().remove();
+											}
+										},
+										error : function(response) {
+											console.log("DB Failed")
+										}
 
-		    });
+									});
 
-		})
+						})
 
 		$("#createcolbtn")
-		    .on('click', function () {
-		        var collection_title = $("input[name='collection_title']").val();
-		        var collection_contents = $("textarea[name='collection_contents']").val();
+				.on(
+						'click',
+						function() {
+							var collection_title = $(
+									"input[name='collection_title']").val();
+							var collection_contents = $(
+									"textarea[name='collection_contents']")
+									.val();
 
-		        $.ajax({
-		            url: "createCollection.ajax",
-		            type: "post",
-		            data: {
-		                collection_title: collection_title,
-		                collection_contents: collection_contents
-		            },
-		            success: function (data) {
-		                console.log("생성" + data);
-		                var dto = JSON.parse(data);
-		                $("input[name='collection_title']").val("");
-		                $("textarea[name='collection_contents']").val("");
-		                $("#createModal").hide();
+							$
+									.ajax({
+										url : "createCollection.ajax",
+										type : "post",
+										data : {
+											collection_title : collection_title,
+											collection_contents : collection_contents
+										},
+										success : function(data) {
+											console.log("생성" + data);
+											var dto = JSON.parse(data);
+											$("input[name='collection_title']")
+													.val("");
+											$(
+													"textarea[name='collection_contents']")
+													.val("");
+											$("#createModal").hide();
 
-		                $("#collectionarea").append(
-		                    '<div class="collectionItem z-depth-1 mt-2">' +
-		                    '<h4 class="mt-1 mb-1 text-truncate">' +
-		                    dto.collection_title +
-		                    '</h4><h6 class="text-truncate">' +
-		                    dto.collection_contents +
-		                    '</h6>' +
-		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
-		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+											$("#collectionarea")
+													.append(
+															'<div class="collectionItem z-depth-1 mt-2">'
+																	+ '<h4 class="mt-1 mb-1 text-truncate">'
+																	+ dto.collection_title
+																	+ '</h4><h6 class="text-truncate">'
+																	+ dto.collection_contents
+																	+ '</h6>'
+																	+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
+																	+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-		                $("#saveModal").show();
+											$("#saveModal").show();
 
-		            }
-		        });
-		    });
-		$("#createModal").on('show.bs.modal', function () {
-		    $("#saveModal").hide();
+										}
+									});
+						});
+		$("#createModal").on('show.bs.modal', function() {
+			$("#saveModal").hide();
 		});
 
-		$("#createModal").on('hidden.bs.modal', function () {
-		    $("#saveModal").show();
+		$("#createModal").on('hidden.bs.modal', function() {
+			$("#saveModal").show();
 		});
 
-		$("#saveModal").on('hidden.bs.modal', function () {
-		    console.log("닫힘");
-		    $(".collectionItem").removeClass("active");
+		$("#saveModal").on('hidden.bs.modal', function() {
+			console.log("닫힘");
+			$(".collectionItem").removeClass("active");
 		});
-
-		</script>
+	</script>
 </body>
 
 <!-- Bootstrap tooltips -->
@@ -896,23 +970,22 @@ button.dropdown-toggle {
 <script>
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-/* 	var titletext = '${list.social_title}'; */
+	
 
-/* 	console.log("<c:out value='${param.mode}'/>");
+	console.log("<c:out value='${param.mode}'/>");
 
 	var mode = "<c:out value='${list.social_title}'/>";
- */
+
 	//트위터 공유  
 	function twittergo(url, text) {
+
 		var url = window.location.protocol + window.location.host
 				+ window.location.pathname;
-		var text = document.title;
-
-		console.log(text);
-		console.log(titletext);
+		var text = '${list.social_title}';
 
 		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="
 				+ url, "", "width=700, height=400");
+
 	}
 
 	//카카오톡공유  
@@ -922,7 +995,7 @@ button.dropdown-toggle {
 			container : '#kakao-link-btn',
 			objectType : 'feed',
 			content : {
-				title : document.title,
+				title : '${socialList[0].social_title}',
 				description : '내용, 주로 해시태그',
 				imageUrl : document.images[0].src, //이미지 주소 올곳 
 				link : {
@@ -955,9 +1028,8 @@ button.dropdown-toggle {
 
 	}
 
-	//메타태그 변경 
-	function metago() {
-
-	}
+	
+	
+	
 </script>
 </html>

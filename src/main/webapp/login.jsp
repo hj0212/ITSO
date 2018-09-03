@@ -244,6 +244,7 @@ $(document).ready(function () {
 			}
 		  }
 	  });
+    
     /* 페이스북 로그인 */
     var checkLoginStatus = function (response) {
         console.log(response);
