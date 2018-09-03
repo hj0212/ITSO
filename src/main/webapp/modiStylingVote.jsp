@@ -52,8 +52,15 @@ body {
 	src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
 }
 
+@media (max-width: 576px) {
+.btmrow{
+float:left;
+}
+}
+
 #wrapper {
 	width: 100%;
+	min-width: 500px;
 }
 
 #voteitemimg {
@@ -62,7 +69,7 @@ body {
 
 #voteitemdiv {
 	width: 100%;
-}
+} 
 
 img {
 	border: 0.3px solid lightgray;
@@ -91,6 +98,7 @@ input[type="file"] {
 .settxt{
 font-size:15px;
 }
+
 
 </style>
 
@@ -160,7 +168,7 @@ font-size:15px;
 						<c:forEach var="item" items="${voteitems}" varStatus = "status">
 							<tr class="z-depth-3 hoverable" id="tr${status.index}">
 								<th scope="row">
-								<input type="text" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
+								<input type="hidden" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
 								<td>
 									<div class="media">
 										<div class="media-img">
@@ -258,7 +266,7 @@ font-size:15px;
 			<input type="hidden" name ="deletedsvitem[]" value="del">
 			<input type="hidden" name ="itemphotos[]" value="photo">
 
-			<div class="row">
+			<div class="row btmrow">
 				<button class="btn btn-indigo" type="button" id="itsobtn">itso?</button>
 				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
@@ -301,8 +309,7 @@ font-size:15px;
 			    object.value = object.value.slice(0, object.maxLength);
 			   }    
 			  }
-		
-		
+			
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */

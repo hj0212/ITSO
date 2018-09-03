@@ -53,6 +53,13 @@ body {
 
 #wrapper {
 	width: 100%;
+ min-width:490px; 
+}
+
+@media (max-width: 576px) {
+.btmrow{
+float:left;
+}
 }
 
 #voteitemimg {
@@ -221,7 +228,7 @@ input[type="file"] {
 				<div class="md-form form-lg col-md-12 my-2"></div>
 			</div>
 
-			<div class="row">
+			<div class="row btmrow">
 				<button class="btn btn-indigo" type="button" id="itsobtn">itso?</button>
 				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
