@@ -419,7 +419,7 @@
 							src="resources/images/${writer.photo }"
 							alt="Generic placeholder image">
 						<div class="media-body mt-2">
-							<span><a href="userpage.go?seq=${writer.seq }">${writer.name}</a></span><br>
+							<span><a href="userpage.go?seq=${writer.seq }" >${writer.name}</a></span><br>
 							<span>"${writer.state}"</span>
 						</div>
 						<c:choose>
@@ -1014,7 +1014,8 @@
 																		comment : $(
 																				"#commentarea")
 																				.val(),
-																		seq : "${content.social_seq}"
+																		seq : "${content.social_seq}",
+																		writerseq:"${writer.seq }"
 																	},
 
 																	success : function(

@@ -754,9 +754,10 @@ public class SocialController {
 	}
 
 	@RequestMapping("/procSocialComment.go")
-	public void procSocialComment(HttpServletRequest request, HttpServletResponse response) {
+	public void procSocialComment(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		int social_seq = Integer.parseInt(request.getParameter("seq"));
-
+		int writer_seq =Integer.parseInt(request.getParameter("writerseq"));
+		System.out.println("글작성잡니다 :"+writer_seq);
 		try {
 			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 			String comment = request.getParameter("comment");
@@ -767,7 +768,9 @@ public class SocialController {
 			ObjectMapper om = new ObjectMapper();
 
 			ArrayNode array = om.createArrayNode();
-
+			if(writer_seq != writer) {
+				NotificationDTO nodto = new NotificationDTO(writer_seq,writer,"comment","댓글을 남겼습니다","n","아무거나",social_seq);
+			}
 
 			for(SocialCommentDTO dto : commentList) {
 				ObjectNode on = om.createObjectNode();

@@ -542,6 +542,7 @@ background-color: #f4f4f4;
 
 	$("#tooltip").click(function() {
 		var seq = "${sessionScope.user.seq}"
+	
 		console.log(seq);
 		let contents = document.getElementById("notification-info");
 
@@ -552,7 +553,12 @@ background-color: #f4f4f4;
 				user_seq : seq
 			},
 			success : function(data) {
+				
+				$("#notification_list").html("");
 				showNotification(data);
+			
+					
+				
 			}
 
 		});
@@ -560,6 +566,7 @@ background-color: #f4f4f4;
 
 	function showNotification(data) {
 		var notItem = "";
+	
 		var sessionSeq = "${sessionScope.user.seq}";
 		$
 				.each(
@@ -586,10 +593,12 @@ background-color: #f4f4f4;
 								notItem += "</div>";
 							}
 						});
+	
 		$("#notification_list").prepend(notItem).trigger("create");
 
 	};
 	$("#message-counter").hide();
+	
 	$("#tooltip2").click(function() {
 		$("#message-counter").hide();
 			$.ajax({
@@ -612,6 +621,7 @@ background-color: #f4f4f4;
 		var userlist="";
 		var listget = $("#user_list").text();
 		console.log(listget);
+		var nocount =0;
 		$.each(data.list,function(index,item){			
 			if(listget==""){
 			userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">' ;
@@ -626,8 +636,12 @@ background-color: #f4f4f4;
 			userlist += '<i class="fa fa-mail-reply" aria-hidden="true"></i></span>';
 			userlist += '</div>'	;
 			userlist += '</a></li>';
+			
+			console.log(item.time);
 			}
+		
 			$("#user_list").prepend(userlist);
+			
 		});
 	};
 

@@ -180,7 +180,8 @@ public class AjaxController {
 			obj.put("name",tmp.getName());
 			obj.put("photo", tmp.getPhoto());
 			obj.put("contents", last.getMessage_contents());
-			obj.put("time",last.getMessage_time());
+			System.out.println("time :" +last.getMessage_time());
+			obj.put("time",last.getMessage_time().toString());
 
 			json.add(obj);
 		}
