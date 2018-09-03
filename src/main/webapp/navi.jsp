@@ -18,6 +18,28 @@
 	font: 8px Verdana;
 	background-color: rgba(212, 19, 13, 1);
 }
+.msg-user-count {
+	
+	
+	background-color: rgba(212, 19, 13, 1);
+	color: #fff;
+	border-radius: 3px;
+	padding: 1px 3px;
+	font: 8px Verdana;
+	background-color: rgba(212, 19, 13, 1);
+}
+
+.message-counter {
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	background-color: rgba(212, 19, 13, 1);
+	color: #fff;
+	border-radius: 3px;
+	padding: 1px 3px;
+	font: 8px Verdana;
+	background-color: rgba(212, 19, 13, 1);
+}
 
 @font-face {
 	font-family: 'NanumbarunpenR';
@@ -292,7 +314,8 @@ background-color: #f4f4f4;
 
 			<li class="nav-item" id="tooltip2"><a
 				class="nav-link waves-effect waves-light"> <i
-					class="fa fa-envelope"></i> 메시지
+					class="fa fa-envelope"></i> 메시지<span class="message-counter"
+					id="message-counter">NEW</span>
 			</a></li>
 			<li class="nav-item"><a
 				class="nav-link waves-effect waves-light" href="writeSocial.jsp"> <i
@@ -566,9 +589,9 @@ background-color: #f4f4f4;
 		$("#notification_list").prepend(notItem).trigger("create");
 
 	};
-
+	$("#message-counter").hide();
 	$("#tooltip2").click(function() {
-		
+		$("#message-counter").hide();
 			$.ajax({
 				 url :"userList.ajax",
 				 type:"post",
@@ -607,13 +630,14 @@ background-color: #f4f4f4;
 			$("#user_list").prepend(userlist);
 		});
 	};
+
 		var messageReset =0;
 	$(document).on("click",".modal-list",function(){
 		var listseq =$(this).attr("seq");
 		console.log(listseq);
 	/* 	$(".modal-list").attr("data-toggle","modal");
 		$(".modal-list").attr("data-target","#centralModalSuccess"); */
-		
+		$(".msg-user-count").hide();
 	
 		$.ajax({
 		    url :"messageUser.ajax",
@@ -685,7 +709,11 @@ background-color: #f4f4f4;
 	
 	$("#sendMessage").click(function(){
 		var message = $("#exampleFormControlTextarea2").val();
+		var go="";
 		if(message != ""){
+		go = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+message+'</p></div>'
+		$("#modal-body").append(go);
+		$("#exampleFormControlTextarea2").val("");
 		 ws.send(message);
 		 $.ajax({
 			 url :"sendMessage.ajax",
@@ -708,8 +736,13 @@ background-color: #f4f4f4;
 		if(key.keyCode ==13){
 			var message = $("#exampleFormControlTextarea2").val();
 			var message_user_seq =$(".heading-name").attr("seq");
+			
+		
 			console.log(message_user_seq);
 			if(message != ""){
+				var go2 = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+message+'</p></div>'
+				$("#modal-body").append(go2);
+				$("#exampleFormControlTextarea2").val("");
 				console.log("여기는 들어옴");
 			 socket.send(message);
 			 $.ajax({
@@ -731,7 +764,7 @@ background-color: #f4f4f4;
 			}
 		}
 	});
-
+	$(".msg-user-count").hide();
 	var notificationcounter = 0;
 	if ("WebSocket" in window) {
 		var socket = new WebSocket(
@@ -742,9 +775,12 @@ background-color: #f4f4f4;
 		
 			};
 			socket.onmessage = function(msg) {
-		
-
-			console.log(msg);
+				 file = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+msg.data+'</p></div>'
+				 $("#modal-body").append(file); 
+				$("#message-counter").show();
+				$(".msg-user-count").show();
+		/* 	console.log(msg); */
+				
 		};
 
 		ws.onclose = function() {
@@ -781,7 +817,7 @@ background-color: #f4f4f4;
 		user += '<p class="heading lead heading-name" seq="'+item.seq+'">'+item.name+'</p>'; 
 		user+=	'<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
 		user+=	'<span aria-hidden="true" class="white-text">&times;</span>'
-			user+='	</button>'
+		user+='	</button>'
 		});	
 	 	$("#message-header").html(user);  
 		

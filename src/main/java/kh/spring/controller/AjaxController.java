@@ -1,5 +1,6 @@
 package kh.spring.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import kh.spring.interfaces.ISocialBoardService;
 import kh.spring.interfaces.IStylingService;
 import kh.spring.interfaces.ITipService;
 import kh.spring.websocket.EchoHandler;
+import kh.spring.websocket.MessageSocket;
 
 @Controller
 public class AjaxController {
@@ -50,13 +52,13 @@ public class AjaxController {
 
 	@Autowired
 	private ISocialBoardService sbService;
-	
+
 	@Autowired
 	private IStylingService styservice; 
-	
+
 	@Autowired
 	private IMessagesService mservice;
-	
+
 	@Autowired
 	private ITipService tservice;
 
@@ -85,8 +87,8 @@ public class AjaxController {
 		}
 		return msg;
 	}
-	
-	
+
+
 
 	@RequestMapping("/notificaiton.ajax")
 	public @ResponseBody String notifiNavi(int user_seq,HttpSession session,NotificationDTO dto,HttpServletResponse response){
@@ -115,19 +117,19 @@ public class AjaxController {
 	@RequestMapping("/messageUser.ajax")
 	public @ResponseBody JSONObject messageUser(int seq,HttpServletResponse response,HttpSession session) {
 		try {
-		/*JSONObject jsonobject  = new JSONObject();*/
-	
-		int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();	
-		MemberDTO mdto = new MemberDTO(seq);
-		List<MemberDTO> user = this.service.getUserData(mdto);
-		
-		MessagesDTO medto = new MessagesDTO(sessionSeq,seq);
-		List<MessagesDTO> messageList = this.mservice.selectMessage(medto);
-		
-		JSONObject jsonobject = new JSONObject();
-		
-	
-	
+			/*JSONObject jsonobject  = new JSONObject();*/
+
+			int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();	
+			MemberDTO mdto = new MemberDTO(seq);
+			List<MemberDTO> user = this.service.getUserData(mdto);
+
+			MessagesDTO medto = new MessagesDTO(sessionSeq,seq);
+			List<MessagesDTO> messageList = this.mservice.selectMessage(medto);
+
+			JSONObject jsonobject = new JSONObject();
+
+
+
 			JSONArray json = new JSONArray();
 			JSONObject obj = new JSONObject();
 			MemberDTO userdata = user.get(0);
@@ -135,26 +137,26 @@ public class AjaxController {
 			obj.put("name",userdata.getName());
 			obj.put("photo", userdata.getPhoto());
 			json.add(obj);
-		
-			
-			JSONArray list = new JSONArray();
-		for(MessagesDTO tmp : messageList) {
-			JSONObject mbj = new JSONObject();
-			mbj.put("user_seq", tmp.getUser_seq());
-			mbj.put("contents", tmp.getMessage_contents());
-			mbj.put("time", tmp.getMessage_time());
-			list.add(mbj);
-		}
-	
 
-		
-		jsonobject.put("message", list);
-		jsonobject.put("user", json);
-		System.out.println(jsonobject.toString());
-		
-	
-		return jsonobject;
-	
+
+			JSONArray list = new JSONArray();
+			for(MessagesDTO tmp : messageList) {
+				JSONObject mbj = new JSONObject();
+				mbj.put("user_seq", tmp.getUser_seq());
+				mbj.put("contents", tmp.getMessage_contents());
+				mbj.put("time", tmp.getMessage_time());
+				list.add(mbj);
+			}
+
+
+
+			jsonobject.put("message", list);
+			jsonobject.put("user", json);
+			System.out.println(jsonobject.toString());
+
+
+			return jsonobject;
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,10 +168,10 @@ public class AjaxController {
 		JSONObject jsonObject = new JSONObject();
 		MessagesDTO mdto = new MessagesDTO(seq);
 		List<MessagesDTO> userList = this.mservice.userList(mdto);
-		
-		
+
+
 		JSONArray json = new JSONArray();
-		
+
 		for(MessagesDTO tmp : userList) {
 			JSONObject obj = new JSONObject();
 			MessagesDTO list = new MessagesDTO(seq,tmp.getSeq());
@@ -179,26 +181,36 @@ public class AjaxController {
 			obj.put("photo", tmp.getPhoto());
 			obj.put("contents", last.getMessage_contents());
 			obj.put("time",last.getMessage_time());
-			
+
 			json.add(obj);
 		}
 		System.out.println(json.toString());
 		jsonObject.put("list",json);
-		
+
 		return jsonObject;
 	}
-	
+
 
 	@RequestMapping("/sendMessage.ajax")
 	public @ResponseBody int sendMessage(int message_user_seq,String message,HttpSession session) {
-		int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
-		
-		MessagesDTO medto = new MessagesDTO(sessionSeq,message_user_seq,message);
-	
-		int success = this.mservice.sendMessage(medto);
-		return success;
+		try {
+			int sessionSeq = ((MemberDTO)session.getAttribute("user")).getSeq();
+
+			MessagesDTO medto = new MessagesDTO(sessionSeq,message_user_seq,message);
+
+			int success = this.mservice.sendMessage(medto);
+			if( MessageSocket.message_user.get(message_user_seq) !=null) {
+			MessageSocket.message_user.get(message_user_seq).getBasicRemote().sendText(message);
+			}else {
+				System.out.println("사용자가 접속중이지 않습니다");
+			}
+			return success;
+		} catch (IOException e) {	
+			System.out.println("사용자가 접속중이지 않습니다 그래서 실패함");
+		}
+		return 0;
 	}
-	
+
 
 	@RequestMapping("/mainHeart.ajax")
 	public @ResponseBody int mainHeart(int social_seq,int social_writer,HttpServletResponse response,HttpSession session) {				
@@ -246,8 +258,8 @@ public class AjaxController {
 		System.out.println("누른사람 번호"+user_seq);
 		return count;
 	}
-	
-	
+
+
 
 
 	@RequestMapping("/saveCollection.ajax")
@@ -339,21 +351,21 @@ public class AjaxController {
 		}
 		return resultmsg;
 	}
-	
+
 	@RequestMapping("/doStylingVote.ajax")
 	public @ResponseBody void doStylingVote(HttpSession session, int value, int styling_vote_seq) {
 		System.out.println("투표ajax실행시작-------------------");
 		StylingVoteUserDTO votedto = new StylingVoteUserDTO();
-		
+
 		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		votedto.setUser_seq(user_seq);
 		votedto.setVote_value(value);
 		votedto.setStyling_vote_seq(styling_vote_seq);
-		
+
 		int voteresult = styservice.doStylingVote(votedto);
 		System.out.println(value+"에 투표ajax 결과-"+voteresult);
 	}
-	
+
 	@RequestMapping("/updateStylingViewcount.ajax")
 	public @ResponseBody void updateStylingViewcount(HttpSession session, @RequestParam int styling_vote_seq) {
 		System.out.println(styling_vote_seq+"번글 조회수 up-------------------");
@@ -402,7 +414,7 @@ public class AjaxController {
 
 		return null;
 	}
-	
+
 	@RequestMapping("reportArticle.ajax")
 	public @ResponseBody void reportTipArticle(ReportDTO dto, HttpSession session) {
 		System.out.println("dto: " + dto.getBoard_seq());
