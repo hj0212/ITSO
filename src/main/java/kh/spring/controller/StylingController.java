@@ -79,7 +79,7 @@ public class StylingController {
 				System.out.println("검색결과가 아이템개수보다 작아서 임의의 dto생성 시작");
 				int loopnum = svitemdtos.size()-resultdtos.size();
 				System.out.println(loopnum+":loopnum");
-				List<Integer> empdtos = new ArrayList<>();
+				List<Integer> empdtos = new ArrayList();
 				
 				for(int i=0; i<svitemdtos.size(); i++) {
 					int stopflag = 0;
