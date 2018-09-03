@@ -371,7 +371,7 @@ background-color: #f4f4f4;
 		var notificationcounter = 0;
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://localhost:8080/websocket?seq=${sessionScope.user.seq}");
+					"ws://59.10.249.73/websocket?seq=${sessionScope.user.seq}");
 			var str;
 			var file = "";
 
@@ -387,7 +387,7 @@ background-color: #f4f4f4;
 					var notification = "<div class='notification-item read-Y' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
 				}
 				notification += "<div class='img-left'>";
-				notification += "<img src='/upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
+				notification += "<img src='upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
 				notification += "</div>";
 				notification += "<div class='user-content'>";
 				notification += "<span class='user-info'> <span class='user-name'><b>"
@@ -573,7 +573,7 @@ background-color: #f4f4f4;
 									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"' go='"+item.noti_url+"'>"
 								}
 								notItem += "<div class='img-left'>";
-								notItem += "<img src='/upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
+								notItem += "<img src='upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
 								notItem += "</div>";
 								notItem += "<div class='user-content'>";
 								notItem += "<span class='user-info'> <span class='user-name'><b>"
@@ -619,7 +619,7 @@ background-color: #f4f4f4;
 		$.each(data.list,function(index,item){			
 			if(listget==""){
 			userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">' ;
-			 userlist += '<img src="/upload/profile"'+item.photo+'alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'; 
+			 userlist += '<img src="upload/profile/"'+item.photo+'alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'; 
 			userlist += '<div class="text-md-left align-middle">';
 			userlist += '<strong>'+item.name+'</strong>';
 			userlist += '<p class="last-message text-muted">'+item.contents+'</p>';
@@ -777,7 +777,7 @@ background-color: #f4f4f4;
 	var notificationcounter = 0;
 	if ("WebSocket" in window) {
 		var socket = new WebSocket(
-				"ws://localhost:8080/socket?seq=${sessionScope.user.seq}");
+				"ws://59.10.249.73/socket?seq=${sessionScope.user.seq}");
 		var str;
 		var file = ""
 			socket.onopen = function() {

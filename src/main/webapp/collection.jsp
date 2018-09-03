@@ -202,16 +202,6 @@ section .follow-action .follow-button {
 	}
 }
 
-/* 각 card별 follow 버튼 */
-.follow-action .follow-button {
-	padding: 5px 10px;
-	border: none;
-	color: var(- -text-bright-color);
-	color: #fff;
-	background-color: var(- -main-color);
-	background-color: #1B0946;
-}
-
 @media ( min-width : 768px) {
 	#colnav {
 		max-width: var(- -large-width);
@@ -224,6 +214,7 @@ section .follow-action .follow-button {
 .overlay img {
 	height: 350px;
 	object-fit: cover;
+	margin: 0 auto;
 }
 
 #colnav {

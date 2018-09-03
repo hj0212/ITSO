@@ -760,62 +760,61 @@ table .profilearea {
 																		href="userpage.go?seq=${list.social_writer }"><b
 																		class="writerName" style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;
 																	<span class="state"><font color="gray">"${list.userState}"</font></span>
-																</div> <c:choose>
-																	<c:when
-																		test="${list.social_writer eq sessionScope.user.seq}">
+																</div> <c:set var="loop_flag" value="false" />
+                                    <c:choose>
+                                        <c:when test="${list.social_writer eq sessionScope.user.seq}">
+                                            
+								    </c:when>
+								    <c:otherwise>
+										<c:choose>
+											<c:when test="${empty followingList }">
+												<button type="button" class="btn btn-indigo followbtn">
+															<span class="unfollow hidden"
+																style="font-family: 'NanumbarunpenR';"><i
+																class="fa fa-check" /></i> 언팔로우</span> <span class="follow show"
+																style="font-family: 'NanumbarunpenR';"><i
+																class="fa fa-plus" /></i> 팔로우</span>
+																</button>
+											</c:when>
+											<c:otherwise>
+												<c:forEach var="flist" items="${followingList }" varStatus="fstatus">
 
-																	</c:when>
-																	<c:otherwise>
-																		<c:choose>
+													<c:if test="${loop_flag == false }">
+														<c:choose>
+															<c:when test="${good.social_seq == list.social_seq }">
+															<button type="button" class="btn btn-itso followbtn">
+																<span class="unfollow show"
+																				style="font-family: 'NanumbarunpenR';"><i
+																				class="fa fa-check" /></i> 언팔로우</span> <span
+																				class="follow hidden"
+																				style="font-family: 'NanumbarunpenR';"><i
+																				class="fa fa-plus" /></i> 팔로우</span>
+																		</button>
 
-																			<c:when test="${!empty followingList }">
-																				<c:forEach var="flist" items="${followingList }">
+																<c:set var="loop_flag" value="true" />
+															</c:when>
+															<c:otherwise>
+																<c:if test="${fstatus.last }">
+																<button type="button" class="btn btn-indigo followbtn">
+																	<span class="follow show"
+																				style="font-family: 'NanumbarunpenR';"><i
+																				class="fa fa-plus" /></i> 팔로우</span> <span
+																				class="unfollow hidden"
+																				style="font-family: 'NanumbarunpenR';"><i
+																				class="fa fa-check" /></i> 언팔로우</span>
+																</button>
 
-																					<c:choose>
-																						<c:when test="${flist.seq eq list.social_writer}">
+																</c:if>
+															</c:otherwise>
+														</c:choose>
+													</c:if>
 
-																							<button type="button"
-																								class="btn btn-itso followbtn ml-0">
-																								<span class="unfollow show"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-check" /></i> 언팔로우</span> <span
-																									class="follow hidden"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-plus" /></i> 팔로우</span>
-																							</button>
-																						</c:when>
-																						<c:otherwise>
+												</c:forEach>
+											</c:otherwise>
 
-																							<button type="button"
-																								class="btn btn-indigo followbtn ml-0">
-																								<span class="follow show"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-plus" /></i> 팔로우</span> <span
-																									class="unfollow hidden"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-check" /></i> 언팔로우</span>
-																							</button>
-																						</c:otherwise>
-																					</c:choose>
-																				</c:forEach>
-																			</c:when>
-
-																			<c:otherwise>
-																				<button type="button"
-																					class="btn btn-indigo followbtn ml-0">
-																					<span class="unfollow hidden"
-																						style="font-family: 'NanumbarunpenR';"><i
-																						class="fa fa-check" /></i> 언팔로우</span> <span
-																						class="follow show"
-																						style="font-family: 'NanumbarunpenR';"><i
-																						class="fa fa-plus" /></i> 팔로우</span>
-																				</button>
-																			</c:otherwise>
-																		</c:choose>
-
-																	</c:otherwise>
-																</c:choose> <input type="hidden" value="${list.social_writer }"
-																 /></li>
+										</c:choose>
+										</c:otherwise>
+										</c:choose> <input type="hidden" value="${list.social_writer }" id="seq" /></li>
 															<li>
 																<!--Text-->
 																<p class="mb-0">
@@ -941,7 +940,7 @@ table .profilearea {
 										<td>나를 팔로우 하는 사람이 없습니다.
 								</c:when>
 								<c:otherwise>
-									<c:forEach var="ferlist" items="${followerList }">
+									<c:forEach var="ferlist" items="${followerList }" varStatus="fstatus">
 										<tr>
 											<td width=100>
 												<div class="profilearea">
@@ -1006,7 +1005,7 @@ table .profilearea {
 
 											<td style="height: 100px; vertical-align: middle">
 												<h6 class="mt-1">${finglist.name }</h6> <c:choose>
-													<c:when test="${ferlist.seq eq sessionScope.user.seq }">
+													<c:when test="${finglist.seq eq sessionScope.user.seq }">
 
 													</c:when>
 													<c:otherwise>
@@ -1030,7 +1029,7 @@ table .profilearea {
 																	class="fa fa-plus" /></i> 팔로우</span>
 															</button>
 														</c:if>
-														<input type="hidden" value="${ferlist.seq }" id="seq" />
+														<input type="hidden" value="${finglist.seq }" id="seq" />
 													</c:otherwise>
 												</c:choose>
 											</td>
@@ -1383,7 +1382,6 @@ table .profilearea {
 		
 		$("#messagebtn").click(function(){
 			var seq	="${seq}";
-			alert(seq);
 			var message=""
 				
 			$.ajax({
