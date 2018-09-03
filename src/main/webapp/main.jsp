@@ -29,6 +29,12 @@
 	font-size: 0.75rem;
 }
 
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 body {
 	width: 100%;
 	margin: 0px auto;

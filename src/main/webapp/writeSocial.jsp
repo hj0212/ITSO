@@ -82,6 +82,7 @@
 			</div>
 		</div>
 		<div class="col-md-12 my-3"></div>
+
 		<div class="col-md-6">
 			<form method="post" action="uploadSocialImg.sns" id="uploadform" enctype="multipart/form-data">
 				<div class="file-upload">
@@ -119,8 +120,9 @@
 			if (input.files && input.files[0]) {
 
 				var reader = new FileReader();
+
 				reader.onload = function(e) {
-					/* $('.image-upload-wrap').hide(); */
+					$('.image-upload-wrap').hide();
 
 					$('.file-upload-image').attr('src', e.target.result);
 					$('#imgselected').css("visibility", "visible");

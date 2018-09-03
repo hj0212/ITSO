@@ -36,6 +36,12 @@
 
 
 <style>
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 ul {
 	list-style-type: none;
 	padding-left: 0px;
@@ -92,8 +98,6 @@ table th {
 	background-color: #1B0946;
 }
 </style>
-
-
 
 </head>
 
@@ -214,10 +218,13 @@ table th {
 				    </ul>
 				</div>
 			</div>
-		<div class=container>
-			<button class="btn btn-itso" onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
+			<div class=container>
+				<button class="btn btn-itso" onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
+			</div>
 		</div>
 	</div>
+	
+	<%@include file="footer.jsp"%>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
 	<!-- Bootstrap core JavaScript -->
