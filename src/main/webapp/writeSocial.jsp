@@ -90,12 +90,7 @@
 					<div class="row">
 						<div class="image-upload-wrap form-group my-3 col-md-12">
 							<label>-님의 스타일을 보여주세요.</label> 
-							<input type="file" name="file" id="imgfile"
-								class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);"
-								accept="image/*" />
-							<!--     <div class="drag-text">
-      <h3>Drag and drop a file or select add Image</h3>
-    </div> -->
+							<input type="file" name="file" id="imgfile" class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);" accept="image/*" />
 						</div>
 					</div>
 					<div class="row">
