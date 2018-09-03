@@ -465,9 +465,9 @@
 											<a href=${item.tag_url } target="_blank">${item.tag_name}</a>
 										</div>
 										<div>
-											<a href="#">${item.tag_brand}</a>
+											<a href="searchWord.se?word=${item.tag_brand}">${item.tag_brand}</a>
 											<c:if test="${!empty item.tag_store }">
-												<a href="#">in ${item.tag_store}</a>
+												<a href="searchWord.se?word=${item.tag_store}">in ${item.tag_store}</a>
 											</c:if>
 										</div>
 									</li>
@@ -717,10 +717,10 @@
 					board: "style"
 	            },
 	            success: function() {
-	                console.log("성공");
+	                alert("신고가 완료되었습니다.");
 	            },
 	            error: function() {
-	                console.log("실패");
+	                console.log("신고 실패");
 	            }
 	        });
 		}
@@ -920,11 +920,7 @@
 		var $j = jQuery.noConflict();
 		$j(document).ready(function() {
 			if ("${dataflag}" === "true") {
-				let markerdata = $
-				{
-					markerdata
-				}
-				;
+				let markerdata = ${markerdata};
 				$j('.pin').easypinShow({
 					data : markerdata,
 					popover : {
@@ -948,14 +944,13 @@
 					var index = $j(".clothes-marker").index(this);
 					$j(".clothesinfo")[index].style.backgroundColor = "white";
 				});
-			}
-			;
+			};
 		});
 	</script>
 	<c:if test="${sessionScope.user.seq == content.social_writer}">
 		<script>
 			document.getElementById("modify").onclick = function() {
-				location.href = "modifySocial.go?seq=" + $
+				location.href = "modifySocial.go?seq=" + ${content.social_seq}
 				{
 					content.social_seq
 				}
@@ -965,11 +960,10 @@
 			document.getElementById("delete").onclick = function() {
 				let delcheck = confirm("글을 삭제하시겠습니까?");
 				if (delcheck) {
-					location.href = "deleteSocial.go?seq=" + $
+					location.href = "deleteSocial.go?seq=" + ${content.social_seq}
 					{
 						content.social_seq
-					}
-					;
+					};
 				}
 			};
 		</script>

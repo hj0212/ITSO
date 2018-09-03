@@ -17,12 +17,13 @@ public class ReportDAOImpl implements IReportDAO {
 
 	@Override
 	public int insertReport(ReportDTO dto) {
+		System.out.println("insert"+dto.getBoard_seq()+":"+dto.getReporting_user());
 		return template.insert("Report.reportArticle", dto);
 	}
 
 	@Override
 	public List<ReportDTO> checkReportData(ReportDTO dto) {
-		System.out.println(dto.getBoard_seq()+":"+dto.getReporting_user());
+		System.out.println("select"+dto.getBoard_seq()+":"+dto.getReporting_user());
 		return template.selectList("Report.checkArticle");
 	}
 

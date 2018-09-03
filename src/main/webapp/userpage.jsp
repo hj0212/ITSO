@@ -25,7 +25,7 @@
 	rel="stylesheet">
 
 <!--   ---------CDN 모음 끝------------------------------------------  -->
-<title>MyPage</title>
+<title></title>
 <style>
 body {
 	background-color: #eeeeee;
@@ -484,7 +484,17 @@ table .profilearea {
 				<p class="h4-responsive mb-0 nanumB">${member.name}</p>
 				<p class="h6-responsive">${member.email}</p>
 				<br>
-				<p class="h4-responsive mb-0 nanumB">"${member.state}"</p>
+				<p class="h4-responsive mb-0 nanumB">
+				
+				<c:choose>
+					<c:when test="${empty member.state}">
+					" "
+					</c:when>
+					<c:otherwise>
+					"${member.state}"
+					</c:otherwise>
+				</c:choose>
+				</p>
 				<br>
 
 				<c:choose>
@@ -1410,7 +1420,7 @@ table .profilearea {
 			
 		});
 	
-		
+		document.title = "${member.name}" ;
 		 
 		
 	</script>

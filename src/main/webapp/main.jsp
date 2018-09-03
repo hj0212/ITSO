@@ -29,6 +29,12 @@
 	font-size: 0.75rem;
 }
 
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 body {
 	width: 100%;
 	margin: 0px auto;
@@ -577,7 +583,7 @@ button.dropdown-toggle {
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				검색 결과가 없습니다.
+				<div style="height: 860px; padding-top: 100px; text-align: center;"> 검색 결과가 없습니다. </div>
 			</c:otherwise>
 		</c:choose>
 

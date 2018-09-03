@@ -37,8 +37,15 @@
 
 
 <style>
+<<<<<<< HEAD
 a, a:hover{
 text-decoration:none;
+=======
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+>>>>>>> 머지
 }
 
 ul {
@@ -124,8 +131,6 @@ table th {
 	background-color: #1B0946;
 }
 </style>
-
-
 
 </head>
 
@@ -381,6 +386,7 @@ table th {
 						data-dismiss="modal" style="color: black;">취소</button>
 				</div>
 			</div>
+<<<<<<< HEAD
 		</div>
 	</div>
 
@@ -428,6 +434,15 @@ table th {
 
 
 
+=======
+			<div class=container>
+				<button class="btn btn-itso" onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
+			</div>
+		</div>
+	</div>
+	
+	<%@include file="footer.jsp"%>
+>>>>>>> 머지
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
