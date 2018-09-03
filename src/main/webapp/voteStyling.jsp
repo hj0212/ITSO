@@ -202,7 +202,7 @@ input[type="file"] {
 				</div>
 				<div class="col">
 					<input type="text" class="form-control form-control-sm col-md-4"
-						readOnly id="votenum" placeholder="명" name="styling_voternumtxt">
+						readOnly id="votenum" placeholder="명" name="styling_voternumtxt" maxlength="12" oninput="maxLengthCheck(this)"/>
 				</div>
 
 			</div>
@@ -276,6 +276,13 @@ input[type="file"] {
 		/* $('#addvotebtn, .upvotebtn, .downvotebtn, .delvotebtn').on('click',function(){
 			
 		}) */
+		
+		  function maxLengthCheck(object){
+			   if (object.value.length > object.maxLength){
+			    object.value = object.value.slice(0, object.maxLength);
+			   }    
+			  }
+			
 		function readURL(input) {
 			console.log(input.id);
 			console.log(input.files[0].name);
@@ -429,7 +436,7 @@ input[type="file"] {
 							alert("항목을 모두 입력해 주세요.");
 						}else if(radioval==1 && $('#datepicker').val()==""){
 							alert("종료 날짜를 선택해 주세요.");			
-						}else if(radioval==2 && $('#votenum').val()==""){
+						}else if(radioval==2 && $('#votenum').val()=="" || radioval==2 && $('#votenum').val()==0 || radioval==2 && $('#votenum').val()==1){
 							alert("참여 인원을 입력해 주세요.");	
 						}else if($('#datepicker').val()=="" && $('#votenum').val()=="" && radioval!=3){
 							alert("투표종료 조건을 입력해 주세요.");
