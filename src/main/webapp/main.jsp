@@ -29,6 +29,12 @@
 	font-size: 0.75rem;
 }
 
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 body {
 	width: 100%;
 	margin: 0px auto;
@@ -79,8 +85,12 @@ a {
 #rightfix {
 	width: 300px;
 	top: 30%;
-	right: 50px;
+	right: 30px;
 	position: fixed;
+}
+
+#rightfix .media {
+	margin-bottom: 20px;
 }
 
 .media-body {
@@ -143,44 +153,14 @@ button.dropdown-toggle {
 	border: 1px solid #e9e9e9;
 }
 
-#sidefooter {
-	width: 100%;
-	bottom: 0px;
-	border-top: 2px solid black;
-	text-align: center;
-}
-
-#sidefooter p {
-	font-style: oblique;
-}
-
-#sidefooter p a {
-	font-style: oblique;
-	color: black;
-}
-
 #MOVE_TOP_BTN {
-	position: fixed;
-	right: 5%;
-	width: 100px;
-	bottom: 100px;
 	display: none;
 	z-index: 999;
-	background-color: black;
-	color: white;
 	text-align: center;
 }
 
 .writerName:hover {
 	color: aqua;
-}
-
-.btn-floating {
-	
-}
-
-.footer-brand {
-	width: 70px;
 }
 
 .hidden {
@@ -274,6 +254,10 @@ button.dropdown-toggle {
 
 #social_contents a:hover {
 	color: black;
+}
+
+#rightfix button {
+	top: -15px;
 }
 </style>
 <script>
@@ -429,7 +413,6 @@ button.dropdown-toggle {
 				</div>
 			</div>
 		</section>
-		<a id="MOVE_TOP_BTN" href="#">TOP</a>
 
 		<c:choose>
 			<c:when test="${fn:length(socialList) > 0}">
@@ -590,7 +573,7 @@ button.dropdown-toggle {
 										<button type="button" class="btn-floating btn-sm savebtn"
 											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
 											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">컬렉션에 저장
-											<i class="fa fa-upload"></i>
+											<i class="fa fa-download"></i>
 										</button>
 									</div>
 								</div>
@@ -598,13 +581,10 @@ button.dropdown-toggle {
 						</div>
 					</div>
 					<!-- Grid column -->
-
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<tr>
-					<td colspan="3">게시글이 없습니다,</td>
-				</tr>
+				<div style="height: 860px; padding-top: 100px; text-align: center;"> 검색 결과가 없습니다. </div>
 			</c:otherwise>
 		</c:choose>
 
@@ -684,7 +664,9 @@ button.dropdown-toggle {
 								</div>
 							</c:when>
 							<c:otherwise>
-								<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+								<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
+								<div id="collectionarea" class="mt-2 first">
+								</div>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -739,57 +721,63 @@ button.dropdown-toggle {
 		<!-- 오른쪽 추천 follow  -->
 		<div id="rightfix" class="right-fixed">
 			<ul class="list-unstyled">
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
+				<li class="media"><img class="d-flex mr-3 rounded-circle  align-self-center"
 					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
 					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
+					<div class="media-body mt-0">
+						<h5 class="mt-0 font-weight-bold">List-based media
 							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
-					</div></li>
-				<li class="media my-4"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder6.jpg"
-					alt="An image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg"
+					</div>
+					</li>
+				<li class="media"><img class="d-flex mr-3 rounded-circle  align-self-center"
+					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
 					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+					<div class="media-body mt-0">
+						<h5 class="mt-0 font-weight-bold">List-based media
+							object</h5>
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
-					</div></li>
+					</div>
+					</li>
+				<li class="media"><img class="d-flex mr-3 rounded-circle  align-self-center"
+					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
+					alt="Generic placeholder image">
+					<div class="media-body mt-0">
+						<h5 class="mt-0 font-weight-bold">List-based media
+							object</h5>
+						<button type="button" class="btn btn-indigo btn-sm m-0">
+							<i class="fa fa-plus">follow</i>
+						</button>
+
+					</div>
+					</li>
 			</ul>
-
+			<a id="MOVE_TOP_BTN" href="#" class="btn btn-elegant btn-sm">TOP</a>
 		</div>
-
-		<!--side footer -->
-		<div id="sidefooter">
-
-			<p>
-				<a class="footer-brand" href="#"><img id="logo" alt=""
-					src="resources/images/logo_black.png"></a>©2018 ItSo. All rights
-				reserved.
-			</p>
-			<p>
-				<a href="#">language</a>· <a href="#">help</a>· <a href="#">widgets</a>·
-				<a href="#">advertise</a>· <a href="#">legal</a>
-			</p>
+		<div id="enters">
+		
 		</div>
+		
+	<%@include file="footer.jsp"%>
+		
 	</div>
 	<script>
+	$(window).scroll(function() {
+		console.log($(document).height()+":"+$(window).height()); 
+		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			console.log(++page);
+			for(var i=0; i < 10;i++){
+				$("#enters").append("내용내용내용내용내용</br>");
+			}
+		}
+	});
+	
 		$("#managebtn").on("click", function () {
 		    window.open('userpage.go?view=collection', '_blank');
 		})
@@ -861,7 +849,13 @@ button.dropdown-toggle {
 		    .on('click', function () {
 		        var collection_title = $("input[name='collection_title']").val();
 		        var collection_contents = $("textarea[name='collection_contents']").val();
-
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
 		        $.ajax({
 		            url: "createCollection.ajax",
 		            type: "post",
@@ -872,6 +866,13 @@ button.dropdown-toggle {
 		            success: function (data) {
 		                console.log("생성" + data);
 		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
 		                $("input[name='collection_title']").val("");
 		                $("textarea[name='collection_contents']").val("");
 		                $("#createModal").hide();
@@ -890,6 +891,7 @@ button.dropdown-toggle {
 
 		            }
 		        });
+		        }
 		    });
 		$("#createModal").on('show.bs.modal', function () {
 		    $("#saveModal").hide();
@@ -934,12 +936,12 @@ button.dropdown-toggle {
 <script>
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-	var titletext = '${list.social_title}';
+/* 	var titletext = '${list.social_title}'; */
 
-	console.log("<c:out value='${param.mode}'/>");
+/* 	console.log("<c:out value='${param.mode}'/>");
 
 	var mode = "<c:out value='${list.social_title}'/>";
-
+ */
 	//트위터 공유  
 	function twittergo(url, text) {
 		var url = window.location.protocol + window.location.host

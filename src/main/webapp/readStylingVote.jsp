@@ -29,6 +29,12 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!--   ---------CDN 모음 끝------------------------------------------  -->
 <style>
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 div {
 	/* border: 1px solid black; */
 	box-sizing: border-box;
@@ -83,7 +89,7 @@ body {
 	width: 100%;
 }
 
-img {
+#wrapper img {
 	border: 0.3px solid lightgray;
 	text-align: center;
 	vertical-align: middle;
@@ -211,7 +217,7 @@ margin-top:20px;
 	<hr />
 	<div class="row my-2" style="width:100%">
 		<div class="md-form form-lg mx-0 topimg" style="width:40%">
-			<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
+			<img class="d-flex" src="/upload/stylingvote/${votedto.photo}"
 				alt="사진 없음" id="votetitleimg" style="width: 80%">
 		</div>
 		<div class="md-form form-lg mx-0 toptext" style="width:60%">
@@ -256,7 +262,7 @@ margin-top:20px;
 										<img
 											class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
 											style="width: 90%"
-											src="upload/stylingvote/${svitemdto.styling_vote_item_photo}"
+											src="/upload/stylingvote/${svitemdto.styling_vote_item_photo}"
 											alt="후보사진">
 									</div>
 
@@ -304,6 +310,7 @@ margin-top:20px;
 			aria-hidden="true"></i></a>
 	</div>
 	</div>
+	<%@include file="footer.jsp"%>
 	<!-- JQuery -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

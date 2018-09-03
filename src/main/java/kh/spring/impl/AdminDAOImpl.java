@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.spring.dto.AdminPageDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.interfaces.IAdminDAO;
 
@@ -63,6 +64,11 @@ public class AdminDAOImpl implements IAdminDAO {
 	@Override
 	public int blockUserReleasing(int userSeq) {
 		return template.update("adminPageSQL.blockUserReleasing",userSeq);
+	}
+
+	@Override
+	public int reportProc(AdminPageDTO dto) {
+		return template.update("adminPageSQL.reportProc", dto );
 	}
 	
 

@@ -28,6 +28,12 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!--   ---------CDN 모음 끝------------------------------------------  -->
 <style>
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 div {
 	/* border: 1px solid black; */
 	box-sizing: border-box;
@@ -61,7 +67,7 @@ body {
 	width: 100%;
 }
 
-img {
+#wrapper img {
 	border: 0.3px solid lightgray;
 	text-align: center;
 	vertical-align: middle;
@@ -222,6 +228,7 @@ input[type="file"] {
 	<div class="col-md-2 offset-md-10">
 	<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1" aria-hidden="true"></i></a>
 	</div>
+	<%@include file="footer.jsp"%>
 
 	<!-- JQuery -->
 	<script type="text/javascript"

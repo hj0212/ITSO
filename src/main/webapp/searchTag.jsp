@@ -443,7 +443,7 @@ button.dropdown-toggle {
 								<ul class="list-unstyled">
 									<li class="media align-middle"><img
 										class="d-flex mr-3 rounded-circle "
-										src="/upload/social/${list.user_photo}"
+										src="/upload/profile/${list.user_photo}"
 										style="width: 50px; height: 50px; margin-top: 10px">
 										<div class="media-body" style="margin: 0px auto">
 											<a class="writer-a"><b class="writerName"
@@ -739,45 +739,6 @@ button.dropdown-toggle {
 		</div>
 
 
-		<!-- 오른쪽 추천 follow  -->
-		<div id="rightfix" class="right-fixed">
-			<ul class="list-unstyled">
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-				<li class="media my-4"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder6.jpg"
-					alt="An image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg"
-					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-			</ul>
-
-		</div>
-
 		<!--side footer -->
 		<div id="sidefooter">
 
@@ -864,7 +825,13 @@ button.dropdown-toggle {
 		    .on('click', function () {
 		        var collection_title = $("input[name='collection_title']").val();
 		        var collection_contents = $("textarea[name='collection_contents']").val();
-
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
 		        $.ajax({
 		            url: "createCollection.ajax",
 		            type: "post",
@@ -875,6 +842,13 @@ button.dropdown-toggle {
 		            success: function (data) {
 		                console.log("생성" + data);
 		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
 		                $("input[name='collection_title']").val("");
 		                $("textarea[name='collection_contents']").val("");
 		                $("#createModal").hide();
@@ -893,6 +867,7 @@ button.dropdown-toggle {
 
 		            }
 		        });
+		        }
 		    });
 		$("#createModal").on('show.bs.modal', function () {
 		    $("#saveModal").hide();
