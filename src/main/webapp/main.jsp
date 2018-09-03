@@ -583,7 +583,7 @@ button.dropdown-toggle {
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				검색 결과가 없습니다.
+				<div style="height: 860px; padding-top: 100px; text-align: center;"> 검색 결과가 없습니다. </div>
 			</c:otherwise>
 		</c:choose>
 
