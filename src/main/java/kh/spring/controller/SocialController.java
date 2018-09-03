@@ -124,8 +124,10 @@ public class SocialController {
 
 
 		SocialBoardDTO sdto = new SocialBoardDTO(pAge,pGender,user_seq);
+		sdto.setStart(1);
+		sdto.setEnd(10);
 
-		List<SocialBoardDTO> result =null ;
+		List<SocialBoardDTO> result =null;
 		String feed=null;
 		try {
 			feed = request.getParameter("feed");

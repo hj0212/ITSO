@@ -767,25 +767,107 @@ button.dropdown-toggle {
 			</ul>
 			<a id="MOVE_TOP_BTN" href="#" class="btn btn-elegant btn-sm">TOP</a>
 		</div>
-		<div id="enters"></div>
 
 		<%@include file="footer.jsp"%>
 
 	</div>
 	<script>
-		$(window).scroll(
-				function() {
-					console
-							.log($(document).height() + ":"
-									+ $(window).height());
-					if ($(window).scrollTop() == $(document).height()
-							- $(window).height()) {
-						console.log(++page);
-						for (var i = 0; i < 10; i++) {
-							$("#enters").append("내용내용내용내용내용</br>");
-						}
-					}
-				});
+	let gender = "";
+	let age = "";
+	let main = "";
+	let feed = "";
+    
+	let url = window.location.href;
+	
+	if(url.indexOf('?') > 0) {
+		$.urlParam = function(name){
+		    var results = new RegExp('[\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+		    return results[1] || 0;
+		}
+		
+		gender = $.urlParam('gender');
+		age = $.urlParam('age');
+		main = $.urlParam('main');
+		feed = $.urlParam('feed');
+		console.log(gender+":"+age+":"+main+":"+feed);
+		
+	} else {
+		gender = "";
+		age = "0";
+		main = "";
+		feed = "";
+	}
+	
+	let isEnd = false;
+	$(function(){
+        $(window).scroll(function(){
+                 let $window = $(this);
+                 let scrollTop = $window.scrollTop();
+                 let windowHeight = $window.height();
+                 let documentHeight = $(document).height();
+
+                 console.log("documentHeight:" + documentHeight + " | scrollTop:" +
+                                scrollTop + " | windowHeight: " + windowHeight );
+
+                 // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
+                 if( scrollTop + windowHeight + 0 > documentHeight ){
+                         fetchList();
+                 }
+        })
+        fetchList();
+	})
+	
+	 let count = 1;
+	 let fetchList = function(){
+                  if(isEnd == true){
+                           return;
+                  }
+				
+                  // 방명록 리스트를 가져올 때 시작 번호
+                  // renderList 함수에서 html 코드를 보면 <li> 태그에 data-no 속성이 있는 것을 알 수 있다.
+                  // ajax에서는 data- 속성의 값을 가져오기 위해 data() 함수를 제공.
+
+                  $.ajax({
+                           url:"getMoreSocial.ajax",
+                           type: "GET",
+                           data: {
+                        	   gender: gender,
+                        	   age: age,
+                        	   main: main,
+                        	   feed: feed,
+                        	   count: count
+                           },
+                           dataType: "json",
+                           success: function(result){
+                        	   console.log(result);
+                                   // 컨트롤러에서 가져온 방명록 리스트는 result.data에 담겨오도록 했다.
+                                   // 남은 데이터가 5개 이하일 경우 무한 스크롤 종료
+                                   count++;
+                                   /* let length = result.data.length;
+                                   if( length < 5 ){
+                                            isEnd = true;
+                                   }
+                                   $.each(result.data, function(index, vo){
+                                            renderList(false, vo);
+                                   }) */
+                           }
+                  });
+         }
+		
+	 let renderList = function(mode, vo){
+         // 리스트 html을 정의
+         let html = "";
+
+         if( mode ){
+                  $("#list-guestbook").prepend(html);         
+         }
+         else{
+                  $("#list-guestbook").append(html);
+         }
+}
+
+	</script>
+	<script>
 
 		$("#managebtn").on("click", function() {
 			window.open('userpage.go?view=collection', '_blank');
@@ -848,9 +930,7 @@ button.dropdown-toggle {
 											console.log("ajax: " + data.photo
 													+ "," + data.social_seq)
 											if (data.photo != null) {
-												console.log("여기");
 												if (num > 3) {
-								                	console.log("숨겨");
 								                cursor.find(".collectionPhoto").append(
 								                    '<div class="collectionPhotoItem" style="display:none;">' +
 								                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +

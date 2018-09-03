@@ -20,10 +20,22 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	@Autowired
 	private SqlSessionTemplate template;
 
-	@Override
+	//최신
+	@Override 
 	public List<SocialBoardDTO> showSocialBoardList(SocialBoardDTO sdto) {
-
 		return template.selectList("SocialBoard.showSocialBoardList",sdto);
+	}
+	
+	//인기
+	@Override
+	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
+		return template.selectList("SocialBoard.showSocialHotBoardList",sdto);
+	}
+	
+	//팔로잉
+	@Override
+	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
+		return template.selectList("SocialBoard.showSocialFollowBoardList",sdto);
 	}
 
 	@Override
@@ -152,17 +164,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.selectList("SocialBoard.getMyGoodSocialArticleList", dto);
 	}
 	
-	//인기
-	@Override
-	public List<SocialBoardDTO> showSocialHotBoardList(SocialBoardDTO sdto) {
-		System.out.println("2");
-		return template.selectList("SocialBoard.showSocialHotBoardList",sdto);
-	}
-	//팔로잉
-	@Override
-	public List<SocialBoardDTO> showSocialFollowBoardList(SocialBoardDTO sdto) {
-		return template.selectList("SocialBoard.showSocialFollowBoardList",sdto);
-	}
+	
 
 	@Override
 	public int selectSocialWriter(int seq) {

@@ -3,9 +3,7 @@ package kh.spring.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.GoodDTO;
+import kh.spring.dto.MainDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MessagesDTO;
 import kh.spring.dto.NotificationDTO;
@@ -152,8 +150,6 @@ public class AjaxController {
 				mbj.put("time", tmp.getMessage_time());
 				list.add(mbj);
 			}
-
-
 
 			jsonobject.put("message", list);
 			jsonobject.put("user", json);
@@ -394,7 +390,7 @@ public class AjaxController {
 		System.out.println("ajax 조회수 up 완료");
 	}
 
-	@RequestMapping("/fbLogin.ajax")
+	/*@RequestMapping("/fbLogin.ajax")
 	public @ResponseBody String fbLogin(String data, HttpSession session) {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, String> map = new HashMap<String, String>();
@@ -434,7 +430,7 @@ public class AjaxController {
 		}
 
 		return null;
-	}
+	}*/
 
 	@RequestMapping("reportArticle.ajax")
 	public @ResponseBody void reportTipArticle(ReportDTO dto, HttpSession session) {
@@ -450,5 +446,40 @@ public class AjaxController {
 			System.out.println(result>0?"신고 성공":"신고 실패");
 		}
 	}
-
+	
+	
+	@RequestMapping("/getMoreSocial.ajax")
+	public @ResponseBody Object getMoreSocial(HttpSession session, String gender, int age, String main, String feed, int count) {
+		System.out.println("모어: " + gender +","+age +","+main +",");
+	
+		int user_seq = 0;
+		try {
+			user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+			System.out.println("유저시퀀스: " + user_seq);
+		} catch(Exception e) {
+			System.out.println("로그인x");
+		}
+		SocialBoardDTO sdto = new SocialBoardDTO(age,gender,user_seq);
+		sdto.setStart(10+5*count);
+		sdto.setEnd(sdto.getStart()+10);
+		List<SocialBoardDTO> result =null;
+		if(feed.equals("hot")) {//인기
+			result = this.sservice.showSocialHotBoardList(sdto);
+		}else if(feed.equals("following")) { //팔로잉
+			result =this.sservice.showSocialFollowBoardList(sdto);
+		}else {
+			result = this.sservice.showSocialBoardList(sdto);
+			System.out.println("여기: " + result.size());
+		}
+		
+		for(SocialBoardDTO tmp : result) {
+			System.out.println("결과: " + tmp.getSocial_seq() +":"+tmp.getPhoto()+":"+tmp.getWriterName());
+		}
+		
+		List<SocialBoardDTO> goodList = this.sservice.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
+		List<MemberDTO> followingList = this.service.getFollowingList((MemberDTO)session.getAttribute("user"));
+	
+		MainDTO dto = new MainDTO(result, goodList, followingList);
+		return dto;
+	}
 }
