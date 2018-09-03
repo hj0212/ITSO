@@ -176,13 +176,7 @@ font-size:15px;
 
 										<div class="media-body image-upload-wrap form-group"
 											id="btnsdiv">
-											<a class="upvotebtn"> <i
-												class="fa fa-arrow-circle-o-up indigo-text fa-1x"
-												aria-hidden="true"></i>
-											</a> <a class="downvotebtn"> <i
-												class="fa fa-arrow-circle-o-down fa-1x indigo-text"
-												aria-hidden="true"></i>
-											</a> <a class="delvotebtn"> <i
+											 <a class="delvotebtn"> <i
 												class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i>
 											</a><br>
 											<div class="md-form form-sm">
@@ -356,8 +350,6 @@ font-size:15px;
 														+ '" class="file-upload-input form-control filesel"'
 														+ 'onchange="readURL(this);" accept="image/*"></div>'
 														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'
-														+ '<a class="upvotebtn"> <i class="fa fa-arrow-circle-o-up indigo-text fa-1x" aria-hidden="true"></i></a>'
-														+ '<a class="downvotebtn"> <i class="fa fa-arrow-circle-o-down fa-1x indigo-text" aria-hidden="true"></i></a>'
 														+ '<a class="delvotebtn"> <i class="fa fa-minus fa-1x indigo-text" aria-hidden="true"></i></a><br>'
 														+ '<div class="md-form form-sm"><input type="text" id="vitemtext'+count+'" class="form-control itemconttext"><label for="itemtext'+count+'">아이템의 특징을 간단히 적어주세요.</label>'
 														+ '</div></div></div></td></tr>');
