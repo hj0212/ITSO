@@ -35,7 +35,7 @@ select count(*) from users where 50>age and age>40
 
 <!-- getReportedUser -->
 <select id="getReportedUser" resultType="kh.spring.dto.AdminPageDTO">
-select user_seq, report_count,report_reason, name, email, create_date, block from reported_users ru, users u where ru.USER_SEQ = u.seq
+select user_seq, report_reason, name, email, create_date, block from reported_users ru, users u where ru.USER_SEQ = u.seq
 </select>
 
 <!-- user block -->
@@ -46,6 +46,7 @@ update users set block='y' where seq=#{userSeq}
 
 <!-- block user releasing -->
 <update id="blockUserReleasing">
+
 update users set block='n' where seq=#{userSeq}
 </update>
 

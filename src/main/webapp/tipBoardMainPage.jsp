@@ -177,34 +177,12 @@ table th {
 							</span>
 						</form>
 
-
-
-						<!--Text-->
-						<p class="card-text">${upvotingArticles.category}</p>
-						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-
-						<div>
-							<button id=best-tip-read-btn type="button"
-								onclick="javascript:location.href='getSpecificTipView.tip?seq=${upvotingArticles.tip_seq}'"
-								class=" btn btn-itso btn-md">읽기</button>
-						</div>
-					</div>
-				</div>
-
-	
 	<!-- status.index 때문에, 이 line위치가 c:forEach를 벗어날 시 작동 X -->
 
 	<script>
 		$(document).ready(function() {
 
 			$("#reportSubmitBtn").click(function report() {
-
-				var user_name = $(".userName[name|=${status.index}]").html(),
-				var user_seq = $(".userSeq[name|=${status.index}]").val(),
-				var reporting_user = $(".sessionUser").val(),
-				var report_reason = $(".reportReason:checked").val()
-
-				console.log(user_name +" : "+ user_seq + " : " + reporting_user + " : " + report_reason);
 
 				
 				
@@ -213,7 +191,6 @@ table th {
 					user_name : $(".userName[name|=${status.index}]").html(),
 					user_seq : $(".userSeq[name|=${status.index}]").val(),
 					reporting_user : $(".sessionUser").val(),
-
 					report_reason : $(".reportReason:checked").val()
 
 				});
@@ -240,6 +217,22 @@ table th {
 		})
 	</script>
 
+
+
+
+						<!--Text-->
+						<p class="card-text">${upvotingArticles.category}</p>
+						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+
+						<div>
+							<button id=best-tip-read-btn type="button"
+								onclick="javascript:location.href='getSpecificTipView.tip?seq=${upvotingArticles.tip_seq}'"
+								class=" btn btn-itso btn-md">읽기</button>
+						</div>
+					</div>
+				</div>
+
+	
 
 
 
