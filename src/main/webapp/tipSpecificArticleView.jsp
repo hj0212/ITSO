@@ -99,7 +99,7 @@ img {
 						<td>
 							<div>
 								<a href="#">${tipComments.name}</a>
-							</div>+
+							</div>
 							<div>${tipComments.tip_comment_contents}</div>
 							<div>${tipComments.tip_comment_time}
 								<c:if test="${sessionScope.user.seq == tipComments.user_seq}">
@@ -300,11 +300,18 @@ img {
 					},
 					type : "get",
 					success : function() {
-						alert("success");
-						location.replace("tipBoardMainPage.tip");
+						var rYouSure = confirm();
+
+						if (rYouSure) {
+							alert("글 삭제에 성공하였습니다.");
+							location.replace("tipBoardMainPage.tip");
+						} else {
+
+						}
 					},
 					error : function() {
-						alert("error");
+						alert("에러가 발생하였습니다. 관리자에게 문의하세요.");
+						location.href("tipBoardMainPage.tip");
 					}
 				})
 			})

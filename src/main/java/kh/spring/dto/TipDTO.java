@@ -1,12 +1,14 @@
 package kh.spring.dto;
 
+import java.util.Date;
+
 public class TipDTO {
 
 	int tip_seq;
 	String tip_title;
 	String tip_contents;
 	int tip_writer;
-	String tip_date;
+	Date tip_date;
 	String tip_viewcount;
 	String category;
 	int tip_like_count;
@@ -89,11 +91,11 @@ public class TipDTO {
 		this.tip_writer = tip_writer;
 	}
 
-	public String getTip_date() {
+	public Date getTip_date() {
 		return tip_date;
 	}
 
-	public void setTip_date(String tip_date) {
+	public void setTip_date(Date tip_date) {
 		this.tip_date = tip_date;
 	}
 
@@ -130,7 +132,7 @@ public class TipDTO {
 	 * @param tip_comment_count
 	 * @param thumbnail
 	 */
-	public TipDTO(int tip_seq, String tip_title, String tip_contents, int tip_writer, String tip_date,
+	public TipDTO(int tip_seq, String tip_title, String tip_contents, int tip_writer, Date tip_date,
 			String tip_viewcount, String category, int tip_like_count, String name, int tip_comment_count,
 			String thumbnail) {
 		super();

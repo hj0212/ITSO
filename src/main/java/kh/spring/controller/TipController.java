@@ -93,8 +93,9 @@ public class TipController {
 		
 		int startCount = (page - 1) * countList + 1;
 		int endCount = page * countList;
-		List<TipDTO> tipBoardList = service.getTipBoardListRange(category, startCount, endCount);
 		
+		List<TipDTO> tipBoardList = service.getTipBoardListRange(category, startCount, endCount);
+
 		mav.addObject("category", category);
 		mav.addObject("page", page);
 		mav.addObject("startPage", startPage);
