@@ -3,6 +3,7 @@ package kh.spring.interfaces;
 import java.util.List;
 
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.ReportDTO;
 import kh.spring.dto.SearchedTipDTO;
 import kh.spring.dto.TipCommentDTO;
 import kh.spring.dto.TipDTO;
@@ -54,4 +55,7 @@ public interface ITipService {
 	public int getTipBoardCount(String category);
 	public List<TipDTO> getTipBoardListRange(String category, int start, int end);
 	public List<TipDTO> getMyTipBoardList(MemberDTO dto);
+	
+	public int insertReport(ReportDTO dto);
+	public List<ReportDTO> checkReportData(ReportDTO dto);
 }

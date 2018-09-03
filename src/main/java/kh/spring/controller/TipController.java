@@ -125,7 +125,7 @@ public class TipController {
 		System.out.println(tipComments.toString());
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("tipContent", tipContent);
+		mav.addObject("tipContent", tipContent.get(0));
 		mav.addObject("tipLikeCounts", tipLikeCounts);
 		mav.addObject("tipComments", tipComments);
 		mav.setViewName("tipSpecificArticleView.jsp");
