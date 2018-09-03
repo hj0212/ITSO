@@ -8,13 +8,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta property="fb:app_id" content="175142883151176" />
-<meta property="og:site_name" content="ITSO" />
-<meta property="og:title" content="${content.social_title}" />
-<meta property="og:description" content="${content.social_contents}" />
-<meta property="article:author" content="${content.social_writer}" />
-<meta property="og:url" content="document.location.href" />
-<meta property="og:image"
+<meta name="fb:app_id" content="175142883151176" />
+<meta name="og:site_name" content="ITSO" />
+<meta name="og:title" content="${content.social_title}" />
+<meta name="og:description" content="${content.social_contents}" />
+<meta name="article:author" content="${content.social_writer}" />
+<meta name="og:url" content="document.location.href" />
+<meta name="og:image"
 	content="https://image.ibb.co/cvb5k9/itso_12.png" />
 
 <meta name="twitter:card" content="summary" />
@@ -47,8 +47,9 @@
 <style>
 #wrapper {
 	min-height: 100%;
+	position: relative;
 	width: 980px;
-	margin: 0 auto;
+	margin: 0 auto 100px auto;
 }
 
 .vertical-align-none {
@@ -278,31 +279,37 @@
 								aria-label="Toolbar with button groups">
 								<div class="btn-group mr-2" role="group"
 									aria-label="First group">
-									<input type="hidden" value="${content.social_writer }"
-										class="writerseq" /> <input type="hidden"
-										value="${content.social_seq }" class="socialseq" />
-									<button type="button" class="btn-floating btn-sm savebtn"
-										style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
-										title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
-										<i class="fa fa-upload"></i>
-									</button>
-									<!--facebook-->
-									<button type="button" class="btn-floating btn-sm btn-fb share"
-										style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-										<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
-									</button>
-									<!--twitter-->
-									<button type="button" class="btn-floating btn-sm btn-tw share"
-										style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-										<i class="fa fa-twitter" title="트위터로 공유하기"></i>
-									</button>
-									<!--kakao-->
-									<button type="button" class="btn-floating btn-sm share "
-										style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
-										title="카카오로 공유하기">
-										<i class="fa fa-comment"></i>
-									</button>
-
+										<input type="hidden" value="${content.social_writer }"
+											class="writerseq" /> 
+										<input type="hidden"
+											value="${content.social_seq }" class="socialseq" />
+										<button type="button" class="btn-floating btn-sm savebtn"
+											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
+											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
+											<i class="fa fa-upload"></i>
+										</button>
+										<!--facebook-->
+										<button type="button" class="btn-floating btn-sm btn-fb share"
+											style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											onclick="facebookgo()">
+											<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
+										</button>									
+										
+										<!--twitter-->
+										<button type="button" class="btn-floating btn-sm btn-tw share"
+											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											onclick="twittergo()">
+											<i class="fa fa-twitter" title="트위터로 공유하기"></i>
+										</button>
+										<!--kakao-->
+										<button type="button" class="btn-floating btn-sm share "
+											style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											title="카카오로 공유하기" onclick="kakaogo()" id="kakao-link-btn">
+											<i class="fa fa-comment"></i>
+										</button>
+										
+										
+										
 								</div>
 							</div>
 						</div>
@@ -320,8 +327,8 @@
 								</c:if>
 							</div>
 							<div class="instafilta-target mt-1">
-								<span id="commentcount">${content.comment_count }</span> <i
-									class="fa fa-comment-o"></i>
+								<span id="commentcount"><i
+									class="fa fa-comment-o"></i> ${content.comment_count }</span> 
 							</div>
 						</header>
 						<div>
@@ -363,7 +370,7 @@
 									<tr>
 										<td><img
 											class="avatar rounded-circle z-depth-1-half mr-3"
-											src="resources/images/${commentList.photo}"></td>
+											src="upload/profile/${commentList.photo}"></td>
 										<td>
 											<div>
 												<a href="userpage.go?seq=${commentList.user_seq }">${commentList.name}</a>
@@ -399,7 +406,7 @@
 					</div>
 					<div style="float: right;">
 						<input type="button" class="btn btn-grey btn-sm"
-							id="write-comment" value="쓰기" disabled="disabled"> <input
+							id="write-comment" value="댓글쓰기" disabled="disabled"> <input
 							type="button" class="btn btn-grey btn-sm" id="gomain" value="목록">
 					</div>
 				</div>
@@ -415,10 +422,10 @@
 					<div class="media">
 						<img
 							class="d-flex align-self-center mr-3 rounded-circle avatar z-depth-1-half"
-							src="resources/images/${writer.photo }"
+							src="/upload/profile/${writer.photo }"
 							alt="Generic placeholder image">
 						<div class="media-body mt-2">
-							<span><a href="userpage.go?seq=${writer.seq }">${writer.name}</a></span><br>
+							<span><a href="userpage.go?seq=${writer.seq }" >${writer.name}</a></span><br>
 							<span>"${writer.state}"</span>
 						</div>
 						<c:choose>
@@ -464,9 +471,9 @@
 											<a href=${item.tag_url } target="_blank">${item.tag_name}</a>
 										</div>
 										<div>
-											<a href="#">${item.tag_brand}</a>
+											<a href="searchWord.se?word=${item.tag_brand}">${item.tag_brand}</a>
 											<c:if test="${!empty item.tag_store }">
-												<a href="#">in ${item.tag_store}</a>
+												<a href="searchWord.se?word=${item.tag_store}">in ${item.tag_store}</a>
 											</c:if>
 										</div>
 									</li>
@@ -475,6 +482,9 @@
 						</ol>
 					</section>
 				</c:if>
+				<button class="btn btn-itso btn-sm" data-toggle="modal"
+			data-target="#reportModal">신고</button>
+			</aside>
 		</div>
 
 
@@ -555,7 +565,7 @@
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -605,7 +615,123 @@
 			<!--/.Content-->
 		</div>
 	</div>
+	
+	<!-- reportModal 신고-->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead mb-0">신고</p>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						<!-- <input type="hidden" name="user_seq" value="${id}"> -->
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="ex mb-3">이 글을 신고하는 이유를 선택하세요. 신고자 정보는 공개되지 않습니다.</div>
+					<div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios1" value="그냥 마음에 들지 않습니다." checked> <label
+								class="form-check-label" for="exampleRadios1"> 그냥 마음에 들지
+								않습니다. </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios2" value="스팸입니다."> <label
+								class="form-check-label" for="exampleRadios2"> 스팸입니다. </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios3" value="신체 노출, 나체 게시물 및 음란물"> <label
+								class="form-check-label" for="exampleRadios3"> 신체 노출, 나체
+								게시물 및 음란물 </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios4" value="편파적 발언 및 상징"> <label
+								class="form-check-label" for="exampleRadios4"> 편파적 발언 및
+								상징 </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios5"> <label class="form-check-label"
+								for="exampleRadios5"> 기타 </label>
+							<div class="md-form">
+								<textarea name="report_reason" id="form7"
+									class="md-textarea form-control pt-0" rows="3" readonly></textarea>
+							</div>
+
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<button class="btn btn-itso" data-dismiss="modal"
+							id="reportsubmitbtn">제출</button>
+						<button class="btn btn-outline-itso" data-dismiss="modal"
+							style="color: black;">취소</button>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+	</div>
+	
+	<%@include file="footer.jsp"%>
 	<script>
+	$("input[name='reportreason']").click(function() {
+		var cursor = $(this).val();
+		console.log(cursor);
+		if(cursor == "on") {
+			$("#form7").attr("readonly", false); 
+			$("#form7").focus();
+		} else {
+			$("#form7").attr("readonly", true); 
+		}
+	})
+	
+	$("#reportsubmitbtn").click(function() {
+		report_reason = $("input[name='reportreason']:checked").val();
+		var user_seq = $(".writerseq").val();
+		var board_seq = $(".socialseq").val();
+		
+		flag = true;
+		if(report_reason == "on") {
+			report_reason = $("#form7").text();
+			if(report_reason == "") {
+				flag=false;
+				console.log("기타 비어있음: " + form);
+			}
+			console.log("기타: " + form);
+		} 
+		
+		if(flag) {
+			$.ajax({
+	            url: "reportArticle.ajax",
+	            type: "post",
+	            data: {
+	                report_reason: report_reason,
+					user_seq: user_seq,
+					board_seq: board_seq,
+					board: "style"
+	            },
+	            success: function() {
+	                alert("신고가 완료되었습니다.");
+	            },
+	            error: function() {
+	                console.log("신고 실패");
+	            }
+	        });
+		}
+	});
+	
 	$(".heart").click(function() {
 		var heartVal = $(this).attr("class");
 		if (heartVal == "fa fa-heart red-text heart") {
@@ -614,6 +740,7 @@
 			$(this).attr("class", "fa fa-heart red-text heart");
 		}
 	});
+	
 	$(".heart").on('click', function() {
 		var seq = $(this).attr("value");
 		var writer	= $(".writerseq").val();
@@ -638,156 +765,131 @@
 		})
 
 		social_seq = 0;
-		$('.savebtn')
-				.on(
-						"click",
-						function() {
-							social_seq = $(this).siblings(".socialseq").val();
-							console.log(social_seq);
+		$('.savebtn').on("click", function () {
+		    social_seq = $(this).siblings(".socialseq").val();
+		    console.log(social_seq);
 
-							var clistsize = "${fn:length(collectionList)}";
+		    var clistsize = "${fn:length(collectionList)}";
 
-							for (var i = 1; i <= clistsize; i++) {
-								var cursor = $(".collectionItem:nth-of-type("
-										+ i + ")");
-								var plistsize = cursor
-										.find(".collectionPhotoItem").length;
+		    for (var i = 1; i <= clistsize; i++) {
+		        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
+		        var plistsize = cursor.find(".collectionPhotoItem").length;
 
-								for (var j = 1; j <= plistsize; j++) {
-									var collection_socialseq = $(cursor).find(
-											".collectionPhotoItem:nth-of-type("
-													+ j + ")").find(
-											".socialseq").val();
-									console.log("검사 : " + i + "," + j + ":"
-											+ social_seq + ":"
-											+ collection_socialseq);
-									if (social_seq == collection_socialseq) {
-										cursor.addClass("active");
-										console.log("true");
-										break;
-									}
-								}
-							}
-						})
-		$("#collectionarea")
-				.on(
-						"click",
-						".collectionItem",
-						function() {
-							var cursor = $(this);
-							cursor.toggleClass('active');
-							var collection_seq = $(this).children(
-									".collectionseq").val();
-							console.log("collection_seq: " + collection_seq);
-							console.log("social_seq: " + social_seq);
+		        for (var j = 1; j <= plistsize; j++) {
+		            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
+		            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
+		            if (social_seq == collection_socialseq) {
+		                cursor.addClass("active");
+		                console.log("true");
+		                break;
+		            }
+		        }
+		    }
+		})
+		$("#collectionarea").on("click", ".collectionItem", function () {
+		    var cursor = $(this);
+		    cursor.toggleClass('active');
+		    var collection_seq = $(this).children(".collectionseq").val();
+		    console.log("collection_seq: " + collection_seq);
+		    console.log("social_seq: " + social_seq);
 
-							var num = $(this).find(".collectionPhotoItem").length;
-							$
-									.ajax({
-										url : "saveCollection.ajax",
-										type : "post",
-										data : {
-											collection_seq : collection_seq,
-											social_seq : social_seq
-										},
-										success : function(data) {
-											console.log("ajax: " + data.photo
-													+ "," + data.social_seq)
-											if (data.photo != null) {
-												console.log("여기");
-												cursor
-														.find(
-																".collectionPhoto")
-														.append(
-																'<div class="collectionPhotoItem">'
-																		+ '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">'
-																		+ '</div>');
-												if (num > 4) {
-													cursor
-															.find(
-																	".collectionPhoto:last")
-															.attr("display",
-																	"none");
-												}
-											} else {
-												cursor
-														.find(
-																".collectionseq[value='"
-																		+ collection_seq
-																		+ "']")
-														.siblings(
-																".collectionPhoto")
-														.find(
-																".socialseq[value='"
-																		+ social_seq
-																		+ "']")
-														.parent().remove();
-											}
-										},
-										error : function(response) {
-											console.log("DB Failed")
-										}
+		    var num = $(this).find(".collectionPhotoItem").length;
+		    $.ajax({
+		        url: "saveCollection.ajax",
+		        type: "post",
+		        data: {
+		            collection_seq: collection_seq,
+		            social_seq: social_seq
+		        },
+		        success: function (data) {
+		            console.log("ajax: " +
+		                data.photo + "," +
+		                data.social_seq)
+		            if (data.photo != null) {
+		                console.log("여기");
+		                cursor.find(".collectionPhoto").append(
+		                    '<div class="collectionPhotoItem">' +
+		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		                    '</div>');
+		                if (num > 4) {
+		                    cursor.find(".collectionPhoto:last").attr("display", "none");
+		                }
+		            } else {
+		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
+		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
 
-									});
+		    });
 
-						})
+		})
 
 		$("#createcolbtn")
-				.on(
-						'click',
-						function() {
-							var collection_title = $(
-									"input[name='collection_title']").val();
-							var collection_contents = $(
-									"textarea[name='collection_contents']")
-									.val();
+		    .on('click', function () {
+		        var collection_title = $("input[name='collection_title']").val();
+		        var collection_contents = $("textarea[name='collection_contents']").val();
+		        
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
+		        $.ajax({
+		            url: "createCollection.ajax",
+		            type: "post",
+		            data: {
+		                collection_title: collection_title,
+		                collection_contents: collection_contents
+		            },
+		            success: function (data) {
+		                console.log("생성" + data);
+		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
+		                $("input[name='collection_title']").val("");
+		                $("textarea[name='collection_contents']").val("");
+		                $("#createModal").hide();
 
-							$
-									.ajax({
-										url : "createCollection.ajax",
-										type : "post",
-										data : {
-											collection_title : collection_title,
-											collection_contents : collection_contents
-										},
-										success : function(data) {
-											console.log("생성" + data);
-											var dto = JSON.parse(data);
-											$("input[name='collection_title']")
-													.val("");
-											$(
-													"textarea[name='collection_contents']")
-													.val("");
-											$("#createModal").hide();
+		                $("#collectionarea").append(
+		                    '<div class="collectionItem z-depth-1 mt-2">' +
+		                    '<h4 class="mt-1 mb-1 text-truncate">' +
+		                    dto.collection_title +
+		                    '</h4><h6 class="text-truncate">' +
+		                    dto.collection_contents +
+		                    '</h6>' +
+		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
+		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-											$("#collectionarea")
-													.append(
-															'<div class="collectionItem z-depth-1 mt-2">'
-																	+ '<h4 class="mt-1 mb-1 text-truncate">'
-																	+ dto.collection_title
-																	+ '</h4><h6 class="text-truncate">'
-																	+ dto.collection_contents
-																	+ '</h6>'
-																	+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
-																	+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+		                $("#saveModal").show();
 
-											$("#saveModal").show();
-
-										}
-									});
-						});
-		$("#createModal").on('show.bs.modal', function() {
-			$("#saveModal").hide();
+		            }
+		        });
+		        }
+		    });
+		$("#createModal").on('show.bs.modal', function () {
+		    $("#saveModal").hide();
 		});
 
-		$("#createModal").on('hidden.bs.modal', function() {
-			$("#saveModal").show();
+		$("#createModal").on('hidden.bs.modal', function () {
+		    $("#saveModal").show();
 		});
 
-		$("#saveModal").on('hidden.bs.modal', function() {
-			console.log("닫힘");
-			$(".collectionItem").removeClass("active");
+		$("#saveModal").on('hidden.bs.modal', function () {
+		    console.log("닫힘");
+		    $(".collectionItem").removeClass("active");
 		});
+
+		</script>
 	</script>
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
@@ -800,11 +902,7 @@
 		var $j = jQuery.noConflict();
 		$j(document).ready(function() {
 			if ("${dataflag}" === "true") {
-				let markerdata = $
-				{
-					markerdata
-				}
-				;
+				let markerdata = ${markerdata};
 				$j('.pin').easypinShow({
 					data : markerdata,
 					popover : {
@@ -828,14 +926,13 @@
 					var index = $j(".clothes-marker").index(this);
 					$j(".clothesinfo")[index].style.backgroundColor = "white";
 				});
-			}
-			;
+			};
 		});
 	</script>
 	<c:if test="${sessionScope.user.seq == content.social_writer}">
 		<script>
 			document.getElementById("modify").onclick = function() {
-				location.href = "modifySocial.go?seq=" + $
+				location.href = "modifySocial.go?seq=" + ${content.social_seq}
 				{
 					content.social_seq
 				}
@@ -845,11 +942,10 @@
 			document.getElementById("delete").onclick = function() {
 				let delcheck = confirm("글을 삭제하시겠습니까?");
 				if (delcheck) {
-					location.href = "deleteSocial.go?seq=" + $
+					location.href = "deleteSocial.go?seq=" + ${content.social_seq}
 					{
 						content.social_seq
-					}
-					;
+					};
 				}
 			};
 		</script>
@@ -894,7 +990,8 @@
 																		comment : $(
 																				"#commentarea")
 																				.val(),
-																		seq : "${content.social_seq}"
+																		seq : "${content.social_seq}",
+																		writerseq:"${writer.seq }"
 																	},
 
 																	success : function(
@@ -917,7 +1014,7 @@
 													function(index, item) {
 														html += '<tr>';
 														html += '	<td>';
-														html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'">';
+														html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="upload/profile/'+item.photo+'">';
 														html += '	</td>';
 														html += '	<td>';
 														html += '		<div>';
@@ -1028,6 +1125,7 @@
 <!-- 카카오api -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- 페이스북api -->
+
 <div id="fb-root"></div>
 <script>
 	(function(d, s, id) {
@@ -1036,7 +1134,7 @@
 			return;
 		js = d.createElement(s);
 		js.id = id;
-		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
@@ -1046,25 +1144,17 @@
 
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-	var titletext = '${content.social_title}';
-
-	console.log("<c:out value='${param.mode}'/>");
-
-	var mode = "<c:out value='${content.social_title}'/>";
-
+	var titletext = '${content.social_title}';	
+	
+	
 	//트위터 공유 
 	function twittergo(url, text) {
-		//var url = window.location.protocol + window.location.host				+ window.location.pathname;
-		var url = document.location.href;
-		var text = encodeURI('${content.social_title}');
-		var wow = encodeURI('${goodCount}');
-
-		console.log("와우에 오는 깃 : " + wow);
-		console.log("text에 오는 것: " + text);
-		console.log('${goodList.social_good_seq}');
-
-		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="
-				+ url, "", "width=700, height=400");
+		//var url = window.location.protocol + window.location.host	+ window.location.pathname;
+		var url=document.location.href;
+		var text = encodeURI('${content.social_title}');	
+	
+		
+		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="+ url, "", "width=700, height=400");
 	}
 
 	var kakaoURL = 'http://192.168.20.35:8080/controller/readSocial.go?seq=186';

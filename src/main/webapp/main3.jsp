@@ -286,6 +286,8 @@ a#MOVE_TOP_BTN {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px;
+	overflow: hidden;
 }
 
 .active {
@@ -391,12 +393,12 @@ a#MOVE_TOP_BTN {
 
 								<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
-									src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+									src="upload/social/${list.photo}" class="img-fluid z-depth-2"
 									alt="Responsive image">
 
 								</a>
 								<div class="photoContainer">
-									<div class="photoContainerHover z-depth-2">
+									<div class="photoContainerHover z-depth-1">
 										<input type="hidden" class="read" value="readSocial.go?seq=${list.social_seq}" /> 
 										<input type="hidden" class="user" value="userpage.go?seq=${list.social_writer }" />
 										<h3 class="photoContainerHoverTitle title">${list.social_title}</h3>
@@ -460,7 +462,7 @@ a#MOVE_TOP_BTN {
 													style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px; padding-right: 0;"
 													title="컬렉션에 저장" data-toggle="modal"
 													data-target="#saveModal">
-													컬렉션에 저장 <i class="fa fa-upload"></i>
+													컬렉션에 저장 <i class="fa fa-download"></i>
 												</button>
 												<input type="hidden" class="socialseq"
 													value="${list.social_seq }" />
@@ -474,7 +476,7 @@ a#MOVE_TOP_BTN {
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="3">게시글이 없습니다,</td>
+					<td colspan="3">게시글이 없습니다</td>
 				</tr>
 			</c:otherwise>
 			</c:choose>
@@ -559,7 +561,7 @@ a#MOVE_TOP_BTN {
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -592,7 +594,7 @@ a#MOVE_TOP_BTN {
 							for="inputMD">컬렉션 이름</label>
 					</div>
 					<div class="md-form mt-1">
-						<textarea type="text" id="form7" class="md-textarea form-control"
+						<textarea id="form7" class="md-textarea form-control"
 							rows="3" name="collection_contents"></textarea>
 						<label for="form7">컬렉션 상세 설명</label>
 					</div>
@@ -612,8 +614,8 @@ a#MOVE_TOP_BTN {
 
 	<!-- Button trigger modal -->
 	<div class="text-center"></div>
-	</div>
-
+	
+	<%@include file="footer.jsp"%>
 
 </body>
 <!-- Bootstrap tooltips -->
@@ -668,6 +670,18 @@ a#MOVE_TOP_BTN {
 		});
 	});
 
+	// HYPE버튼에 마우스 대면 옆에쪽 버튼에 +1 시키기
+	function hypeOn() {
+		hypeBtn2.innerHTML = "+1";
+	}
+	//기본디폴트설정
+	function hypeOut() {
+		hypeBtn2.innerHTML = "default";
+	}
+	function hashtag() {
+
+	}
+
 	$(function() {
 		$(window).scroll(function() {
 			if ($(this).scrollTop() > 500) {
@@ -690,136 +704,130 @@ a#MOVE_TOP_BTN {
 	})
 
 	social_seq = 0;
-	$('.savebtn').on(
-			"click",
-			function() {
-				social_seq = $(this).siblings(".socialseq").val();
-				console.log(social_seq);
+		$('.savebtn').on("click", function () {
+		    social_seq = $(this).siblings(".socialseq").val();
+		    console.log(social_seq);
 
-				var clistsize = "${fn:length(collectionList)}";
+		    var clistsize = "${fn:length(collectionList)}";
 
-				for (var i = 1; i <= clistsize; i++) {
-					var cursor = $(".collectionItem:nth-of-type(" + i + ")");
-					var plistsize = cursor.find(".collectionPhotoItem").length;
+		    for (var i = 1; i <= clistsize; i++) {
+		        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
+		        var plistsize = cursor.find(".collectionPhotoItem").length;
 
-					for (var j = 1; j <= plistsize; j++) {
-						var collection_socialseq = $(cursor).find(
-								".collectionPhotoItem:nth-of-type(" + j + ")")
-								.find(".socialseq").val();
-						console.log("검사 : " + i + "," + j + ":" + social_seq
-								+ ":" + collection_socialseq);
-						if (social_seq == collection_socialseq) {
-							cursor.addClass("active");
-							console.log("true");
-							break;
-						}
-					}
-				}
-			})
-	$("#collectionarea")
-			.on(
-					"click",
-					".collectionItem",
-					function() {
-						var cursor = $(this);
-						cursor.toggleClass('active');
-						var collection_seq = $(this).children(".collectionseq")
-								.val();
-						console.log("collection_seq: " + collection_seq);
-						console.log("social_seq: " + social_seq);
+		        for (var j = 1; j <= plistsize; j++) {
+		            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
+		            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
+		            if (social_seq == collection_socialseq) {
+		                cursor.addClass("active");
+		                console.log("true");
+		                break;
+		            }
+		        }
+		    }
+		})
+		$("#collectionarea").on("click", ".collectionItem", function () {
+		    var cursor = $(this);
+		    cursor.toggleClass('active');
+		    var collection_seq = $(this).children(".collectionseq").val();
+		    console.log("collection_seq: " + collection_seq);
+		    console.log("social_seq: " + social_seq);
 
-						var num = $(this).find(".collectionPhotoItem").length;
-						$
-								.ajax({
-									url : "saveCollection.ajax",
-									type : "post",
-									data : {
-										collection_seq : collection_seq,
-										social_seq : social_seq
-									},
-									success : function(data) {
-										console.log("ajax: " + data.photo + ","
-												+ data.social_seq)
-										if (data.photo != null) {
-											console.log("여기");
-											cursor
-													.find(".collectionPhoto")
-													.append(
-															'<div class="collectionPhotoItem">'
-																	+ '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">'
-																	+ '</div>');
-											if (num > 4) {
-												cursor
-														.find(
-																".collectionPhoto:last")
-														.attr("display", "none");
-											}
-										} else {
-											cursor
-													.find(
-															".collectionseq[value='"
-																	+ collection_seq
-																	+ "']")
-													.siblings(
-															".collectionPhoto")
-													.find(
-															".socialseq[value='"
-																	+ social_seq
-																	+ "']")
-													.parent().remove();
-										}
-									},
-									error : function(response) {
-										console.log("DB Failed")
-									}
+		    var num = $(this).find(".collectionPhotoItem").length;
+		    $.ajax({
+		        url: "saveCollection.ajax",
+		        type: "post",
+		        data: {
+		            collection_seq: collection_seq,
+		            social_seq: social_seq
+		        },
+		        success: function (data) {
+		            console.log("ajax: " +
+		                data.photo + "," +
+		                data.social_seq)
+		            if (data.photo != null) {
+		                console.log("여기");
+		                cursor.find(".collectionPhoto").append(
+		                    '<div class="collectionPhotoItem">' +
+		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		                    '</div>');
+		                if (num > 4) {
+		                    cursor.find(".collectionPhoto:last").attr("display", "none");
+		                }
+		            } else {
+		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
+		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
 
-								});
+		    });
 
-					})
+		})
 
-	$("#createcolbtn")
-			.on(
-					'click',
-					function() {
-						var collection_title = $(
-								"input[name='collection_title']").val();
-						var collection_contents = $(
-								"textarea[name='collection_contents']").val();
+		$("#createcolbtn")
+		    .on('click', function () {
+		        var collection_title = $("input[name='collection_title']").val();
+		        var collection_contents = $("textarea[name='collection_contents']").val();
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
+		        $.ajax({
+		            url: "createCollection.ajax",
+		            type: "post",
+		            data: {
+		                collection_title: collection_title,
+		                collection_contents: collection_contents
+		            },
+		            success: function (data) {
+		                console.log("생성" + data);
+		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
+		                $("input[name='collection_title']").val("");
+		                $("textarea[name='collection_contents']").val("");
+		                $("#createModal").hide();
 
-						$
-								.ajax({
-									url : "createCollection.ajax",
-									type : "post",
-									data : {
-										collection_title : collection_title,
-										collection_contents : collection_contents
-									},
-									success : function(data) {
-										console.log("생성" + data);
-										var dto = JSON.parse(data);
-										$("input[name='collection_title']")
-												.val("");
-										$(
-												"textarea[name='collection_contents']")
-												.val("");
-										$("#createModal").hide();
+		                $("#collectionarea").append(
+		                    '<div class="collectionItem z-depth-1 mt-2">' +
+		                    '<h4 class="mt-1 mb-1 text-truncate">' +
+		                    dto.collection_title +
+		                    '</h4><h6 class="text-truncate">' +
+		                    dto.collection_contents +
+		                    '</h6>' +
+		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
+		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-										$("#collectionarea")
-												.append(
-														'<div class="collectionItem z-depth-1 mt-2">'
-																+ '<h4 class="mt-1 mb-1 text-truncate">'
-																+ dto.collection_title
-																+ '</h4><h6 class="text-truncate">'
-																+ dto.collection_contents
-																+ '</h6>'
-																+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
-																+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+		                $("#saveModal").show();
 
-										$("#saveModal").show();
+		            }
+		        });
+		        }
+		    });
+		$("#createModal").on('show.bs.modal', function () {
+		    $("#saveModal").hide();
+		});
 
-									}
-								});
-					});
+		$("#createModal").on('hidden.bs.modal', function () {
+		    $("#saveModal").show();
+		});
+
+		$("#saveModal").on('hidden.bs.modal', function () {
+		    console.log("닫힘");
+		    $(".collectionItem").removeClass("active");
+		});
+
+		</script>
 
 	$("#createModal").on('show.bs.modal', function() {
 		$("#saveModal").hide();

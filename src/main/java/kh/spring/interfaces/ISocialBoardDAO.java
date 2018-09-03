@@ -19,7 +19,7 @@ public interface ISocialBoardDAO {
 	public List<SocialBoardDTO> getMySocialList(MemberDTO dto);
 	public List<CollectionDTO> getCollectionList(MemberDTO dto);
 	public List<SocialBoardDTO> getCollectionPhotoList(MemberDTO dto);
-	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto);
+	public List<SocialBoardDTO> getCollectionSocialList(int seq, int startCount, int endCount);
 	public List<CollectionDTO> getCollectionData(CollectionDTO dto);
 	public int insertCollectionContent(SocialBoardDTO dto);
 	public int deleteCollectionContent(SocialBoardDTO dto);
@@ -30,6 +30,10 @@ public interface ISocialBoardDAO {
 	public int updateCollection(CollectionDTO dto);
 	public CollectionDTO getCollectionSeq(CollectionDTO dto);
 	public CollectionDTO getCollectionInfo(CollectionDTO dto);
+	public List<CollectionDTO> getSearchedCollectionList(String word);
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word);
+	public Integer getCollectionCount(CollectionDTO dto);
+	
 	public int getSocialBoardcurrval();
 	public int insertSocialBoard(SocialBoardDTO sdto);
 	public int updateSocialBoard(SocialBoardDTO sdto);
@@ -43,4 +47,6 @@ public interface ISocialBoardDAO {
 	public int allGoodCount(GoodDTO gdto);
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto);
 	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto);
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word);
+	public List<SocialBoardDTO> getSearchedBrandList(String word);
 }

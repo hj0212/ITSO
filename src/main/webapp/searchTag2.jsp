@@ -13,7 +13,8 @@
 <!-- jquery  -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
@@ -84,7 +85,8 @@ body {
 }
 
 .thirdSection .gridPhotoContainer {
-	padding: 20px;
+	margin: 20px;
+	/* padding: 20px; */
 }
 
 .thirdSection .row .gridPhoto {
@@ -94,19 +96,24 @@ body {
 	width: 280px;
 	height: 280px;
 	margin: auto;
+	padding: 10px;
 }
 
 .thirdSection .row .gridPhoto img {
+	/*
 	max-width: 100% \9;
 	height: auto;
-	object-fit: contain;
+	object-fit: none;
+	 */
+	width: 100%;
+	height: 100%;
 }
 
 .thirdSection .row .gridPhoto .photoContainer {
 	visibility: hidden;
 }
 /* hover */
-.thirdSection .row .gridPhoto:hover .photoContainerHover {
+.thirdSection .row .gridPhoto:hover  .photoContainerHover {
 	visibility: visible;
 	z-index: 41;
 	position: absolute;
@@ -114,7 +121,7 @@ body {
 	height: 450px;
 	border: 1px solid antiquewhite;
 	background-color: white;
-	margin-top: -300px;
+	margin-top: -350px;
 	margin-left: -25px;
 	padding: 30px;
 }
@@ -138,8 +145,47 @@ body {
 	margin-top: -15px;
 	margin-left: 5px;
 	box-shadow: none;
-	border: 1px solid black;
 	cursor: pointer;
+}
+
+@media screen and (min-width: 960px) {
+	.thirdSection .row .gridPhoto {
+		height: 280px;
+	}
+}
+
+@media screen and (max-width: 959px) and (min-width: 850px) {
+	.thirdSection .row .gridPhoto {
+		width: 260px;
+		height: 260px;
+	}
+}
+
+@media screen and (max-width: 849px) and (min-width: 750px) {
+	.thirdSection .row .gridPhoto {
+		width: 240px;
+		height: 240px;
+	}
+}
+
+@media screen and (max-width: 749px) and (min-width: 650px) {
+	.thirdSection .row .gridPhoto {
+		width: 220px;
+		height: 220px;
+	}
+}
+
+@media screen and (max-width: 649px) and (min-width: 550px) {
+	.thirdSection .row .gridPhoto {
+		width: 180px;
+		height: 180px;
+	}
+}
+
+@media screen and (max-width: 549px) and (min-width: 450px) {
+	.thirdSection .row .gridPhoto {
+		height: 280px;
+	}
 }
 
 .thirdSection .row .gridPhoto .photoContainer .photoContainerButton1 {
@@ -193,46 +239,55 @@ a#MOVE_TOP_BTN {
 }
 
 ::-webkit-scrollbar {
-	display:none;
+	display: none;
 }
+
 @media ( max-width : 575px) {
 	.collectionItem {
 		width: 80%;
 	}
 }
+
 @media ( min-width : 576px) and (max-width: 991px) {
 	.collectionItem {
 		width: 50%;
 		float: left;
 	}
 }
+
 @media ( min-width : 991px) {
 	.collectionItem {
 		width: 30%;
 	}
 }
+
 .collectionItem {
 	display: inline-block;
 	margin: 0 auto 10px auto !important;
 	background: white;
 	height: 236px;
 }
+
 .collectionItem:hover {
 	transform: scale(1.05);
 	transition: all 0.1s ease-in-out;
 }
+
 .collectionPhoto {
 	height: 100%;
 	padding-left: 5px;
 }
+
 .collectionPhotoItem {
-	float:left;
+	float: left;
 	display: inline;
 	padding: 1px;
 }
+
 .collectionPhotoItem img {
 	width: 105px;
 }
+
 .active {
 	border: 3px solid #21FCFF;
 	margin-left: 1px;
@@ -242,8 +297,12 @@ a#MOVE_TOP_BTN {
 	margin-left: 3px;
 }
 
-.dropdown-toggle {
+.container.dropdown-toggle {
 	border: 1px solid #e9e9e9;
+}
+
+.photoContainerHoverWriter a, .photoContainerHoverTitle a {
+	color: black;
 }
 </style>
 </head>
@@ -257,12 +316,12 @@ a#MOVE_TOP_BTN {
 		<!-- 메인인트로시작 -->
 
 		<section class="firstSection col-md-12">
-		<div class="mainIntro">
-			<p>
-				<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
-				the people you like to personalize you feed.
-			</p>
-		</div>
+			<div class="mainIntro">
+				<p>
+					<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
+					the people you like to personalize you feed.
+				</p>
+			</div>
 		</section>
 
 		<!-- 메인인트로종료 -->
@@ -270,226 +329,289 @@ a#MOVE_TOP_BTN {
 
 		<!-- 드랍박스메뉴시작 -->
 		<section class="secondSection col-md-12">
-		<div class="container">
+			<div class="container">
 
-			<div class="btn-group">
-				<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-					id="gender">${gender}</button>
-
-				<div class="dropdown-menu">
-					<a class="dropdown-item flex-center droptxt2"
-						href="searchTag.go?gender=g&age=${pAge }&feed=${feed}&search=${search}">무관 </a> <a
-						class="dropdown-item flex-center droptxt2"
-						href="searchTag.go?gender=m&age=${pAge}&main=${main}&feed=${feed}&search=${search}">남성</a> <a
-						class="dropdown-item flex-center droptxt2"
-						href="searchTag.go?gender=f&age=${pAge }&main=${main}&feed=${feed}&search=${search}">여성</a>
-				</div>
 				<div class="btn-group">
 					<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-						id="age">${age}</button>
+						id="gender">${gender}</button>
+
 					<div class="dropdown-menu">
 						<a class="dropdown-item flex-center droptxt2"
-							href="searchTag.go?age=0&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">모든연령 </a> <a
+							href="main.go?gender=g&age=${pAge }&feed=${feed}&search=${search}">무관 </a> <a
 							class="dropdown-item flex-center droptxt2"
-							href="searchTag.go?age=10&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">10대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="searchTag.go?age=20&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">20대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="searchTag.go?age=30&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">30대</a> <a
-							class="dropdown-item flex-center droptxt2"
-							href="searchTag.go?age=40&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">40대</a>
+							href="main.go?gender=m&age=${pAge}&main=${main}&feed=${feed}&search=${search}">남성</a>
+						<a class="dropdown-item flex-center droptxt2"
+							href="main.go?gender=f&age=${pAge }&main=${main}&feed=${feed}&search=${search}">여성</a>
 					</div>
 					<div class="btn-group">
 						<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Full
-							view</button>
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+							id="age">${age}</button>
 						<div class="dropdown-menu">
 							<a class="dropdown-item flex-center droptxt2"
-								href="searchTag.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">Full view</a> <a
-								class="dropdown-item flex-center droptxt2"
-								href="searchTag.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">Thumbnail view</a>
+								href="main.go?age=0&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">모든연령
+							</a> <a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=10&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">10대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=20&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">20대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=30&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">30대</a>
+							<a class="dropdown-item flex-center droptxt2"
+								href="main.go?age=40&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">40대</a>
+						</div>
+						<div class="btn-group">
+							<button class="btn btn-sm dropdown-toggle droptxt1" type="button"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">Full view</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item flex-center droptxt2"
+									href="main.go?main=full&age=${age}&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">Full
+									view</a> <a class="dropdown-item flex-center droptxt2"
+									href="main.go?main=thumbnail&age=${age}&gender=${pGender }&main=${main}&feed=${feed}&search=${search}">Thumbnail
+									view</a>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+
 		</section>
-		
+
 		<!-- 드랍박스메뉴종료 -->
 
 		<!-- 포토컨테이너시작 -->
 		<section class="thirdSection col-md-12">
-		<div class="gridPhotoContainer row">
-			<c:choose>
-				<c:when test="${fn:length(socialList) > 0}">
-					<c:forEach items="${socialList}" var="list">
+			<div class="gridPhotoContainer row">
+				<c:choose>
+					<c:when test="${fn:length(socialList) > 0}">
+						<c:forEach items="${socialList}" var="list" varStatus="status">
 
-						<div class="gridPhoto col-lg-3 col-md-12 mb-3">
-							
-							<a href="#"> <img src="resources/images/background.jpg"
-								class="img-fluid z-depth-2" alt="Responsive image">
-							</a>
-							<div class="photoContainer">
-								<input type="hidden" class="inputSocialSeq" value="${list.social_seq }"/>
-								<div class="photoContainerHover z-depth-2">
-									<h1 class="photoContainerHoverTitle">${list.social_title}</h1>
-									<p class="photoContainerHoverWriter">by
-										${list.writerName}</p>
-									<img src="upload/social/${list.photo}"
-										class="img-fluid z-depth-2" alt="Responsive image"
-										onclick="location='main.jsp'">
-									<c:if test="${!empty sessionScope.user }">
-										<button class="photoContainerButton1 btn btn-elegant"
-											id="hypeBtn1" onmouseover="hypeOn()" onmouseout="hypeOut()"
-											data-hover="+1">HYPE</button>
-										<a href="" class="savebtn btn btn-elegant"
-											data-toggle="modal" data-target="#saveModal">save</a>
-									</c:if>
-									<div class="photoContainerHoverHashTag">
-										<P>
-											<span onclick="hashtag()">해쉬태그올곳</span>
-										</P>
-									</div>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="3">게시글이 없습니다,</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-		</div>
-		</section>
-		<!-- 포토컨테이너종료 -->
+							<div class="gridPhoto">
 
-		<!-- top버튼 시작 -->
-		<a id="MOVE_TOP_BTN" href="#">TOP</a>
-		<!--  top버튼 종료 -->
+								<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
+								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
+									src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+									alt="Responsive image">
 
-		<!-- saveModal -->
-		<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-lg" role="document">
-				<!--Content-->
-				<div class="modal-content">
-					<!--Header-->
-					<div class="modal-header">
-						<p class="heading lead mb-0">컬렉션으로 저장하기</p>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-
-					<!--Body-->
-					<div class="modal-body">
-						<div id="modalbtnarea">
-							<button class="btn btn-itso" data-toggle="modal"
-								data-target="#createModal">
-								<i class="fa fa-plus"></i> 컬렉션 생성
-							</button>
-							<button class="btn btn-indigo" id="managebtn"> 컬렉션 관리 </button>
-						</div>
-
-						<c:choose>
-							<c:when test="${not empty collectionList }">
-								<div id="collectionarea" class="mt-2">
-									<c:set var="num" value="0"></c:set>
-									<c:forEach items="${collectionList}" var="clist">
-									
-										<div class="collectionItem z-depth-1 mt-2">									
-											<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
-											<h6>${clist.collection_contents }</h6>
-											<input type="hidden" class="collectionseq" value="${clist.collection_seq }"/>
-											<div class="collectionPhoto">
-
-												<c:set var="check" value="true" />
-												<c:set var="num" value="0" />
-
-												<c:forEach items="${photoList }" var="plist"
-													varStatus="status">
+								</a>
+								<div class="photoContainer">
+									<div class="photoContainerHover z-depth-2">
+										<input type="hidden" class="read" value="readSocial.go?seq=${list.social_seq}" /> 
+										<input type="hidden" class="user" value="userpage.go?seq=${list.social_writer }" />
+										<h3 class="photoContainerHoverTitle title">${list.social_title}</h3>
+										<p class="photoContainerHoverWriter writer">by ${list.writerName}</p>
+										<img src="upload/social/${list.photo}"
+											class="img-fluid z-depth-2 image" alt="Responsive image">
+										<div class="hashtagarea mt-1" style="margin-left: 5px;">
+											<span>${list.social_contents}</span>
+										</div>
+										<c:if test="${!empty sessionScope.user }">
+											<div class="btnarea " style="display: block; height: 31px;">
+												<div class="goodarea"
+													style="margin-top: 3px; margin-left: 5px; float: left;">
+													<input type="hidden" class="writerseq"
+														value="${list.social_writer }" />
+													<c:set var="loop_flag" value="false" />
 													<c:choose>
-														<c:when test="${check eq true }">
-															<c:if
-																test="${plist.collection_seq == clist.collection_seq }">
-																<c:set var="num" value="${num+1 }" />
-																
-																<div class="collectionPhotoItem"><img src="/upload/social/${plist.photo }"
-																	alt=""><input type="hidden" class="socialseq" value="${plist.social_seq }"/></div>
-																<c:if test="${num == 4 || status.last}">
-																	<c:set var="check" value="false" />
-																</c:if>
-															</c:if>
+														<c:when test="${empty goodList }">
+															<i class="fa fa-heart-o red-text heart "
+																aria-hidden="true"
+																style="float: right; font-size: 25px;"
+																value="${list.social_seq}"> <font color="black">
+																	${heart[status.index].toString()} </font></i>
 														</c:when>
 														<c:otherwise>
+															<c:forEach items="${goodList }" var="good"
+																varStatus="gstatus">
+
+																<c:if test="${loop_flag == false }">
+																	<c:choose>
+																		<c:when test="${good.social_seq == list.social_seq }">
+																			<i class="fa fa-heart red-text heart"
+																				aria-hidden="true"
+																				style="float: left; font-size: 25px;"
+																				value="${list.social_seq}"> <font color="black">
+																					${heart[status.index].toString()} </font></i>
+
+																			<c:set var="loop_flag" value="true" />
+																		</c:when>
+																		<c:otherwise>
+																			<c:if test="${gstatus.last }">
+																				<i class="fa fa-heart-o red-text heart"
+																					aria-hidden="true"
+																					style="float: left; font-size: 25px;"
+																					value="${list.social_seq}"> <font color="black">
+																						${heart[status.index].toString()} </font></i>
 
 
+																			</c:if>
+																		</c:otherwise>
+																	</c:choose>
+																</c:if>
+
+															</c:forEach>
 														</c:otherwise>
+
 													</c:choose>
 
-												</c:forEach>
-											</div>
-											<h6 class="mb-0" style="height: 19px;"></h6>
-										</div>
-									</c:forEach>
+												</div>
+												<button type="button" class="btn-floating btn-sm savebtn"
+													style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px; padding-right: 0;"
+													title="컬렉션에 저장" data-toggle="modal"
+													data-target="#saveModal">
+													컬렉션에 저장 <i class="fa fa-upload"></i>
+												</button>
+												<input type="hidden" class="socialseq"
+													value="${list.social_seq }" />
+										</c:if>
+									</div>
+
 								</div>
-							</c:when>
-							<c:otherwise>
-								<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-				<!--/.Content-->
+							</div>
 			</div>
-		</div>
+			</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan="3">게시글이 없습니다,</td>
+				</tr>
+			</c:otherwise>
+			</c:choose>
+	</div>
+	</section>
+	<!-- 포토컨테이너종료 -->
 
+	<!-- top버튼 시작 -->
+	<a id="MOVE_TOP_BTN" href="#">TOP</a>
+	<!--  top버튼 종료 -->
 
-		<!-- createModal -->
-		<div class="modal fade" id="createModal" tabindex="-1" role="dialog"
-			aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-sm" role="document">
-				<!--Content-->
-				<div class="modal-content">
-					<!--Header-->
-					<div class="modal-header">
-						<p class="heading lead mb-0">컬렉션 생성</p>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
+	<!-- saveModal -->
+	<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead mb-0">컬렉션으로 저장하기</p>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 
-					<!--Body-->
-					<div class="modal-body">
-						<div class="md-form">
-							<input type="text" id="inputMD" class="form-control" name="collection_title" maxlength="30"> <label
-								for="inputMD">컬렉션 이름</label>
-						</div>
-						<div class="md-form mt-1">
-							<textarea type="text" id="form7" class="md-textarea form-control"
-								rows="3"  name="collection_contents"></textarea>
-							<label for="form7">컬렉션 상세 설명</label>
-						</div>
-					</div>
-
-					<!--Footer-->
-					<div class="modal-footer justify-content-center">
+				<!--Body-->
+				<div class="modal-body">
+					<div id="modalbtnarea">
 						<button class="btn btn-itso" data-toggle="modal"
-							data-target="#modal" id="createcolbtn">생성</button>
-						<button class="btn btn-outline-itso waves-effect"
-							data-dismiss="modal">취소</button>
+							data-target="#createModal">
+							<i class="fa fa-plus"></i> 컬렉션 생성
+						</button>
+						<button class="btn btn-indigo" id="managebtn">컬렉션 관리</button>
+					</div>
+
+					<c:choose>
+						<c:when test="${not empty collectionList }">
+							<div id="collectionarea" class="mt-2">
+								<c:set var="num" value="0"></c:set>
+								<c:forEach items="${collectionList}" var="clist">
+
+									<div class="collectionItem z-depth-1 mt-2">
+										<h4 class="mt-1 mb-1">${clist.collection_title }</h4>
+										<h6>${clist.collection_contents }</h6>
+										<input type="hidden" class="collectionseq"
+											value="${clist.collection_seq }" />
+										<div class="collectionPhoto">
+
+											<c:set var="check" value="true" />
+											<c:set var="num" value="0" />
+
+											<c:forEach items="${photoList }" var="plist"
+												varStatus="status">
+												<c:choose>
+													<c:when test="${check eq true }">
+														<c:if
+															test="${plist.collection_seq == clist.collection_seq }">
+															<c:set var="num" value="${num+1 }" />
+
+															<div class="collectionPhotoItem">
+																<img src="/upload/social/${plist.photo }" alt=""><input
+																	type="hidden" class="socialseq"
+																	value="${plist.social_seq }" />
+															</div>
+															<c:if test="${num == 4 || status.last}">
+																<c:set var="check" value="false" />
+															</c:if>
+														</c:if>
+													</c:when>
+													<c:otherwise>
+
+
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</div>
+										<h6 class="mb-0" style="height: 19px;"></h6>
+									</div>
+								</c:forEach>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+
+
+	<!-- createModal -->
+	<div class="modal fade" id="createModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead mb-0">컬렉션 생성</p>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="md-form">
+						<input type="text" id="inputMD" class="form-control"
+							name="collection_title" maxlength="30"> <label
+							for="inputMD">컬렉션 이름</label>
+					</div>
+					<div class="md-form mt-1">
+						<textarea type="text" id="form7" class="md-textarea form-control"
+							rows="3" name="collection_contents"></textarea>
+						<label for="form7">컬렉션 상세 설명</label>
 					</div>
 				</div>
-				<!--/.Content-->
-			</div>
-		</div>
 
-		<!-- Button trigger modal -->
-		<div class="text-center"></div>
+				<!--Footer-->
+				<div class="modal-footer justify-content-center">
+					<button class="btn btn-itso" data-toggle="modal"
+						data-target="#modal" id="createcolbtn">생성</button>
+					<button class="btn btn-outline-itso waves-effect"
+						data-dismiss="modal">취소</button>
+				</div>
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+
+	<!-- Button trigger modal -->
+	<div class="text-center"></div>
 	</div>
 
 
@@ -504,20 +626,47 @@ a#MOVE_TOP_BTN {
 <script type="text/javascript"
 	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
 <script>
-	const hypeBtn1 = document.getElementById("hypeBtn1");
-	let hypeBtn2 = document.getElementById("hypeBtn2");
-
-	// HYPE버튼에 마우스 대면 옆에쪽 버튼에 +1 시키기
-	function hypeOn() {
-		hypeBtn2.innerHTML = "+1";
-	}
-	//기본디폴트설정
-	function hypeOut() {
-		hypeBtn2.innerHTML = "default";
-	}
-	function hashtag() {
-
-	}
+	
+	$(".photoContainerHover").on("click", ".image, .title", 
+	function readSocial() {
+		var cursor = $(this);
+		var src = cursor.siblings(".read").val();
+		location.href = src;
+	});
+	
+	$(".photoContainerHover").on("click", ".writer", 
+	function userpage() {
+		var cursor = $(this);
+		var src = cursor.siblings(".user").val();
+		location.href = src;
+	});
+	
+	$(".heart").click(function() {
+		var heartVal = $(this).attr("class");
+		if (heartVal == "fa fa-heart red-text heart") {
+			$(this).attr("class", "fa fa-heart-o red-text heart");
+		} else {
+			$(this).attr("class", "fa fa-heart red-text heart");
+		}
+	});
+	$(".heart").on('click', function() {
+		var seq = $(this).attr("value");
+		var writer = $(".writerseq").val();
+		var font = $(this).children('font');
+		console.log("숫자: " + $(this).children('font').html());
+		console.log(seq);
+		$.ajax({
+			url : "mainHeart.ajax",
+			type : "post",
+			data : {
+				social_seq : seq,
+				social_writer : writer
+			},
+			success : function(data) {
+				console.log("들어옴" + data), font.html(data)
+			}
+		});
+	});
 
 	$(function() {
 		$(window).scroll(function() {
@@ -535,60 +684,149 @@ a#MOVE_TOP_BTN {
 			return false;
 		});
 	});
-	
+
 	$("#managebtn").on("click", function() {
-		window.open('mypage.go?view=collection', '_blank');
-	})
-	
-	social_seq = 0;
-	$('.savebtn').on("click", function() {
-		social_seq=$(this).parent().siblings(".inputSocialSeq").val();
-		console.log(social_seq);
+		window.open('userpage.go?view=collection', '_blank');
 	})
 
-	$("#collectionarea").on("click", ".collectionItem", function() {
-		$(this).toggleClass('active');
-		var collection_seq =$(this).children(".collectionseq").val();
-		console.log("collection_seq: " + collection_seq);
-		
-		console.log("social_seq: "+social_seq);
-		$.ajax({
-	        url:"saveCollection.ajax",
-	        type:"post",
-	        data:{
-	          collection_seq:collection_seq,
-	          social_seq:social_seq
-	        },
-	        success:function(data){
-	          console.log("들어옴:"+data);
-	        }
-	     });
-	 
-	})
-	
-	$("#createcolbtn").on('click', function() {
-		var collection_title = $("input[name='collection_title']").val();
-		var collection_contents = $("textarea[name='collection_contents']").val();
-		
-		$.ajax({
-	        url:"createCollection.ajax",
-	        type:"post",
-	        data:{
-	          collection_title:collection_title,
-	          collection_contents:collection_contents
-	        },
-	        success:function(data){
-	          console.log("생성");
-	          $("input[name='collection_title']").val("");
-	          $("textarea[name='collection_contents']").val("");
-	          $("#createModal").hide();
-	          $("#saveModal").show();
-	        }
-	    });
-	});
+	social_seq = 0;
+	$('.savebtn').on(
+			"click",
+			function() {
+				social_seq = $(this).siblings(".socialseq").val();
+				console.log(social_seq);
+
+				var clistsize = "${fn:length(collectionList)}";
+
+				for (var i = 1; i <= clistsize; i++) {
+					var cursor = $(".collectionItem:nth-of-type(" + i + ")");
+					var plistsize = cursor.find(".collectionPhotoItem").length;
+
+					for (var j = 1; j <= plistsize; j++) {
+						var collection_socialseq = $(cursor).find(
+								".collectionPhotoItem:nth-of-type(" + j + ")")
+								.find(".socialseq").val();
+						console.log("검사 : " + i + "," + j + ":" + social_seq
+								+ ":" + collection_socialseq);
+						if (social_seq == collection_socialseq) {
+							cursor.addClass("active");
+							console.log("true");
+							break;
+						}
+					}
+				}
+			})
+	$("#collectionarea")
+			.on(
+					"click",
+					".collectionItem",
+					function() {
+						var cursor = $(this);
+						cursor.toggleClass('active');
+						var collection_seq = $(this).children(".collectionseq")
+								.val();
+						console.log("collection_seq: " + collection_seq);
+						console.log("social_seq: " + social_seq);
+
+						var num = $(this).find(".collectionPhotoItem").length;
+						$
+								.ajax({
+									url : "saveCollection.ajax",
+									type : "post",
+									data : {
+										collection_seq : collection_seq,
+										social_seq : social_seq
+									},
+									success : function(data) {
+										console.log("ajax: " + data.photo + ","
+												+ data.social_seq)
+										if (data.photo != null) {
+											console.log("여기");
+											cursor
+													.find(".collectionPhoto")
+													.append(
+															'<div class="collectionPhotoItem">'
+																	+ '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">'
+																	+ '</div>');
+											if (num > 4) {
+												cursor
+														.find(
+																".collectionPhoto:last")
+														.attr("display", "none");
+											}
+										} else {
+											cursor
+													.find(
+															".collectionseq[value='"
+																	+ collection_seq
+																	+ "']")
+													.siblings(
+															".collectionPhoto")
+													.find(
+															".socialseq[value='"
+																	+ social_seq
+																	+ "']")
+													.parent().remove();
+										}
+									},
+									error : function(response) {
+										console.log("DB Failed")
+									}
+
+								});
+
+					})
+
+	$("#createcolbtn")
+			.on(
+					'click',
+					function() {
+						var collection_title = $(
+								"input[name='collection_title']").val();
+						var collection_contents = $(
+								"textarea[name='collection_contents']").val();
+
+						$
+								.ajax({
+									url : "createCollection.ajax",
+									type : "post",
+									data : {
+										collection_title : collection_title,
+										collection_contents : collection_contents
+									},
+									success : function(data) {
+										console.log("생성" + data);
+										var dto = JSON.parse(data);
+										$("input[name='collection_title']")
+												.val("");
+										$(
+												"textarea[name='collection_contents']")
+												.val("");
+										$("#createModal").hide();
+
+										$("#collectionarea")
+												.append(
+														'<div class="collectionItem z-depth-1 mt-2">'
+																+ '<h4 class="mt-1 mb-1 text-truncate">'
+																+ dto.collection_title
+																+ '</h4><h6 class="text-truncate">'
+																+ dto.collection_contents
+																+ '</h6>'
+																+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
+																+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+
+										$("#saveModal").show();
+
+									}
+								});
+					});
 
 	$("#createModal").on('show.bs.modal', function() {
 		$("#saveModal").hide();
+	});
+
+	$("#createModal").on('hidden.bs.modal', function() {
+		$("#saveModal").show();
 	});
 
 	$("#saveModal").on('hidden.bs.modal', function() {

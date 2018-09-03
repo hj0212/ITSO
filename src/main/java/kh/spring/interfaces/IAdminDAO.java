@@ -2,6 +2,7 @@ package kh.spring.interfaces;
 
 import java.util.List;
 
+import kh.spring.dto.AdminPageDTO;
 import kh.spring.dto.MemberDTO;
 
 public interface IAdminDAO {
@@ -26,5 +27,7 @@ int specificUserblock(int userSeq);
 String isThisUserBlocked(int userSeq);
 
 int blockUserReleasing(int userSeq);
+
+int reportProc(AdminPageDTO dto);
 
 }

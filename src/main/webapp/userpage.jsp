@@ -25,10 +25,16 @@
 	rel="stylesheet">
 
 <!--   ---------CDN 모음 끝------------------------------------------  -->
-<title>MyPage</title>
+<title></title>
 <style>
 body {
 	background-color: #eeeeee;
+}
+
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
 }
 
 #wrapper div {
@@ -81,20 +87,20 @@ body {
 }
 
 #profilestat a.active, #tablist a.active {
-	font-weight:normal;
+	font-weight: normal;
 }
 
 #profilestat div p:first-of-type {
 	font-weight: bold;
 }
 
-@media ( min-width : 1010px) {
+@media ( min-width : 868px) {
 	#profilestat {
 		margin-top: 35px;
 	}
 }
 
-@media ( max-width : 1010px) {
+@media ( max-width : 868px) {
 	#profilestat {
 		margin-top: 15px;
 		width: 100%;
@@ -263,7 +269,12 @@ table .profilearea {
 }
 
 .followbtn {
-	margin-top: 12px;
+	margin-top: 6px;
+}
+
+.tip-date {
+	text-align: right;
+	width: 130px;
 }
 </style>
 
@@ -379,7 +390,7 @@ table .profilearea {
 														success : function(
 																response) {
 															if (response != null) {
-																location.href = "mypage.go?view=collection";
+																location.href = "userpage.go?view=collection";
 															}
 														},
 														error : function(
@@ -408,7 +419,7 @@ table .profilearea {
 														success : function(
 																response) {
 															if (response != null) {
-																location.href = "mypage.go?view=collection";
+																location.href = "userpage.go?view=collection";
 															}
 														},
 														error : function(
@@ -451,7 +462,7 @@ table .profilearea {
 										},
 										success : function(data) {
 											console.log("들어옴" + data), font
-													.html( data)
+													.html(data)
 										}
 									});
 								});
@@ -471,9 +482,26 @@ table .profilearea {
 			</div>
 			<div id="infoarea" class="col">
 				<p class="h4-responsive mb-0 nanumB">${member.name}</p>
-				<p class="h6-responsive">${member.email}</p>
+				<c:choose>
+					<c:when test="${seq eq sessionScope.user.seq }">
+						<p class="h6-responsive">${member.email}</p>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+				
 				<br>
-				<p class="h4-responsive mb-0 nanumB">"${member.state}"</p>
+				<p class="h4-responsive mb-0 nanumB">
+				
+				<c:choose>
+					<c:when test="${empty member.state}">
+					" "
+					</c:when>
+					<c:otherwise>
+					"${member.state}"
+					</c:otherwise>
+				</c:choose>
+				</p>
 				<br>
 
 				<c:choose>
@@ -485,7 +513,7 @@ table .profilearea {
 						<!-- 다른사람 -->
 						<c:if test="${followcheck == 0 }">
 							<!-- 팔로우x -->
-							<button type="button" class="btn btn-indigo btn-sm followbtn">
+							<button type="button" class="btn btn-indigo btn-sm followbtn ml-0">
 								<span class="follow show" style="font-family: 'NanumbarunpenR';"><i
 									class="fa fa-plus" /></i> 팔로우</span> <span class="unfollow hidden"
 									style="font-family: 'NanumbarunpenR';"><i
@@ -502,9 +530,9 @@ table .profilearea {
 									class="fa fa-plus" /></i> 팔로우</span>
 							</button>
 						</c:if>
-						<input type="hidden" value="${ferlist.seq }" id="seq" />
-						<button id="messagebtn" class="btn btn-itso btn-sm">
-							<i class="fa fa-envelope-o" aria-hidden="true"></i> 메시지 보내기
+						<input type="hidden" value="${ferlist.seq}" id="message-seq" />
+						<button id="messagebtn" class="btn btn-itso btn-sm" data-toggle="modal" data-target="#centralModalSuccess">
+							<i class="fa fa-envelope-o" aria-hidden="true" ></i> 메시지 보내기
 						</button>
 					</c:otherwise>
 				</c:choose>
@@ -568,8 +596,8 @@ table .profilearea {
 						href="#followerPanel" role="tab">팔로워</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#followingPanel" role="tab">팔로잉</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#boardPanel" role="tab">게시판</a></li>
+					<!-- <li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#boardPanel" role="tab">팁 게시글</a></li> -->
 				</ul>
 
 				<!-- Tab panels -->
@@ -582,7 +610,13 @@ table .profilearea {
 							<!-- Grid column -->
 							<c:choose>
 								<c:when test="${empty socialList }">
-									작성한 글이 없습니다.
+									<table class="table" style="width:100%;">
+										<tr>
+											<td>작성한 글이 없습니다.
+										</tr>
+									</table>
+									
+									
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="list" items="${socialList }">
@@ -645,8 +679,8 @@ table .profilearea {
 																					<i class="fa fa-heart red-text heart"
 																						aria-hidden="true"
 																						style="float: left; font-size: 25px;"
-																						value="${list.social_seq}"> <font color="black">
-																							${good.good_count } </font></i>
+																						value="${list.social_seq}"> <font
+																						color="black"> ${good.good_count } </font></i>
 
 																					<c:set var="loop_flag" value="true" />
 																				</c:when>
@@ -656,8 +690,7 @@ table .profilearea {
 																							aria-hidden="true"
 																							style="float: left; font-size: 25px;"
 																							value="${list.social_seq}"> <font
-																							color="black">
-																								${good.good_count } </font></i>
+																							color="black"> ${good.good_count } </font></i>
 
 
 																					</c:if>
@@ -742,7 +775,7 @@ table .profilearea {
 																						<c:when test="${flist.seq eq list.social_writer}">
 
 																							<button type="button"
-																								class="btn btn-itso followbtn">
+																								class="btn btn-itso followbtn ml-0">
 																								<span class="unfollow show"
 																									style="font-family: 'NanumbarunpenR';"><i
 																									class="fa fa-check" /></i> 언팔로우</span> <span
@@ -754,7 +787,7 @@ table .profilearea {
 																						<c:otherwise>
 
 																							<button type="button"
-																								class="btn btn-indigo followbtn">
+																								class="btn btn-indigo followbtn ml-0">
 																								<span class="follow show"
 																									style="font-family: 'NanumbarunpenR';"><i
 																									class="fa fa-plus" /></i> 팔로우</span> <span
@@ -769,7 +802,7 @@ table .profilearea {
 
 																			<c:otherwise>
 																				<button type="button"
-																					class="btn btn-indigo followbtn">
+																					class="btn btn-indigo followbtn ml-0">
 																					<span class="unfollow hidden"
 																						style="font-family: 'NanumbarunpenR';"><i
 																						class="fa fa-check" /></i> 언팔로우</span> <span
@@ -782,7 +815,7 @@ table .profilearea {
 
 																	</c:otherwise>
 																</c:choose> <input type="hidden" value="${list.social_writer }"
-																id="seq" /></li>
+																 /></li>
 															<li>
 																<!--Text-->
 																<p class="mb-0">
@@ -1012,7 +1045,31 @@ table .profilearea {
 					<!--/.Panel 4-->
 
 					<!--Panel 5-->
-					<div class="tab-pane fade" id="boardPanel" role="tabpanel"></div>
+					<div class="tab-pane fade" id="boardPanel" role="tabpanel">
+						<c:choose>
+							<c:when test="${!empty tipList}">
+								<table style="width: 100%;" class="mt-2">
+
+									<c:forEach items="${tipList}" var="list">
+										<tr>
+											<td>[${list.category}]</td>
+											<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
+											<td class="tip-title"><a
+												href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
+											<td><i class=" fa fa-heart red-text" aria-hidden="true">${list.tip_like_count}</i>
+												<i class="fa fa-comment amber-text" aria-hidden="true">${list.tip_comment_count}</i>
+												<i class="fa  fa-eye" aria-hidden="true">${list.tip_viewcount}</i>
+											</td>
+											<td class=tip-date>${list.tip_date}</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</c:when>
+							<c:otherwise>
+									작성한 글이 없습니다.
+								</c:otherwise>
+						</c:choose>
+					</div>
 					<!--/.Panel 5-->
 
 					<!-- Modal -->
@@ -1036,13 +1093,13 @@ table .profilearea {
 									<input type="hidden" id="seqform" />
 									<div class="md-form">
 										<input type="text" id="titleform" class="form-control"
-											name="collection_title" maxlength="30" autofocus> <label
+											name="ecollection_title" maxlength="30" autofocus> <label
 											for="titleform">컬렉션 이름</label>
 									</div>
 									<div class="md-form mt-1">
-										<textarea type="text" id="contentsform"
+										<textarea id="contentsform"
 											class="md-textarea form-control" rows="3"
-											name="collection_contents"></textarea>
+											name="ecollection_contents"></textarea>
 										<label for="form7" class="mb-0">컬렉션 상세 설명</label>
 									</div>
 								</div>
@@ -1140,7 +1197,7 @@ table .profilearea {
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -1190,162 +1247,167 @@ table .profilearea {
 			<!--/.Content-->
 		</div>
 	</div>
+	
+	<%@include file="footer.jsp"%>
+	
 	<script>
 		$("#managebtn").on("click", function() {
 			window.open('userpage.go?view=collection', '_blank');
 		})
 
 		social_seq = 0;
-		$('.savebtn')
-				.on(
-						"click",
-						function() {
-							social_seq = $(this).siblings(".socialseq").val();
-							console.log(social_seq);
+		$('.savebtn').on("click", function () {
+		    social_seq = $(this).siblings(".socialseq").val();
+		    console.log(social_seq);
 
-							var clistsize = "${fn:length(collectionList)}";
+		    var clistsize = "${fn:length(collectionList)}";
 
-							for (var i = 1; i <= clistsize; i++) {
-								var cursor = $(".collectionItem:nth-of-type("
-										+ i + ")");
-								var plistsize = cursor
-										.find(".collectionPhotoItem").length;
+		    for (var i = 1; i <= clistsize; i++) {
+		        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
+		        var plistsize = cursor.find(".collectionPhotoItem").length;
 
-								for (var j = 1; j <= plistsize; j++) {
-									var collection_socialseq = $(cursor).find(
-											".collectionPhotoItem:nth-of-type("
-													+ j + ")").find(
-											".socialseq").val();
-									console.log("검사 : " + i + "," + j + ":"
-											+ social_seq + ":"
-											+ collection_socialseq);
-									if (social_seq == collection_socialseq) {
-										cursor.addClass("active");
-										console.log("true");
-										break;
-									}
-								}
-							}
-						})
-		$("#collectionarea")
-				.on(
-						"click",
-						".collectionItem",
-						function() {
-							var cursor = $(this);
-							cursor.toggleClass('active');
-							var collection_seq = $(this).children(
-									".collectionseq").val();
-							console.log("collection_seq: " + collection_seq);
-							console.log("social_seq: " + social_seq);
+		        for (var j = 1; j <= plistsize; j++) {
+		            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
+		            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
+		            if (social_seq == collection_socialseq) {
+		                cursor.addClass("active");
+		                console.log("true");
+		                break;
+		            }
+		        }
+		    }
+		})
+		$("#collectionarea").on("click", ".collectionItem", function () {
+		    var cursor = $(this);
+		    cursor.toggleClass('active');
+		    var collection_seq = $(this).children(".collectionseq").val();
+		    console.log("collection_seq: " + collection_seq);
+		    console.log("social_seq: " + social_seq);
 
-							var num = $(this).find(".collectionPhotoItem").length;
-							$
-									.ajax({
-										url : "saveCollection.ajax",
-										type : "post",
-										data : {
-											collection_seq : collection_seq,
-											social_seq : social_seq
-										},
-										success : function(data) {
-											console.log("ajax: " + data.photo
-													+ "," + data.social_seq)
-											if (data.photo != null) {
-												console.log("여기");
-												cursor
-														.find(
-																".collectionPhoto")
-														.append(
-																'<div class="collectionPhotoItem">'
-																		+ '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">'
-																		+ '</div>');
-												if (num > 4) {
-													cursor
-															.find(
-																	".collectionPhoto:last")
-															.attr("display",
-																	"none");
-												}
-											} else {
-												cursor
-														.find(
-																".collectionseq[value='"
-																		+ collection_seq
-																		+ "']")
-														.siblings(
-																".collectionPhoto")
-														.find(
-																".socialseq[value='"
-																		+ social_seq
-																		+ "']")
-														.parent().remove();
-											}
-										},
-										error : function(response) {
-											console.log("DB Failed")
-										}
+		    var num = $(this).find(".collectionPhotoItem").length;
+		    $.ajax({
+		        url: "saveCollection.ajax",
+		        type: "post",
+		        data: {
+		            collection_seq: collection_seq,
+		            social_seq: social_seq
+		        },
+		        success: function (data) {
+		            console.log("ajax: " +
+		                data.photo + "," +
+		                data.social_seq)
+		            if (data.photo != null) {
+		                console.log("여기");
+		                cursor.find(".collectionPhoto").append(
+		                    '<div class="collectionPhotoItem">' +
+		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		                    '</div>');
+		                if (num > 4) {
+		                    cursor.find(".collectionPhoto:last").attr("display", "none");
+		                }
+		            } else {
+		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
+		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
 
-									});
+		    });
 
-						})
+		})
 
-		$("#createcolbtn")
-				.on(
-						'click',
-						function() {
-							var collection_title = $(
-									"input[name='collection_title']").val();
-							var collection_contents = $(
-									"textarea[name='collection_contents']")
-									.val();
+		$("#createcolbtn").on('click', function () {
+		        var collection_title = $("input[name='collection_title']").val();
+		        var collection_contents = $("textarea[name='collection_contents']").val();
+		        
+		        console.log("왜이래: " + collection_title +":"+collection_contents);
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
+		        $.ajax({
+		            url: "createCollection.ajax",
+		            type: "post",
+		            data: {
+		                collection_title: collection_title,
+		                collection_contents: collection_contents
+		            },
+		            success: function (data) {
+		                console.log("생성" + data);
+		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
+		                $("input[name='collection_title']").val("");
+		                $("textarea[name='collection_contents']").val("");
+		                $("#createModal").hide();
 
-							$
-									.ajax({
-										url : "createCollection.ajax",
-										type : "post",
-										data : {
-											collection_title : collection_title,
-											collection_contents : collection_contents
-										},
-										success : function(data) {
-											console.log("생성" + data);
-											var dto = JSON.parse(data);
-											$("input[name='collection_title']")
-													.val("");
-											$(
-													"textarea[name='collection_contents']")
-													.val("");
-											$("#createModal").hide();
+		                $("#collectionarea").append(
+		                    '<div class="collectionItem z-depth-1 mt-2">' +
+		                    '<h4 class="mt-1 mb-1 text-truncate">' +
+		                    dto.collection_title +
+		                    '</h4><h6 class="text-truncate">' +
+		                    dto.collection_contents +
+		                    '</h6>' +
+		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
+		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-											$("#collectionarea")
-													.append(
-															'<div class="collectionItem z-depth-1 mt-2">'
-																	+ '<h4 class="mt-1 mb-1 text-truncate">'
-																	+ dto.collection_title
-																	+ '</h4><h6 class="text-truncate">'
-																	+ dto.collection_contents
-																	+ '</h6>'
-																	+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
-																	+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+		                $("#saveModal").show();
 
-											$("#saveModal").show();
-
-										}
-									});
-						});
-		$("#createModal").on('show.bs.modal', function() {
-			$("#saveModal").hide();
+		            }
+		        });
+		        }
+		    });
+		$("#createModal").on('show.bs.modal', function () {
+		    $("#saveModal").hide();
 		});
 
-		$("#createModal").on('hidden.bs.modal', function() {
-			$("#saveModal").show();
+		$("#createModal").on('hidden.bs.modal', function () {
+		    $("#saveModal").show();
 		});
 
-		$("#saveModal").on('hidden.bs.modal', function() {
-			console.log("닫힘");
-			$(".collectionItem").removeClass("active");
+		$("#saveModal").on('hidden.bs.modal', function () {
+		    console.log("닫힘");
+		    $(".collectionItem").removeClass("active");
 		});
+
+		
+		
+		$("#messagebtn").click(function(){
+			var seq	="${seq}";
+			alert(seq);
+			var message=""
+				
+			$.ajax({
+			    url :"messageUser.ajax",
+			    type: "post",
+			    data: {
+			    	seq :seq
+			    },
+			    success : function(data){
+			   	  showMessageUser(data);
+			   	  showMessageList(data)
+			   	console.log(data.message[0].contents);
+			   	console.log(data.message[1].contents);
+			 
+
+			    }
+				
+			});
+	
+		});
+	
+		document.title = "${member.name}" ;
+		 
+		
 	</script>
 </body>
 <!-- Bootstrap tooltips -->

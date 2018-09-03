@@ -17,9 +17,33 @@ public class SocialBoardDTO {
 	private String userState;
 	private int comment_count;
 	private int good_count;
+	private int recent;
 	
 	public SocialBoardDTO() {}
 	
+	public SocialBoardDTO(int collection_seq, int social_seq, String social_title, String social_contents,
+			int social_writer, String writerName, Date social_date, String photo, String gender, int age,
+			String user_photo, String userState, int comment_count, int good_count, int recent) {
+		super();
+		this.collection_seq = collection_seq;
+		this.social_seq = social_seq;
+		this.social_title = social_title;
+		this.social_contents = social_contents;
+		this.social_writer = social_writer;
+		this.writerName = writerName;
+		this.social_date = social_date;
+		this.photo = photo;
+		this.gender = gender;
+		this.age = age;
+		this.user_photo = user_photo;
+		this.userState = userState;
+		this.comment_count = comment_count;
+		this.good_count = good_count;
+		this.recent = recent;
+	}
+
+
+
 	public SocialBoardDTO(int collection_seq, int social_seq, String social_title, String social_contents,
 			int social_writer, String writerName, Date social_date, String photo, String gender, int age,
 			String user_photo, String userState, int comment_count, int good_count) {
@@ -213,6 +237,14 @@ public class SocialBoardDTO {
 
 	public void setGood_count(int good_count) {
 		this.good_count = good_count;
+	}
+
+	public int getRecent() {
+		return recent;
+	}
+
+	public void setRecent(int recent) {
+		this.recent = recent;
 	}
 	
 }
