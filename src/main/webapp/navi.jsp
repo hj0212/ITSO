@@ -146,8 +146,6 @@ nav {
 	}
 }
 
-
-
 @media ( min-width : 576px) {
 	.notification-info {
 		border-radius: 5px;
@@ -165,8 +163,6 @@ nav {
 		z-index: 1000;
 	}
 }
-
-
 
 .read-n:hover {
 	background: #e9e9e9;
@@ -248,91 +244,95 @@ nav {
 	border-radius: 5px;
 	box-shadow: 3px 2px 3px 3px rgba(0, 0, 0, 0.07);
 }
-.modal-list:hover{
-background-color: #f4f4f4;
+
+.modal-list:hover {
+	background-color: #f4f4f4;
 }
 </style>
 
 <nav class="navbar navbar-expand-sm navbar-dark" id="nav1">
-	<a class="navbar-brand" href="main.go"><img id="logo" alt=""
-		src="resources/images/logo_white_no.png"></a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse"
-		data-target="#navbar1" aria-controls="navbar1" aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbar1">
-		<ul class="navbar-nav mr-auto" id="menu">
-			<li class="nav-item"><a class="nav-link" href="#">스타일 피드 <!-- <span class="sr-only">(current)</span> -->
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
-		</ul>
-		<!-- <form class="form-inline my-1">
-            <div class="md-form form-sm my-0">
-                <input class="form-control form-control-sm mr-sm-2 mb-0" type="text" placeholder="Search" aria-label="Search">
-            </div>
-            <button class="btn btn-outline-white" type="submit"><i class="fas fa-search"></i></button>
-        </form> -->
-		<div class="form-inline lg-form form-lg" style="width: 400px;">
-			<input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search" id="searchinput" style="display: none"> 
-			<i id="searchIcon" class="fa fa-search" aria-hidden="true" style="color: white; display: none"></i>
+
+		<a class="navbar-brand" href="main.go"><img id="logo" alt=""
+			src="resources/images/logo_white_no.png"></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbar1" aria-controls="navbar1" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbar1">
+			<ul class="navbar-nav mr-auto" id="menu">
+				<li class="nav-item"><a class="nav-link" href="#">스타일 피드 
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">게시판</a></li>
+			</ul>
+			<div class="form-inline lg-form form-lg" style="width: 400px;">
+				<input class="form-control form-control-sm mr-3 w-75" type="text"
+					placeholder="Search" aria-label="Search" id="searchinput"
+					style="display: none"> <i id="searchIcon"
+					class="fa fa-search" aria-hidden="true"
+					style="color: white; display: none"></i>
+			</div>
+
+			<ul class="navbar-nav ml-auto nav-flex-icons">
+				<li class="nav-item" id="searchli"><a
+					class="nav-link waves-effect waves-light" id="searchshow"> <i
+						class="fa fa-search"></i>검색
+				</a></li>
+
+
+				<li class="nav-item" id="tooltip"><a
+					class="nav-link waves-effect waves-light" id="notibt"> <i
+						class="fa fa-bell"></i> 알림 <span class="notification-counter"
+						id="notification-counter">0</span>
+				</a></li>
+
+				<li class="nav-item" id="tooltip2"><a
+					class="nav-link waves-effect waves-light"> <i
+						class="fa fa-envelope"></i> 메시지
+				</a></li>
+				<li class="nav-item"><a
+					class="nav-link waves-effect waves-light" href="writeSocial.jsp">
+						<i class="fa fa-pencil"></i> 글쓰기
+				</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fa fa-user"> </i>
+				</a>
+					<div class="dropdown-menu dropdown-menu-right dropdown-default"
+						aria-labelledby="navbarDropdownMenuLink">
+						<a class="dropdown-item" href="userpage.go">마이페이지</a> <a
+							class="dropdown-item" href="#">Another action</a> <a
+							class="dropdown-item" href="logout.do">로그아웃</a>
+					</div></li>
+			</ul>
 		</div>
-
-		<ul class="navbar-nav ml-auto nav-flex-icons">
-			<li class="nav-item" id="searchli"><a
-				class="nav-link waves-effect waves-light" id="searchshow"> <i class="fa fa-search"></i>검색
-			</a></li>
-
-
-			<li class="nav-item" id="tooltip"><a
-				class="nav-link waves-effect waves-light" id="notibt"> <i
-					class="fa fa-bell"></i> 알림 <span class="notification-counter"
-					id="notification-counter">0</span>
-			</a></li>
-
-			<li class="nav-item" id="tooltip2"><a
-				class="nav-link waves-effect waves-light"> <i
-					class="fa fa-envelope"></i> 메시지
-			</a></li>
-			<li class="nav-item"><a
-				class="nav-link waves-effect waves-light" href="writeSocial.jsp"> <i
-					class="fa fa-pencil"></i> 글쓰기
-			</a></li>
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
-				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fa fa-user"> </i>
-			</a>
-				<div class="dropdown-menu dropdown-menu-right dropdown-default"
-					aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="userpage.go">마이페이지</a> <a
-						class="dropdown-item" href="#">Another action</a> <a
-						class="dropdown-item" href="logout.do">로그아웃</a>
-				</div></li>
-		</ul>
-	</div>
 </nav>
-<nav class="mb-1 navbar navbar-expand-ssm navbar-dark" id="nav2">
-	<button class="navbar-toggler" type="button" data-toggle="collapse"
-		data-target="#navbar2" aria-controls="navbar2" aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbar2">
-		<ul class="navbar-nav mr-auto hide">
-			<li class="nav-item"><a class="nav-link" href="main.go?feed=new">최신</a></li>
-			<li class="nav-item"><a class="nav-link" href="main.go?feed=hot">인기</a></li>
-			<li class="nav-item"><a class="nav-link"
-				href="main.go?feed=following">팔로잉</a></li>
-		</ul>
 
-		<ul class="navbar-nav mr-auto hide">
-			<li class="nav-item"><a class="nav-link"
-				href="tipBoardMainPage.tip">팁 </a></li>
-			<li class="nav-item"><a class="nav-link" href="stylingBoard.style">스타일링</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
-		</ul>
-	</div>
+<nav class="mb-1 navbar navbar-expand-ssm navbar-dark" id="nav2">
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbar2" aria-controls="navbar2" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbar2">
+			<ul class="navbar-nav mr-auto hide">
+				<li class="nav-item"><a class="nav-link"
+					href="main.go?feed=new">최신</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="main.go?feed=hot">인기</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="main.go?feed=following">팔로잉</a></li>
+			</ul>
+
+			<ul class="navbar-nav mr-auto hide">
+				<li class="nav-item"><a class="nav-link"
+					href="tipBoardMainPage.tip">팁 </a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="stylingBoard.style">스타일링</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
+			</ul>
+		</div>
 </nav>
 
 <!-- 알람 정보 -->
@@ -445,21 +445,20 @@ background-color: #f4f4f4;
 		<!--Content-->
 		<div class="modal-content" id="modal-content" style="height: 100%;">
 			<!--Header-->
-			<div class="modal-header" id="message-header">
-			
-			
-			</div>
+			<div class="modal-header" id="message-header"></div>
 
 			<!--Body-->
 			<div class="modal-body message-list"
-				style="overflow: auto; padding-top: 10px; padding-bottom: 10px;"id="modal-body"></div>
+				style="overflow: auto; padding-top: 10px; padding-bottom: 10px;"
+				id="modal-body"></div>
 			<!--Footer-->
-			
-				<textarea class="form-control rounded-0"
-					id="exampleFormControlTextarea2" rows="3"
-					style="margin: 0xp; padding: 0px; max-height: 94px; z-index: 100000;"></textarea>
-				
-					<a style="right: 10px;font-size: 20px;" id="sendMessage"><i class="fa fa-send" style="float:right;"></i></a>		
+
+			<textarea class="form-control rounded-0"
+				id="exampleFormControlTextarea2" rows="3"
+				style="margin: 0xp; padding: 0px; max-height: 94px; z-index: 100000;"></textarea>
+
+			<a style="right: 10px; font-size: 20px;" id="sendMessage"><i
+				class="fa fa-send" style="float: right;"></i></a>
 		</div>
 		<!--/.Content-->
 	</div>
@@ -513,7 +512,7 @@ background-color: #f4f4f4;
 			$("#searchIcon").toggle("fast");
 			$("#searchinput").toggle("slow");
 		} else {
-			location.href = "searchWord.se?word="+input;
+			location.href = "searchWord.se?word=" + input;
 		}
 	});
 
@@ -568,75 +567,79 @@ background-color: #f4f4f4;
 	};
 
 	$("#tooltip2").click(function() {
-		
-			$.ajax({
-				 url :"userList.ajax",
-				 type:"post",
-				 data:{
-					seq:"${sessionScope.user.seq}"
-				 },
-				 success: function(data){
-					 console.log(data);
-					 showUserList(data); 
-				 }
-			});		
-			$("#tooltip2").attr("data-toggle",'modal');
-			$("#tooltip2").attr("data-target",'#modalPoll');
+
+		$.ajax({
+			url : "userList.ajax",
+			type : "post",
+			data : {
+				seq : "${sessionScope.user.seq}"
+			},
+			success : function(data) {
+				console.log(data);
+				showUserList(data);
+			}
+		});
+		$("#tooltip2").attr("data-toggle", 'modal');
+		$("#tooltip2").attr("data-target", '#modalPoll');
 
 	});
-	
-	function showUserList(data){
-		var userlist="";
+
+	function showUserList(data) {
+		var userlist = "";
 		var listget = $("#user_list").text();
 		console.log(listget);
-		$.each(data.list,function(index,item){			
-			if(listget==""){
-			userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">' ;
-			 userlist += '<img src="/upload/profile"'+item.photo+'alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'; 
-			userlist += '<div class="text-md-left align-middle">';
-			userlist += '<strong>'+item.name+'</strong>';
-			userlist += '<p class="last-message text-muted">'+item.contents+'</p>';
-			userlist += '</div>';
-			userlist += '<div class="chat-footer">';
-			userlist += '<p class="text-smaller text-muted mb-0">'+item.time+'</p>';
-			userlist += '<span class="text-muted float-right">';
-			userlist += '<i class="fa fa-mail-reply" aria-hidden="true"></i></span>';
-			userlist += '</div>'	;
-			userlist += '</a></li>';
-			}
-			$("#user_list").prepend(userlist);
-		});
+		$
+				.each(
+						data.list,
+						function(index, item) {
+							if (listget == "") {
+								userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">';
+								userlist += '<img src="/upload/profile"'+item.photo+'alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">';
+								userlist += '<div class="text-md-left align-middle">';
+								userlist += '<strong>' + item.name
+										+ '</strong>';
+								userlist += '<p class="last-message text-muted">'
+										+ item.contents + '</p>';
+								userlist += '</div>';
+								userlist += '<div class="chat-footer">';
+								userlist += '<p class="text-smaller text-muted mb-0">'
+										+ item.time + '</p>';
+								userlist += '<span class="text-muted float-right">';
+								userlist += '<i class="fa fa-mail-reply" aria-hidden="true"></i></span>';
+								userlist += '</div>';
+								userlist += '</a></li>';
+							}
+							$("#user_list").prepend(userlist);
+						});
 	};
-		var messageReset =0;
-	$(document).on("click",".modal-list",function(){
-		var listseq =$(this).attr("seq");
+	var messageReset = 0;
+	$(document).on("click", ".modal-list", function() {
+		var listseq = $(this).attr("seq");
 		console.log(listseq);
-	/* 	$(".modal-list").attr("data-toggle","modal");
-		$(".modal-list").attr("data-target","#centralModalSuccess"); */
-		
-	
+		/* 	$(".modal-list").attr("data-toggle","modal");
+			$(".modal-list").attr("data-target","#centralModalSuccess"); */
+
 		$.ajax({
-		    url :"messageUser.ajax",
-		    type: "post",
-		    data: {
-		    	seq :listseq
-		    },
-		    success : function(data){
-		     	
-		   	  showMessageUser(data);
-		   	 if(messageReset==0){		   	  
-		   	 $("#modal-body").text("");	
-		   	  showMessageList(data);
-		   	  messageReset =0;
-		   	 }
-		   	 	console.log(messageReset);
-		   	console.log(data.message[0].contents);
-		   	console.log(data.message[1].contents);
-		 
-		    }
+			url : "messageUser.ajax",
+			type : "post",
+			data : {
+				seq : listseq
+			},
+			success : function(data) {
+
+				showMessageUser(data);
+				if (messageReset == 0) {
+					$("#modal-body").text("");
+					showMessageList(data);
+					messageReset = 0;
+				}
+				console.log(messageReset);
+				console.log(data.message[0].contents);
+				console.log(data.message[1].contents);
+
+			}
 		});
-	 	
-		
+
 	});
 
 	function toggleTooltip() {
@@ -662,7 +665,6 @@ background-color: #f4f4f4;
 		$("#notification-counter").hide();
 	};
 
-	
 	$(document).on(
 			'click',
 			".notification-item",
@@ -675,59 +677,59 @@ background-color: #f4f4f4;
 						"readSocial.go?seq=" + seq + "&noti_seq=" + noti_seq);
 
 			});
-	
+
 	// 검색창에서 enter 입력시 실행
 	$("#searchinput").keypress(function(e) {
-		if(e.keyCode == 13){
-			location.href = "searchWord.se?word="+$(this).val();
+		if (e.keyCode == 13) {
+			location.href = "searchWord.se?word=" + $(this).val();
 		}
 	});
-	
-	$("#sendMessage").click(function(){
+
+	$("#sendMessage").click(function() {
 		var message = $("#exampleFormControlTextarea2").val();
-		if(message != ""){
-		 ws.send(message);
-		 $.ajax({
-			 url :"sendMessage.ajax",
-			 type:"post",
-			 data:{
-				 message:message,
-				 message_user_seq: message_user_seq
-			 },
-			 success: function(data){
-				 if(data >0){
-				 console.log("입력완료");
-				 }else{
-					 console.log("실패");
-				 }
-			 }
-		 });	 	 
+		if (message != "") {
+			ws.send(message);
+			$.ajax({
+				url : "sendMessage.ajax",
+				type : "post",
+				data : {
+					message : message,
+					message_user_seq : message_user_seq
+				},
+				success : function(data) {
+					if (data > 0) {
+						console.log("입력완료");
+					} else {
+						console.log("실패");
+					}
+				}
+			});
 		}
 	});
-	$("#exampleFormControlTextarea2").keydown(function(key){
-		if(key.keyCode ==13){
+	$("#exampleFormControlTextarea2").keydown(function(key) {
+		if (key.keyCode == 13) {
 			var message = $("#exampleFormControlTextarea2").val();
-			var message_user_seq =$(".heading-name").attr("seq");
+			var message_user_seq = $(".heading-name").attr("seq");
 			console.log(message_user_seq);
-			if(message != ""){
+			if (message != "") {
 				console.log("여기는 들어옴");
-			 socket.send(message);
-			 $.ajax({
-				 url :"sendMessage.ajax",
-				 type:"post",
-				 data:{
-					 message:message,
-					 message_user_seq: message_user_seq
-				 },
-				 success: function(data){
-					 if(data >0){
-					 console.log("입력완료");
-					 }else{
-						 console.log("실패");
-					 }
-				 }
-			 });
-			 
+				socket.send(message);
+				$.ajax({
+					url : "sendMessage.ajax",
+					type : "post",
+					data : {
+						message : message,
+						message_user_seq : message_user_seq
+					},
+					success : function(data) {
+						if (data > 0) {
+							console.log("입력완료");
+						} else {
+							console.log("실패");
+						}
+					}
+				});
+
 			}
 		}
 	});
@@ -738,11 +740,10 @@ background-color: #f4f4f4;
 				"ws://localhost:8080/socket?seq=${sessionScope.user.seq}");
 		var str;
 		var file = ""
-			socket.onopen = function() {
-		
-			};
-			socket.onmessage = function(msg) {
-		
+		socket.onopen = function() {
+
+		};
+		socket.onmessage = function(msg) {
 
 			console.log(msg);
 		};
@@ -752,42 +753,44 @@ background-color: #f4f4f4;
 
 	}
 
-	
-	
-	function showMessageList(data){
-		var list ="";
-		var sessionSeq = "${sessionScope.user.seq}"	
-	
-	
-		$.each(data.message,function(index,item){
-		
-			if(item.user_seq == sessionSeq){
-				list = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
-			}else{
-				list = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
-			}
-			 $("#modal-body").append(list);
-			
-		});
-	
-	}; 
-	 
-	function showMessageUser(data){
-		var user ="";
-	
-	 	$.each(data.user,function(index,item){
-							
-		user = '<img src="/upload/profile/"'+item.photo+'"alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'
-		user += '<p class="heading lead heading-name" seq="'+item.seq+'">'+item.name+'</p>'; 
-		user+=	'<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-		user+=	'<span aria-hidden="true" class="white-text">&times;</span>'
-			user+='	</button>'
-		});	
-	 	$("#message-header").html(user);  
-		
-	}; 
+	function showMessageList(data) {
+		var list = "";
+		var sessionSeq = "${sessionScope.user.seq}"
 
-	
-	
-	
+		$
+				.each(
+						data.message,
+						function(index, item) {
+
+							if (item.user_seq == sessionSeq) {
+								list = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'
+										+ item.contents + '</p></div>'
+							} else {
+								list = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'
+										+ item.contents + '</p></div>'
+							}
+							$("#modal-body").append(list);
+
+						});
+
+	};
+
+	function showMessageUser(data) {
+		var user = "";
+
+		$
+				.each(
+						data.user,
+						function(index, item) {
+
+							user = '<img src="/upload/profile/"'+item.photo+'"alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'
+							user += '<p class="heading lead heading-name" seq="'+item.seq+'">'
+									+ item.name + '</p>';
+							user += '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+							user += '<span aria-hidden="true" class="white-text">&times;</span>'
+							user += '	</button>'
+						});
+		$("#message-header").html(user);
+
+	};
 </script>

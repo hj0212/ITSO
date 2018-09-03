@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html >
 <html>
 <head>
@@ -62,18 +64,25 @@ img {
 	<!-- navi -->
 	<%@include file="navi.jsp"%>
 	<!-- body -->
-	<table class="container">
+	<table class="container mt-4">
 		<tr>
 			<td>
-				<h1>${tipContent.tip_title}</h1>
+				<h1 class="mr-2" style="display:inline-block;">${tipContent.tip_title}</h1> by 
+				 <span>${tipContent.name}</span><input id="tip_writer" type="hidden"
+				value="${tipContent.tip_writer}">
 		</tr>
 		<tr>
-			<td><span id="tip_seq">${tipContent.tip_seq}</span> <span>${tipContent.category}</span>
-				<span> <i id="category-mark"></i>
-			</span> <span> <i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}</span>
-				<input id="tip_writer" type="hidden"
-				value="${tipContent.tip_writer}"> <span>${tipContent.name}</span>
-				<span>${tipContent.tip_date}</span>
+			<td>no.<span id="tip_seq">${tipContent.tip_seq}</span> 
+			
+				<span><i class="fa fa-clock-o mr-1" aria-hidden="true"></i> <fmt:formatDate type="both"
+						value="${tipContent.tip_date}"></fmt:formatDate>
+			</span>
+			
+			<span>
+			<i class="fa fa-tags" aria-hidden="true"></i>
+			${tipContent.category}
+			</span>
+				<span><i class="fa fa-eye" aria-hidden="true"></i>${tipContent.tip_viewcount}</span>
 		</tr>
 		<tr>
 			<td><div class="container">${tipContent.tip_contents}</div></td>
