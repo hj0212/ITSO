@@ -50,6 +50,23 @@ body {
 	src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
 }
 
+@media ( max-width : 991px) {
+	.topbtns {
+		display: block;
+		text-align: center;
+	}
+}
+
+@media ( min-width : 576px) and (max-width: 767px) {
+	.topbtns {
+		display: block;
+	}
+	.media-image, .media-body{
+		display:block;
+		width:100%;
+	}
+}
+
 #wrapper {
 	width: 100%;
 }
@@ -92,13 +109,11 @@ input[type="file"] {
 	color: white;
 	text-align: center;
 }
-.settxt{
-font-size:15px;
+
+.settxt {
+	font-size: 15px;
 }
 
-.media-img {
-	
-}
 </style>
 
 </head>
@@ -109,10 +124,28 @@ font-size:15px;
 	<div class="row my-5"></div>
 	<div id="wrapper" class="container-fluid col-md-8">
 		<div>
-		<h4>투표
-			&nbsp;<span class="text-muted text-sm settxt"><i class="fa fa-bar-chart" aria-hidden="true"></i>${votedto.voter}명 참여중 </span>
-			 &nbsp;<span class="text-muted text-sm settxt"><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${votedto.styling_viewcount}</span>
-			
+			<h4>
+				투표 &nbsp;<span class="text-muted text-sm settxt"><i
+					class="fa fa-bar-chart mr-1 " aria-hidden="true"></i>${votedto.voter}명
+					참여중 </span> &nbsp;<span class="text-muted text-sm settxt"><i
+					class="fa mr-1 fa-eye" aria-hidden="true"></i>${votedto.styling_viewcount}</span>
+				<c:choose>
+					<c:when test="${votedto.styling_end eq 1}">
+			&nbsp;<span class="text-muted text-sm settxt"><i
+							class="fa fa-hourglass-end mr-1 " aria-hidden="true"></i>종료까지
+							${votedto.ddate}일 </span>
+					</c:when>
+					<c:when test="${votedto.styling_end eq 2}">
+			&nbsp;<span class="text-muted text-sm settxt"><i
+							class="fa fa-hourglass-end mr-1 " aria-hidden="true"></i>종료까지
+							${votedto.dnum}명 </span>
+					</c:when>
+					<c:when test="${votedto.styling_end eq 3}">
+			&nbsp;<span class="text-muted text-sm settxt"><i
+							class="fa fa-hourglass-end mr-1 " aria-hidden="true"></i>종료 없음 </span>
+					</c:when>
+				</c:choose>
+			</h4>
 			<script>
 				console.log("${sessionScope.user.seq}");
 			</script>
@@ -123,145 +156,146 @@ font-size:15px;
 				console.log("투표여부:${didVote}");
 				console.log("종료여부:${votestate}")
 			</script>
-
+			
+			<div class="topbtns">
 			<c:if test="${sessionScope.user.seq eq votedto.styling_writer}">
-			<c:choose>
-			<c:when test="${votedto.voter eq 0 and votestate eq 'ing'}">
-				<button class="btn btn-indigo btn-md float-right" type="button"
-					id="modibtn">글 수정</button>
-				<button class="btn btn-indigo btn-md float-right" type="button"
-					id="delbtn">글 삭제</button>
-			</c:when>
-			<c:when test="${votedto.voter > 0}">
-				<button class="btn btn-indigo btn-md float-right" type="button"
-					id="delbtn">글 삭제</button>
-			</c:when>
-			<c:when test="${votedto.voter eq 0 and votestate eq 'done'}">			
-				<button class="btn btn-indigo btn-md float-right" type="button"
-					id="delbtn">글 삭제</button>
-			</c:when>
-			</c:choose>
 				
+					<c:choose>
+						<c:when test="${votedto.voter eq 0 and votestate eq 'ing'}">
+							<button class="btn btn-indigo btn-md float-right"
+								type="button" id="modibtn">글 수정</button>
+							<button class="btn btn-indigo btn-md float-right"
+								type="button" id="delbtn">글 삭제</button>
+						</c:when>
+						<c:when test="${votedto.voter > 0}">
+							<button class="btn btn-indigo btn-md float-right"
+								type="button" id="delbtn">글 삭제</button>
+						</c:when>
+						<c:when test="${votedto.voter eq 0 and votestate eq 'done'}">
+							<button class="btn btn-indigo btn-md float-right"
+								type="button" id="delbtn">글 삭제</button>
+						</c:when>
+					</c:choose>
 			</c:if>
 			<c:choose>
 				<c:when test="${didVote eq 0 && votestate eq 'ing'}">
-					<button class="btn btn-indigo btn-md float-right" type="button"
-						id="votebtn">투표하기</button>
+					<button class="btn btn-indigo btn-md float-right"
+						type="button" id="votebtn">투표하기</button>
 				</c:when>
 				<c:when test="${didVote >= 1 && votestate eq 'ing'}">
-					<button class="btn btn-indigo btn-md float-right" type="button"
-						id="votebtn" disabled>투표완료</button>
+					<button class="btn btn-indigo btn-md float-right"
+						type="button" id="votebtn" disabled>투표완료</button>
 				</c:when>
 				<c:when test="${didVote eq 0 && votestate eq 'done'}">
-					<button class="btn btn-indigo btn-md float-right" type="button"
-						id="votebtn" disabled>투표종료</button>
+					<button class="btn btn-indigo btn-md float-right"
+						type="button" id="votebtn" disabled>투표종료</button>
 				</c:when>
 				<c:when test="${didVote >= 1 && votestate eq 'done'}">
-					<button class="btn btn-indigo btn-md float-right" type="button"
-						id="votebtn" disabled>투표종료</button>
+					<button class="btn btn-indigo btn-md float-right"
+						type="button" id="votebtn" disabled>투표종료</button>
 				</c:when>
-			</c:choose>		
+			</c:choose>
+		</div>
 		<input type="hidden" id="sequenceId"
 			value="${votedto.styling_vote_seq}">
-		 </h4>
+
+	</div>
+
+	<hr />
+	<div class="row my-2">
+		<div class="md-form form-lg col-4 mx-0">
+			<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
+				alt="사진 없음" id="votetitleimg" style="width: 100%">
 		</div>
-		
+		<div class="md-form form-lg col-7 offset-md-5 mx-0">
+			<h4>투표주제: ${votedto.styling_title}</h4>
+			<h6>작성자: ${votedto.styling_writername}</h6>
+			<p>" ${votedto.styling_contents} "</p>
+		</div>
+	</div>
+	<div class="row">
 		<hr />
-		<div class="row my-2">
-			<div class="md-form form-lg col-4 mx-0">
-				<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
-					alt="사진 없음" id="votetitleimg" style="width: 100%">
-			</div>
-			<div class="md-form form-lg col-7 offset-md-5 mx-0">
-				<h4>투표주제: ${votedto.styling_title}</h4>
-				<h6>작성자: ${votedto.styling_writername}</h6>
-				<p>" ${votedto.styling_contents} "</p>
-			</div>
-		</div>
-		<div class="row">
-			<hr />
-		</div>
-		<div class="row">
-			<div class="md-form form-lg col-md-12 my-2">
-				<table class="table table-borderless">
-					<thead>
+	</div>
+	<div class="row">
+		<div class="md-form form-lg col-md-12 my-2">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th scope="col" style="width: 10%">아이템</th>
+						<th scope="col" style="width: 70%">아이템 소개</th>
+						<th scope="col" style="width: 20%" class="text-center">결과</th>
+					</tr>
+				</thead>
+				<tbody id="itemlist">
+					<c:forEach var="svitemdto" items="${voteitems}" varStatus="status">
+
+
 						<tr>
-							<th scope="col" style="width: 10%">아이템</th>
-							<th scope="col" style="width: 70%">아이템 소개</th>
-							<th scope="col" style="width: 20%" class="text-center">결과</th>
-						</tr>
-					</thead>
-					<tbody id="itemlist">
-						<c:forEach var="svitemdto" items="${voteitems}" varStatus="status">
-							
-							
-							<tr>
-								<th scope="col">
-									<div class="custom-control custom-radio"
-										id="test${status.index}">
-										 ${svitemdto.styling_vote_item_seq}
-										<input type="radio" class="custom-control-input"
-											id="defaultGroupExample${status.index}"
-											name="styling_votesel"
-											value="${svitemdto.styling_vote_item_seq}"> <span
-											class="custom-control" for="test${status.index}"> </span> <label
-											class="custom-control-label"
-											for="defaultGroupExample${status.index}"></label>
+							<th scope="col">
+								<div class="custom-control custom-radio"
+									id="test${status.index}">
+
+									<input type="radio" class="custom-control-input"
+										id="defaultGroupExample${status.index}" name="styling_votesel"
+										value="${svitemdto.styling_vote_item_seq}"> <span
+										class="custom-control" for="test${status.index}"> </span> <label
+										class="custom-control-label"
+										for="defaultGroupExample${status.index}"></label>
+								</div>
+							</th>
+							<td>
+								<div class="media">
+									<div class="media-img col-5">
+										<img
+											class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
+											style="width: 90%"
+											src="upload/stylingvote/${svitemdto.styling_vote_item_photo}"
+											alt="후보사진">
 									</div>
-								</th>
-								<td>
-									<div class="media">
-										<div class="media-img col-5">
-											<img
-												class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
-												style="width: 90%"
-												src="upload/stylingvote/${svitemdto.styling_vote_item_photo}"
-												alt="후보사진">
-										</div>
 
-										<div class="media-body image-upload-wrap form-group col-5"
-											id="btnsdiv">
+									<div class="media-body image-upload-wrap form-group col-5"
+										id="btnsdiv">
 
-											<div class="md-form form-sm">
-												<p>${svitemdto.styling_vote_item_contents}</p>
-											</div>
+										<div class="md-form form-sm">
+											<p>${svitemdto.styling_vote_item_contents}</p>
 										</div>
 									</div>
-								</td>
-								<td class="text-center">									
-										<c:choose>
-										<c:when test="${not empty voteresults}">								
-											<c:forEach var="item" items="${voteresults}">
-												<c:if test="${svitemdto.styling_vote_item_seq eq item.vote_value}">
+								</div>
+							</td>
+							<td class="text-center"><c:choose>
+									<c:when test="${not empty voteresults}">
+										<c:forEach var="item" items="${voteresults}">
+											<c:if
+												test="${svitemdto.styling_vote_item_seq eq item.vote_value}">
 												<div class="progress">
-													<div class="progress-bar" style="width:${item.eachrate}%" role="progressbar">
-													</div>
+													<div class="progress-bar" style="width:${item.eachrate}%"
+														role="progressbar"></div>
 												</div>
-												<a class="text-muted">${item.eachcount}명 (${item.eachrate}%)</a>
-												</c:if>
-											</c:forEach>
-										</c:when>
-										<%--   <c:otherwise>
+												<a class="text-muted">${item.eachcount}명
+													(${item.eachrate}%)</a>
+											</c:if>
+										</c:forEach>
+									</c:when>
+									<%--   <c:otherwise>
 										<div class="progress">
 											<div class="progress-bar" style="width:0%" role="progressbar"></div>
 										</div>
 										<a class="text-muted">0명 (0%)</a>
-										</c:otherwise>	 	 --%>							
-										</c:choose>	 															
-								</td>
-							</tr>
-						</c:forEach>
+										</c:otherwise>	 	 --%>
+								</c:choose></td>
+						</tr>
+					</c:forEach>
 
-					</tbody>
-				</table>
-			</div>
+				</tbody>
+			</table>
 		</div>
-		<div class="row"></div>
+	</div>
+	<div class="row"></div>
 
-		<div class="col-md-2 offset-md-10">
-			<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1"
-				aria-hidden="true"></i></a>
-		</div>
+	<div class="col-md-2 offset-md-10">
+		<a id="MOVE_TOP_BTN" href="#"><i class="fa fa-arrow-up my-1"
+			aria-hidden="true"></i></a>
+	</div>
 	</div>
 	<!-- JQuery -->
 	<script type="text/javascript"

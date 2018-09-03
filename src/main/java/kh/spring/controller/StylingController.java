@@ -120,13 +120,13 @@ public class StylingController {
 	}
 
 	@RequestMapping("/modifyStylingVote.go")
-	public ModelAndView gomodifyStylingVote(HttpSession session, @RequestParam int styling_vote_seq) {
+	public ModelAndView gomodifyStylingVote(HttpSession session, @RequestParam int styling_vote_seq, @RequestParam("state")String state) {
 		ModelAndView mav = new ModelAndView();
 
 		StylingVoteDTO votedto = styservice.selectStylingVote(styling_vote_seq);
 		List<StylingVoteItemDTO>svitemdtos = styservice.selectStylingVoteItem(styling_vote_seq);
 
-
+		mav.addObject("state",state);
 		mav.addObject("voteitems",svitemdtos);
 		mav.addObject("votedto",votedto);
 		mav.setViewName("modiStylingVote.jsp");
@@ -148,10 +148,11 @@ public class StylingController {
 
 	
 	@RequestMapping("/modifyStylingVote.style")
-	public ModelAndView modifyStylingVote(HttpSession session, @RequestParam("styling_endtermtxt") String styling_endtermtxt, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("voteitemori[]")List<String> oriconts, @RequestParam("voteitemnew[]")List<String> newconts, @RequestParam("deletedsvitem[]")List<String> delseqs, @RequestParam("itemphotos[]")List<String> svitemphotos) {
+	public ModelAndView modifyStylingVote(HttpSession session, @RequestParam("styling_endtermtxt") String styling_endtermtxt, StylingVoteDTO svdto, int styling_vote_seq, @RequestParam("titlefile")MultipartFile titlefile, @RequestParam("state")String state, @RequestParam("voteimgfile[]")List<MultipartFile>uploadfiles, @RequestParam("voteitemori[]")List<String> oriconts, @RequestParam("voteitemnew[]")List<String> newconts, @RequestParam("deletedsvitem[]")List<String> delseqs, @RequestParam("itemphotos[]")List<String> svitemphotos) {
 		ModelAndView mav = new ModelAndView();
 		System.out.println("------------------------------modiCtrl");		
 		System.out.println(svitemphotos.size()+":원래사진 개수");
+		System.out.println(state);
 		String path = session.getServletContext().getRealPath("/")+"upload/stylingvote";
 		System.out.println(styling_vote_seq+"번 글 수정 Ctrl");
 		System.out.println(svdto.getPhoto()+":이건 원래 있던 포토");
@@ -275,7 +276,7 @@ public class StylingController {
 			}		*/
 		}
 			
-		mav.setViewName("readStylingVote.style?styling_vote_seq="+styling_vote_seq);
+		mav.setViewName("readStylingVote.style?styling_vote_seq="+styling_vote_seq+"&state="+state);
 		return mav;
 	}
 	/*@RequestMapping("/readStylingVote.go")
