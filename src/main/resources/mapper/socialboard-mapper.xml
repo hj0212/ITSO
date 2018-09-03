@@ -142,4 +142,8 @@ where su.social_writer in (select following_seq from follow where USER_SEQ = #{u
 	<select id="searchedTagSocialList" resultType="sdto" parameterType="String">
 		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u, social_hash_tag sht where s.social_writer = u.seq and s.social_seq = sht.social_seq	and sht.social_hash_tag_contents like '%'||#{0}||'%'
 	</select>
+	
+	<select id="searchedBrandList" resultType="sdto" parameterType="String">
+		select  s.*, u.name writerName, u.photo user_photo, u.state userState from social s,users u where s.social_seq IN (select social_seq from social_tag where tag_brand like '%'||#{0}||'%' or tag_store like '%'||#{0}||'%') and s.social_writer = u.seq
+	</select>
 </mapper>

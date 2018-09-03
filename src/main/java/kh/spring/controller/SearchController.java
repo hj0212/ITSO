@@ -53,16 +53,23 @@ public class SearchController {
 			List<CollectionDTO> searchedCollectionList = null;
 			List<SocialBoardDTO> searchedPhotoList = null;
 			
+			List<SocialBoardDTO> brandList = null; 
+			
 			List<Integer> ggdto = new ArrayList<>();
 			List<MemberDTO> mdto = new ArrayList<>();
+			
+			List<Integer> ggdto2 = new ArrayList<>();
+			List<MemberDTO> mdto2 = new ArrayList<>();
 			
 			if(!word.trim().equals("")) {
 				userList = this.service.getSearchedUserList(word);
 				tipList = this.tipService.getSearchedTipList(word);
 				result = this.socialService.getsearchedTagSocialList(word);
+				brandList = this.socialService.getSearchedBrandList(word);
+				
 				searchedCollectionList = this.socialService.getSearchedCollectionList(word);
 				searchedPhotoList = this.socialService.getSearchedCollectionPhotoList(word);
-
+				
 				for(SocialBoardDTO sdd : result) {	
 					GoodDTO gdto = new GoodDTO(sdd.getSocial_seq());
 					MemberDTO mom =  new MemberDTO(sdd.getSocial_seq()); 
@@ -71,11 +78,24 @@ public class SearchController {
 					/*System.out.println(ggdto);*/
 				}
 				
+				for(SocialBoardDTO sdd2 : brandList) {
+					GoodDTO gdto2 = new GoodDTO(sdd2.getSocial_seq());
+					MemberDTO mom2 = new MemberDTO(sdd2.getSocial_seq());
+					ggdto2.add(this.socialService.allGoodCount(gdto2));
+					mdto2.addAll(this.mService.getUserData(mom2));
+				}
+				
 				List<Integer> goodCount = new ArrayList<>();
 				for(SocialBoardDTO sdd : result) {
 					GoodDTO gdto = new GoodDTO(sdd.getSocial_seq(),writer.getSeq());
 					goodCount.add(this.socialService.selectGoodCount(gdto));
 					/*System.out.println("goodCount"+goodCount);*/
+				}
+				
+				List<Integer> goodCount2 = new ArrayList<>();
+				for(SocialBoardDTO sdd2 : brandList) {
+					GoodDTO gdto2 = new GoodDTO(sdd2.getSocial_seq(), writer.getSeq());
+					goodCount.add(this.socialService.selectGoodCount(gdto2));
 				}
 				
 				List<CollectionDTO> collectionList = this.socialService.getCollectionList((MemberDTO)request.getSession().getAttribute("user"));
@@ -89,12 +109,20 @@ public class SearchController {
 				mav.addObject("photoList",photoList);
 				mav.addObject("goodList", goodList);
 				mav.addObject("followingList", followingList);
+				
 				mav.addObject("goodCount",goodCount);
 				mav.addObject("heart",ggdto);
+				
+				mav.addObject("goodCount2", goodCount2);
+				mav.addObject("heart2", ggdto2);
+				
 				mav.addObject("userList", userList);
 				mav.addObject("tipList", tipList);
-				mav.addObject("socialList",result);
 				mav.setViewName("searchResults.jsp");
+				
+				mav.addObject("socialList",result);
+				mav.addObject("brandList", brandList);
+				
 			}
 		}catch(NotLoginException e) {
 			mav.setViewName("login.go");
