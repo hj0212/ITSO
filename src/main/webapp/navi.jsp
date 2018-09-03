@@ -574,9 +574,9 @@ background-color: #f4f4f4;
 						function(index, item) {
 							if (item.user_seq == sessionSeq) {
 								if (item.noti_read == 'y') {
-									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"' go='"+item.noti_url+"'>"
 								} else {
-									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"' go='"+item.noti_url+"'>"
 								}
 								notItem += "<div class='img-left'>";
 								notItem += "<img src='/upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
@@ -705,12 +705,13 @@ background-color: #f4f4f4;
 			'click',
 			".notification-item",
 			function() {
-				console.log($(this).attr("id"));
+			/* 	console.log($(this).attr("id"));
 				console.log($(this).attr("seq"));
 				var seq = $(this).attr("seq");
-				var noti_seq = $(this).attr("id");
+				var noti_seq = $(this).attr("id"); */
+				var noti_url = $(this).attr("go");
 				$(location).attr("href",
-						"readSocial.go?seq=" + seq + "&noti_seq=" + noti_seq);
+						noti_url);
 
 			});
 	

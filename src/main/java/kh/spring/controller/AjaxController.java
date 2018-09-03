@@ -97,9 +97,11 @@ public class AjaxController {
 			if(user_seq == sessionSeq) {
 				NotificationDTO ndto = new NotificationDTO(sessionSeq);
 				List<NotificationDTO> notiList = this.noservice.selectNotification(ndto);
+				
 				ObjectMapper mapper = new ObjectMapper();	
 
-				String jsonString = mapper.writeValueAsString(notiList);					
+				String jsonString = mapper.writeValueAsString(notiList);	
+				System.out.println(jsonString.toString());
 				return jsonString;
 
 			}
@@ -227,7 +229,7 @@ public class AjaxController {
 			int insert = sbService.insertGoodCount(gdto);
 
 			if(user_seq != social_writer) {
-				NotificationDTO nodto = new NotificationDTO(social_writer,user_seq,"good","좋아요를 눌렀습니다.","n","아무거나",social_seq);
+				NotificationDTO nodto = new NotificationDTO(social_writer,user_seq,"good","좋아요를 눌렀습니다.","n","readSocial.go?seq="+social_writer+"&noti_seq="+social_seq,social_seq);
 				List<NotificationDTO> data = noservice.notificationData(nodto);
 
 
@@ -334,10 +336,24 @@ public class AjaxController {
 			int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 			dto.setUser_seq(user_seq);
 			dto.setFollowing_seq(seq);
+			
+			if(user_seq != seq) {
+				NotificationDTO nodto = new NotificationDTO(seq,user_seq,"follow","팔로우를 하였습니다","n","userpage.go?seq="+user_seq,seq);
+				List<NotificationDTO> data = noservice.notificationData(nodto);
+				if(data.size()==0) {
+					int noInsert = noservice.insertNotification(nodto);
+					NotificationDTO list = noservice.selectNotification(nodto).get(0);
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonString = mapper.writeValueAsString(list);
+					EchoHandler.users.get(nodto.getUser_seq()).getBasicRemote().sendText(jsonString);
+				}
+			
+			}
 		}catch(Exception e) {
 			System.out.println("로그인x");
 		}
-
+		
+		
 
 		System.out.println("text:" + text);
 		String resultmsg = "";
@@ -350,6 +366,8 @@ public class AjaxController {
 			resultmsg = result>0?"팔로우성공":"팔로우실패";
 			System.out.println(resultmsg);
 		}
+		
+
 		return resultmsg;
 	}
 
