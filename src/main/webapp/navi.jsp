@@ -18,6 +18,28 @@
 	font: 8px Verdana;
 	background-color: rgba(212, 19, 13, 1);
 }
+.msg-user-count {
+	
+	
+	background-color: rgba(212, 19, 13, 1);
+	color: #fff;
+	border-radius: 3px;
+	padding: 1px 3px;
+	font: 8px Verdana;
+	background-color: rgba(212, 19, 13, 1);
+}
+
+.message-counter {
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	background-color: rgba(212, 19, 13, 1);
+	color: #fff;
+	border-radius: 3px;
+	padding: 1px 3px;
+	font: 8px Verdana;
+	background-color: rgba(212, 19, 13, 1);
+}
 
 @font-face {
 	font-family: 'NanumbarunpenR';
@@ -292,7 +314,8 @@ background-color: #f4f4f4;
 
 			<li class="nav-item" id="tooltip2"><a
 				class="nav-link waves-effect waves-light"> <i
-					class="fa fa-envelope"></i> 메시지
+					class="fa fa-envelope"></i> 메시지<span class="message-counter"
+					id="message-counter">NEW</span>
 			</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
@@ -513,6 +536,7 @@ background-color: #f4f4f4;
 
 	$("#tooltip").click(function() {
 		var seq = "${sessionScope.user.seq}"
+	
 		console.log(seq);
 		let contents = document.getElementById("notification-info");
 
@@ -523,7 +547,12 @@ background-color: #f4f4f4;
 				user_seq : seq
 			},
 			success : function(data) {
+				
+				$("#notification_list").html("");
 				showNotification(data);
+			
+					
+				
 			}
 
 		});
@@ -531,6 +560,7 @@ background-color: #f4f4f4;
 
 	function showNotification(data) {
 		var notItem = "";
+	
 		var sessionSeq = "${sessionScope.user.seq}";
 		$
 				.each(
@@ -538,9 +568,9 @@ background-color: #f4f4f4;
 						function(index, item) {
 							if (item.user_seq == sessionSeq) {
 								if (item.noti_read == 'y') {
-									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"' go='"+item.noti_url+"'>"
 								} else {
-									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"' go='"+item.noti_url+"'>"
 								}
 								notItem += "<div class='img-left'>";
 								notItem += "<img src='/upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
@@ -557,12 +587,14 @@ background-color: #f4f4f4;
 								notItem += "</div>";
 							}
 						});
+	
 		$("#notification_list").prepend(notItem).trigger("create");
 
 	};
-
+	$("#message-counter").hide();
+	
 	$("#tooltip2").click(function() {
-		
+		$("#message-counter").hide();
 			$.ajax({
 				 url :"userList.ajax",
 				 type:"post",
@@ -583,6 +615,7 @@ background-color: #f4f4f4;
 		var userlist="";
 		var listget = $("#user_list").text();
 		console.log(listget);
+		var nocount =0;
 		$.each(data.list,function(index,item){			
 			if(listget==""){
 			userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">' ;
@@ -597,17 +630,22 @@ background-color: #f4f4f4;
 			userlist += '<i class="fa fa-mail-reply" aria-hidden="true"></i></span>';
 			userlist += '</div>'	;
 			userlist += '</a></li>';
+			
+			console.log(item.time);
 			}
+		
 			$("#user_list").prepend(userlist);
+			
 		});
 	};
+
 		var messageReset =0;
 	$(document).on("click",".modal-list",function(){
 		var listseq =$(this).attr("seq");
 		console.log(listseq);
 	/* 	$(".modal-list").attr("data-toggle","modal");
 		$(".modal-list").attr("data-target","#centralModalSuccess"); */
-		
+		$(".msg-user-count").hide();
 	
 		$.ajax({
 		    url :"messageUser.ajax",
@@ -661,12 +699,13 @@ background-color: #f4f4f4;
 			'click',
 			".notification-item",
 			function() {
-				console.log($(this).attr("id"));
+			/* 	console.log($(this).attr("id"));
 				console.log($(this).attr("seq"));
 				var seq = $(this).attr("seq");
-				var noti_seq = $(this).attr("id");
+				var noti_seq = $(this).attr("id"); */
+				var noti_url = $(this).attr("go");
 				$(location).attr("href",
-						"readSocial.go?seq=" + seq + "&noti_seq=" + noti_seq);
+						noti_url);
 
 			});
 	
@@ -679,7 +718,11 @@ background-color: #f4f4f4;
 	
 	$("#sendMessage").click(function(){
 		var message = $("#exampleFormControlTextarea2").val();
+		var go="";
 		if(message != ""){
+		go = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+message+'</p></div>'
+		$("#modal-body").append(go);
+		$("#exampleFormControlTextarea2").val("");
 		 ws.send(message);
 		 $.ajax({
 			 url :"sendMessage.ajax",
@@ -702,8 +745,13 @@ background-color: #f4f4f4;
 		if(key.keyCode ==13){
 			var message = $("#exampleFormControlTextarea2").val();
 			var message_user_seq =$(".heading-name").attr("seq");
+			
+		
 			console.log(message_user_seq);
 			if(message != ""){
+				var go2 = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+message+'</p></div>'
+				$("#modal-body").append(go2);
+				$("#exampleFormControlTextarea2").val("");
 				console.log("여기는 들어옴");
 			 socket.send(message);
 			 $.ajax({
@@ -725,7 +773,7 @@ background-color: #f4f4f4;
 			}
 		}
 	});
-
+	$(".msg-user-count").hide();
 	var notificationcounter = 0;
 	if ("WebSocket" in window) {
 		var socket = new WebSocket(
@@ -736,9 +784,12 @@ background-color: #f4f4f4;
 		
 			};
 			socket.onmessage = function(msg) {
-		
-
-			console.log(msg);
+				 file = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+msg.data+'</p></div>'
+				 $("#modal-body").append(file); 
+				$("#message-counter").show();
+				$(".msg-user-count").show();
+		/* 	console.log(msg); */
+				
 		};
 
 		ws.onclose = function() {
@@ -775,7 +826,7 @@ background-color: #f4f4f4;
 		user += '<p class="heading lead heading-name" seq="'+item.seq+'">'+item.name+'</p>'; 
 		user+=	'<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
 		user+=	'<span aria-hidden="true" class="white-text">&times;</span>'
-			user+='	</button>'
+		user+='	</button>'
 		});	
 	 	$("#message-header").html(user);  
 		

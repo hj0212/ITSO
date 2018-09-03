@@ -41,6 +41,7 @@ import kh.spring.interfaces.ISocialCommentService;
 import kh.spring.interfaces.ISocialHashTagService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
+import kh.spring.websocket.EchoHandler;
 
 @Controller
 public class SocialController {
@@ -755,9 +756,10 @@ public class SocialController {
 	}
 
 	@RequestMapping("/procSocialComment.go")
-	public void procSocialComment(HttpServletRequest request, HttpServletResponse response) {
+	public void procSocialComment(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		int social_seq = Integer.parseInt(request.getParameter("seq"));
-
+		int writer_seq =Integer.parseInt(request.getParameter("writerseq"));
+		System.out.println("글작성잡니다 :"+writer_seq);
 		try {
 			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
 			String comment = request.getParameter("comment");
@@ -768,7 +770,17 @@ public class SocialController {
 			ObjectMapper om = new ObjectMapper();
 
 			ArrayNode array = om.createArrayNode();
-
+			if(writer_seq != writer) {
+				NotificationDTO nodto = new NotificationDTO(writer_seq,writer,"comment","댓글을 남겼습니다","n","readSocial.go?seq="+writer_seq+"&noti_seq="+social_seq,social_seq);
+				List<NotificationDTO> data = nosevice.notificationData(nodto);
+				if(data.size() ==0) {
+					int noInsert = nosevice.insertNotification(nodto);
+					NotificationDTO list = nosevice.selectNotification(nodto).get(0);
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonString = mapper.writeValueAsString(list);
+					EchoHandler.users.get(nodto.getUser_seq()).getBasicRemote().sendText(jsonString);
+				}
+			}
 
 			for(SocialCommentDTO dto : commentList) {
 				ObjectNode on = om.createObjectNode();
