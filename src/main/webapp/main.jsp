@@ -810,10 +810,6 @@ button.dropdown-toggle {
 		    var collection_seq = $(this).children(".collectionseq").val();
 		    console.log("collection_seq: " + collection_seq);
 		    console.log("social_seq: " + social_seq);
-		    if($("#collectionarea").hasClass("first")) {
-		    	console.log("처음");
-		    	$("#firstmsg").remove();
-		    }
 
 		    var num = $(this).find(".collectionPhotoItem").length;
 		    $.ajax({
@@ -853,12 +849,13 @@ button.dropdown-toggle {
 		    .on('click', function () {
 		        var collection_title = $("input[name='collection_title']").val();
 		        var collection_contents = $("textarea[name='collection_contents']").val();
-				
+		        
 		        if(collection_title == "") {
 		        	alert("컬렉션 이름을 입력하세요.");
 		        } else if(collection_contents == "") {
 		        	alert("컬렉션 상세 설명을 입력하세요.");
 		        } else {
+		        	
 		        $.ajax({
 		            url: "createCollection.ajax",
 		            type: "post",
@@ -869,6 +866,13 @@ button.dropdown-toggle {
 		            success: function (data) {
 		                console.log("생성" + data);
 		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
 		                $("input[name='collection_title']").val("");
 		                $("textarea[name='collection_contents']").val("");
 		                $("#createModal").hide();

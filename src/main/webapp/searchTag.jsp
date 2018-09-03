@@ -825,7 +825,13 @@ button.dropdown-toggle {
 		    .on('click', function () {
 		        var collection_title = $("input[name='collection_title']").val();
 		        var collection_contents = $("textarea[name='collection_contents']").val();
-
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
 		        $.ajax({
 		            url: "createCollection.ajax",
 		            type: "post",
@@ -836,6 +842,13 @@ button.dropdown-toggle {
 		            success: function (data) {
 		                console.log("생성" + data);
 		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
 		                $("input[name='collection_title']").val("");
 		                $("textarea[name='collection_contents']").val("");
 		                $("#createModal").hide();
@@ -854,6 +867,7 @@ button.dropdown-toggle {
 
 		            }
 		        });
+		        }
 		    });
 		$("#createModal").on('show.bs.modal', function () {
 		    $("#saveModal").hide();
@@ -868,6 +882,7 @@ button.dropdown-toggle {
 		    $(".collectionItem").removeClass("active");
 		});
 
+		</script>
 		</script>
 </body>
 
