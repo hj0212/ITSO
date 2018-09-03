@@ -7,11 +7,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>팁 보기 | ITSO</title>
 <!-- Font Awesome 4.7-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
+	rel="stylesheet">
 <style>
 .btn-itso {
 	background-color: #1B0946;
@@ -44,7 +49,7 @@
 }
 
 img {
-	width: 100%;
+	width: 85vh;
 }
 
 #comment a {
@@ -58,33 +63,29 @@ img {
 	<%@include file="navi.jsp"%>
 	<!-- body -->
 	<table class="container">
-		<c:forEach items="${tipContent}" var="tipContent">
-			<tr>
-				<td>
-					<h1>${tipContent.tip_title}</h1>
-			</tr>
-			<tr>
-				<td><span id="tip_seq">${tipContent.tip_seq}</span>
-					<span>${tipContent.category}</span>
-					<span>
-						<i id="category-mark"></i>
-					</span>
-					<span>
-						<i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}</span>
-					<input id="tip_writer" type="hidden" value="${tipContent.tip_writer}">
-					<span>${tipContent.name}</span>
-					<span>${tipContent.tip_date}</span>
-			</tr>
-			<tr>
-				<td><div class="container">${tipContent.tip_contents}</div></td>
-			</tr>
-		</c:forEach>
+		<tr>
+			<td>
+				<h1>${tipContent.tip_title}</h1>
+		</tr>
+		<tr>
+			<td><span id="tip_seq">${tipContent.tip_seq}</span> <span>${tipContent.category}</span>
+				<span> <i id="category-mark"></i>
+			</span> <span> <i class="fa fa-comment-o"></i>${tipContent.tip_viewcount}</span>
+				<input id="tip_writer" type="hidden"
+				value="${tipContent.tip_writer}"> <span>${tipContent.name}</span>
+				<span>${tipContent.tip_date}</span>
+		</tr>
+		<tr>
+			<td><div class="container">${tipContent.tip_contents}</div></td>
+		</tr>
 	</table>
 
 	<div id=reaction>
 		<button id="like-btn" class="btn white btn-sm">
 			<i class=" fa fa-heart red-text" aria-hidden="true"></i>
 		</button>
+		<button class="btn btn-itso btn-sm" data-toggle="modal"
+			data-target="#reportModal">신고</button>
 	</div>
 
 	<!-- comments -->
@@ -117,9 +118,12 @@ img {
 
 	<!-- To write reply -->
 	<div class="mt-4 container">
-		<textarea class="form-control" name="tip_comment_contents" id="tip_comment_contents" placeholder="로그인이 필요합니다."></textarea>
-		<input type="hidden" class="form-control" value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
-		<button id="insertTipCommentBtn" type="button" class="btn btn-sm btn-itso" disabled="disabled">댓글 쓰기</button>
+		<textarea class="form-control" name="tip_comment_contents"
+			id="tip_comment_contents" placeholder="로그인이 필요합니다."></textarea>
+		<input type="hidden" class="form-control"
+			value="${sessionScope.user.seq}" name="user_seq" id="user_seq">
+		<button id="insertTipCommentBtn" type="button"
+			class="btn btn-sm btn-itso" disabled="disabled">댓글 쓰기</button>
 	</div>
 
 	<!-- like btn -->
@@ -127,42 +131,161 @@ img {
 		<button class="btn btn-itso"
 			onclick="javascript:location.replace('tipBoardMainPage.tip')">돌아가기</button>
 		<input type="hidden" id="sessionUser" value="${sessionScope.user.seq}">
-		<input id="tipDeleteBtn" class="btn btn-itso" value="지우기">
-		<input id="tipModifyBtn" class="btn btn-itso"  value="바꾸기">
-
-
-
+		<input id="tipDeleteBtn" class="btn btn-itso" value="지우기"> <input
+			id="tipModifyBtn" class="btn btn-itso" value="바꾸기">
 	</div>
 
-		<script>
-//팁 삭제하기 버튼 나타나게하기
-		var tipWriter = $("#tip_writer").val();
-			var sessionUser = $("#sessionUser").val();
+	<!-- reportModal 신고-->
+	<div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead mb-0">신고</p>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						<!-- <input type="hidden" name="user_seq" value="${id}"> -->
+					</button>
+				</div>
 
-			console.log(tipWriter + " : " + sessionUser);
+				<!--Body-->
+				<div class="modal-body">
+					<div class="ex mb-3">이 글을 신고하는 이유를 선택하세요. 신고자 정보는 공개되지 않습니다.</div>
+					<div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios1" value="그냥 마음에 들지 않습니다." checked> <label
+								class="form-check-label" for="exampleRadios1"> 그냥 마음에 들지
+								않습니다. </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios2" value="스팸입니다."> <label
+								class="form-check-label" for="exampleRadios2"> 스팸입니다. </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios3" value="신체 노출, 나체 게시물 및 음란물"> <label
+								class="form-check-label" for="exampleRadios3"> 신체 노출, 나체
+								게시물 및 음란물 </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios4" value="편파적 발언 및 상징"> <label
+								class="form-check-label" for="exampleRadios4"> 편파적 발언 및
+								상징 </label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="reportreason"
+								id="exampleRadios5"> <label class="form-check-label"
+								for="exampleRadios5"> 기타 </label>
+							<div class="md-form">
+								<textarea name="report_reason" id="form7"
+									class="md-textarea form-control pt-0" rows="3" readonly></textarea>
+							</div>
 
-			console.log(sessionUser==tipWriter);
-			
-			if (sessionUser == tipWriter) {
-				$("#tipDeleteBtn").attr("type", "button");
-				$("#tipModifyBtn").attr("type", "button");
-					
+						</div>
+					</div>
+
+					<!--Footer-->
+					<div class="modal-footer justify-content-center">
+						<button class="btn btn-itso" data-dismiss="modal"
+							id="reportsubmitbtn">제출</button>
+						<button class="btn btn-outline-itso" data-dismiss="modal"
+							style="color: black;">취소</button>
+					</div>
+				</div>
+				<!--/.Content-->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$("input[name='reportreason']").click(function() {
+			var cursor = $(this).val();
+			console.log(cursor);
+			if (cursor == "on") {
+				$("#form7").attr("readonly", false);
+				$("#form7").focus();
 			} else {
-				$("#tipDeleteBtn").hide();
-				$("#tipModifyBtn").hide();
+				$("#form7").attr("readonly", true);
 			}
-		</script>
-<script>
+		})
 
-var tipSeq = $("#tip_seq").html();
-console.log(tipSeq);
+		$("#reportsubmitbtn").click(function() {
+			report_reason = $("input[name='reportreason']:checked").val();
+			var user_seq = $
+			{
+				tipContent.tip_writer
+			}
+			;
+			var board_seq = $
+			{
+				tipContent.tip_seq
+			}
+			;
 
-$("#tipModifyBtn").click(function(){
-	location.href="tipModification.go?tipSeq=" + tipSeq;
-	
-})
+			flag = true;
+			if (report_reason == "on") {
+				report_reason = $("#form7").text();
+				if (report_reason == "") {
+					flag = false;
+					console.log("기타 비어있음: " + form);
+				}
+				console.log("기타: " + form);
+			}
 
-</script>
+			if (flag) {
+				$.ajax({
+					url : "reportArticle.ajax",
+					type : "post",
+					data : {
+						report_reason : report_reason,
+						user_seq : user_seq,
+						board_seq : board_seq,
+						board : "tip"
+					},
+					success : function() {
+						console.log("성공");
+					},
+					error : function() {
+						console.log("실");
+					}
+				});
+			}
+		});
+	</script>
+
+	<script>
+		//팁 삭제하기 버튼 나타나게하기
+		var tipWriter = $("#tip_writer").val();
+		var sessionUser = $("#sessionUser").val();
+
+		console.log(tipWriter + " : " + sessionUser);
+
+		console.log(sessionUser == tipWriter);
+
+		if (sessionUser == tipWriter) {
+			$("#tipDeleteBtn").attr("type", "button");
+			$("#tipModifyBtn").attr("type", "button");
+
+		} else {
+			$("#tipDeleteBtn").hide();
+			$("#tipModifyBtn").hide();
+		}
+	</script>
+	<script>
+		var tipSeq = $("#tip_seq").html();
+		console.log(tipSeq);
+
+		$("#tipModifyBtn").click(function() {
+			location.href = "tipModification.go?tipSeq=" + tipSeq;
+
+		})
+	</script>
 	<script>
 		window.onload = function() {
 			// tip delete btn proc
@@ -224,7 +347,9 @@ $("#tipModifyBtn").click(function(){
 				let html = '<table id="comment">';
 				html += '<tbody>'
 				$
-						.each(data,function(index, item) {
+						.each(
+								data,
+								function(index, item) {
 									html += '<tr>';
 									html += '<td>';
 									html += '<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'"/>';
@@ -279,65 +404,87 @@ $("#tipModifyBtn").click(function(){
 				}
 			});
 		}
-
-			</script>
+	</script>
 
 	<script>
-			
-			$(document).ready(function(){
+		$(document)
+				.ready(
+						function() {
 
-				// 			좋아요 기능
-				var tipSeqForLike = document.getElementById("tip_seq").innerHTML;
-				var tipLikingUser = document.getElementById("user_seq").value;
+							// 			좋아요 기능
+							var tipSeqForLike = document
+									.getElementById("tip_seq").innerHTML;
+							var tipLikingUser = document
+									.getElementById("user_seq").value;
 
-				var i = 0;
+							var i = 0;
 
-				$("#like-btn").click(function() {
-					console.log("like btn clicked! " + ++i);
-					if (tipLikingUser == "") {
-						tipLikingUser = 0;
-					}
-					console.log(tipSeqForLike + ":" + tipLikingUser);
+							$("#like-btn")
+									.click(
+											function() {
+												console
+														.log("like btn clicked! "
+																+ ++i);
+												if (tipLikingUser == "") {
+													tipLikingUser = 0;
+												}
+												console.log(tipSeqForLike + ":"
+														+ tipLikingUser);
 
-					$.ajax({
-						url : "tipArticleLikeProc.tip",
-						method : "post",
-						data : {
-							"tipSeq" : tipSeqForLike,
-							"tipLikingUser" : tipLikingUser
-						},
-						success : function(data, textStatus, jqXHR) {
-							console.log("[" + data + "]");
+												$
+														.ajax({
+															url : "tipArticleLikeProc.tip",
+															method : "post",
+															data : {
+																"tipSeq" : tipSeqForLike,
+																"tipLikingUser" : tipLikingUser
+															},
+															success : function(
+																	data,
+																	textStatus,
+																	jqXHR) {
+																console.log("["
+																		+ data
+																		+ "]");
 
-							if (data == 9) {
-								alert("좋아요는 한번만 할 수 있습니다.");
+																if (data == 9) {
+																	alert("좋아요는 한번만 할 수 있습니다.");
 
-							} else if (data == 1) {
-								console.log("좋아요  + 1");
-								alert("좋아요!")
-							} else {
-								alert("좋아요 에러 발생!");
-							}
-							;
+																} else if (data == 1) {
+																	console
+																			.log("좋아요  + 1");
+																	alert("좋아요!")
+																} else {
+																	alert("좋아요 에러 발생!");
+																}
+																;
 
-						},
-						error : function(jqXHR, textStatus, errorThrown) {
-							console.log(this.textStatus + "," + this.jqXHR + ","
-									+ this.errorThrown);
-							console.log("좋아요 실패 관리자에게 문의 요망");
-						}
-					});
-			})
-			});
-			</script>
+															},
+															error : function(
+																	jqXHR,
+																	textStatus,
+																	errorThrown) {
+																console
+																		.log(this.textStatus
+																				+ ","
+																				+ this.jqXHR
+																				+ ","
+																				+ this.errorThrown);
+																console
+																		.log("좋아요 실패 관리자에게 문의 요망");
+															}
+														});
+											})
+						});
+	</script>
 
-<c:if test="${!empty sessionScope.user.seq}">
+	<c:if test="${!empty sessionScope.user.seq}">
 		<script>
-			$("#tip_comment_contents").attr("placeholder","댓글 쓰기");
-			$("#insertTipCommentBtn").attr("disabled",false);
+			$("#tip_comment_contents").attr("placeholder", "댓글 쓰기");
+			$("#insertTipCommentBtn").attr("disabled", false);
 		</script>
 	</c:if>
-	
+
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

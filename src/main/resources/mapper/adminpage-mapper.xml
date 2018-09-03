@@ -3,6 +3,8 @@
 
 <mapper namespace="adminPageSQL">
 
+
+
 <!-- genders -->
 <select id="getFemaleUserCounts" resultType="java.lang.Integer">
 select count(gender) as femaleUsers from users where gender='f'
@@ -51,5 +53,10 @@ update users set block='n' where seq=#{userSeq}
 <select id="isThisUserBlocked" resultType="java.lang.String">
 select block from users where seq=#{userSeq}
 </select>
+
+<!-- reportProc -->
+<insert id="reportProc" parameterType="AdminPageDTO">
+insert into reported_users values(#{user_seq},#{report_reason},${reporting_user})
+</insert>
 
 </mapper>

@@ -31,6 +31,12 @@ body {
 	background-color: #eeeeee;
 }
 
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
+}
+
 #wrapper div {
 	background-color: #fff;
 }
@@ -81,7 +87,7 @@ body {
 }
 
 #profilestat a.active, #tablist a.active {
-	font-weight:normal;
+	font-weight: normal;
 }
 
 #profilestat div p:first-of-type {
@@ -263,7 +269,12 @@ table .profilearea {
 }
 
 .followbtn {
-	margin-top: 12px;
+	margin-top: 6px;
+}
+
+.tip-date {
+	text-align: right;
+	width: 130px;
 }
 </style>
 
@@ -451,7 +462,7 @@ table .profilearea {
 										},
 										success : function(data) {
 											console.log("들어옴" + data), font
-													.html( data)
+													.html(data)
 										}
 									});
 								});
@@ -568,8 +579,8 @@ table .profilearea {
 						href="#followerPanel" role="tab">팔로워</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#followingPanel" role="tab">팔로잉</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#boardPanel" role="tab">게시판</a></li>
+					<!-- <li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#boardPanel" role="tab">팁 게시글</a></li> -->
 				</ul>
 
 				<!-- Tab panels -->
@@ -645,8 +656,8 @@ table .profilearea {
 																					<i class="fa fa-heart red-text heart"
 																						aria-hidden="true"
 																						style="float: left; font-size: 25px;"
-																						value="${list.social_seq}"> <font color="black">
-																							${good.good_count } </font></i>
+																						value="${list.social_seq}"> <font
+																						color="black"> ${good.good_count } </font></i>
 
 																					<c:set var="loop_flag" value="true" />
 																				</c:when>
@@ -656,8 +667,7 @@ table .profilearea {
 																							aria-hidden="true"
 																							style="float: left; font-size: 25px;"
 																							value="${list.social_seq}"> <font
-																							color="black">
-																								${good.good_count } </font></i>
+																							color="black"> ${good.good_count } </font></i>
 
 
 																					</c:if>
@@ -1012,7 +1022,31 @@ table .profilearea {
 					<!--/.Panel 4-->
 
 					<!--Panel 5-->
-					<div class="tab-pane fade" id="boardPanel" role="tabpanel"></div>
+					<div class="tab-pane fade" id="boardPanel" role="tabpanel">
+						<c:choose>
+							<c:when test="${!empty tipList}">
+								<table style="width: 100%;" class="mt-2">
+
+									<c:forEach items="${tipList}" var="list">
+										<tr>
+											<td>[${list.category}]</td>
+											<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
+											<td class="tip-title"><a
+												href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
+											<td><i class=" fa fa-heart red-text" aria-hidden="true">${list.tip_like_count}</i>
+												<i class="fa fa-comment amber-text" aria-hidden="true">${list.tip_comment_count}</i>
+												<i class="fa  fa-eye" aria-hidden="true">${list.tip_viewcount}</i>
+											</td>
+											<td class=tip-date>${list.tip_date}</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</c:when>
+							<c:otherwise>
+									작성한 글이 없습니다.
+								</c:otherwise>
+						</c:choose>
+					</div>
 					<!--/.Panel 5-->
 
 					<!-- Modal -->
@@ -1190,6 +1224,9 @@ table .profilearea {
 			<!--/.Content-->
 		</div>
 	</div>
+	
+	<%@include file="footer.jsp"%>
+	
 	<script>
 		$("#managebtn").on("click", function() {
 			window.open('userpage.go?view=collection', '_blank');

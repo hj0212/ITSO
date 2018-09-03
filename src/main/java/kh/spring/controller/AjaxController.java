@@ -1,7 +1,5 @@
 package kh.spring.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -16,13 +14,12 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import kh.spring.dto.CollectionDTO;
 import kh.spring.dto.FollowDTO;
@@ -30,13 +27,16 @@ import kh.spring.dto.GoodDTO;
 import kh.spring.dto.MemberDTO;
 import kh.spring.dto.MessagesDTO;
 import kh.spring.dto.NotificationDTO;
+import kh.spring.dto.ReportDTO;
 import kh.spring.dto.SocialBoardDTO;
+import kh.spring.dto.StylingVoteUserDTO;
 import kh.spring.interfaces.IMemberService;
 import kh.spring.interfaces.IMessagesService;
 import kh.spring.interfaces.INotificationService;
 import kh.spring.interfaces.ISocialBoardService;
+import kh.spring.interfaces.IStylingService;
+import kh.spring.interfaces.ITipService;
 import kh.spring.websocket.EchoHandler;
-import kh.spring.websocket.MessageSocket;
 
 @Controller
 public class AjaxController {
@@ -52,12 +52,15 @@ public class AjaxController {
 	private ISocialBoardService sbService;
 	
 	@Autowired
+	private IStylingService styservice; 
+	
+	@Autowired
 	private IMessagesService mservice;
-
-
-
 	
-	
+	@Autowired
+	private ITipService tservice;
+
+
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
 
@@ -337,9 +340,26 @@ public class AjaxController {
 		return resultmsg;
 	}
 	
-
-
+	@RequestMapping("/doStylingVote.ajax")
+	public @ResponseBody void doStylingVote(HttpSession session, int value, int styling_vote_seq) {
+		System.out.println("투표ajax실행시작-------------------");
+		StylingVoteUserDTO votedto = new StylingVoteUserDTO();
+		
+		int user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
+		votedto.setUser_seq(user_seq);
+		votedto.setVote_value(value);
+		votedto.setStyling_vote_seq(styling_vote_seq);
+		
+		int voteresult = styservice.doStylingVote(votedto);
+		System.out.println(value+"에 투표ajax 결과-"+voteresult);
+	}
 	
+	@RequestMapping("/updateStylingViewcount.ajax")
+	public @ResponseBody void updateStylingViewcount(HttpSession session, @RequestParam int styling_vote_seq) {
+		System.out.println(styling_vote_seq+"번글 조회수 up-------------------");
+		int result = styservice.updateStylingViewcount(styling_vote_seq);
+		System.out.println("ajax 조회수 up 완료");
+	}
 
 	@RequestMapping("/fbLogin.ajax")
 	public @ResponseBody String fbLogin(String data, HttpSession session) {
@@ -382,6 +402,20 @@ public class AjaxController {
 
 		return null;
 	}
-
+	
+	@RequestMapping("reportArticle.ajax")
+	public @ResponseBody void reportTipArticle(ReportDTO dto, HttpSession session) {
+		System.out.println("dto: " + dto.getBoard_seq());
+		int reporting_user = ((MemberDTO)session.getAttribute("user")).getSeq();
+		dto.setReporting_user(reporting_user);
+		List<ReportDTO> list = tservice.checkReportData(dto);
+		System.out.println("dto: " + dto.getBoard_seq());
+		if(list.size() > 0) {
+			System.out.println("이미 신고");
+		} else {
+			int result = tservice.insertReport(dto);
+			System.out.println(result>0?"신고 성공":"신고 실패");
+		}
+	}
 
 }

@@ -84,7 +84,6 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		return this.dao.getMyGoodSocialList(dto);
 	}
-
 	
 	//게시물 인기
 	@Override
@@ -104,8 +103,8 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
-	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto) {
-		return this.dao.getCollectionSocialList(dto);
+	public List<SocialBoardDTO> getCollectionSocialList(int seq, int startCount, int endCount) {
+		return this.dao.getCollectionSocialList(seq, startCount, endCount);
 	}
 
 	@Override
@@ -178,5 +177,23 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 		return this.dao.getMyGoodSocialArticleList(dto);
 	}
 
-	
+	@Override
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
+		return this.dao.getsearchedTagSocialList(word);
+	}
+
+	@Override
+	public List<CollectionDTO> getSearchedCollectionList(String word) {
+		return this.dao.getSearchedCollectionList(word);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
+		return this.dao.getSearchedCollectionPhotoList(word);
+	}
+
+	@Override
+	public Integer getCollectionCount(CollectionDTO dto) {
+		return this.dao.getCollectionCount(dto);
+	}
 }

@@ -50,7 +50,7 @@ body {
 }
 </style>
 
-<script>
+<script> 
 	$(document).ready(function() {
 		$("#imgbtn").click(function() {
 			$("#img_file").trigger("click");

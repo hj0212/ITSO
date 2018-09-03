@@ -295,7 +295,7 @@ background-color: #f4f4f4;
 					class="fa fa-envelope"></i> 메시지
 			</a></li>
 			<li class="nav-item"><a
-				class="nav-link waves-effect waves-light"> <i
+				class="nav-link waves-effect waves-light" href="writeSocial.jsp"> <i
 					class="fa fa-pencil"></i> 글쓰기
 			</a></li>
 			<li class="nav-item dropdown"><a
@@ -329,7 +329,7 @@ background-color: #f4f4f4;
 		<ul class="navbar-nav mr-auto hide">
 			<li class="nav-item"><a class="nav-link"
 				href="tipBoardMainPage.tip">팁 </a></li>
-			<li class="nav-item"><a class="nav-link" href="#">스타일링</a></li>
+			<li class="nav-item"><a class="nav-link" href="stylingBoard.style">스타일링</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">컨테스트</a></li>
 		</ul>
 	</div>
