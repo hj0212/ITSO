@@ -713,7 +713,7 @@ a#MOVE_TOP_BTN {
 									<c:forEach var="userList" items="${userList}">
 										<tr>
 											<td class="user-image"><img
-												src="resources/images/${userList.photo}" alt=""
+												src="upload/profile/${userList.photo}" alt=""
 												onerror="this.src='resources/images/background.jpg'">
 											</td>
 											<td class="user-info">
