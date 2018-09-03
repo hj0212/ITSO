@@ -8,13 +8,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta property="fb:app_id" content="175142883151176" />
-<meta property="og:site_name" content="ITSO" />
-<meta property="og:title" content="${content.social_title}" />
-<meta property="og:description" content="${content.social_contents}" />
-<meta property="article:author" content="${content.social_writer}" />
-<meta property="og:url" content="document.location.href" />
-<meta property="og:image"
+<meta name="fb:app_id" content="175142883151176" />
+<meta name="og:site_name" content="ITSO" />
+<meta name="og:title" content="${content.social_title}" />
+<meta name="og:description" content="${content.social_contents}" />
+<meta name="article:author" content="${content.social_writer}" />
+<meta name="og:url" content="document.location.href" />
+<meta name="og:image"
 	content="https://image.ibb.co/cvb5k9/itso_12.png" />
 
 <meta name="twitter:card" content="summary" />
@@ -279,31 +279,37 @@
 								aria-label="Toolbar with button groups">
 								<div class="btn-group mr-2" role="group"
 									aria-label="First group">
-									<input type="hidden" value="${content.social_writer }"
-										class="writerseq" /> <input type="hidden"
-										value="${content.social_seq }" class="socialseq" />
-									<button type="button" class="btn-floating btn-sm savebtn"
-										style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
-										title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
-										<i class="fa fa-upload"></i>
-									</button>
-									<!--facebook-->
-									<button type="button" class="btn-floating btn-sm btn-fb share"
-										style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-										<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
-									</button>
-									<!--twitter-->
-									<button type="button" class="btn-floating btn-sm btn-tw share"
-										style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;">
-										<i class="fa fa-twitter" title="트위터로 공유하기"></i>
-									</button>
-									<!--kakao-->
-									<button type="button" class="btn-floating btn-sm share "
-										style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
-										title="카카오로 공유하기">
-										<i class="fa fa-comment"></i>
-									</button>
-
+										<input type="hidden" value="${content.social_writer }"
+											class="writerseq" /> 
+										<input type="hidden"
+											value="${content.social_seq }" class="socialseq" />
+										<button type="button" class="btn-floating btn-sm savebtn"
+											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
+											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
+											<i class="fa fa-upload"></i>
+										</button>
+										<!--facebook-->
+										<button type="button" class="btn-floating btn-sm btn-fb share"
+											style="float: right; background-color: #4267b2; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											onclick="facebookgo()">
+											<i class="fa fa-facebook-f" title="페이스북으로 공유하기"></i>
+										</button>									
+										
+										<!--twitter-->
+										<button type="button" class="btn-floating btn-sm btn-tw share"
+											style="float: right; background-color: #55acee; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											onclick="twittergo()">
+											<i class="fa fa-twitter" title="트위터로 공유하기"></i>
+										</button>
+										<!--kakao-->
+										<button type="button" class="btn-floating btn-sm share "
+											style="float: right; background-color: #fae101; color: white; border: 0px; margin-left: 10px; border-radius: 5px;"
+											title="카카오로 공유하기" onclick="kakaogo()" id="kakao-link-btn">
+											<i class="fa fa-comment"></i>
+										</button>
+										
+										
+										
 								</div>
 							</div>
 						</div>
@@ -1142,6 +1148,7 @@
 <!-- 카카오api -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- 페이스북api -->
+
 <div id="fb-root"></div>
 <script>
 	(function(d, s, id) {
@@ -1150,7 +1157,7 @@
 			return;
 		js = d.createElement(s);
 		js.id = id;
-		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+		js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.1";
 		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));
 </script>
@@ -1160,25 +1167,17 @@
 
 	var newURL = window.location.protocol + window.location.host
 			+ window.location.pathname;
-	var titletext = '${content.social_title}';
-
-	console.log("<c:out value='${param.mode}'/>");
-
-	var mode = "<c:out value='${content.social_title}'/>";
-
+	var titletext = '${content.social_title}';	
+	
+	
 	//트위터 공유 
 	function twittergo(url, text) {
-		//var url = window.location.protocol + window.location.host				+ window.location.pathname;
-		var url = document.location.href;
-		var text = encodeURI('${content.social_title}');
-		var wow = encodeURI('${goodCount}');
-
-		console.log("와우에 오는 깃 : " + wow);
-		console.log("text에 오는 것: " + text);
-		console.log('${goodList.social_good_seq}');
-
-		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="
-				+ url, "", "width=700, height=400");
+		//var url = window.location.protocol + window.location.host	+ window.location.pathname;
+		var url=document.location.href;
+		var text = encodeURI('${content.social_title}');	
+	
+		
+		window.open("https://twitter.com/intent/tweet?text=" + text + "&url="+ url, "", "width=700, height=400");
 	}
 
 	var kakaoURL = 'http://192.168.20.35:8080/controller/readSocial.go?seq=186';
