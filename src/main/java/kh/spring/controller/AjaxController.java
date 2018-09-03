@@ -57,17 +57,13 @@ public class AjaxController {
 	
 	@Autowired
 	private IMessagesService mservice;
-<<<<<<< HEAD
-=======
-	
+
 	@Autowired
 	private ITipService tservice;
 	
 	@Autowired
 	private IReportService rservice;
 
-
->>>>>>> 머지
 	@RequestMapping("/emailcheck.ajax")
 	public @ResponseBody String emailExist(String email,HttpServletResponse response) {
 
@@ -367,12 +363,6 @@ public class AjaxController {
 		int result = styservice.updateStylingViewcount(styling_vote_seq);
 		System.out.println("ajax 조회수 up 완료");
 	}
-<<<<<<< HEAD
-
-
-	
-=======
->>>>>>> 머지
 
 	@RequestMapping("/fbLogin.ajax")
 	public @ResponseBody String fbLogin(String data, HttpSession session) {
