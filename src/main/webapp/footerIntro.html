@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width" />
+<title>Insert title here</title>
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<!-- Bootstrap core CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
+	rel="stylesheet">
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=nNEs9epKfyUEcdwyisTe&submodules=geocoder"></script>
+
+<style>
+@font-face {
+	font-family: 'NanumbarunpenR';
+	src: url('resources/fonts/nanumbarunpenr.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'NanumbarunpenB';
+	src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Voga';
+	src: url('resources/fonts/Voga.otf') format('truetype');
+}
+
+body {
+	font-family: 'NanumbarunpenR';
+	background: #ffffff;
+	color: #fff;
+	margin: 0;
+	transition: all 500ms;
+	will-change: scroll-position;
+	text-align: center;
+}
+
+section {
+	display: block;
+	width: 100%;
+}
+
+section p {
+	font-size: 120px;
+	font-weight: 600;
+}
+
+.firstContainer {
+	padding-top: 90px;
+	margin: auto;
+}
+
+.firstSection {
+	background-image: url("resources/images/aboutitso.jpeg");
+	width: 1100px;
+	height: 600px;
+	margin: auto;
+}
+
+.firstSection p {
+	font-family: 'Voga';
+}
+
+.firstSection img {
+	width: 100%;
+	height: 100%;
+}
+
+@media screen and (min-width: 960px) {
+	.firstContainer .firstSection section p {
+		font-size: 120px;
+	}
+	.container .row .leftContainer p {
+		font-size: 50px;
+	}
+	.firstContainer .firstSection {
+		width: 1100px;
+		height: 600px;
+	}
+}
+
+@media screen and (max-width: 959px) and (min-width: 600px) {
+	.firstContainer .firstSection section p {
+		font-size: 80px;
+	}
+	.container .row .leftContainer p {
+		font-size: 40px;
+	}
+	.firstContainer .firstSection {
+		width: 780;
+		height: 400px;
+	}
+}
+
+@media screen and (max-width: 599px) and (min-width: 320px) {
+	.firstContainer .firstSection section p {
+		font-size: 48px;
+	}
+	.container .row .leftContainer p {
+		font-size: 30px;
+	}
+	.firstContainer .firstSection {
+		width: 330px;
+		height: 200px;
+	}
+}
+
+.firstContainer .container {
+	padding-top: 100px;
+}
+
+.container .row {
+	margin: auto;
+	opacity: 0;
+}
+
+.container .row .leftContainer {
+	font-size: 50px;
+	font-weight: 600;
+	text-align: right;
+	line-height: 50px;
+	padding: 20px;
+	padding-left: 150px;
+}
+
+.container .row .rightContainer {
+	font-size: 37px;
+	font-weight: 600;
+	padding: 20px;
+	text-align: left;
+}
+
+.thirdSection {
+	padding-top: 30px;
+}
+
+.thirdSection .itsomain {
+	font-family: 'Voga';
+	text-align: center;
+	margin: auto;
+	font-size: 60px;
+}
+
+.thirdSection .press {
+	text-align: center;
+	margin: auto;
+	font-size: 20px;
+}
+
+.thirdSection .press a {
+	color: gray;
+	font-weight: 600;
+}
+
+.fourSection {
+	margin-top: 50px;
+}
+
+.fourSection .map {
+	border: 1px solid white;
+	width: 500px;
+	height: 400px;
+	margin: auto;
+	margin-bottom: 50px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="firstContainer col-md-8">
+
+		<div class="firstSection">
+			<section id="one" data-color="#ffffff">
+			<p>ABOUT ITSO</p>
+			</section>
+			<section id="two" data-color="#cccccc"> </section>
+			<section id="three" data-color="#999999"> </section>
+			<section id="four" data-color="#666666"> </section>
+			<section id="five" data-color="#000000">
+			<div class="arrow" style="margin-top: 250px;">
+				<i class="fas fa-angle-double-down fa-9x"></i>
+			</div>
+			</section>
+
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 leftContainer">
+					<p>지금 이 순간</p>
+					<p>인기 있는</p>
+					<p>트렌드를</p>
+					<p>한 눈에 보세요.</p>
+				</div>
+				<div class="col-md-6 rightContainer">
+					<p>요즘 멋쟁이들은 뭘 입고 있을까? 실시간으로 수 많은 패션 소식, 스타일링, 쇼핑후기를 스타일 피드에서 매일
+						새롭게 발견해보세요.</p>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="thirdSection">
+			<p class="itsomain">ITSO in press</p>
+			<p class="press">
+				<a href="#" onClick="alert('준비중입니다.'); return false;" id="pressgo">언론보도
+					자세히 보러가기 > </a>
+			</p>
+		</div>
+
+		<div class="fourSection">
+
+			<div class="map" id="map"></div>
+
+		</div>
+	</div>
+
+	</div>
+
+</body>
+<!-- JQuery -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/js/mdb.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+	integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+	crossorigin="anonymous"></script>
+<script>
+	$(window).on("scroll touchmove", function() {
+
+		if ($(document).scrollTop() >= $("#one").position().top) {
+			$('body').css('background', $("#one").attr("data-color"));
+		}
+		;
+
+		if ($(document).scrollTop() > $("#two").position().top) {
+			$('body').css('background', $("#two").attr("data-color"))
+		}
+		;
+
+		if ($(document).scrollTop() > $("#three").position().top) {
+			$('body').css('background', $("#three").attr("data-color"))
+		}
+		;
+
+		if ($(document).scrollTop() > $("#four").position().top) {
+			$('body').css('background', $("#four").attr("data-color"))
+		}
+		;
+
+		if ($(document).scrollTop() > $("#five").position().top) {
+			$('body').css('background', $("#five").attr("data-color"))
+		}
+		;
+
+	});
+
+	let divs = $('.row');
+	$(window).on('scroll', function() {
+		let st = $(this).scrollTop();
+		divs.css({
+			'opacity' : (0 + st / 130)
+		});
+	});
+
+	let firstdivs = $('.firstSection');
+	$(window).on('scroll', function() {
+		let st = $(this).scrollTop();
+		firstdivs.css({
+			'opacity' : (1 - st / 530)
+		});
+	});
+
+	var map = new naver.maps.Map('map');
+	var myaddress = '서울 영등포구 선유동2로 57';// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
+	naver.maps.Service
+			.geocode(
+					{
+						address : myaddress
+					},
+					function(status, response) {
+						if (status !== naver.maps.Service.Status.OK) {
+							return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
+						}
+						var result = response.result;
+						// 검색 결과 갯수: result.total
+						// 첫번째 결과 결과 주소: result.items[0].address
+						// 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
+						var myaddr = new naver.maps.Point(
+								result.items[0].point.x,
+								result.items[0].point.y);
+						map.setCenter(myaddr); // 검색된 좌표로 지도 이동
+						// 마커 표시
+						var marker = new naver.maps.Marker({
+							position : myaddr,
+							map : map
+						});
+						// 마커 클릭 이벤트 처리
+						naver.maps.Event.addListener(marker, "click", function(
+								e) {
+							if (infowindow.getMap()) {
+								infowindow.close();
+							} else {
+								infowindow.open(map, marker);
+							}
+						});
+						// 마크 클릭시 인포윈도우 오픈
+						var infowindow = new naver.maps.InfoWindow(
+								{
+									content : '<img src="resources/images/itso12.png" style="width: 120px; height: 120px;">'
+								});
+					});
+</script>
+
+
+</html>
