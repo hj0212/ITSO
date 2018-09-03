@@ -122,6 +122,15 @@ public class MemberController {
 		List<MemberDTO> followerList = this.mservice.getFollowerList(tmp);
 		List<MemberDTO> followingList = this.mservice.getFollowingList(tmp);
 		MemberController.followCheck(followerList, followingList);
+		
+		for(MemberDTO mtmp : followerList) {
+			System.out.println(mtmp.getSeq() + ":" +mtmp.getFollowcheck());
+		}
+		
+		for(MemberDTO mtmp : followingList) {
+			System.out.println(mtmp.getSeq() + ":" +mtmp.getFollowcheck());
+		}
+		
 		mav.addObject("followcheck", result);
 		mav.addObject("seq", tmp.getSeq());
 		mav.addObject("member", tmp);
@@ -173,11 +182,11 @@ public class MemberController {
 				for (MemberDTO followingtmp : followingList) {
 					if (followertmp.getSeq() == followingtmp.getSeq()) {
 						followertmp.setFollowcheck("y");
-						System.out.println("followcheck" + followertmp.getFollowcheck());
+						System.out.println("followercheck" + followertmp.getFollowcheck() + ":" + followertmp.getSeq() + ":" + followingtmp.getSeq());
 						break;
 					} else {
 						followertmp.setFollowcheck("n");
-						System.out.println("followcheck" + followertmp.getFollowcheck());
+						System.out.println("followercheck" + followertmp.getFollowcheck() + ":" + followertmp.getSeq() + ":" + followingtmp.getSeq());
 					}
 				}
 			} else {
@@ -190,11 +199,11 @@ public class MemberController {
 				for (MemberDTO followertmp : followerList) {
 					if (followingtmp.getSeq() == followertmp.getSeq()) {
 						followingtmp.setFollowcheck("y");
-						System.out.println("followcheck" + followingtmp.getFollowcheck());
+						System.out.println("followingcheck" + followingtmp.getFollowcheck() + ":" + followingtmp.getSeq() + ":" + followertmp.getSeq());
 						break;
 					} else {
 						followingtmp.setFollowcheck("n");
-						System.out.println("followcheck" + followingtmp.getFollowcheck());
+						System.out.println("followingcheck" + followingtmp.getFollowcheck() + ":" + followingtmp.getSeq() + ":" + followertmp.getSeq());
 					}
 				}
 			} else {

@@ -325,7 +325,7 @@ public class AjaxController {
 
 	@RequestMapping("/editCollection.ajax")
 	public @ResponseBody void editCollection(CollectionDTO dto) {
-		System.out.println(dto.getCollection_seq()+":"+dto.getCollection_title());
+		System.out.println(dto.getCollection_seq()+":"+dto.getCollection_title()+":"+dto.getCollection_contents());
 		int result = sservice.updateCollection(dto);
 		String resultmsg = result>0?"수정성공":"수정실패";
 		System.out.println(resultmsg);
@@ -356,11 +356,12 @@ public class AjaxController {
 			System.out.println("로그인x");
 		}
 		
-		
+		Integer check = service.checkFollow(dto);
+		System.out.println("check: " + check);
 
 		System.out.println("text:" + text);
 		String resultmsg = "";
-		if(text.contains("언팔로우")) {
+		if(text.contains("언팔로우") && check > 0) {
 			int result = service.deleteFollowData(dto);
 			resultmsg = result>0?"언팔로우성공":"언팔로우실패";
 			System.out.println(resultmsg);
@@ -369,8 +370,6 @@ public class AjaxController {
 			resultmsg = result>0?"팔로우성공":"팔로우실패";
 			System.out.println(resultmsg);
 		}
-		
-
 		return resultmsg;
 	}
 

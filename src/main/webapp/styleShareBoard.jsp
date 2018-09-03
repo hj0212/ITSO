@@ -202,6 +202,8 @@
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px; 
+	overflow: hidden; 
 }
 
 #saveModal .active {
@@ -286,7 +288,7 @@
 										<button type="button" class="btn-floating btn-sm savebtn"
 											style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px;"
 											title="컬렉션에 저장" data-toggle="modal" data-target="#saveModal">
-											<i class="fa fa-upload"></i>
+											<i class="fa fa-download"></i>
 										</button>
 										<!--facebook-->
 										<button type="button" class="btn-floating btn-sm btn-fb share"
@@ -566,6 +568,7 @@
 						</c:when>
 						<c:otherwise>
 							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
+							<div id="collectionarea" class="mt-2 first"></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -793,7 +796,8 @@
 		    console.log("collection_seq: " + collection_seq);
 		    console.log("social_seq: " + social_seq);
 
-		    var num = $(this).find(".collectionPhotoItem").length;
+		    num = $(this).find(".collectionPhotoItem").length;
+		    
 		    $.ajax({
 		        url: "saveCollection.ajax",
 		        type: "post",
@@ -807,13 +811,22 @@
 		                data.social_seq)
 		            if (data.photo != null) {
 		                console.log("여기");
+		                console.log("num " + num);
+		                if (num > 3) {
+		                	console.log("숨겨");
 		                cursor.find(".collectionPhoto").append(
-		                    '<div class="collectionPhotoItem">' +
+		                    '<div class="collectionPhotoItem" style="display:none;">' +
 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
 		                    '</div>');
-		                if (num > 4) {
-		                    cursor.find(".collectionPhoto:last").attr("display", "none");
+		                } else {
+		                	console.log("보여");
+		                	 cursor.find(".collectionPhoto").append(
+		 		                    '<div class="collectionPhotoItem">' +
+		 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		 		                    '</div>');
 		                }
+		                
+		               
 		            } else {
 		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
 		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
@@ -858,7 +871,7 @@
 					    
 		                $("input[name='collection_title']").val("");
 		                $("textarea[name='collection_contents']").val("");
-		                $("#createModal").hide();
+		                $("#createModal").modal('hide');
 
 		                $("#collectionarea").append(
 		                    '<div class="collectionItem z-depth-1 mt-2">' +
@@ -870,18 +883,18 @@
 		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
 		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-		                $("#saveModal").show();
+		                $("#saveModal").modal('show');
 
 		            }
 		        });
 		        }
 		    });
 		$("#createModal").on('show.bs.modal', function () {
-		    $("#saveModal").hide();
+		    $("#saveModal").modal('hide');
 		});
 
 		$("#createModal").on('hidden.bs.modal', function () {
-		    $("#saveModal").show();
+		    $("#saveModal").modal('show');
 		});
 
 		$("#saveModal").on('hidden.bs.modal', function () {

@@ -251,6 +251,8 @@ button.dropdown-toggle {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px; 
+	overflow: hidden; 
 }
 
 #saveModal .active {
@@ -527,6 +529,8 @@ a#MOVE_TOP_BTN {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px; 
+	overflow: hidden; 
 }
 
 #savemodal .active {
@@ -1107,6 +1111,7 @@ a#MOVE_TOP_BTN {
 						</c:when>
 						<c:otherwise>
 							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
+							<div id="collectionarea" class="mt-2 first"></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -1205,12 +1210,18 @@ a#MOVE_TOP_BTN {
 		                data.social_seq)
 		            if (data.photo != null) {
 		                console.log("여기");
+		                if (num > 3) {
+		                	console.log("숨겨");
 		                cursor.find(".collectionPhoto").append(
-		                    '<div class="collectionPhotoItem">' +
+		                    '<div class="collectionPhotoItem" style="display:none;">' +
 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
 		                    '</div>');
-		                if (num > 4) {
-		                    cursor.find(".collectionPhoto:last").attr("display", "none");
+		                } else {
+		                	console.log("보여");
+		                	 cursor.find(".collectionPhoto").append(
+		 		                    '<div class="collectionPhotoItem">' +
+		 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		 		                    '</div>');
 		                }
 		            } else {
 		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
@@ -1255,7 +1266,7 @@ a#MOVE_TOP_BTN {
 					    
 		                $("input[name='collection_title']").val("");
 		                $("textarea[name='collection_contents']").val("");
-		                $("#createModal").hide();
+		                $("#createModal").modal('hide');
 
 		                $("#collectionarea").append(
 		                    '<div class="collectionItem z-depth-1 mt-2">' +
@@ -1267,18 +1278,18 @@ a#MOVE_TOP_BTN {
 		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
 		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-		                $("#saveModal").show();
+		                $("#saveModal").modal('show');
 
 		            }
 		        });
 		        }
 		    });
 		$("#createModal").on('show.bs.modal', function () {
-		    $("#saveModal").hide();
+		    $("#saveModal").modal('hide');
 		});
 
 		$("#createModal").on('hidden.bs.modal', function () {
-		    $("#saveModal").show();
+		    $("#saveModal").modal('show');
 		});
 
 		$("#saveModal").on('hidden.bs.modal', function () {
@@ -1287,20 +1298,6 @@ a#MOVE_TOP_BTN {
 		});
 
 		</script>
-	$("#createModal").on('show.bs.modal', function () {
-	    $("#saveModal").hide();
-	});
-
-	$("#createModal").on('hidden.bs.modal', function () {
-	    $("#saveModal").show();
-	});
-
-	$("#saveModal").on('hidden.bs.modal', function () {
-	    console.log("닫힘");
-	    $(".collectionItem").removeClass("active");
-	});
-
-	</script>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
