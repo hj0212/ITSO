@@ -287,7 +287,7 @@ button.dropdown-toggle {
 	color: black;
 }
 
-#user-tab, #tag-tab, #tip-tab {
+#user-tab, #tag-tab, #tip-tab, #itemtag-tab {
 	color: black;
 }
 
@@ -676,13 +676,16 @@ a#MOVE_TOP_BTN {
 							<c:otherwise>${searchedCollectionList.size()}</c:otherwise>
 						</c:choose>)
 				</a></li>
-				<li class="nav-item"><a class="nav-link" id="tip-tab"
-					data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv"
-					aria-selected="false"> 팁 게시글(<c:choose>
-							<c:when test="${empty tipList}">0</c:when>
-							<c:otherwise>${tipList.size()}</c:otherwise>
-						</c:choose>)
-				</a></li>
+				<li class="nav-item">
+					<a class="nav-link" id="tip-tab" data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv" aria-selected="false">
+					 팁 게시글(<c:choose><c:when test="${empty tipList}">0</c:when><c:otherwise>${tipList.size()}</c:otherwise></c:choose>)
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="itemtag-tab" data-toggle="tab" href="#itemtagdiv" role="tab" aria-controls="itemtagdiv" aria-selected="false">
+						브랜드(<c:choose><c:when test="${empty brandList}">0</c:when><c:otherwise>${brandList.size()}</c:otherwise></c:choose>)
+					</a>
+				</li>
 			</ul>
 			<div class="tab-content text-center" id="myTabContent">
 				<div class="tab-pane fade show active" id="userdiv" role="tabpanel"
@@ -821,7 +824,6 @@ a#MOVE_TOP_BTN {
 				</div>
 			</section>
 			<!-- 포토컨테이너종료 -->
-
 		</div>
 
 		<div class="tab-pane fade" id="collectiondiv" role="tabpanel"
@@ -904,6 +906,111 @@ a#MOVE_TOP_BTN {
 					</c:choose>
 				</table>
 			</div>
+		</div>
+		
+		<div class="tab-pane fade" id="itemtagdiv" role="tabpanel" aria-labelledby="itemtab-tab">
+								<!-- 포토컨테이너시작 -->
+					<section class="thirdSection col-md-12">
+					<div class="gridPhotoContainer row">
+						<c:choose>
+							<c:when test="${fn:length(brandList) > 0}">
+								<c:forEach items="${brandList}" var="list" varStatus="status">
+
+									<div class="gridPhoto">
+
+										<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
+								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
+											src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+											alt="Responsive image">
+
+										</a>
+										<div class="photoContainer">
+											<div class="photoContainerHover z-depth-2">
+												<input type="hidden" class="read"
+													value="readSocial.go?seq=${list.social_seq}" /> <input
+													type="hidden" class="user"
+													value="userpage.go?seq=${list.social_writer }" />
+												<h3 class="photoContainerHoverTitle title">${list.social_title}</h3>
+												<p class="photoContainerHoverWriter writer">by
+													${list.writerName}</p>
+												<img src="upload/social/${list.photo}"
+													class="img-fluid z-depth-2 image" alt="Responsive image">
+												<div class="hashtagarea mt-1" style="margin-left: 5px;">
+													<span>${list.social_contents}</span>
+												</div>
+												<c:if test="${!empty sessionScope.user }">
+													<div class="btnarea " style="display: block; height: 31px;">
+														<div class="goodarea"
+															style="margin-top: 3px; margin-left: 5px; float: left;">
+															<input type="hidden" class="writerseq"
+																value="${list.social_writer }" />
+															<c:set var="loop_flag" value="false" />
+															<c:choose>
+																<c:when test="${empty goodList }">
+																	<i class="fa fa-heart-o red-text heart "
+																		aria-hidden="true"
+																		style="float: right; font-size: 25px;"
+																		value="${list.social_seq}"> <font color="black">
+																			${heart2[status.index].toString()} </font></i>
+																</c:when>
+																<c:otherwise>
+																	<c:forEach items="${goodList }" var="good"
+																		varStatus="gstatus">
+
+																		<c:if test="${loop_flag == false }">
+																			<c:choose>
+																				<c:when
+																					test="${good.social_seq == list.social_seq }">
+																					<i class="fa fa-heart red-text heart"
+																						aria-hidden="true"
+																						style="float: left; font-size: 25px;"
+																						value="${list.social_seq}"> <font
+																						color="black">
+																							${heart2[status.index].toString()} </font></i>
+
+																					<c:set var="loop_flag" value="true" />
+																				</c:when>
+																				<c:otherwise>
+																					<c:if test="${gstatus.last }">
+																						<i class="fa fa-heart-o red-text heart"
+																							aria-hidden="true"
+																							style="float: left; font-size: 25px;"
+																							value="${list.social_seq}"> <font
+																							color="black">
+																								${heart2[status.index].toString()} </font></i>
+
+
+																					</c:if>
+																				</c:otherwise>
+																			</c:choose>
+																		</c:if>
+
+																	</c:forEach>
+																</c:otherwise>
+
+															</c:choose>
+
+														</div>
+														<button type="button" class="btn-floating btn-sm savebtn"
+															style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px; padding-right: 0;"
+															title="컬렉션에 저장" data-toggle="modal"
+															data-target="#saveModal">
+															컬렉션에 저장 <i class="fa fa-download"></i>
+														</button>
+														<input type="hidden" class="socialseq"
+															value="${list.social_seq }" />
+												</c:if>
+											</div>
+
+										</div>
+									</div>
+					</div>
+					</c:forEach> </c:when> <c:otherwise>
+						<div class="col-md-12">검색 결과가 없습니다.</div>
+					</c:otherwise> </c:choose>
+				</div>
+			</section>
+			<!-- 포토컨테이너종료 -->
 		</div>
 	</div>
 	</section>

@@ -48,4 +48,5 @@ public interface ISocialBoardDAO {
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto);
 	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto);
 	public List<SocialBoardDTO> getsearchedTagSocialList(String word);
+	public List<SocialBoardDTO> getSearchedBrandList(String word);
 }
