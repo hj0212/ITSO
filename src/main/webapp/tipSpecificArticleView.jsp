@@ -456,7 +456,7 @@ img {
 			 container: '#kakao-link-btn',
 		      objectType: 'feed',
 		      content: {
-		        title: document.title,
+		        title: '${tipContent[0].tip_title}',
 		        description: 'TIP BOARD',
 		        imageUrl: 'https://image.ibb.co/cvb5k9/itso_12.png',
 		        link: {
