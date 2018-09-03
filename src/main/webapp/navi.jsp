@@ -294,10 +294,6 @@ background-color: #f4f4f4;
 				class="nav-link waves-effect waves-light"> <i
 					class="fa fa-envelope"></i> 메시지
 			</a></li>
-			<li class="nav-item"><a
-				class="nav-link waves-effect waves-light" href="writeSocial.jsp"> <i
-					class="fa fa-pencil"></i> 글쓰기
-			</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

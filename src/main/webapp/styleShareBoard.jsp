@@ -370,7 +370,7 @@
 									<tr>
 										<td><img
 											class="avatar rounded-circle z-depth-1-half mr-3"
-											src="resources/images/${commentList.photo}"></td>
+											src="upload/profile/${commentList.photo}"></td>
 										<td>
 											<div>
 												<a href="userpage.go?seq=${commentList.user_seq }">${commentList.name}</a>
@@ -422,7 +422,7 @@
 					<div class="media">
 						<img
 							class="d-flex align-self-center mr-3 rounded-circle avatar z-depth-1-half"
-							src="resources/images/${writer.photo }"
+							src="/upload/profile/${writer.photo }"
 							alt="Generic placeholder image">
 						<div class="media-body mt-2">
 							<span><a href="userpage.go?seq=${writer.seq }">${writer.name}</a></span><br>
@@ -565,7 +565,7 @@
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -1037,7 +1037,7 @@
 													function(index, item) {
 														html += '<tr>';
 														html += '	<td>';
-														html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="resources/images/'+item.photo+'">';
+														html += '		<img class="avatar rounded-circle z-depth-1-half mr-3" src="upload/profile/'+item.photo+'">';
 														html += '	</td>';
 														html += '	<td>';
 														html += '		<div>';

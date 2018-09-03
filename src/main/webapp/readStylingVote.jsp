@@ -217,7 +217,7 @@ margin-top:20px;
 	<hr />
 	<div class="row my-2" style="width:100%">
 		<div class="md-form form-lg mx-0 topimg" style="width:40%">
-			<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
+			<img class="d-flex" src="/upload/stylingvote/${votedto.photo}"
 				alt="사진 없음" id="votetitleimg" style="width: 80%">
 		</div>
 		<div class="md-form form-lg mx-0 toptext" style="width:60%">
@@ -262,7 +262,7 @@ margin-top:20px;
 										<img
 											class="d-flex align-self-center mr-3 selimg z-depth-3 hoverable"
 											style="width: 90%"
-											src="upload/stylingvote/${svitemdto.styling_vote_item_photo}"
+											src="/upload/stylingvote/${svitemdto.styling_vote_item_photo}"
 											alt="후보사진">
 									</div>
 

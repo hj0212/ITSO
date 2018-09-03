@@ -158,7 +158,7 @@ public class MemberController {
 			MemberDTO user = mservice.getUserData(dto).get(0);
 			session.setAttribute("user", user);
 		}
-		return "myinfo.go";
+		return "userpage.go";
 	}
 
 	@RequestMapping("/logout.do")

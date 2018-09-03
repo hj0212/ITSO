@@ -559,7 +559,7 @@ a#MOVE_TOP_BTN {
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
 						</c:otherwise>
 					</c:choose>
 				</div>
