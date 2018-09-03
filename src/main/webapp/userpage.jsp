@@ -25,7 +25,7 @@
 	rel="stylesheet">
 
 <!--   ---------CDN 모음 끝------------------------------------------  -->
-<title>MyPage</title>
+<title></title>
 <style>
 body {
 	background-color: #eeeeee;
@@ -1420,7 +1420,7 @@ table .profilearea {
 			
 		});
 	
-		
+		document.title = "${member.name}" ;
 		 
 		
 	</script>

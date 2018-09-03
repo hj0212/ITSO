@@ -717,10 +717,10 @@
 					board: "style"
 	            },
 	            success: function() {
-	                console.log("성공");
+	                alert("신고가 완료되었습니다.");
 	            },
 	            error: function() {
-	                console.log("실패");
+	                console.log("신고 실패");
 	            }
 	        });
 		}
