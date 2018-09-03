@@ -71,6 +71,10 @@ body {
 		display:block;
 		width:100%;
 	}
+	.topimg, .toptext{
+	display:block;
+	width:100%;
+	}
 }
 
 #wrapper {
@@ -119,6 +123,9 @@ input[type="file"] {
 .settxt {
 	font-size: 15px;
 }
+.topbtns{
+margin-top:20px;
+}
 
 </style>
 
@@ -127,7 +134,7 @@ input[type="file"] {
 
 <body>
 	<%@include file="navi.jsp"%>
-	<div class="row my-5"></div>
+	<div class="row my-5"></div> 
 	<div id="wrapper" class="container-fluid col-md-8">
 		<div>
 			<h4>
@@ -208,12 +215,12 @@ input[type="file"] {
 	</div>
 
 	<hr />
-	<div class="row my-2">
-		<div class="md-form form-lg col-4 mx-0">
+	<div class="row my-2" style="width:100%">
+		<div class="md-form form-lg mx-0 topimg" style="width:40%">
 			<img class="d-flex" src="upload/stylingvote/${votedto.photo}"
-				alt="사진 없음" id="votetitleimg" style="width: 100%">
+				alt="사진 없음" id="votetitleimg" style="width: 80%">
 		</div>
-		<div class="md-form form-lg col-7 offset-md-5 mx-0">
+		<div class="md-form form-lg mx-0 toptext" style="width:60%">
 			<h4>투표주제: ${votedto.styling_title}</h4>
 			<h6>작성자: ${votedto.styling_writername}</h6>
 			<p>" ${votedto.styling_contents} "</p>

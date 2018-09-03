@@ -52,8 +52,15 @@ body {
 	src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
 }
 
+@media (max-width: 576px) {
+.btmrow{
+float:left;
+}
+}
+
 #wrapper {
 	width: 100%;
+	min-width: 500px;
 }
 
 #voteitemimg {
@@ -62,7 +69,7 @@ body {
 
 #voteitemdiv {
 	width: 100%;
-}
+} 
 
 img {
 	border: 0.3px solid lightgray;
@@ -92,6 +99,7 @@ input[type="file"] {
 font-size:15px;
 }
 
+
 </style>
 
 </head>
@@ -107,7 +115,7 @@ font-size:15px;
 		<div class="row my-2"></div>
 		<form method="post" action="modifyStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}" id="modiform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
-				<h4>투표주제</h4>&nbsp;<span class="text-muted text-sm settxt">(작성자: ${votedto.styling_writer}</span>
+				<h4>투표주제</h4>&nbsp;<span class="text-muted text-sm settxt">(작성자: ${votedto.styling_writername}</span>
 				&nbsp;<span class="text-muted text-sm settxt"><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${votedto.styling_viewcount})</span>
 				<input type="hidden" value="${votedto.styling_writer}" id="votewriterid" name ="styling_writer">
 			<input type="hidden" name="styling_vote_seq" value="${votedto.styling_vote_seq}">
@@ -160,7 +168,7 @@ font-size:15px;
 						<c:forEach var="item" items="${voteitems}" varStatus = "status">
 							<tr class="z-depth-3 hoverable" id="tr${status.index}">
 								<th scope="row">
-								<input type="text" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
+								<input type="hidden" name="styling_vote_item_seq" value="${item.styling_vote_item_seq}"></th>
 								<td>
 									<div class="media">
 										<div class="media-img">
@@ -258,7 +266,7 @@ font-size:15px;
 			<input type="hidden" name ="deletedsvitem[]" value="del">
 			<input type="hidden" name ="itemphotos[]" value="photo">
 
-			<div class="row">
+			<div class="row btmrow">
 				<button class="btn btn-indigo" type="button" id="itsobtn">itso?</button>
 				<a href="#top" class="btn btn-indigo ml-auto"><i
 					class="fa fa-arrow-up" aria-hidden="true"></i></a>
@@ -301,8 +309,7 @@ font-size:15px;
 			    object.value = object.value.slice(0, object.maxLength);
 			   }    
 			  }
-		
-		
+			
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
