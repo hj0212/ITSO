@@ -154,6 +154,10 @@
 			 $("#uploadform").submit(); 
 			/* $(location).attr('href', 'writeArticle2.jsp'); */
 		})
+		
+		$("#backbtn").click(function(){
+			$(location).attr('href',"main.go");
+		})
 	</script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
