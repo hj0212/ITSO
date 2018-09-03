@@ -465,9 +465,9 @@
 											<a href=${item.tag_url } target="_blank">${item.tag_name}</a>
 										</div>
 										<div>
-											<a href="#">${item.tag_brand}</a>
+											<a href="searchWord.se?word=${item.tag_brand}">${item.tag_brand}</a>
 											<c:if test="${!empty item.tag_store }">
-												<a href="#">in ${item.tag_store}</a>
+												<a href="searchWord.se?word=${item.tag_store}">in ${item.tag_store}</a>
 											</c:if>
 										</div>
 									</li>
