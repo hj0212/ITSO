@@ -85,7 +85,7 @@ a {
 #rightfix {
 	width: 300px;
 	top: 30%;
-	right: 50px;
+	right: 30px;
 	position: fixed;
 }
 
@@ -256,6 +256,10 @@ button.dropdown-toggle {
 
 #social_contents a:hover {
 	color: black;
+}
+
+#rightfix button {
+	top: -15px;
 }
 </style>
 <script>
@@ -718,34 +722,35 @@ button.dropdown-toggle {
 		<!-- 오른쪽 추천 follow  -->
 		<div id="rightfix" class="right-fixed">
 			<ul class="list-unstyled">
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
+				<li class="media"><img class="d-flex mr-3 rounded-circle  align-self-center"
 					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
 					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
+					<div class="media-body mt-0">
+						<h5 class="mt-0 font-weight-bold">List-based media
 							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
-					</div></li>
-				<li class="media my-4"><img class="d-flex mr-3 rounded-circle"
+					</div>
+					</li>
+				<li class="media my-4"><img class="d-flex mr-3 rounded-circle  align-self-center"
 					src="https://mdbootstrap.com/img/Photos/Others/placeholder6.jpg"
 					alt="An image">
 					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
+						<h5 class="mt-0 font-weight-bold">List-based media
 							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
 					</div></li>
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
+				<li class="media"><img class="d-flex mr-3 rounded-circle align-self-center"
 					src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg"
 					alt="Generic placeholder image">
 					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
+						<h5 class="mt-0 font-weight-bold">List-based</h5>
+						<button type="button" class="btn btn-indigo btn-sm m-0">
 							<i class="fa fa-plus">follow</i>
 						</button>
 
@@ -753,11 +758,24 @@ button.dropdown-toggle {
 			</ul>
 
 		</div>
+		<div id="enters">
+		
+		</div>
 		
 	<%@include file="footer.jsp"%>
 		
 	</div>
 	<script>
+	$(window).scroll(function() {
+		console.log($(document).height()+":"+$(window).height()); 
+		if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+			console.log(++page);
+			for(var i=0; i < 10;i++){
+				$("#enters").append("내용내용내용내용내용</br>");
+			}
+		}
+	});
+	
 		$("#managebtn").on("click", function () {
 		    window.open('userpage.go?view=collection', '_blank');
 		})

@@ -23,10 +23,7 @@
 		<typeAlias type="kh.spring.dto.SearchedUserInfoDTO" alias="suidto"/>
 		<typeAlias type="kh.spring.dto.SearchedTipDTO" alias="searchedtipdto"/>
 		<typeAlias type="kh.spring.dto.MessagesDTO" alias="MessagesDTO"/>
-<<<<<<< HEAD
-=======
 		<typeAlias type="kh.spring.dto.ReportDTO" alias="ReportDTO"/>
->>>>>>> 머지
 	</typeAliases>
 </configuration>
 

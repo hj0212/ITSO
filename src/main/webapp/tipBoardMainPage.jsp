@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,15 +37,16 @@
 
 
 <style>
-<<<<<<< HEAD
-a, a:hover{
-text-decoration:none;
-=======
+<<<<<<<
+HEAD
+a, a:hover {
+	text-decoration: none;
+}
+
 #wrapper {
 	min-height: 100%;
 	position: relative;
 	margin-bottom: 100px; /* footer height */
->>>>>>> 머지
 }
 
 ul {
@@ -53,8 +54,8 @@ ul {
 	padding-left: 0px;
 }
 
-.list-category{
-text-align:center;
+.list-category {
+	text-align: center;
 }
 
 .card-img-top, .card {
@@ -232,11 +233,13 @@ table th {
 					<td class="tip-title"><a
 						href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
 					<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
-					<td class=tip-date><fmt:formatDate type="both" value="${list.tip_date}"></fmt:formatDate></td>
-					<td><i class=" fa fa-heart mr-1 red-text" aria-hidden="true"> ${list.tip_like_count}</i>
-						<i class="fa fa-comment mr-1 amber-text" aria-hidden="true"> ${list.tip_comment_count}</i>
-						<i class="fa fa-eye mr-1" aria-hidden="true"> ${list.tip_viewcount}</i>
-					</td>
+					<td class=tip-date><fmt:formatDate type="both"
+							value="${list.tip_date}"></fmt:formatDate></td>
+					<td><i class=" fa fa-heart mr-1 red-text" aria-hidden="true">
+							${list.tip_like_count}</i> <i class="fa fa-comment mr-1 amber-text"
+						aria-hidden="true"> ${list.tip_comment_count}</i> <i
+						class="fa fa-eye mr-1" aria-hidden="true">
+							${list.tip_viewcount}</i></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -386,7 +389,7 @@ table th {
 						data-dismiss="modal" style="color: black;">취소</button>
 				</div>
 			</div>
-<<<<<<< HEAD
+			<<<<<<< HEAD
 		</div>
 	</div>
 
@@ -434,15 +437,16 @@ table th {
 
 
 
-=======
-			<div class=container>
-				<button class="btn btn-itso" onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
-			</div>
-		</div>
+	=======
+	<div class=container>
+		<button class="btn btn-itso"
+			onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
 	</div>
-	
+	</div>
+	</div>
+
 	<%@include file="footer.jsp"%>
->>>>>>> 머지
+	>>>>>>> 머지
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

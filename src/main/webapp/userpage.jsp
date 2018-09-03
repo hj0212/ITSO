@@ -94,13 +94,13 @@ body {
 	font-weight: bold;
 }
 
-@media ( min-width : 1010px) {
+@media ( min-width : 868px) {
 	#profilestat {
 		margin-top: 35px;
 	}
 }
 
-@media ( max-width : 1010px) {
+@media ( max-width : 868px) {
 	#profilestat {
 		margin-top: 15px;
 		width: 100%;
@@ -482,7 +482,14 @@ table .profilearea {
 			</div>
 			<div id="infoarea" class="col">
 				<p class="h4-responsive mb-0 nanumB">${member.name}</p>
-				<p class="h6-responsive">${member.email}</p>
+				<c:choose>
+					<c:when test="${seq eq sessionScope.user.seq }">
+						<p class="h6-responsive">${member.email}</p>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+				
 				<br>
 				<p class="h4-responsive mb-0 nanumB">
 				
@@ -506,7 +513,7 @@ table .profilearea {
 						<!-- 다른사람 -->
 						<c:if test="${followcheck == 0 }">
 							<!-- 팔로우x -->
-							<button type="button" class="btn btn-indigo btn-sm followbtn">
+							<button type="button" class="btn btn-indigo btn-sm followbtn ml-0">
 								<span class="follow show" style="font-family: 'NanumbarunpenR';"><i
 									class="fa fa-plus" /></i> 팔로우</span> <span class="unfollow hidden"
 									style="font-family: 'NanumbarunpenR';"><i
@@ -603,7 +610,13 @@ table .profilearea {
 							<!-- Grid column -->
 							<c:choose>
 								<c:when test="${empty socialList }">
-									작성한 글이 없습니다.
+									<table class="table" style="width:100%;">
+										<tr>
+											<td>작성한 글이 없습니다.
+										</tr>
+									</table>
+									
+									
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="list" items="${socialList }">
@@ -762,7 +775,7 @@ table .profilearea {
 																						<c:when test="${flist.seq eq list.social_writer}">
 
 																							<button type="button"
-																								class="btn btn-itso followbtn">
+																								class="btn btn-itso followbtn ml-0">
 																								<span class="unfollow show"
 																									style="font-family: 'NanumbarunpenR';"><i
 																									class="fa fa-check" /></i> 언팔로우</span> <span
@@ -774,7 +787,7 @@ table .profilearea {
 																						<c:otherwise>
 
 																							<button type="button"
-																								class="btn btn-indigo followbtn">
+																								class="btn btn-indigo followbtn ml-0">
 																								<span class="follow show"
 																									style="font-family: 'NanumbarunpenR';"><i
 																									class="fa fa-plus" /></i> 팔로우</span> <span
@@ -789,7 +802,7 @@ table .profilearea {
 
 																			<c:otherwise>
 																				<button type="button"
-																					class="btn btn-indigo followbtn">
+																					class="btn btn-indigo followbtn ml-0">
 																					<span class="unfollow hidden"
 																						style="font-family: 'NanumbarunpenR';"><i
 																						class="fa fa-check" /></i> 언팔로우</span> <span

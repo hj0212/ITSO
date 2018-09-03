@@ -35,11 +35,7 @@ select count(*) from users where 50>age and age>40
 
 <!-- getReportedUser -->
 <select id="getReportedUser" resultType="kh.spring.dto.AdminPageDTO">
-<<<<<<< HEAD
 select user_seq, report_reason, name, email, create_date, block from reported_users ru, users u where ru.USER_SEQ = u.seq
-=======
-select user_seq, report_count,report_reason, u.name, email, create_date, block from reported_users ru, users u where ru.USER_SEQ = u.seq
->>>>>>> 머지
 </select>
 
 <!-- user block -->
