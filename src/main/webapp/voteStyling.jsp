@@ -325,7 +325,6 @@ input[type="file"] {
 								$('#itemlist')
 										.append(
 												'<tr class="z-depth-3 hoverable"><th scope="row">'
-														+ 
 														+ '</th>'
 														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'

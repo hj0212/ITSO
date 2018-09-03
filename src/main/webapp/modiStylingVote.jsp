@@ -115,9 +115,9 @@ font-size:15px;
 		<div class="row my-2"></div>
 		<form method="post" action="modifyStylingVote.style?styling_vote_seq=${votedto.styling_vote_seq}" id="modiform" enctype="multipart/form-data">
 			<div class="row z-depth-3 hoverable" id="toprow">
-				<h4>투표주제</h4>&nbsp;<span class="text-muted text-sm settxt">(작성자: ${votedto.styling_writer}</span>
+				<h4>투표주제</h4>&nbsp;<span class="text-muted text-sm settxt">(작성자: ${votedto.styling_writername}</span>
 				&nbsp;<span class="text-muted text-sm settxt"><i class="fa mr-2 fa-eye" aria-hidden="true"></i>${votedto.styling_viewcount})</span>
-				<input type="hidden" value="${votedto.styling_writer}" id="votewriterid" name ="styling_writername">
+				<input type="hidden" value="${votedto.styling_writer}" id="votewriterid" name ="styling_writer">
 			<input type="hidden" name="styling_vote_seq" value="${votedto.styling_vote_seq}">
 			<input type="hidden" name="styling_viewcount" value="${votedto.styling_viewcount}">
 			<input type="hidden" id="showdto" value="투표인원${votedto.styling_voternum}::기간${votedto.styling_endterm}::최근수정날짜${votedto.styling_lastdate}::조회수${votedto.styling_viewcount}::글번호${votedto.styling_vote_seq}">
@@ -219,8 +219,8 @@ font-size:15px;
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="datepickervalue" disabled readOnly
-						class="form-control form-control-sm col-md-4" value="${votedto.styling_endterm}">
+					<input type="text" id="datepicker" name="datepickervalue" disabled
+						class="form-control form-control-sm col-md-4" readOnly value="${votedto.styling_endterm}">
 						<input type="hidden" name="styling_endtermtxt" id="realterm">
 				</div>
 			</div>
@@ -354,7 +354,6 @@ font-size:15px;
 								$('#itemlist')
 										.append(
 												'<tr class="z-depth-3 hoverable" id="tr${status.index}"><th scope="row">'
-														+ count
 														+ '</th>'
 														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'
@@ -411,7 +410,6 @@ font-size:15px;
 			} else if ($(this).val() == 1) {
 				$('#votenum').attr('readOnly', true);
 				$("#datepicker").attr('disabled',false);
-				$("#datepicker").attr('readOnly',false);
 				$("#datepicker").css("background-color","white");
 				$(function() {
 					$("#datepicker").datepicker(
@@ -510,7 +508,6 @@ font-size:15px;
 						if(radioval==3){
 							$('#realterm').val("blank");
 							$('#votenum').val(0);
-							console.log($('#realterm:styling_endtermtxt 값').val()); 
 						}
 						
 						if(radioval==2){
@@ -519,7 +516,8 @@ font-size:15px;
 						}
 						if(radioval==1){
 							$('#votenum').val(0);
-							console.log($('#realterm:styling_endtermtxt 값').val()); 
+							$("#realterm").val($('#datepicker').val());
+							console.log($('#datepicker').val()+": 다시 입력된 새로운 날짜").val()); 
 						}
 						  console.log("submit");  		    
 						   $('#modiform').submit();     			

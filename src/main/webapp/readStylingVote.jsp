@@ -350,7 +350,7 @@ margin-top:20px;
 						$('#votebtn').attr("disabled", true);
 						$('#votebtn').text("투표 완료");
 						$('input[type="radio"]').attr("disabled",true);
-						location.href="readStylingVote.style?styling_vote_seq="+$('#sequenceId').val();
+						location.href="readStylingVote.style?styling_vote_seq="+$('#sequenceId').val()+"&state=${votestate}"";
 					}
 				});
 			}else if(voteval == null){
