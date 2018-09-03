@@ -883,7 +883,6 @@ button.dropdown-toggle {
 		});
 
 		</script>
-		</script>
 </body>
 
 <!-- Bootstrap tooltips -->

@@ -740,6 +740,7 @@
 			$(this).attr("class", "fa fa-heart red-text heart");
 		}
 	});
+	
 	$(".heart").on('click', function() {
 		var seq = $(this).attr("value");
 		var writer	= $(".writerseq").val();
@@ -830,6 +831,7 @@
 		    .on('click', function () {
 		        var collection_title = $("input[name='collection_title']").val();
 		        var collection_contents = $("textarea[name='collection_contents']").val();
+		        
 		        
 		        if(collection_title == "") {
 		        	alert("컬렉션 이름을 입력하세요.");

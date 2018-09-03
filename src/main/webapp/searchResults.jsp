@@ -546,6 +546,22 @@ a#MOVE_TOP_BTN {
 	color: black;
 }
 
+.rect img {
+	width: 200px;
+	height: 200px;
+}
+
+.rect {
+	width: 200px;
+	height: 200px;
+	background: #eee;
+	display: inline;
+	float: left;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+
 /* collection-div */
 .textbtn {
 	font-size: 12px;
@@ -733,7 +749,7 @@ a#MOVE_TOP_BTN {
 
 										<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
-											src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+											src="upload/social/${list.photo}" class="img-fluid z-depth-2"
 											alt="Responsive image">
 
 										</a>
@@ -1123,7 +1139,7 @@ a#MOVE_TOP_BTN {
 							for="inputMD">컬렉션 이름</label>
 					</div>
 					<div class="md-form mt-1">
-						<textarea type="text" id="form7" class="md-textarea form-control"
+						<textarea id="form7" class="md-textarea form-control"
 							rows="3" name="collection_contents"></textarea>
 						<label for="form7">컬렉션 상세 설명</label>
 					</div>

@@ -1093,13 +1093,13 @@ table .profilearea {
 									<input type="hidden" id="seqform" />
 									<div class="md-form">
 										<input type="text" id="titleform" class="form-control"
-											name="collection_title" maxlength="30" autofocus> <label
+											name="ecollection_title" maxlength="30" autofocus> <label
 											for="titleform">컬렉션 이름</label>
 									</div>
 									<div class="md-form mt-1">
-										<textarea type="text" id="contentsform"
+										<textarea id="contentsform"
 											class="md-textarea form-control" rows="3"
-											name="collection_contents"></textarea>
+											name="ecollection_contents"></textarea>
 										<label for="form7" class="mb-0">컬렉션 상세 설명</label>
 									</div>
 								</div>
@@ -1318,11 +1318,11 @@ table .profilearea {
 
 		})
 
-		$("#createcolbtn")
-		    .on('click', function () {
+		$("#createcolbtn").on('click', function () {
 		        var collection_title = $("input[name='collection_title']").val();
 		        var collection_contents = $("textarea[name='collection_contents']").val();
 		        
+		        console.log("왜이래: " + collection_title +":"+collection_contents);
 		        if(collection_title == "") {
 		        	alert("컬렉션 이름을 입력하세요.");
 		        } else if(collection_contents == "") {
@@ -1403,8 +1403,6 @@ table .profilearea {
 				
 			});
 	
-		
-			
 		});
 	
 		document.title = "${member.name}" ;

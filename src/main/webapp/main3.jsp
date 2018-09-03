@@ -286,6 +286,8 @@ a#MOVE_TOP_BTN {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px;
+	overflow: hidden;
 }
 
 .active {
@@ -391,12 +393,12 @@ a#MOVE_TOP_BTN {
 
 								<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
-									src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+									src="upload/social/${list.photo}" class="img-fluid z-depth-2"
 									alt="Responsive image">
 
 								</a>
 								<div class="photoContainer">
-									<div class="photoContainerHover z-depth-2">
+									<div class="photoContainerHover z-depth-1">
 										<input type="hidden" class="read" value="readSocial.go?seq=${list.social_seq}" /> 
 										<input type="hidden" class="user" value="userpage.go?seq=${list.social_writer }" />
 										<h3 class="photoContainerHoverTitle title">${list.social_title}</h3>
@@ -592,7 +594,7 @@ a#MOVE_TOP_BTN {
 							for="inputMD">컬렉션 이름</label>
 					</div>
 					<div class="md-form mt-1">
-						<textarea type="text" id="form7" class="md-textarea form-control"
+						<textarea id="form7" class="md-textarea form-control"
 							rows="3" name="collection_contents"></textarea>
 						<label for="form7">컬렉션 상세 설명</label>
 					</div>
