@@ -121,15 +121,8 @@ public class MemberController {
 		List<SocialBoardDTO> goodList = this.sservice.getMyGoodSocialArticleList((MemberDTO) session.getAttribute("user"));
 		List<MemberDTO> followerList = this.mservice.getFollowerList(tmp);
 		List<MemberDTO> followingList = this.mservice.getFollowingList(tmp);
+		
 		MemberController.followCheck(followerList, followingList);
-		
-		for(MemberDTO mtmp : followerList) {
-			System.out.println(mtmp.getSeq() + ":" +mtmp.getFollowcheck());
-		}
-		
-		for(MemberDTO mtmp : followingList) {
-			System.out.println(mtmp.getSeq() + ":" +mtmp.getFollowcheck());
-		}
 		
 		mav.addObject("followcheck", result);
 		mav.addObject("seq", tmp.getSeq());
@@ -182,32 +175,13 @@ public class MemberController {
 				for (MemberDTO followingtmp : followingList) {
 					if (followertmp.getSeq() == followingtmp.getSeq()) {
 						followertmp.setFollowcheck("y");
-						System.out.println("followercheck" + followertmp.getFollowcheck() + ":" + followertmp.getSeq() + ":" + followingtmp.getSeq());
 						break;
 					} else {
 						followertmp.setFollowcheck("n");
-						System.out.println("followercheck" + followertmp.getFollowcheck() + ":" + followertmp.getSeq() + ":" + followingtmp.getSeq());
 					}
 				}
 			} else {
 				followertmp.setFollowcheck("n");
-			}
-		}
-
-		for (MemberDTO followingtmp : followingList) {
-			if(followerList.size()>0) {
-				for (MemberDTO followertmp : followerList) {
-					if (followingtmp.getSeq() == followertmp.getSeq()) {
-						followingtmp.setFollowcheck("y");
-						System.out.println("followingcheck" + followingtmp.getFollowcheck() + ":" + followingtmp.getSeq() + ":" + followertmp.getSeq());
-						break;
-					} else {
-						followingtmp.setFollowcheck("n");
-						System.out.println("followingcheck" + followingtmp.getFollowcheck() + ":" + followingtmp.getSeq() + ":" + followertmp.getSeq());
-					}
-				}
-			} else {
-				followingtmp.setFollowcheck("n");
 			}
 		}
 	}

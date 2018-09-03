@@ -1016,24 +1016,8 @@ table .profilearea {
 											</td>
 
 											<td style="height: 100px; vertical-align: middle">
-												<h6 class="mt-1">${finglist.name }</h6> <c:choose>
-													<c:when test="${finglist.seq eq sessionScope.user.seq }">
-
-													</c:when>
-													<c:otherwise>
-														<script></script>
-														<c:if test="${finglist.followcheck eq 'n' }">
-															<button type="button" class="btn btn-indigo followbtn">
-																<span class="follow show"
-																	style="font-family: 'NanumbarunpenR';"><i
-																	class="fa fa-plus" /></i> 팔로우</span> <span
-																	class="unfollow hidden"
-																	style="font-family: 'NanumbarunpenR';"><i
-																	class="fa fa-check" /></i> 언팔로우</span>
-															</button>
-														</c:if>
-														<c:if test="${finglist.followcheck eq 'y' }">
-															<button type="button" class="btn btn-itso followbtn">
+												<h6 class="mt-1">${finglist.name }</h6>
+												<button type="button" class="btn btn-itso followbtn">
 																<span class="unfollow show"
 																	style="font-family: 'NanumbarunpenR';"><i
 																	class="fa fa-check" /></i> 언팔로우</span> <span
@@ -1041,10 +1025,7 @@ table .profilearea {
 																	style="font-family: 'NanumbarunpenR';"><i
 																	class="fa fa-plus" /></i> 팔로우</span>
 															</button>
-														</c:if>
 														<input type="hidden" value="${finglist.seq }" id="seq" />
-													</c:otherwise>
-												</c:choose>
 											</td>
 
 										</tr>
