@@ -143,7 +143,8 @@ input[type="file"] {
 									<h4 class="card-title">${svdto.styling_title}</h4>
 									<!--Text-->
 									<p class="card-text">
-										<a class="text-muted amber-text">${svdto.styling_writername}</a>
+										<a class="text-muted amber-text" href="userpage.go?seq=${svdto.styling_writer}">${svdto.styling_writername}	
+										</a>
 										<a><i class="fa mr-2 fa-eye"
 											aria-hidden="true"></i>${svdto.styling_viewcount}</a> 
 									</p>
