@@ -297,25 +297,22 @@ input[type="file"] {
 			  }
 			
 		function readURL(input) {
-			console.log("input:"+input);
-			console.log("inputId:"+input.id); 
-			console.log("inputfile.name:"+input.files[0].name);
-			
+			console.log(input.id);
+			console.log(input.files[0].name);
 			var inputId = input.id;
-			/* console.log(document.getElementById(inputId)); */
-			var imageId = document.getElementById(inputId).parentElement.children[0]; 
+			console.log(document.getElementById(inputId));
+			var imageId = document.getElementById(inputId).parentElement.children[0];
 
-			console.log("imageId:"+imageId); 
+			console.log(imageId);
 			var imagesrc = imageId.src;
-			console.log("imgsrc:"+imagesrc);
-			/* var imagesrc = imageId.src; */
-			/* console.log(imagesrc); */
+			console.log(imagesrc);
 			/*  console.log(imageId.src); */
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
+
 				reader.onload = function(e) {
-					imagesrc = e.target.result;
-					console.log(imagesrc);
+					imageId.src = e.target.result;
+					/* imagesrc = e.target.result; */
 					$('.image-title').html(input.files[0].name);
 				};
 				reader.readAsDataURL(input.files[0]);
@@ -324,7 +321,7 @@ input[type="file"] {
 			}
 		}
 		count = 1;
-		counter =2;
+		counter =10;
 		$("#addvotebtn")
 				.on(
 						"click",
@@ -338,7 +335,8 @@ input[type="file"] {
 												'<tr class="z-depth-3 hoverable"><th scope="row">'
 														+ '</th>'
 														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
-														+ '<input type="file" name="voteimgfile[]" id="imgfile'+counter									
+														+ '<input type="file" name="voteimgfile[]" id="imgfile'
+														+ counter
 														+ '" class="file-upload-input form-control filesel"'
 														+ 'onchange="readURL(this);" accept="image/*"></div>'
 														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'	
