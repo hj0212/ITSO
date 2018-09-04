@@ -286,7 +286,7 @@ input[type="file"] {
 		$('.mask').click(function() {
 			var seq = $(this).parent().parent().find('.findseq').val();
 			var state = "";
-			console.log($(this).parent().next('div').find('.secondtxt')) ;
+			console.log($(this).parent().next('div').find('.secondtxt').text()) ;
 			if($(this).parent().next('div').find('.secondtxt').text() =='투표 진행중' ){
 				state = "ing";
 			}else if($(this).parent().next('div').find('.secondtxt').text() =='투표 종료' ){
