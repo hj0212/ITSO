@@ -131,7 +131,7 @@ input[type="file"] {
 								<div class="view overlay view-cascade ">
 									<img class="card-img-top"
 										src="upload/stylingvote/${svdto.photo}" alt="titlephoto"
-										id="titleimg" /> <a href="#!">
+										id="titleimg" /> <a>
 										<div class="mask rgba-white-slight"></div>
 									</a>
 								</div>
