@@ -44,4 +44,8 @@
 	<select id="searchedUserInfo" parameterType="String" resultType="suidto">
 		select seq,email,name,photo,state from users where state like '%'||#{0}||'%'
 	</select>
+	
+	<select id="recoFollow" resultType="dto">
+		select u2.* from (select seq, name, photo, substr(age,1,1) age from users where seq=#{seq}) u1, (select seq, name, photo, substr(age,1,1) age from users where seq not in (select following_seq from follow where user_seq = #{seq})) u2 where u1.age = u2.age
+	</select>
 </mapper>

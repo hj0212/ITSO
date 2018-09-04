@@ -37,8 +37,7 @@
 
 
 <style>
-<<<<<<<
-HEAD
+
 a, a:hover {
 	text-decoration: none;
 }
@@ -217,7 +216,7 @@ table th {
 			<tr>
 				<td><button class="btn dropdown-toggle" type="button"
 						id="tipcategory" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">카테고리별 분류</button>
+						aria-expanded="false">카테고리</button>
 
 					<div class="dropdown-menu" aria-labelledby="tipcategory">
 						<a class="dropdown-item" href="tipBoardMainPage.tip">전체보기</a> <a
@@ -233,12 +232,15 @@ table th {
 					<td class="tip-title"><a
 						href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
 					<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
-					<td class=tip-date><fmt:formatDate type="both"
+					<td>　　</td>
+					<td class="text-left"><fmt:formatDate type="both"
 							value="${list.tip_date}"></fmt:formatDate></td>
-					<td><i class=" fa fa-heart mr-1 red-text" aria-hidden="true">
-							${list.tip_like_count}</i> <i class="fa fa-comment mr-1 amber-text"
-						aria-hidden="true"> ${list.tip_comment_count}</i> <i
-						class="fa fa-eye mr-1" aria-hidden="true">
+					<td>　　</td>
+					<td class="text-left"><i class=" fa fa-heart mr-1 red-text" aria-hidden="true">
+							${list.tip_like_count}</i>
+					<td class="text-left"><i class="fa fa-comment mr-1 amber-text"
+						aria-hidden="true"> ${list.tip_comment_count}</i>
+					<td class="text-left"><i class="fa fa-eye mr-1" aria-hidden="true">
 							${list.tip_viewcount}</i></td>
 				</tr>
 			</c:forEach>
@@ -321,8 +323,6 @@ table th {
 	</div>
 
 
-
-
 	<!-- report : reportTheUser modal -->
 	<div class="modal fade" id="reportTheUser" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -389,64 +389,14 @@ table th {
 						data-dismiss="modal" style="color: black;">취소</button>
 				</div>
 			</div>
-			<<<<<<< HEAD
-		</div>
-	</div>
-
-
-	<!-- reportTheUser modal end -->
-
-
-
-	<!--  차단 -->
-	<div class="modal fade" id="blockTheUser" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm" role="document">
-			<!--Content-->
-			<div class="modal-content">
-				<!--Header-->
-				<div class="modal-header">
-					<p class="heading lead mb-0">차단</p>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-
-				<!--Body-->
-				<div class="modal-body">
-					<div class="text-center mb-4">
-						<span class="instafilta-target"><i
-							class="fa fa-hand-stop-o fa-5x red-text"></i></span>
-					</div>
-					<label for="rddisabled" class="disabled">상대방은 ITSO에서 회원님의
-						프로필,게시물을 찾을 수 없습니다. ITSO는 회원님이 차단한 사실을 상대방에게 알리지 않습니다.</label>
-				</div>
-
-				<!--Footer-->
-				<div class="modal-footer justify-content-center">
-					<button class="btn btn-itso" data-toggle="modal"
-						data-target="#modal">차단</button>
-					<button class="btn btn-outline-itso waves-effect"
-						data-dismiss="modal" style="color: black;">취소</button>
-				</div>
+			<div class=container>
+				<button class="btn btn-itso"
+					onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
 			</div>
-
 		</div>
-	</div>
-
-
-
-	=======
-	<div class=container>
-		<button class="btn btn-itso"
-			onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
-	</div>
-	</div>
 	</div>
 
 	<%@include file="footer.jsp"%>
-	>>>>>>> 머지
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

@@ -20,4 +20,5 @@ public interface IMemberService {
   public Integer checkFollow(FollowDTO dto);
   public MemberDTO selectSocialWriter(int social_seq);
   public List<SearchedUserInfoDTO> getSearchedUserList(String word);
+  public List<MemberDTO> recoFollow(MemberDTO dto);
 }

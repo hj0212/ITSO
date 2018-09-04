@@ -83,14 +83,19 @@ a {
 }
 
 #rightfix {
-	width: 300px;
+	width: 250px;
 	top: 30%;
-	right: 30px;
+	right: 0px;
 	position: fixed;
 }
 
 #rightfix .media {
 	margin-bottom: 20px;
+}
+
+#rightfix img {
+	height: 70px;
+	width: 70px;
 }
 
 .media-body {
@@ -360,8 +365,7 @@ button.dropdown-toggle {
 		<section class="firstSection col-md-12">
 			<div class="mainIntro">
 				<p>
-					<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
-					the people you like to personalize you feed.
+					마음에 드는 게시글에 <strong>좋아요</strong>를 누르고, <strong>팔로우</strong>를 통해 개인적인 피드를 구성하세요!  
 				</p>
 			</div>
 		</section>
@@ -730,44 +734,36 @@ button.dropdown-toggle {
 
 		<!-- 오른쪽 추천 follow  -->
 		<div id="rightfix" class="right-fixed">
-			<ul class="list-unstyled">
+		<c:choose>
+			<c:when test="${empty recommendList} }">
+			
+			</c:when>
+			<c:otherwise>
+				<h5 class="font-weight-bold" style="margin-bottom: 20px;">추천 팔로우</h5>
+				<ul class="list-unstyled">
+				<c:forEach var="reco" items="${recommendList}">
 				<li class="media"><img
 					class="d-flex mr-3 rounded-circle  align-self-center"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
+					src="upload/profile/${reco.photo }"
 					alt="Generic placeholder image">
 					<div class="media-body mt-0">
-						<h5 class="mt-0 font-weight-bold">List-based media object</h5>
-						<button type="button" class="btn btn-indigo btn-sm m-0">
-							<i class="fa fa-plus">follow</i>
+						<h5 class="mt-0 mb-0 ">${reco.name }</h5>
+						<button type="button" class="btn btn-indigo followbtn btn-sm">
+							<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';">
+							<i class="fa fa-check" /></i> 언팔로우</span> 
+							<span class="follow show" style="font-family: 'NanumbarunpenR';">
+							<i class="fa fa-plus" /></i> 팔로우</span>
 						</button>
-
+						<input type="hidden" class="writerseq" value="${reco.seq }"/>
 					</div></li>
-				<li class="media"><img
-					class="d-flex mr-3 rounded-circle  align-self-center"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-					alt="Generic placeholder image">
-					<div class="media-body mt-0">
-						<h5 class="mt-0 font-weight-bold">List-based media object</h5>
-						<button type="button" class="btn btn-indigo btn-sm m-0">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-				<li class="media"><img
-					class="d-flex mr-3 rounded-circle  align-self-center"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-					alt="Generic placeholder image">
-					<div class="media-body mt-0">
-						<h5 class="mt-0 font-weight-bold">List-based media object</h5>
-						<button type="button" class="btn btn-indigo btn-sm m-0">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
+				</c:forEach>
 			</ul>
+			</c:otherwise>
+		</c:choose>
+		
+			
 			<a id="MOVE_TOP_BTN" href="#" class="btn btn-elegant btn-sm">TOP</a>
 		</div>
-		<div id="enters"></div>
 
 		<%@include file="footer.jsp"%>
 

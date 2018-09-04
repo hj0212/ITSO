@@ -619,7 +619,7 @@ background-color: #f4f4f4;
 		$.each(data.list,function(index,item){			
 			if(listget==""){
 			userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">' ;
-			 userlist += '<img src="upload/profile/"'+item.photo+'alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'; 
+			 userlist += '<img src="upload/profile/'+item.photo+'" alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'; 
 			userlist += '<div class="text-md-left align-middle">';
 			userlist += '<strong>'+item.name+'</strong>';
 			userlist += '<p class="last-message text-muted">'+item.contents+'</p>';
@@ -822,7 +822,7 @@ background-color: #f4f4f4;
 	
 	 	$.each(data.user,function(index,item){
 							
-		user = '<img src="/upload/profile/"'+item.photo+'"alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'
+		user = '<img src="upload/profile/'+item.photo+'" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'
 		user += '<p class="heading lead heading-name" seq="'+item.seq+'">'+item.name+'</p>'; 
 		user+=	'<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
 		user+=	'<span aria-hidden="true" class="white-text">&times;</span>'

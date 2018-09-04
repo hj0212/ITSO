@@ -84,4 +84,9 @@ public class MemberDAOImpl implements IMemberDAO{
 	public Integer checkFollow(FollowDTO dto) {
 		return template.selectOne("Member.checkFollow", dto);
 	}
+
+	@Override
+	public List<MemberDTO> recoFollow(MemberDTO dto) {
+		return template.selectList("Member.recoFollow", dto);
+	}
 }
