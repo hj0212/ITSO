@@ -389,64 +389,14 @@ table th {
 						data-dismiss="modal" style="color: black;">취소</button>
 				</div>
 			</div>
-			<<<<<<< HEAD
-		</div>
-	</div>
-
-
-	<!-- reportTheUser modal end -->
-
-
-
-	<!--  차단 -->
-	<div class="modal fade" id="blockTheUser" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm" role="document">
-			<!--Content-->
-			<div class="modal-content">
-				<!--Header-->
-				<div class="modal-header">
-					<p class="heading lead mb-0">차단</p>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-
-				<!--Body-->
-				<div class="modal-body">
-					<div class="text-center mb-4">
-						<span class="instafilta-target"><i
-							class="fa fa-hand-stop-o fa-5x red-text"></i></span>
-					</div>
-					<label for="rddisabled" class="disabled">상대방은 ITSO에서 회원님의
-						프로필,게시물을 찾을 수 없습니다. ITSO는 회원님이 차단한 사실을 상대방에게 알리지 않습니다.</label>
-				</div>
-
-				<!--Footer-->
-				<div class="modal-footer justify-content-center">
-					<button class="btn btn-itso" data-toggle="modal"
-						data-target="#modal">차단</button>
-					<button class="btn btn-outline-itso waves-effect"
-						data-dismiss="modal" style="color: black;">취소</button>
-				</div>
+			<div class=container>
+				<button class="btn btn-itso"
+					onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
 			</div>
-
 		</div>
-	</div>
-
-
-
-	=======
-	<div class=container>
-		<button class="btn btn-itso"
-			onclick="location.href='tipInsertPage.go'">팁 쓰기</button>
-	</div>
-	</div>
 	</div>
 
 	<%@include file="footer.jsp"%>
-	>>>>>>> 머지
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
