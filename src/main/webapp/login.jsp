@@ -28,6 +28,7 @@ body, html {
 	width: 100%;
 	height: 120vh;
 }
+
 .bg {
 	/* The image used */
 	background-image:
@@ -40,11 +41,13 @@ body, html {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
 /*login*/
 * {
 	margin: 0px auto;
 	box-sizing: border-box;
 }
+
 #facebook {
 	margin-left: 5px;
 	border-radius: 5px;
@@ -52,11 +55,13 @@ body, html {
 	background-color: #4267b2;
 	color: white;
 }
+
 #facebook:hover {
 	cursor: pointer;
 	color: #4267b2;
 	background-color: white;
 }
+
 #twitter {
 	margin-left: 5px;
 	border-radius: 10px;
@@ -64,11 +69,13 @@ body, html {
 	background-color: #3cf;
 	color: white;
 }
+
 #twitter:hover {
 	cursor: pointer;
 	color: #3cf;
 	background-color: white;
 }
+
 #google {
 	margin-left: 5px;
 	border-radius: 3px;
@@ -76,48 +83,60 @@ body, html {
 	background-color: #db4437;
 	color: white;
 }
+
 #google:hover {
 	cursor: pointer;
 	color: #db4437;
 	background-color: white;
 }
+
 #warpper {
 	width: 100%;
 }
+
 #login-div {
 	width: 100%;
 }
+
 /*login/signup button*/
 #login {
 	background-color: black;
 	border: 2px solid black;
 }
+
 #login:hover {
 	border: 2px solid #ffffff;
 }
+
 #signup {
 	background-color: black;
 	border: 2px solid black;
 }
+
 #signup:hover {
 	border: 2px solid #ffffff;
 }
+
 #signin {
 	color: black;
 	background-color: #ffffff;
 	border: 2px solid #ffffff;
 }
+
 #signin:hover {
 	border: 2px solid #feff19;
 }
+
 #cancel {
 	color: black;
 	background-color: #ffffff;
 	border: 2px solid #ffffff;
 }
+
 #cancel:hover {
 	border: 2px solid #feff19;
 }
+
 #gender{
    border:0px;
    border-bottom: 1px solid white;
@@ -135,12 +154,14 @@ color: black;
 <script>
 $(document).ready(function () {
     $(".sign").hide();
+
     $("#signup").click(function () {
         $(".sign").show("slow");
         $("#login").hide();
         $(".login").hide();
         $(".form-control").val("");
     });
+
     $("#cancel").click(function () {
         $("#login").show();
         $(".sign").hide();
@@ -151,15 +172,18 @@ $(document).ready(function () {
     /*email*/
     document.getElementById("inputIconEx1").onblur = function () {
         var email = $("#inputIconEx1").val();
+
         if (!emailCheck(email)) {
             $("#inputIconEx1").val("");
             console.log("emali형식이 맞지않습니다");
         }
+
         function emailCheck(email) {
             var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
             return regex.test(email);
         }
     };
+
     /*ajax */
     document.getElementById("email").onblur = function () {
         var email = $("#email").val();
@@ -167,10 +191,12 @@ $(document).ready(function () {
             $("#email").val("");
             console.log("email형식이 맞지않습니다");
         }
+
         function emailCheck(email) {
             var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
             return regex.test(email);
         }
+
         console.log(email);
         $.ajax({
             url: "emailcheck.ajax",
@@ -185,6 +211,7 @@ $(document).ready(function () {
             }
         });
     };
+
     function iconColor(data) {
         console.log(data + "1");
         if (data.indexOf("fa-close") > -1) {
@@ -196,13 +223,16 @@ $(document).ready(function () {
             $("#emailIcon").css("color", "green");
         }
     }
+
     /*password*/
     $("#inputValidationEx2")
-        .keypress(
+     
+    .keypress(
             function () {
                 var password = $(
                         "#inputValidationEx2")
                     .val();
+
                 if (blank(password)) {
                     console.log(password);
                     var regex = /\s/g;
@@ -211,11 +241,13 @@ $(document).ready(function () {
                         .getElementById("inputValidationEx2").value
                         .replace(regex, "");
                 };
+
                 function blank(password) {
                     var regex = /\s/g;
                     return regex.test(password);
                 };
             });
+
     /*login button click event*/
     /*    $("#signin").on('click', function () {
            $("userform").attr("action", "signin.do");
@@ -225,6 +257,7 @@ $(document).ready(function () {
         $("#userform").attr("action", "signin.do");
         $("#userform").submit();
     });
+
     $("#login").click(function () {
         $("#userform").attr("action", "login.do");
         $("#userform").submit();
@@ -244,7 +277,88 @@ $(document).ready(function () {
 			}
 		  }
 	  });
+
+    /* 페이스북 로그인 */
+    var checkLoginStatus = function (response) {
+        console.log(response);
+        // statusChangeCallback(response);
+
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            $("#authBtn").val("logout");
+            fbLoginAction();
+        } else {
+            $("#authBtn").val("login");
+            // The person is not logged into your app or we are unable to tell.
+            document.getElementById('status').innerHTML = 'Please log ' +
+                'into this app.';
+        }
+    };
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1128205587330014',
+            cookie: true, // enable cookies to allow the server to access 
+            // the session
+            xfbml: true, // parse social plugins on this page
+            version: 'v2.8' // use graph api version 2.8
+        });
+
+        // Now that we've initialized the JavaScript SDK, we call 
+        // FB.getLoginStatus().  This function gets the state of the
+        // person visiting this page and can return one of three states to
+        // the callback you provide.  They can be:
+        //
+        // 1. Logged into your app ('connected')
+        // 2. Logged into Facebook, but not your app ('not_authorized')
+        // 3. Not logged into Facebook and can't tell if they are logged into
+        //    your app or not.
+        //
+        // These three cases are handled in the callback function.
+
+        checkLoginState = function () {
+            FB.getLoginStatus(checkLoginStatus);
+        }
+
+    };
+
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    function fbLoginAction() {
+        FB.login(function (response) {
+            var fbname;
+            var accessToken = response.authResponse.accessToken;
+            FB.api('/me?fields=id,name,email', function (resp) {
+                console.log(resp);
+                var data = JSON.stringify(resp);
+                console.log(data);
+                $.ajax({
+                    url: "fbLogin.ajax",
+                    type: "post",
+                    data: {
+                        data: data
+                    },
+                    success: function (data) {
+                        location.href = data;
+                    }
+                });
+
+
+            });
+        });
+    }
 });
+
+
 </script>
 </head>
 <body>
@@ -336,9 +450,31 @@ $(document).ready(function () {
 							in</button>
 						<button class="btn sign" id="cancel" type="button">Cancel</button>
 					</div>
+					<!--password 찾기-->
+					<div class="row forgot-password-row">
+						<span class="blue-text text-lighten-1 waves-effect"> <a
+							href="../findPw.jsp" style="margin-right: 0px">Forgot
+								Password?</a></span>
+					</div>
 				</div>
 			</form>
-			
+			<div id="other-bt-group" style="text-align: center;">
+
+				<!-- T
+				itle -->
+				<h4 class="card-title" style="color: #e9e9e9">
+					<strong>Other Login</strong>
+				</h4>
+				<!-- Subtitle -->
+
+				<!-- Text -->
+				<p class="card-text"></p>
+				
+
+				<!-- Facebook -->
+				<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+				</fb:login-button>
+			</div>
 		</div>
 	</div>
 </body>

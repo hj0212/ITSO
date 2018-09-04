@@ -321,21 +321,22 @@ input[type="file"] {
 			}
 		}
 		count = 1;
+		counter =10;
 		$("#addvotebtn")
 				.on(
 						"click",
 						function() {
 							if (count < 6) {
 								count++;
+								counter++;
 								console.log(count);
 								$('#itemlist')
 										.append(
 												'<tr class="z-depth-3 hoverable"><th scope="row">'
-														+ 
 														+ '</th>'
 														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'
-														+ count
+														+ counter
 														+ '" class="file-upload-input form-control filesel"'
 														+ 'onchange="readURL(this);" accept="image/*"></div>'
 														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'	
