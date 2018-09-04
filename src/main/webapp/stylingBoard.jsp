@@ -131,7 +131,7 @@ input[type="file"] {
 								<div class="view overlay view-cascade ">
 									<img class="card-img-top"
 										src="upload/stylingvote/${svdto.photo}" alt="titlephoto"
-										id="titleimg" /> <a>
+										id="titleimg" /> <a class="clickcard">
 										<div class="mask rgba-white-slight"></div>
 									</a>
 								</div>
@@ -283,7 +283,7 @@ input[type="file"] {
 			location.href = "readStylingVote.style?styling_vote_seq=" + seq+"&state="+state;
 		})
 		
-		$('.mask').click(function() {
+		$('.clickcard').click(function() {
 			var seq = $(this).parent().parent().find('.findseq').val();
 			var state = "";
 			console.log($(this).parent().next('div').find('.secondtxt').text()) ;
