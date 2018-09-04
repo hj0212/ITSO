@@ -37,8 +37,7 @@
 
 
 <style>
-<<<<<<<
-HEAD
+
 a, a:hover {
 	text-decoration: none;
 }
@@ -217,7 +216,7 @@ table th {
 			<tr>
 				<td><button class="btn dropdown-toggle" type="button"
 						id="tipcategory" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="false">카테고리별 분류</button>
+						aria-expanded="false">카테고리</button>
 
 					<div class="dropdown-menu" aria-labelledby="tipcategory">
 						<a class="dropdown-item" href="tipBoardMainPage.tip">전체보기</a> <a
@@ -233,12 +232,15 @@ table th {
 					<td class="tip-title"><a
 						href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
 					<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
-					<td class=tip-date><fmt:formatDate type="both"
+					<td>　　</td>
+					<td class="text-left"><fmt:formatDate type="both"
 							value="${list.tip_date}"></fmt:formatDate></td>
-					<td><i class=" fa fa-heart mr-1 red-text" aria-hidden="true">
-							${list.tip_like_count}</i> <i class="fa fa-comment mr-1 amber-text"
-						aria-hidden="true"> ${list.tip_comment_count}</i> <i
-						class="fa fa-eye mr-1" aria-hidden="true">
+					<td>　　</td>
+					<td class="text-left"><i class=" fa fa-heart mr-1 red-text" aria-hidden="true">
+							${list.tip_like_count}</i>
+					<td class="text-left"><i class="fa fa-comment mr-1 amber-text"
+						aria-hidden="true"> ${list.tip_comment_count}</i>
+					<td class="text-left"><i class="fa fa-eye mr-1" aria-hidden="true">
 							${list.tip_viewcount}</i></td>
 				</tr>
 			</c:forEach>
@@ -319,8 +321,6 @@ table th {
 			</div>
 		</div>
 	</div>
-
-
 
 
 	<!-- report : reportTheUser modal -->

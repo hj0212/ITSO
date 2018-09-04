@@ -82,4 +82,9 @@ public class MemberServiceImpl implements IMemberService {
 	public List<SearchedUserInfoDTO> getSearchedUserList(String word) {
 		return this.dao.getSearchedUserList(word);
 	}
+
+	@Override
+	public List<MemberDTO> recoFollow(MemberDTO dto) {
+		return this.dao.recoFollow(dto);
+	}
 }

@@ -73,7 +73,9 @@ public class SocialController {
 			mav.setViewName("login.go");
 			return mav;
 		}
-
+		
+		MemberDTO tmp = new MemberDTO();
+		tmp.setSeq(user_seq);
 
 		String main =null;
 		String gender =null;
@@ -182,6 +184,7 @@ public class SocialController {
 			NotificationDTO ndto = new NotificationDTO(sessionSeq);
 			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
 			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);*/
+			List<MemberDTO> recommendList = this.mService.recoFollow(tmp);
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
@@ -189,6 +192,7 @@ public class SocialController {
 
 			/*mav.addObject("u-seq",sessionSeq);
 			mav.addObject("notiList",notiList);*/
+			mav.addObject("recommendList",recommendList);
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
