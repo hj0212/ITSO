@@ -22,7 +22,7 @@
 	</select>  -->
 	
 	<select id="selectStylingBoard" resultType="svDTO">
-	select s.styling_vote_seq, dd.ddate, cc.voter voter, (cc.styling_voternum-cc.voter)dnum, s.styling_title, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s
+	select u.photo uphoto,s.styling_vote_seq, dd.ddate, cc.voter voter, (cc.styling_voternum-cc.voter)dnum, s.styling_title, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s
 join users u 
 on s.styling_writer = u.seq and s.styling_delete_flag='n' 
 LEFT OUTER join 

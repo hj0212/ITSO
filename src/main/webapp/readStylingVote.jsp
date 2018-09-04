@@ -374,7 +374,6 @@ margin-top:20px;
 		
 		$('#modibtn').click(function(){
 			alert("준비중 입니다:)");
-			location.href="login.go";
 			
 		})
 

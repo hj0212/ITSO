@@ -143,9 +143,9 @@ input[type="file"] {
 									<h4 class="card-title">${svdto.styling_title}</h4>
 									<!--Text-->
 									<p class="card-text">
+									
 										<a class="text-muted amber-text">${svdto.styling_writername}</a>
-										<a><i class="fa mr-2 fa-comment amber-text"
-											aria-hidden="true"></i>0</a> <a><i class="fa mr-2 fa-eye"
+										<a><i class="fa mr-2 fa-eye"
 											aria-hidden="true"></i>${svdto.styling_viewcount}</a> 
 									</p>
 									<p class='card-text secondtxt'>		
@@ -283,7 +283,7 @@ input[type="file"] {
 			location.href = "readStylingVote.style?styling_vote_seq=" + seq+"&state="+state;
 		})
 		
-		$('.clickcard').click(function() {
+		/* $('.clickcard').click(function() {
 			var seq = $(this).parent().parent().find('.findseq').val();
 			var state = "";
 			console.log($(this).parent().next('div').find('.secondtxt').text()) ;
@@ -306,7 +306,7 @@ input[type="file"] {
 				}
 			});
 			location.href = "readStylingVote.style?styling_vote_seq=" + seq+"&state="+state;
-		})
+		}) */
 		
 		$(function() {
 			$(window).scroll(function() {
