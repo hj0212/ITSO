@@ -78,6 +78,8 @@ body {
 				alert("상태메시지를 입력하세요.")
 			} else if(age == "") {
 				alert("나이를 입력하세요.")
+			} else {
+				$("#editform").submit();
 			}
 		})
 	});
@@ -111,7 +113,7 @@ body {
 					<input type="text" id="email" class="form-control"
 						value="${sessionScope.user.email }" readonly> <label for="email">email</label>
 				</div>
-				<form action="editProfile.do" method="post">
+				<form action="editProfile.do" method="post" id="editform">
 					<div class="md-form">
 						<input type="text" id="pw" class="form-control" name="pw"> <label
 							for="pw" placeholder="비밀번호를 입력하세요">비밀번호</label>

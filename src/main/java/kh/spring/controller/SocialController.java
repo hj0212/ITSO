@@ -41,6 +41,7 @@ import kh.spring.interfaces.ISocialCommentService;
 import kh.spring.interfaces.ISocialHashTagService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
+import kh.spring.websocket.EchoHandler;
 
 @Controller
 public class SocialController {
@@ -72,7 +73,9 @@ public class SocialController {
 			mav.setViewName("login.go");
 			return mav;
 		}
-
+		
+		MemberDTO tmp = new MemberDTO();
+		tmp.setSeq(user_seq);
 
 		String main =null;
 		String gender =null;
@@ -181,6 +184,7 @@ public class SocialController {
 			NotificationDTO ndto = new NotificationDTO(sessionSeq);
 			System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
 			List<NotificationDTO> notiList = this.nosevice.selectNotification(ndto);*/
+			List<MemberDTO> recommendList = this.mService.recoFollow(tmp);
 			List<CollectionDTO> collectionList = this.service.getCollectionList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> photoList = this.service.getCollectionPhotoList((MemberDTO)session.getAttribute("user"));
 			List<SocialBoardDTO> goodList = this.service.getMyGoodSocialList((MemberDTO)session.getAttribute("user"));
@@ -188,6 +192,7 @@ public class SocialController {
 
 			/*mav.addObject("u-seq",sessionSeq);
 			mav.addObject("notiList",notiList);*/
+			mav.addObject("recommendList",recommendList);
 			mav.addObject("collectionList",collectionList);
 			mav.addObject("photoList",photoList);
 			mav.addObject("goodList", goodList);
@@ -755,11 +760,15 @@ public class SocialController {
 	}
 
 	@RequestMapping("/procSocialComment.go")
-	public void procSocialComment(HttpServletRequest request, HttpServletResponse response) {
+	public void procSocialComment(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		int social_seq = Integer.parseInt(request.getParameter("seq"));
-
+		int writer_seq =Integer.parseInt(request.getParameter("writerseq"));
+		System.out.println("글작성잡니다 :"+writer_seq);
+		
+		
 		try {
 			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+	
 			String comment = request.getParameter("comment");
 			SocialCommentDTO scdto = new SocialCommentDTO(social_seq, writer, comment);
 			int result = this.comService.insertSocialComment(scdto);
@@ -768,7 +777,7 @@ public class SocialController {
 			ObjectMapper om = new ObjectMapper();
 
 			ArrayNode array = om.createArrayNode();
-
+		
 
 			for(SocialCommentDTO dto : commentList) {
 				ObjectNode on = om.createObjectNode();
@@ -783,8 +792,21 @@ public class SocialController {
 
 				array.add(on);
 			}
-
+			
+			if(writer_seq != writer) {
+				NotificationDTO nodto = new NotificationDTO(writer_seq,writer,"comment","댓글을 남겼습니다","n","readSocial.go?seq="+social_seq,social_seq);
+				List<NotificationDTO> data = nosevice.notificationData(nodto);
+				if(data.size() ==0) {
+					int noInsert = nosevice.insertNotification(nodto);
+					NotificationDTO list = nosevice.selectNotification(nodto).get(0);
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonString = mapper.writeValueAsString(list);
+					EchoHandler.users.get(nodto.getUser_seq()).getBasicRemote().sendText(jsonString);
+				}
+			}
+			
 			response.getWriter().println(array);
+		
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

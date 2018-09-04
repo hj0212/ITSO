@@ -196,4 +196,9 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public Integer getCollectionCount(CollectionDTO dto) {
 		return this.dao.getCollectionCount(dto);
 	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedBrandList(String word) {
+		return this.dao.getSearchedBrandList(word);
+	}
 }

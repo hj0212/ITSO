@@ -22,7 +22,7 @@
 	</select>  -->
 	
 	<select id="selectStylingBoard" resultType="svDTO">
-	select s.styling_vote_seq, dd.ddate, cc.voter voter, (cc.styling_voternum-cc.voter)dnum, s.styling_title, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s
+	select u.photo uphoto,s.styling_vote_seq, dd.ddate, cc.voter voter, (cc.styling_voternum-cc.voter)dnum, s.styling_title, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s
 join users u 
 on s.styling_writer = u.seq and s.styling_delete_flag='n' 
 LEFT OUTER join 
@@ -39,17 +39,19 @@ order by s.styling_writedate desc
 	
 	<select id="selectStylingVote" parameterType="int" resultType="svDTO">
 	<!-- select s.styling_vote_seq, s.styling_title, s.styling_contents, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s,users u where s.styling_writer = u.seq and s.styling_vote_seq = #{styling_vote_seq} -->
-	select s.styling_vote_seq, dd.ddate, cc.dnum, cc.voter, s.styling_title, s.styling_contents, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo, u.name as styling_writername from styling_vote s
-	join users u on s.styling_writer = u.seq and s.styling_vote_seq = #{styling_vote_seq}
-	LEFT OUTER JOIN
-	(select sv.styling_vote_seq, sv.styling_endterm, (sv.styling_endterm - to_date(sysdate,'yy/mm/dd')) ddate from styling_vote sv, dual where sv.styling_end = 1)dd
-	on s.styling_vote_seq = dd.styling_vote_seq
-	LEFT OUTER JOIN
-	(select sv.styling_vote_seq, sv.styling_voternum, su.voter, (sv.styling_voternum-su.voter) dnum 
-	from styling_vote sv ,
-	(select styling_vote_seq, count(*)voter from styling_vote_user group by styling_vote_seq)su
-	where sv.styling_vote_seq = su.styling_vote_seq)cc
-	on s.styling_vote_seq = cc.styling_vote_seq	
+	select s.styling_vote_seq, dd.ddate, cc.voter voter, (cc.styling_voternum-cc.voter)dnum, s.styling_title, s.styling_writer, s.styling_writedate, s.styling_viewcount, s.styling_end,s.styling_endterm,s.styling_voternum,s.photo,u.name as styling_writername  from styling_vote s
+join users u 
+on s.styling_writer = u.seq and s.styling_delete_flag='n' and s.styling_vote_seq=#{styling_vote_seq}
+LEFT OUTER join 
+(select sv.styling_vote_seq,sv.styling_endterm, (sv.styling_endterm - to_date(sysdate,'yy/mm/dd')) ddate from styling_vote sv, dual where sv.styling_end = 1)dd
+on s.styling_vote_seq = dd.styling_vote_seq
+LEFT OUTER join
+(select sv.styling_vote_seq, sv.styling_voternum, nvl(su.voter,0) as voter, (sv.styling_voternum-su.voter)dnum from styling_vote sv 
+left outer Join
+(select styling_vote_seq, nvl(count(*),0)voter from styling_vote_user group by styling_vote_seq)su  
+on sv.styling_vote_seq = su.styling_vote_seq)cc 
+on s.styling_vote_seq = cc.styling_vote_seq 
+order by s.styling_writedate desc
 	</select>
 	
 	<select id="selectStylingVoteItem" parameterType="int" resultType="svitemDTO">

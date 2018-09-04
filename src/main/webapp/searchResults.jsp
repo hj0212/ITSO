@@ -251,6 +251,8 @@ button.dropdown-toggle {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px; 
+	overflow: hidden; 
 }
 
 #saveModal .active {
@@ -287,7 +289,7 @@ button.dropdown-toggle {
 	color: black;
 }
 
-#user-tab, #tag-tab, #tip-tab {
+#user-tab, #tag-tab, #tip-tab, #itemtag-tab {
 	color: black;
 }
 
@@ -527,6 +529,8 @@ a#MOVE_TOP_BTN {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px; 
+	overflow: hidden; 
 }
 
 #savemodal .active {
@@ -544,6 +548,22 @@ a#MOVE_TOP_BTN {
 
 .photoContainerHoverWriter a, .photoContainerHoverTitle a {
 	color: black;
+}
+
+.rect img {
+	width: 200px;
+	height: 200px;
+}
+
+.rect {
+	width: 200px;
+	height: 200px;
+	background: #eee;
+	display: inline;
+	float: left;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	overflow: hidden;
 }
 
 /* collection-div */
@@ -676,13 +696,16 @@ a#MOVE_TOP_BTN {
 							<c:otherwise>${searchedCollectionList.size()}</c:otherwise>
 						</c:choose>)
 				</a></li>
-				<li class="nav-item"><a class="nav-link" id="tip-tab"
-					data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv"
-					aria-selected="false"> 팁 게시글(<c:choose>
-							<c:when test="${empty tipList}">0</c:when>
-							<c:otherwise>${tipList.size()}</c:otherwise>
-						</c:choose>)
-				</a></li>
+				<li class="nav-item">
+					<a class="nav-link" id="tip-tab" data-toggle="tab" href="#tipdiv" role="tab" aria-controls="tipdiv" aria-selected="false">
+					 팁 게시글(<c:choose><c:when test="${empty tipList}">0</c:when><c:otherwise>${tipList.size()}</c:otherwise></c:choose>)
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="itemtag-tab" data-toggle="tab" href="#itemtagdiv" role="tab" aria-controls="itemtagdiv" aria-selected="false">
+						브랜드(<c:choose><c:when test="${empty brandList}">0</c:when><c:otherwise>${brandList.size()}</c:otherwise></c:choose>)
+					</a>
+				</li>
 			</ul>
 			<div class="tab-content text-center" id="myTabContent">
 				<div class="tab-pane fade show active" id="userdiv" role="tabpanel"
@@ -694,7 +717,7 @@ a#MOVE_TOP_BTN {
 									<c:forEach var="userList" items="${userList}">
 										<tr>
 											<td class="user-image"><img
-												src="resources/images/${userList.photo}" alt=""
+												src="upload/profile/${userList.photo}" alt=""
 												onerror="this.src='resources/images/background.jpg'">
 											</td>
 											<td class="user-info">
@@ -730,7 +753,7 @@ a#MOVE_TOP_BTN {
 
 										<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
-											src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+											src="upload/social/${list.photo}" class="img-fluid z-depth-2"
 											alt="Responsive image">
 
 										</a>
@@ -821,7 +844,6 @@ a#MOVE_TOP_BTN {
 				</div>
 			</section>
 			<!-- 포토컨테이너종료 -->
-
 		</div>
 
 		<div class="tab-pane fade" id="collectiondiv" role="tabpanel"
@@ -905,6 +927,111 @@ a#MOVE_TOP_BTN {
 				</table>
 			</div>
 		</div>
+		
+		<div class="tab-pane fade" id="itemtagdiv" role="tabpanel" aria-labelledby="itemtab-tab">
+								<!-- 포토컨테이너시작 -->
+					<section class="thirdSection col-md-12">
+					<div class="gridPhotoContainer row">
+						<c:choose>
+							<c:when test="${fn:length(brandList) > 0}">
+								<c:forEach items="${brandList}" var="list" varStatus="status">
+
+									<div class="gridPhoto">
+
+										<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
+								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
+											src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+											alt="Responsive image">
+
+										</a>
+										<div class="photoContainer">
+											<div class="photoContainerHover z-depth-2">
+												<input type="hidden" class="read"
+													value="readSocial.go?seq=${list.social_seq}" /> <input
+													type="hidden" class="user"
+													value="userpage.go?seq=${list.social_writer }" />
+												<h3 class="photoContainerHoverTitle title">${list.social_title}</h3>
+												<p class="photoContainerHoverWriter writer">by
+													${list.writerName}</p>
+												<img src="upload/social/${list.photo}"
+													class="img-fluid z-depth-2 image" alt="Responsive image">
+												<div class="hashtagarea mt-1" style="margin-left: 5px;">
+													<span>${list.social_contents}</span>
+												</div>
+												<c:if test="${!empty sessionScope.user }">
+													<div class="btnarea " style="display: block; height: 31px;">
+														<div class="goodarea"
+															style="margin-top: 3px; margin-left: 5px; float: left;">
+															<input type="hidden" class="writerseq"
+																value="${list.social_writer }" />
+															<c:set var="loop_flag" value="false" />
+															<c:choose>
+																<c:when test="${empty goodList }">
+																	<i class="fa fa-heart-o red-text heart "
+																		aria-hidden="true"
+																		style="float: right; font-size: 25px;"
+																		value="${list.social_seq}"> <font color="black">
+																			${heart2[status.index].toString()} </font></i>
+																</c:when>
+																<c:otherwise>
+																	<c:forEach items="${goodList }" var="good"
+																		varStatus="gstatus">
+
+																		<c:if test="${loop_flag == false }">
+																			<c:choose>
+																				<c:when
+																					test="${good.social_seq == list.social_seq }">
+																					<i class="fa fa-heart red-text heart"
+																						aria-hidden="true"
+																						style="float: left; font-size: 25px;"
+																						value="${list.social_seq}"> <font
+																						color="black">
+																							${heart2[status.index].toString()} </font></i>
+
+																					<c:set var="loop_flag" value="true" />
+																				</c:when>
+																				<c:otherwise>
+																					<c:if test="${gstatus.last }">
+																						<i class="fa fa-heart-o red-text heart"
+																							aria-hidden="true"
+																							style="float: left; font-size: 25px;"
+																							value="${list.social_seq}"> <font
+																							color="black">
+																								${heart2[status.index].toString()} </font></i>
+
+
+																					</c:if>
+																				</c:otherwise>
+																			</c:choose>
+																		</c:if>
+
+																	</c:forEach>
+																</c:otherwise>
+
+															</c:choose>
+
+														</div>
+														<button type="button" class="btn-floating btn-sm savebtn"
+															style="float: right; background-color: #fff; color: black; border: 0px; border-radius: 5px; padding-right: 0;"
+															title="컬렉션에 저장" data-toggle="modal"
+															data-target="#saveModal">
+															컬렉션에 저장 <i class="fa fa-download"></i>
+														</button>
+														<input type="hidden" class="socialseq"
+															value="${list.social_seq }" />
+												</c:if>
+											</div>
+
+										</div>
+									</div>
+					</div>
+					</c:forEach> </c:when> <c:otherwise>
+						<div class="col-md-12">검색 결과가 없습니다.</div>
+					</c:otherwise> </c:choose>
+				</div>
+			</section>
+			<!-- 포토컨테이너종료 -->
+		</div>
 	</div>
 	</section>
 	</div>
@@ -983,7 +1110,8 @@ a#MOVE_TOP_BTN {
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
+							<div id="collectionarea" class="mt-2 first"></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -1016,7 +1144,7 @@ a#MOVE_TOP_BTN {
 							for="inputMD">컬렉션 이름</label>
 					</div>
 					<div class="md-form mt-1">
-						<textarea type="text" id="form7" class="md-textarea form-control"
+						<textarea id="form7" class="md-textarea form-control"
 							rows="3" name="collection_contents"></textarea>
 						<label for="form7">컬렉션 상세 설명</label>
 					</div>
@@ -1040,116 +1168,136 @@ a#MOVE_TOP_BTN {
 	})
 
 	social_seq = 0;
-	$('.savebtn').on("click", function () {
-	    social_seq = $(this).siblings(".socialseq").val();
-	    console.log(social_seq);
+		$('.savebtn').on("click", function () {
+		    social_seq = $(this).siblings(".socialseq").val();
+		    console.log(social_seq);
 
-	    var clistsize = "${fn:length(collectionList)}";
+		    var clistsize = "${fn:length(collectionList)}";
 
-	    for (var i = 1; i <= clistsize; i++) {
-	        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
-	        var plistsize = cursor.find(".collectionPhotoItem").length;
+		    for (var i = 1; i <= clistsize; i++) {
+		        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
+		        var plistsize = cursor.find(".collectionPhotoItem").length;
 
-	        for (var j = 1; j <= plistsize; j++) {
-	            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
-	            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
-	            if (social_seq == collection_socialseq) {
-	                cursor.addClass("active");
-	                console.log("true");
-	                break;
-	            }
-	        }
-	    }
-	})
-	$("#collectionarea").on("click", ".collectionItem", function () {
-	    var cursor = $(this);
-	    cursor.toggleClass('active');
-	    var collection_seq = $(this).children(".collectionseq").val();
-	    console.log("collection_seq: " + collection_seq);
-	    console.log("social_seq: " + social_seq);
+		        for (var j = 1; j <= plistsize; j++) {
+		            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
+		            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
+		            if (social_seq == collection_socialseq) {
+		                cursor.addClass("active");
+		                console.log("true");
+		                break;
+		            }
+		        }
+		    }
+		})
+		$("#collectionarea").on("click", ".collectionItem", function () {
+		    var cursor = $(this);
+		    cursor.toggleClass('active');
+		    var collection_seq = $(this).children(".collectionseq").val();
+		    console.log("collection_seq: " + collection_seq);
+		    console.log("social_seq: " + social_seq);
 
-	    var num = $(this).find(".collectionPhotoItem").length;
-	    $.ajax({
-	        url: "saveCollection.ajax",
-	        type: "post",
-	        data: {
-	            collection_seq: collection_seq,
-	            social_seq: social_seq
-	        },
-	        success: function (data) {
-	            console.log("ajax: " +
-	                data.photo + "," +
-	                data.social_seq)
-	            if (data.photo != null) {
-	                console.log("여기");
-	                cursor.find(".collectionPhoto").append(
-	                    '<div class="collectionPhotoItem">' +
-	                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
-	                    '</div>');
-	                if (num > 4) {
-	                    cursor.find(".collectionPhoto:last").attr("display", "none");
-	                }
-	            } else {
-	                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
-	                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
-	            }
-	        },
-	        error: function (response) {
-	            console.log("DB Failed")
-	        }
+		    var num = $(this).find(".collectionPhotoItem").length;
+		    $.ajax({
+		        url: "saveCollection.ajax",
+		        type: "post",
+		        data: {
+		            collection_seq: collection_seq,
+		            social_seq: social_seq
+		        },
+		        success: function (data) {
+		            console.log("ajax: " +
+		                data.photo + "," +
+		                data.social_seq)
+		            if (data.photo != null) {
+		                console.log("여기");
+		                if (num > 3) {
+		                	console.log("숨겨");
+		                cursor.find(".collectionPhoto").append(
+		                    '<div class="collectionPhotoItem" style="display:none;">' +
+		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		                    '</div>');
+		                } else {
+		                	console.log("보여");
+		                	 cursor.find(".collectionPhoto").append(
+		 		                    '<div class="collectionPhotoItem">' +
+		 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		 		                    '</div>');
+		                }
+		            } else {
+		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
+		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
 
-	    });
+		    });
 
-	})
+		})
 
-	$("#createcolbtn")
-	    .on('click', function () {
-	        var collection_title = $("input[name='collection_title']").val();
-	        var collection_contents = $("textarea[name='collection_contents']").val();
+		$("#createcolbtn")
+		    .on('click', function () {
+		        var collection_title = $("input[name='collection_title']").val();
+		        var collection_contents = $("textarea[name='collection_contents']").val();
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
+		        $.ajax({
+		            url: "createCollection.ajax",
+		            type: "post",
+		            data: {
+		                collection_title: collection_title,
+		                collection_contents: collection_contents
+		            },
+		            success: function (data) {
+		                console.log("생성" + data);
+		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
+		                $("input[name='collection_title']").val("");
+		                $("textarea[name='collection_contents']").val("");
+		                $("#createModal").modal('hide');
 
-	        $.ajax({
-	            url: "createCollection.ajax",
-	            type: "post",
-	            data: {
-	                collection_title: collection_title,
-	                collection_contents: collection_contents
-	            },
-	            success: function (data) {
-	                console.log("생성" + data);
-	                var dto = JSON.parse(data);
-	                $("input[name='collection_title']").val("");
-	                $("textarea[name='collection_contents']").val("");
-	                $("#createModal").hide();
+		                $("#collectionarea").append(
+		                    '<div class="collectionItem z-depth-1 mt-2">' +
+		                    '<h4 class="mt-1 mb-1 text-truncate">' +
+		                    dto.collection_title +
+		                    '</h4><h6 class="text-truncate">' +
+		                    dto.collection_contents +
+		                    '</h6>' +
+		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
+		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-	                $("#collectionarea").append(
-	                    '<div class="collectionItem z-depth-1 mt-2">' +
-	                    '<h4 class="mt-1 mb-1 text-truncate">' +
-	                    dto.collection_title +
-	                    '</h4><h6 class="text-truncate">' +
-	                    dto.collection_contents +
-	                    '</h6>' +
-	                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
-	                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+		                $("#saveModal").modal('show');
 
-	                $("#saveModal").show();
+		            }
+		        });
+		        }
+		    });
+		$("#createModal").on('show.bs.modal', function () {
+		    $("#saveModal").modal('hide');
+		});
 
-	            }
-	        });
-	    });
-	$("#createModal").on('show.bs.modal', function () {
-	    $("#saveModal").hide();
-	});
+		$("#createModal").on('hidden.bs.modal', function () {
+		    $("#saveModal").modal('show');
+		});
 
-	$("#createModal").on('hidden.bs.modal', function () {
-	    $("#saveModal").show();
-	});
+		$("#saveModal").on('hidden.bs.modal', function () {
+		    console.log("닫힘");
+		    $(".collectionItem").removeClass("active");
+		});
 
-	$("#saveModal").on('hidden.bs.modal', function () {
-	    console.log("닫힘");
-	    $(".collectionItem").removeClass("active");
-	});
-
-	</script>
+		</script>
 	<!-- Bootstrap tooltips -->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>

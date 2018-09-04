@@ -321,21 +321,22 @@ input[type="file"] {
 			}
 		}
 		count = 1;
+		counter =10;
 		$("#addvotebtn")
 				.on(
 						"click",
 						function() {
 							if (count < 6) {
 								count++;
+								counter++;
 								console.log(count);
 								$('#itemlist')
 										.append(
 												'<tr class="z-depth-3 hoverable"><th scope="row">'
-														+ 
 														+ '</th>'
 														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'
-														+ count
+														+ counter
 														+ '" class="file-upload-input form-control filesel"'
 														+ 'onchange="readURL(this);" accept="image/*"></div>'
 														+ '<div class="media-body image-upload-wrap form-group" id="btnsdiv">'	
@@ -450,7 +451,7 @@ input[type="file"] {
 						}else if(radioval==1 && $('#datepicker').val()==""){
 							alert("종료 날짜를 선택해 주세요.");			
 						}else if(radioval==2 && $('#votenum').val()=="" || radioval==2 && $('#votenum').val()==0 || radioval==2 && $('#votenum').val()==1){
-							alert("참여 인원을 입력해 주세요.");	
+							alert("참여 인원을 입력해 주세요.(2명 이상)");		
 						}else if($('#datepicker').val()=="" && $('#votenum').val()=="" && radioval!=3){
 							alert("투표종료 조건을 입력해 주세요.");
 						}else if($('.filesel').length<2){

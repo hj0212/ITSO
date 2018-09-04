@@ -8,7 +8,7 @@ public class MessagesDTO {
 	private int message_seq;
 	private int user_seq;
 	private String message_contents;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date message_time;
 	private int message_user_seq;
 	private String message_read;

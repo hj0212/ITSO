@@ -18,6 +18,28 @@
 	font: 8px Verdana;
 	background-color: rgba(212, 19, 13, 1);
 }
+.msg-user-count {
+	
+	
+	background-color: rgba(212, 19, 13, 1);
+	color: #fff;
+	border-radius: 3px;
+	padding: 1px 3px;
+	font: 8px Verdana;
+	background-color: rgba(212, 19, 13, 1);
+}
+
+.message-counter {
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	background-color: rgba(212, 19, 13, 1);
+	color: #fff;
+	border-radius: 3px;
+	padding: 1px 3px;
+	font: 8px Verdana;
+	background-color: rgba(212, 19, 13, 1);
+}
 
 @font-face {
 	font-family: 'NanumbarunpenR';
@@ -280,33 +302,24 @@ nav {
 				</a></li>
 
 
-				<li class="nav-item" id="tooltip"><a
-					class="nav-link waves-effect waves-light" id="notibt"> <i
-						class="fa fa-bell"></i> 알림 <span class="notification-counter"
-						id="notification-counter">0</span>
-				</a></li>
-
-				<li class="nav-item" id="tooltip2"><a
-					class="nav-link waves-effect waves-light"> <i
-						class="fa fa-envelope"></i> 메시지
-				</a></li>
-				<li class="nav-item"><a
-					class="nav-link waves-effect waves-light" href="writeSocial.jsp">
-						<i class="fa fa-pencil"></i> 글쓰기
-				</a></li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fa fa-user"> </i>
-				</a>
-					<div class="dropdown-menu dropdown-menu-right dropdown-default"
-						aria-labelledby="navbarDropdownMenuLink">
-						<a class="dropdown-item" href="userpage.go">마이페이지</a> <a
-							class="dropdown-item" href="#">Another action</a> <a
-							class="dropdown-item" href="logout.do">로그아웃</a>
-					</div></li>
-			</ul>
-		</div>
+			<li class="nav-item" id="tooltip2"><a
+				class="nav-link waves-effect waves-light"> <i
+					class="fa fa-envelope"></i> 메시지<span class="message-counter"
+					id="message-counter">NEW</span>
+			</a></li>
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-user"> </i>
+			</a>
+				<div class="dropdown-menu dropdown-menu-right dropdown-default"
+					aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" href="userpage.go">마이페이지</a> <a
+						class="dropdown-item" href="#">Another action</a> <a
+						class="dropdown-item" href="logout.do">로그아웃</a>
+				</div></li>
+		</ul>
+	</div>
 </nav>
 
 <nav class="mb-1 navbar navbar-expand-ssm navbar-dark" id="nav2">
@@ -354,7 +367,7 @@ nav {
 		var notificationcounter = 0;
 		if ("WebSocket" in window) {
 			var ws = new WebSocket(
-					"ws://localhost:8080/websocket?seq=${sessionScope.user.seq}");
+					"ws://59.10.249.73/websocket?seq=${sessionScope.user.seq}");
 			var str;
 			var file = "";
 
@@ -370,7 +383,7 @@ nav {
 					var notification = "<div class='notification-item read-Y' id='"+obj.noti_seq+"' seq='"+obj.article_seq+"'>";
 				}
 				notification += "<div class='img-left'>";
-				notification += "<img src='/upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
+				notification += "<img src='upload/profile/"+obj.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
 				notification += "</div>";
 				notification += "<div class='user-content'>";
 				notification += "<span class='user-info'> <span class='user-name'><b>"
@@ -518,6 +531,7 @@ nav {
 
 	$("#tooltip").click(function() {
 		var seq = "${sessionScope.user.seq}"
+	
 		console.log(seq);
 		let contents = document.getElementById("notification-info");
 
@@ -528,7 +542,12 @@ nav {
 				user_seq : seq
 			},
 			success : function(data) {
+				
+				$("#notification_list").html("");
 				showNotification(data);
+			
+					
+				
 			}
 
 		});
@@ -536,6 +555,7 @@ nav {
 
 	function showNotification(data) {
 		var notItem = "";
+	
 		var sessionSeq = "${sessionScope.user.seq}";
 		$
 				.each(
@@ -543,12 +563,12 @@ nav {
 						function(index, item) {
 							if (item.user_seq == sessionSeq) {
 								if (item.noti_read == 'y') {
-									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+									notItem += "<div class='notification-item read-Y' id='"+item.noti_seq+"' seq='"+item.article_seq+"' go='"+item.noti_url+"'>"
 								} else {
-									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"'>"
+									notItem += "<div class='notification-item read-n' id='"+item.noti_seq+"' seq='"+item.article_seq+"' go='"+item.noti_url+"'>"
 								}
 								notItem += "<div class='img-left'>";
-								notItem += "<img src='/upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
+								notItem += "<img src='upload/profile/"+item.noti_user_photo+"' alt='' class='user-image rounded-circle'>";
 								notItem += "</div>";
 								notItem += "<div class='user-content'>";
 								notItem += "<span class='user-info'> <span class='user-name'><b>"
@@ -562,11 +582,27 @@ nav {
 								notItem += "</div>";
 							}
 						});
+	
 		$("#notification_list").prepend(notItem).trigger("create");
 
 	};
-
+	$("#message-counter").hide();
+	
 	$("#tooltip2").click(function() {
+		$("#message-counter").hide();
+			$.ajax({
+				 url :"userList.ajax",
+				 type:"post",
+				 data:{
+					seq:"${sessionScope.user.seq}"
+				 },
+				 success: function(data){
+					 console.log(data);
+					 showUserList(data); 
+				 }
+			});		
+			$("#tooltip2").attr("data-toggle",'modal');
+			$("#tooltip2").attr("data-target",'#modalPoll');
 
 		$.ajax({
 			url : "userList.ajax",
@@ -588,37 +624,38 @@ nav {
 		var userlist = "";
 		var listget = $("#user_list").text();
 		console.log(listget);
-		$
-				.each(
-						data.list,
-						function(index, item) {
-							if (listget == "") {
-								userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">';
-								userlist += '<img src="/upload/profile"'+item.photo+'alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">';
-								userlist += '<div class="text-md-left align-middle">';
-								userlist += '<strong>' + item.name
-										+ '</strong>';
-								userlist += '<p class="last-message text-muted">'
-										+ item.contents + '</p>';
-								userlist += '</div>';
-								userlist += '<div class="chat-footer">';
-								userlist += '<p class="text-smaller text-muted mb-0">'
-										+ item.time + '</p>';
-								userlist += '<span class="text-muted float-right">';
-								userlist += '<i class="fa fa-mail-reply" aria-hidden="true"></i></span>';
-								userlist += '</div>';
-								userlist += '</a></li>';
-							}
-							$("#user_list").prepend(userlist);
-						});
+		var nocount =0;
+		$.each(data.list,function(index,item){			
+			if(listget==""){
+			userlist = '<li class="w-100 p-2 h-25 d-inline-block modal-list" seq="'+item.user+'" data-toggle="modal" data-target="#centralModalSuccess" ><a class="d-flex justify-content-between h-25 d-inline-block ">' ;
+			 userlist += '<img src="upload/profile/'+item.photo+'" alt="avatar"class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'; 
+			userlist += '<div class="text-md-left align-middle">';
+			userlist += '<strong>'+item.name+'</strong>';
+			userlist += '<p class="last-message text-muted">'+item.contents+'</p>';
+			userlist += '</div>';
+			userlist += '<div class="chat-footer">';
+			userlist += '<p class="text-smaller text-muted mb-0">'+item.time+'</p>';
+			userlist += '<span class="text-muted float-right">';
+			userlist += '<i class="fa fa-mail-reply" aria-hidden="true"></i></span>';
+			userlist += '</div>'	;
+			userlist += '</a></li>';
+			
+			console.log(item.time);
+			}
+		
+			$("#user_list").prepend(userlist);
+			
+		});
 	};
-	var messageReset = 0;
-	$(document).on("click", ".modal-list", function() {
-		var listseq = $(this).attr("seq");
-		console.log(listseq);
-		/* 	$(".modal-list").attr("data-toggle","modal");
-			$(".modal-list").attr("data-target","#centralModalSuccess"); */
 
+		var messageReset =0;
+	$(document).on("click",".modal-list",function(){
+		var listseq =$(this).attr("seq");
+		console.log(listseq);
+	/* 	$(".modal-list").attr("data-toggle","modal");
+		$(".modal-list").attr("data-target","#centralModalSuccess"); */
+		$(".msg-user-count").hide();
+	
 		$.ajax({
 			url : "messageUser.ajax",
 			type : "post",
@@ -669,12 +706,13 @@ nav {
 			'click',
 			".notification-item",
 			function() {
-				console.log($(this).attr("id"));
+			/* 	console.log($(this).attr("id"));
 				console.log($(this).attr("seq"));
 				var seq = $(this).attr("seq");
-				var noti_seq = $(this).attr("id");
+				var noti_seq = $(this).attr("id"); */
+				var noti_url = $(this).attr("go");
 				$(location).attr("href",
-						"readSocial.go?seq=" + seq + "&noti_seq=" + noti_seq);
+						noti_url);
 
 			});
 
@@ -687,31 +725,40 @@ nav {
 
 	$("#sendMessage").click(function() {
 		var message = $("#exampleFormControlTextarea2").val();
-		if (message != "") {
-			ws.send(message);
-			$.ajax({
-				url : "sendMessage.ajax",
-				type : "post",
-				data : {
-					message : message,
-					message_user_seq : message_user_seq
-				},
-				success : function(data) {
-					if (data > 0) {
-						console.log("입력완료");
-					} else {
-						console.log("실패");
-					}
-				}
-			});
+		var go="";
+		if(message != ""){
+		go = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+message+'</p></div>'
+		$("#modal-body").append(go);
+		$("#exampleFormControlTextarea2").val("");
+		 ws.send(message);
+		 $.ajax({
+			 url :"sendMessage.ajax",
+			 type:"post",
+			 data:{
+				 message:message,
+				 message_user_seq: message_user_seq
+			 },
+			 success: function(data){
+				 if(data >0){
+				 console.log("입력완료");
+				 }else{
+					 console.log("실패");
+				 }
+			 }
+		 });	 	 
 		}
 	});
 	$("#exampleFormControlTextarea2").keydown(function(key) {
 		if (key.keyCode == 13) {
 			var message = $("#exampleFormControlTextarea2").val();
-			var message_user_seq = $(".heading-name").attr("seq");
+			var message_user_seq =$(".heading-name").attr("seq");
+			
+		
 			console.log(message_user_seq);
-			if (message != "") {
+			if(message != ""){
+				var go2 = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+message+'</p></div>'
+				$("#modal-body").append(go2);
+				$("#exampleFormControlTextarea2").val("");
 				console.log("여기는 들어옴");
 				socket.send(message);
 				$.ajax({
@@ -733,19 +780,23 @@ nav {
 			}
 		}
 	});
-
+	$(".msg-user-count").hide();
 	var notificationcounter = 0;
 	if ("WebSocket" in window) {
 		var socket = new WebSocket(
-				"ws://localhost:8080/socket?seq=${sessionScope.user.seq}");
+				"ws://59.10.249.73/socket?seq=${sessionScope.user.seq}");
 		var str;
 		var file = ""
-		socket.onopen = function() {
-
-		};
-		socket.onmessage = function(msg) {
-
-			console.log(msg);
+			socket.onopen = function() {
+		
+			};
+			socket.onmessage = function(msg) {
+				 file = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+msg.data+'</p></div>'
+				 $("#modal-body").append(file); 
+				$("#message-counter").show();
+				$(".msg-user-count").show();
+		/* 	console.log(msg); */
+				
 		};
 
 		ws.onclose = function() {
@@ -753,9 +804,40 @@ nav {
 
 	}
 
-	function showMessageList(data) {
-		var list = "";
-		var sessionSeq = "${sessionScope.user.seq}"
+	
+	
+	function showMessageList(data){
+		var list ="";
+		var sessionSeq = "${sessionScope.user.seq}"	
+	
+	
+		$.each(data.message,function(index,item){
+		
+			if(item.user_seq == sessionSeq){
+				list = '<div class="msg col-md-6 ml-auto" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
+			}else{
+				list = '<div class="other-msg col-md-6" style="width: 100%; margin-bottom: 20px;"><p class="text-sm">'+item.contents+'</p></div>'
+			}
+			 $("#modal-body").append(list);
+			
+		});
+	
+	}; 
+	 
+	function showMessageUser(data){
+		var user ="";
+	
+	 	$.each(data.user,function(index,item){
+							
+		user = '<img src="upload/profile/'+item.photo+'" alt="avatar" class="avatar rounded-circle d-flex align-self-center mr-1 z-depth-1 " style="width: 50px; height: 50px;">'
+		user += '<p class="heading lead heading-name" seq="'+item.seq+'">'+item.name+'</p>'; 
+		user+=	'<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+		user+=	'<span aria-hidden="true" class="white-text">&times;</span>'
+		user+='	</button>'
+		});	
+	 	$("#message-header").html(user);  
+		
+	}; 
 
 		$
 				.each(

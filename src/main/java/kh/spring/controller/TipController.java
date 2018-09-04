@@ -59,6 +59,7 @@ public class TipController {
 	public ModelAndView tipBoardMainPageWithAllData(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
+		System.out.println("up: " + upvotingArticles.size());
 		String category = request.getParameter("category");
 		
 		if(category != null) {

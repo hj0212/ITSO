@@ -286,6 +286,8 @@ a#MOVE_TOP_BTN {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px;
+	overflow: hidden;
 }
 
 .active {
@@ -303,6 +305,38 @@ a#MOVE_TOP_BTN {
 
 .photoContainerHoverWriter a, .photoContainerHoverTitle a {
 	color: black;
+}
+
+@media ( max-width : 1334px) {
+	#rightfix {
+		display: none;
+	}
+}
+
+@media ( max-width : 1100px) {
+	#MOVE_TOP_BTN {
+		visibility: hidden;
+	}
+}
+
+.avatar {
+	margin-bottom: 5px;
+}
+
+#rightfix {
+	width: 250px;
+	top: 30%;
+	right: 0px;
+	position: fixed;
+}
+
+#rightfix .media {
+	margin-bottom: 20px;
+}
+
+#rightfix img {
+	height: 70px;
+	width: 70px;
 }
 </style>
 </head>
@@ -391,12 +425,12 @@ a#MOVE_TOP_BTN {
 
 								<a href="readSocial.go?seq=${list.social_seq}"> <!-- <img src="resources/images/background.jpg"
 								class="img-fluid z-depth-2" alt="Responsive image"> --> <img
-									src="upload/social/${list.photo}" class="img-fluid z-depth-5"
+									src="upload/social/${list.photo}" class="img-fluid z-depth-2"
 									alt="Responsive image">
 
 								</a>
 								<div class="photoContainer">
-									<div class="photoContainerHover z-depth-2">
+									<div class="photoContainerHover z-depth-1">
 										<input type="hidden" class="read" value="readSocial.go?seq=${list.social_seq}" /> 
 										<input type="hidden" class="user" value="userpage.go?seq=${list.social_writer }" />
 										<h3 class="photoContainerHoverTitle title">${list.social_title}</h3>
@@ -482,9 +516,37 @@ a#MOVE_TOP_BTN {
 	</section>
 	<!-- 포토컨테이너종료 -->
 
-	<!-- top버튼 시작 -->
-	<a id="MOVE_TOP_BTN" href="#">TOP</a>
-	<!--  top버튼 종료 -->
+		<!-- 오른쪽 추천 follow  -->
+		<div id="rightfix" class="right-fixed">
+		<c:choose>
+			<c:when test="${empty recommendList} }">
+			
+			</c:when>
+			<c:otherwise>
+				<h5 class="font-weight-bold" style="margin-bottom: 20px;">추천 팔로우</h5>
+				<ul class="list-unstyled">
+				<c:forEach var="reco" items="${recommendList}">
+				<li class="media"><img
+					class="d-flex mr-3 rounded-circle  align-self-center"
+					src="upload/profile/${reco.photo }"
+					alt="Generic placeholder image">
+					<div class="media-body mt-0">
+						<h5 class="mt-0 mb-0 ">${reco.name }</h5>
+						<button type="button" class="btn btn-indigo followbtn btn-sm">
+							<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';">
+							<i class="fa fa-check" /></i> 언팔로우</span> 
+							<span class="follow show" style="font-family: 'NanumbarunpenR';">
+							<i class="fa fa-plus" /></i> 팔로우</span>
+						</button>
+						<input type="hidden" class="writerseq" value="${reco.seq }"/>
+					</div></li>
+				</c:forEach>
+			</ul>
+			</c:otherwise>
+		</c:choose>
+			
+			<a id="MOVE_TOP_BTN" href="#" class="btn btn-elegant btn-sm">TOP</a>
+		</div>
 
 	<!-- saveModal -->
 	<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
@@ -559,7 +621,8 @@ a#MOVE_TOP_BTN {
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
+							<div id="collectionarea" class="mt-2 first"></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -592,7 +655,7 @@ a#MOVE_TOP_BTN {
 							for="inputMD">컬렉션 이름</label>
 					</div>
 					<div class="md-form mt-1">
-						<textarea type="text" id="form7" class="md-textarea form-control"
+						<textarea id="form7" class="md-textarea form-control"
 							rows="3" name="collection_contents"></textarea>
 						<label for="form7">컬렉션 상세 설명</label>
 					</div>
@@ -702,151 +765,135 @@ a#MOVE_TOP_BTN {
 	})
 
 	social_seq = 0;
-	$('.savebtn').on(
-			"click",
-			function() {
-				social_seq = $(this).siblings(".socialseq").val();
-				console.log(social_seq);
+		$('.savebtn').on("click", function () {
+		    social_seq = $(this).siblings(".socialseq").val();
+		    console.log(social_seq);
 
-				var clistsize = "${fn:length(collectionList)}";
+		    var clistsize = "${fn:length(collectionList)}";
 
-				for (var i = 1; i <= clistsize; i++) {
-					var cursor = $(".collectionItem:nth-of-type(" + i + ")");
-					var plistsize = cursor.find(".collectionPhotoItem").length;
+		    for (var i = 1; i <= clistsize; i++) {
+		        var cursor = $(".collectionItem:nth-of-type(" + i + ")");
+		        var plistsize = cursor.find(".collectionPhotoItem").length;
 
-					for (var j = 1; j <= plistsize; j++) {
-						var collection_socialseq = $(cursor).find(
-								".collectionPhotoItem:nth-of-type(" + j + ")")
-								.find(".socialseq").val();
-						console.log("검사 : " + i + "," + j + ":" + social_seq
-								+ ":" + collection_socialseq);
-						if (social_seq == collection_socialseq) {
-							cursor.addClass("active");
-							console.log("true");
-							break;
-						}
-					}
-				}
-			})
-	$("#collectionarea")
-			.on(
-					"click",
-					".collectionItem",
-					function() {
-						var cursor = $(this);
-						cursor.toggleClass('active');
-						var collection_seq = $(this).children(".collectionseq")
-								.val();
-						console.log("collection_seq: " + collection_seq);
-						console.log("social_seq: " + social_seq);
+		        for (var j = 1; j <= plistsize; j++) {
+		            var collection_socialseq = $(cursor).find(".collectionPhotoItem:nth-of-type(" + j + ")").find(".socialseq").val();
+		            console.log("검사 : " + i + "," + j + ":" + social_seq + ":" + collection_socialseq);
+		            if (social_seq == collection_socialseq) {
+		                cursor.addClass("active");
+		                console.log("true");
+		                break;
+		            }
+		        }
+		    }
+		})
+		$("#collectionarea").on("click", ".collectionItem", function () {
+		    var cursor = $(this);
+		    cursor.toggleClass('active');
+		    var collection_seq = $(this).children(".collectionseq").val();
+		    console.log("collection_seq: " + collection_seq);
+		    console.log("social_seq: " + social_seq);
 
-						var num = $(this).find(".collectionPhotoItem").length;
-						$
-								.ajax({
-									url : "saveCollection.ajax",
-									type : "post",
-									data : {
-										collection_seq : collection_seq,
-										social_seq : social_seq
-									},
-									success : function(data) {
-										console.log("ajax: " + data.photo + ","
-												+ data.social_seq)
-										if (data.photo != null) {
-											console.log("여기");
-											cursor
-													.find(".collectionPhoto")
-													.append(
-															'<div class="collectionPhotoItem">'
-																	+ '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">'
-																	+ '</div>');
-											if (num > 4) {
-												cursor
-														.find(
-																".collectionPhoto:last")
-														.attr("display", "none");
-											}
-										} else {
-											cursor
-													.find(
-															".collectionseq[value='"
-																	+ collection_seq
-																	+ "']")
-													.siblings(
-															".collectionPhoto")
-													.find(
-															".socialseq[value='"
-																	+ social_seq
-																	+ "']")
-													.parent().remove();
-										}
-									},
-									error : function(response) {
-										console.log("DB Failed")
-									}
+		    var num = $(this).find(".collectionPhotoItem").length;
+		    $.ajax({
+		        url: "saveCollection.ajax",
+		        type: "post",
+		        data: {
+		            collection_seq: collection_seq,
+		            social_seq: social_seq
+		        },
+		        success: function (data) {
+		            console.log("ajax: " +
+		                data.photo + "," +
+		                data.social_seq)
+		            if (data.photo != null) {
+		                console.log("여기");
+		                if (num > 3) {
+		                	console.log("숨겨");
+		                cursor.find(".collectionPhoto").append(
+		                    '<div class="collectionPhotoItem" style="display:none;">' +
+		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		                    '</div>');
+		                } else {
+		                	console.log("보여");
+		                	 cursor.find(".collectionPhoto").append(
+		 		                    '<div class="collectionPhotoItem">' +
+		 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		 		                    '</div>');
+		                }
+		            } else {
+		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
+		                    .find(".socialseq[value='" + social_seq + "']").parent().remove();
+		            }
+		        },
+		        error: function (response) {
+		            console.log("DB Failed")
+		        }
 
-								});
+		    });
 
-					})
+		})
 
-	$("#createcolbtn")
-			.on(
-					'click',
-					function() {
-						var collection_title = $(
-								"input[name='collection_title']").val();
-						var collection_contents = $(
-								"textarea[name='collection_contents']").val();
+		$("#createcolbtn")
+		    .on('click', function () {
+		        var collection_title = $("input[name='collection_title']").val();
+		        var collection_contents = $("textarea[name='collection_contents']").val();
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
+		        $.ajax({
+		            url: "createCollection.ajax",
+		            type: "post",
+		            data: {
+		                collection_title: collection_title,
+		                collection_contents: collection_contents
+		            },
+		            success: function (data) {
+		                console.log("생성" + data);
+		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
+		                $("input[name='collection_title']").val("");
+		                $("textarea[name='collection_contents']").val("");
+		                $("#createModal").modal('hide');
 
-						$
-								.ajax({
-									url : "createCollection.ajax",
-									type : "post",
-									data : {
-										collection_title : collection_title,
-										collection_contents : collection_contents
-									},
-									success : function(data) {
-										console.log("생성" + data);
-										var dto = JSON.parse(data);
-										$("input[name='collection_title']")
-												.val("");
-										$(
-												"textarea[name='collection_contents']")
-												.val("");
-										$("#createModal").hide();
+		                $("#collectionarea").append(
+		                    '<div class="collectionItem z-depth-1 mt-2">' +
+		                    '<h4 class="mt-1 mb-1 text-truncate">' +
+		                    dto.collection_title +
+		                    '</h4><h6 class="text-truncate">' +
+		                    dto.collection_contents +
+		                    '</h6>' +
+		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
+		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-										$("#collectionarea")
-												.append(
-														'<div class="collectionItem z-depth-1 mt-2">'
-																+ '<h4 class="mt-1 mb-1 text-truncate">'
-																+ dto.collection_title
-																+ '</h4><h6 class="text-truncate">'
-																+ dto.collection_contents
-																+ '</h6>'
-																+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
-																+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+		                $("#saveModal").modal('show');
 
-										$("#saveModal").show();
+		            }
+		        });
+		        }
+		    });
+		$("#createModal").on('show.bs.modal', function () {
+		    $("#saveModal").modal('hide');
+		});
 
-									}
-								});
-					});
+		$("#createModal").on('hidden.bs.modal', function () {
+		    $("#saveModal").modal('show');
+		});
 
-	$("#createModal").on('show.bs.modal', function() {
-		$("#saveModal").hide();
-	});
+		$("#saveModal").on('hidden.bs.modal', function () {
+		    console.log("닫힘");
+		    $(".collectionItem").removeClass("active");
+		});
 
-	$("#createModal").on('hidden.bs.modal', function() {
-		$("#saveModal").show();
-	});
-
-	$("#saveModal").on('hidden.bs.modal', function() {
-		console.log("닫힘");
-		$(".collectionItem").removeClass("active");
-	});
-</script>
-
-
+		</script>
 
 </html>

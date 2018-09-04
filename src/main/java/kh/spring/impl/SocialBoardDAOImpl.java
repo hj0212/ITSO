@@ -221,4 +221,9 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	public Integer getCollectionCount(CollectionDTO dto) {
 		return template.selectOne("Collection.getCollectionCount", dto);
 	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedBrandList(String word) {
+		return template.selectList("SocialBoard.searchedBrandList", word);
+	}
 }

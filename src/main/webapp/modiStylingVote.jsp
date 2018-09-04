@@ -35,71 +35,56 @@ div {
 	/* border: 1px solid black; */
 	box-sizing: border-box;
 }
-
 body {
 	margin: 0px;
 	font-family: 'NanumbarunpenR';
 	font-size: 20px;
 }
-
 @font-face {
 	font-family: 'NanumbarunpenR';
 	src: url('resources/fonts/nanumbarunpenr.ttf') format('truetype');
 }
-
 @font-face {
 	font-family: 'NanumbarunpenB';
 	src: url('resources/fonts/nanumbarunpenb.ttf') format('truetype');
 }
-
 @media (max-width: 576px) {
 .btmrow{
 float:left;
 }
 }
-
 #wrapper {
 	width: 100%;
 	min-width: 500px;
 }
-
 #voteitemimg {
 	width: 10%;
 }
-
 #voteitemdiv {
 	width: 100%;
 } 
-
 img {
 	border: 0.3px solid lightgray;
 	text-align: center;
 	vertical-align: middle;
 }
-
 input[type="file"] {
 	border: 0px;
 }
-
 #voteitemimg, .selimg {
 	width: 100px;
 	height: 100px;
 }
-
 .imgsel {
 	width: 70%;
 }
-
 .btnsdiv a {
 	box-shadow: 0px;
 	width: 10%;
 }
-
 .settxt{
 font-size:15px;
 }
-
-
 </style>
 
 </head>
@@ -219,8 +204,8 @@ font-size:15px;
 						class="fa fa-calendar" aria-hidden="true">:</i>
 				</div>
 				<div class="col">
-					<input type="text" id="datepicker" name="datepickervalue" disabled readOnly
-						class="form-control form-control-sm col-md-4" value="${votedto.styling_endterm}">
+					<input type="text" id="datepicker" name="datepickervalue" disabled
+						class="form-control form-control-sm col-md-4" readOnly value="${votedto.styling_endterm}">
 						<input type="hidden" name="styling_endtermtxt" id="realterm">
 				</div>
 			</div>
@@ -313,21 +298,18 @@ font-size:15px;
 		/* $('.file-upload-input').attr('onchange',onChange()); */
 		/* function onChange()
 		onchange="readURL(this);" */
-
 		function readURL(input) {
 			console.log(input.id);
 			console.log(input.files[0].name);
 			var inputId = input.id;
 			console.log(document.getElementById(inputId));
 			var imageId = document.getElementById(inputId).parentElement.children[0];
-
 			console.log(imageId);
 			var imagesrc = imageId.src;
 			console.log(imagesrc);
 			/*  console.log(imageId.src); */
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
-
 				reader.onload = function(e) {
 					imageId.src = e.target.result;
 					/* imagesrc = e.target.result; */
@@ -354,7 +336,6 @@ font-size:15px;
 								$('#itemlist')
 										.append(
 												'<tr class="z-depth-3 hoverable" id="tr${status.index}"><th scope="row">'
-														+ count
 														+ '</th>'
 														+ '<td><div class="media"><div class="media-img"><img class="d-flex mr-3 selimg" src="" alt="후보사진">'
 														+ '<input type="file" name="voteimgfile[]" id="imgfile'
@@ -369,7 +350,6 @@ font-size:15px;
 								alert("투표 항목은 6개까지 추가할 수 있습니다.")
 							}
 						})
-
 		$(document).on('click', '.delvotebtn', function() {
 			var wraptr = $(this).closest("tr");
 			$(this).closest("tr").remove();
@@ -381,7 +361,6 @@ font-size:15px;
 				arr 이거... 해야됨 ㅋㅋㅋㅋ 지우면 숫자 안바뀜
 			} */
 		})
-
 		$(document).on('click', '.upvotebtn', function() {
 			var wraptr = $(this).closest('tr');
 			var wrapprev = $(this).closest('tr').prev('tr');
@@ -392,7 +371,6 @@ font-size:15px;
 				$(this).closest('td').siblings('th').text(number - 1);
 			} */
 		})
-
 		$(document).on('click', '.downvotebtn', function() {
 			var wraptr = $(this).closest('tr');
 			var wrapnext = $(this).closest('tr').next('tr');
@@ -403,7 +381,6 @@ font-size:15px;
 				$(this).closest('td').siblings('th').text(number + 1);
 			} */
 		})
-
 		$(document).on('click', '.custom-control-input', function() {
 			if ($(this).val() == 2) {
 				$('#votenum').attr('readOnly', false);
@@ -411,7 +388,6 @@ font-size:15px;
 			} else if ($(this).val() == 1) {
 				$('#votenum').attr('readOnly', true);
 				$("#datepicker").attr('disabled',false);
-				$("#datepicker").attr('readOnly',false);
 				$("#datepicker").css("background-color","white");
 				$(function() {
 					$("#datepicker").datepicker(
@@ -510,7 +486,6 @@ font-size:15px;
 						if(radioval==3){
 							$('#realterm').val("blank");
 							$('#votenum').val(0);
-							console.log($('#realterm:styling_endtermtxt 값').val()); 
 						}
 						
 						if(radioval==2){
@@ -519,7 +494,8 @@ font-size:15px;
 						}
 						if(radioval==1){
 							$('#votenum').val(0);
-							console.log($('#realterm:styling_endtermtxt 값').val()); 
+							$("#realterm").val($('#datepicker').val());
+							console.log($('#datepicker').val()+": 다시 입력된 새로운 날짜").val()); 
 						}
 						  console.log("submit");  		    
 						   $('#modiform').submit();     			

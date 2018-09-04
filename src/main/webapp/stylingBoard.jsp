@@ -131,7 +131,7 @@ input[type="file"] {
 								<div class="view overlay view-cascade ">
 									<img class="card-img-top"
 										src="upload/stylingvote/${svdto.photo}" alt="titlephoto"
-										id="titleimg" /> <a href="#!">
+										id="titleimg" /> <a class="clickcard">
 										<div class="mask rgba-white-slight"></div>
 									</a>
 								</div>
@@ -143,12 +143,12 @@ input[type="file"] {
 									<h4 class="card-title">${svdto.styling_title}</h4>
 									<!--Text-->
 									<p class="card-text">
-										<a class="text-muted amber-text">${svdto.styling_writername}</a>
-										<a><i class="fa mr-2 fa-comment amber-text"
-											aria-hidden="true"></i>0</a> <a><i class="fa mr-2 fa-eye"
+										<a class="text-muted amber-text" href="userpage.go?seq=${svdto.styling_writer}">${svdto.styling_writername}	
+										</a>
+										<a><i class="fa mr-2 fa-eye"
 											aria-hidden="true"></i>${svdto.styling_viewcount}</a> 
 									</p>
-									<p class='card-text'>		
+									<p class='card-text secondtxt'>		
 											<a class="text-muted amber-text">${svdto.styling_writedate}</a>
 											<c:choose>
 											<c:when test="${svdto.styling_end==1 and svdto.ddate < 0}">
@@ -175,7 +175,7 @@ input[type="file"] {
 									<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 									<button type="button" class="btn btn-light-blue btn-md gobtn">투표
 										보기</button>
-									<input type="hidden" value="${svdto.styling_vote_seq}">
+									<input type="hidden" class="findseq" value="${svdto.styling_vote_seq}">
 								</div>
 							</div>
 						</div>
@@ -265,6 +265,31 @@ input[type="file"] {
 			if($(this).prev('p').find('span').text() =='투표 진행중' ){
 				state = "ing";
 			}else if($(this).prev('p').find('span').text() =='투표 종료' ){
+				state = "done";
+			}
+			$.ajax({
+				method : "POST",
+				url : "updateStylingViewcount.ajax",			
+				data : {				
+					styling_vote_seq:seq
+				},
+				error : function() {
+					alert("다시 시도해 주세요");
+				},
+				success : function(data) {
+					console.log("AJAX 조회수 up");
+				}
+			});
+			location.href = "readStylingVote.style?styling_vote_seq=" + seq+"&state="+state;
+		})
+		
+		$('.clickcard').click(function() {
+			var seq = $(this).parent().parent().find('.findseq').val();
+			var state = "";
+			console.log($(this).parent().next('div').find('.secondtxt').text()) ;
+			if($(this).parent().next('div').find('.secondtxt').text() =='투표 진행중' ){
+				state = "ing";
+			}else if($(this).parent().next('div').find('.secondtxt').text() =='투표 종료' ){
 				state = "done";
 			}
 			$.ajax({

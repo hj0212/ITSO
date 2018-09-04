@@ -603,6 +603,7 @@ img {
 		//var url = document.location.href;
 		//var url = 'http://192.168.20.35/controller/main.go'//test용이라 주소 직접 입력해놓음
 		var url ='http://192.168.20.35:8080/controller/readSocial.go?seq=186';
+		//로컬 호스트로는 페이스북 공유하기 에러가 나서 팀장님 서버로 서비스할때는 두번째 url로 해주세요.
 		var encodeUrl = encodeURIComponent(url);
 		var facebook = 'https://www.facebook.com/sharer/sharer.php?u=';
 		var link = facebook + encodeUrl;
