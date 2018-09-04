@@ -354,7 +354,7 @@
 
 								<marker>
 								<div
-									style="border: solid 1px #1B0946; width: 15px; height: 15px; background-color: black; border-radius: 50%; opacity : 0.3"
+									style="border: solid 1px #1B0946; width: 15px; height: 15px; background-color: gray; border-radius: 50%;"
 									class="clothes-marker" id="clothes-marker"></div>
 								</marker>
 							</div>
