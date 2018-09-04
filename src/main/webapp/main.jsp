@@ -365,8 +365,7 @@ button.dropdown-toggle {
 		<section class="firstSection col-md-12">
 			<div class="mainIntro">
 				<p>
-					<strong>HYPE</strong> the looks you like, and <strong>+FAN</strong>
-					the people you like to personalize you feed.
+					마음에 드는 게시글에 <strong>좋아요</strong>를 누르고, <strong>팔로우</strong>를 통해 개인적인 피드를 구성하세요!  
 				</p>
 			</div>
 		</section>
@@ -740,6 +739,7 @@ button.dropdown-toggle {
 			
 			</c:when>
 			<c:otherwise>
+				<h5 class="font-weight-bold" style="margin-bottom: 20px;">추천 팔로우</h5>
 				<ul class="list-unstyled">
 				<c:forEach var="reco" items="${recommendList}">
 				<li class="media"><img
@@ -747,13 +747,14 @@ button.dropdown-toggle {
 					src="upload/profile/${reco.photo }"
 					alt="Generic placeholder image">
 					<div class="media-body mt-0">
-						<h5 class="mt-0 mb-0 font-weight-bold">${reco.name }</h5>
+						<h5 class="mt-0 mb-0 ">${reco.name }</h5>
 						<button type="button" class="btn btn-indigo followbtn btn-sm">
 							<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';">
 							<i class="fa fa-check" /></i> 언팔로우</span> 
 							<span class="follow show" style="font-family: 'NanumbarunpenR';">
 							<i class="fa fa-plus" /></i> 팔로우</span>
 						</button>
+						<input type="hidden" class="writerseq" value="${reco.seq }"/>
 					</div></li>
 				</c:forEach>
 			</ul>
@@ -763,7 +764,6 @@ button.dropdown-toggle {
 			
 			<a id="MOVE_TOP_BTN" href="#" class="btn btn-elegant btn-sm">TOP</a>
 		</div>
-		<div id="enters"></div>
 
 		<%@include file="footer.jsp"%>
 

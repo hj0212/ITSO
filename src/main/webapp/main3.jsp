@@ -306,6 +306,38 @@ a#MOVE_TOP_BTN {
 .photoContainerHoverWriter a, .photoContainerHoverTitle a {
 	color: black;
 }
+
+@media ( max-width : 1334px) {
+	#rightfix {
+		display: none;
+	}
+}
+
+@media ( max-width : 1100px) {
+	#MOVE_TOP_BTN {
+		visibility: hidden;
+	}
+}
+
+.avatar {
+	margin-bottom: 5px;
+}
+
+#rightfix {
+	width: 250px;
+	top: 30%;
+	right: 0px;
+	position: fixed;
+}
+
+#rightfix .media {
+	margin-bottom: 20px;
+}
+
+#rightfix img {
+	height: 70px;
+	width: 70px;
+}
 </style>
 </head>
 
@@ -484,9 +516,37 @@ a#MOVE_TOP_BTN {
 	</section>
 	<!-- 포토컨테이너종료 -->
 
-	<!-- top버튼 시작 -->
-	<a id="MOVE_TOP_BTN" href="#">TOP</a>
-	<!--  top버튼 종료 -->
+		<!-- 오른쪽 추천 follow  -->
+		<div id="rightfix" class="right-fixed">
+		<c:choose>
+			<c:when test="${empty recommendList} }">
+			
+			</c:when>
+			<c:otherwise>
+				<h5 class="font-weight-bold" style="margin-bottom: 20px;">추천 팔로우</h5>
+				<ul class="list-unstyled">
+				<c:forEach var="reco" items="${recommendList}">
+				<li class="media"><img
+					class="d-flex mr-3 rounded-circle  align-self-center"
+					src="upload/profile/${reco.photo }"
+					alt="Generic placeholder image">
+					<div class="media-body mt-0">
+						<h5 class="mt-0 mb-0 ">${reco.name }</h5>
+						<button type="button" class="btn btn-indigo followbtn btn-sm">
+							<span class="unfollow hidden" style="font-family: 'NanumbarunpenR';">
+							<i class="fa fa-check" /></i> 언팔로우</span> 
+							<span class="follow show" style="font-family: 'NanumbarunpenR';">
+							<i class="fa fa-plus" /></i> 팔로우</span>
+						</button>
+						<input type="hidden" class="writerseq" value="${reco.seq }"/>
+					</div></li>
+				</c:forEach>
+			</ul>
+			</c:otherwise>
+		</c:choose>
+			
+			<a id="MOVE_TOP_BTN" href="#" class="btn btn-elegant btn-sm">TOP</a>
+		</div>
 
 	<!-- saveModal -->
 	<div class="modal fade" id="saveModal" tabindex="-1" role="dialog"
