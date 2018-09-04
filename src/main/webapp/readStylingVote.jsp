@@ -373,8 +373,9 @@ margin-top:20px;
 		})
 		
 		$('#modibtn').click(function(){
-			location.href="modifyStylingVote.go?styling_vote_seq=${votedto.styling_vote_seq}&state=${votestate}";
-			console.log("${votedto.styling_vote_seq}번글 수정으로 go");
+			alert("준비중 입니다:)");
+			location.href="login.go";
+			
 		})
 
 		$(function() {
