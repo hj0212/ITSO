@@ -451,7 +451,7 @@ input[type="file"] {
 						}else if(radioval==1 && $('#datepicker').val()==""){
 							alert("종료 날짜를 선택해 주세요.");			
 						}else if(radioval==2 && $('#votenum').val()=="" || radioval==2 && $('#votenum').val()==0 || radioval==2 && $('#votenum').val()==1){
-							alert("참여 인원을 입력해 주세요.");	
+							alert("참여 인원을 입력해 주세요.(2명 이상)");		
 						}else if($('#datepicker').val()=="" && $('#votenum').val()=="" && radioval!=3){
 							alert("투표종료 조건을 입력해 주세요.");
 						}else if($('.filesel').length<2){
