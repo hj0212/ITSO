@@ -305,7 +305,7 @@ input:checked+.slider:before {
 									<td>${reportedUsers.email}</td>
 									<td>${reportedUsers.name}</td>
 									<td>${reportedUsers.create_date}</td>
-									<td>${reportedUsers.report_count}</td>
+<%-- 									<td>${reportedUsers.report_count}</td> --%>
 									<td>${reportedUsers.report_reason}</td>
 									<td class="isBlocked" name="${status.index}">${reportedUsers.block}</td>
 									<td>

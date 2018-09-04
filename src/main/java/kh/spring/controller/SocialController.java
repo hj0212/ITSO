@@ -41,6 +41,7 @@ import kh.spring.interfaces.ISocialCommentService;
 import kh.spring.interfaces.ISocialHashTagService;
 import kh.spring.interfaces.ISocialTagService;
 import kh.spring.jsonobject.SocialTag;
+import kh.spring.websocket.EchoHandler;
 
 @Controller
 public class SocialController {
@@ -139,6 +140,7 @@ public class SocialController {
 
 			}else if(feed.equals("following")) { //팔로잉
 				result =this.service.showSocialFollowBoardList(sdto);
+				System.out.println(result.size());
 				//System.out.println("3");
 
 			}
@@ -203,11 +205,11 @@ public class SocialController {
 			mav.addObject("pGender",pGender);
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
-			
-			
+
+
 			try {
 				main = request.getParameter("main");
-				
+
 				if(main.equals("full")) {
 					result = makeHashTag(result);
 					mav.addObject("socialList",result);
@@ -215,40 +217,82 @@ public class SocialController {
 				}else if(main.equals("thumbnail")) {
 					mav.addObject("socialList",result);
 					mav.setViewName("main3.jsp");
+				}else {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("main.jsp");
 				}
-				
+
 
 			}catch(Exception e4) {
 				result = makeHashTag(result);
 				mav.addObject("socialList",result);
 				mav.setViewName("main.jsp");
 			}
-			
+
 		}
 		return mav;
 	}
 
 	@RequestMapping("/collection.go")
-	public ModelAndView showCollectionList(int seq, HttpSession session) {
-		CollectionDTO dto = new CollectionDTO();
-		dto.setCollection_seq(seq);
-		dto = service.getCollectionInfo(dto);
-		ModelAndView mav = new ModelAndView();
-		try {
-			List<CollectionDTO> clist = service.getCollectionData(dto);
-			List<SocialBoardDTO> list = service.getCollectionSocialList(dto);
-			List<SocialBoardDTO> goodList = service.getMyGoodSocialArticleList((MemberDTO) session.getAttribute("user"));
+	public ModelAndView showCollectionList(int seq, HttpSession session, HttpServletRequest request) {
+		int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		int user_seq = 0;
 
-			mav.addObject("content", dto);
-			mav.addObject("collectionList", clist);
-			mav.addObject("socialList", list);
-			mav.addObject("goodList", goodList);
-			mav.setViewName("collection.jsp");
+		ModelAndView mav = new ModelAndView();
+
+		try {
+			user_seq = ((MemberDTO)session.getAttribute("user")).getSeq();
 		} catch(Exception e) {
-			System.out.println("로그인x");
+			System.out.println("로그인x1");
 			mav.setViewName("login.go");
 			return mav;
 		}
+
+		CollectionDTO dto = new CollectionDTO();
+		dto.setCollection_seq(seq);
+		dto = service.getCollectionInfo(dto);
+
+
+		int totalCount = service.getCollectionCount(dto);
+		// 한 페이지당 들어갈 글 수
+		int countList = 12;
+
+		int totalPage = totalCount / countList;
+
+		if(totalCount > countList * totalPage) {
+			totalPage++;
+		}
+
+		if(totalPage < page) {
+			page = totalPage;
+		}
+
+		int countPage = 5;
+
+		int startPage = ((page - 1) / countPage) * countPage + 1;
+		int endPage = startPage + countPage - 1;
+
+		if(endPage > totalPage) {
+			endPage = totalPage;
+		}
+
+		int startCount = (page - 1) * countList + 1;
+		int endCount = page * countList;
+
+		List<CollectionDTO> clist = service.getCollectionData(dto);
+		List<SocialBoardDTO> list = service.getCollectionSocialList(seq, startCount, endCount);
+		List<SocialBoardDTO> goodList = service.getMyGoodSocialArticleList((MemberDTO) session.getAttribute("user"));
+
+		mav.addObject("page", page);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("totalPage",totalPage);
+		mav.addObject("content", dto);
+		mav.addObject("collectionList", clist);
+		mav.addObject("socialList", list);
+		mav.addObject("goodList", goodList);
+		mav.setViewName("collection.jsp");
 
 		return mav;
 	}
@@ -289,7 +333,7 @@ public class SocialController {
 		mav.addObject("goodCount", goodCount);
 		int goodStatus = service.selectGoodCount(gdto);
 		mav.addObject("goodStatus", goodStatus);
-		
+
 		fdto.setFollowing_seq(seq);
 		Integer follow = mService.checkFollow(fdto);
 		mav.addObject("followcheck", follow);
@@ -311,7 +355,13 @@ public class SocialController {
 			NotificationDTO nodto = new NotificationDTO(noti_seq,"nono");
 			int update_noti =this.nosevice.updateNotification(nodto);
 		}
+		
 		int social_seq = dto.getSocial_seq();
+		
+		
+		int allgoodCount = service.allGoodCount(gdto);
+		mav.addObject("allgoodCount",allgoodCount);
+		
 		List<SocialTagDTO> list = tagService.showSelectedTagList(social_seq);
 		// image_db -> {} -> 0 : {}, 1 : {}
 		ObjectNode infoNode = om.createObjectNode();
@@ -706,11 +756,15 @@ public class SocialController {
 	}
 
 	@RequestMapping("/procSocialComment.go")
-	public void procSocialComment(HttpServletRequest request, HttpServletResponse response) {
+	public void procSocialComment(HttpServletRequest request, HttpServletResponse response,HttpSession session) {
 		int social_seq = Integer.parseInt(request.getParameter("seq"));
-
+		int writer_seq =Integer.parseInt(request.getParameter("writerseq"));
+		System.out.println("글작성잡니다 :"+writer_seq);
+		
+		
 		try {
 			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
+	
 			String comment = request.getParameter("comment");
 			SocialCommentDTO scdto = new SocialCommentDTO(social_seq, writer, comment);
 			int result = this.comService.insertSocialComment(scdto);
@@ -719,7 +773,7 @@ public class SocialController {
 			ObjectMapper om = new ObjectMapper();
 
 			ArrayNode array = om.createArrayNode();
-
+		
 
 			for(SocialCommentDTO dto : commentList) {
 				ObjectNode on = om.createObjectNode();
@@ -734,8 +788,21 @@ public class SocialController {
 
 				array.add(on);
 			}
-
+			
+			if(writer_seq != writer) {
+				NotificationDTO nodto = new NotificationDTO(writer_seq,writer,"comment","댓글을 남겼습니다","n","readSocial.go?seq="+social_seq,social_seq);
+				List<NotificationDTO> data = nosevice.notificationData(nodto);
+				if(data.size() ==0) {
+					int noInsert = nosevice.insertNotification(nodto);
+					NotificationDTO list = nosevice.selectNotification(nodto).get(0);
+					ObjectMapper mapper = new ObjectMapper();
+					String jsonString = mapper.writeValueAsString(list);
+					EchoHandler.users.get(nodto.getUser_seq()).getBasicRemote().sendText(jsonString);
+				}
+			}
+			
 			response.getWriter().println(array);
+		
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -792,7 +859,7 @@ public class SocialController {
 		return mav;
 	}
 
-	@RequestMapping("searchTag.go")
+	@RequestMapping("/searchTag.go")
 	public ModelAndView searchTag(HttpSession session, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		int user_seq = 0;
@@ -930,9 +997,36 @@ public class SocialController {
 			mav.addObject("pGender",pGender);
 			mav.addObject("gender",gender);		
 			mav.addObject("age",age);
-			mav.addObject("socialList",result);
+
+
+			try {
+				main = request.getParameter("main");
+
+				if(main.equals("full")) {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag.jsp");
+				}else if(main.equals("thumbnail")) {
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag2.jsp");
+				}else {
+					result = makeHashTag(result);
+					mav.addObject("socialList",result);
+					mav.setViewName("searchTag.jsp");
+				}
+
+			}catch(Exception e4) {
+				result = makeHashTag(result);
+				mav.addObject("socialList",result);
+				mav.setViewName("searchTag.jsp");
+			}
 		}
 		return mav;
+	}
+	
+	@RequestMapping("/writeSocial.go")
+	public String loginMain() {
+		return "redirect:writeSocial.jsp";
 	}
 
 	private List<SocialBoardDTO> makeHashTag(List<SocialBoardDTO> list) {

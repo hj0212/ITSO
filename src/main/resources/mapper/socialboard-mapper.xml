@@ -7,14 +7,16 @@
 		 select su.*,nvl(sg.count, '0') good_count,nvl(sc.comcount, '0') comment_count from (select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq) su
         left outer join (select social_seq,count(*) count from social_good group by social_seq) sg on su.social_seq = sg.social_seq
          left outer join (select social_seq,count(*) comcount from social_comment group by social_seq) sc on su.social_seq = sc.social_seq
+		<trim prefix="where" prefixOverrides="and">
 		<if test="age gt 0">
 			<!-- 연령순 -->
-			and s.age=#{age}
+			and su.age=#{age}
 		</if>
 		<if test="gender !=null and gender !='g'.toString() ">
 			<!--성별  -->
-			and s.gender = #{gender}
+			and su.gender = #{gender}
 		</if>		
+		</trim>
 		order by social_date desc
 	</select>
 	
@@ -23,18 +25,23 @@
 		 from (select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq) su
         left outer join (select social_seq,count(*) count from social_good group by social_seq) sg on su.social_seq = sg.social_seq
          left outer join (select social_seq,count(*) comcount from social_comment group by social_seq) sc on su.social_seq = sc.social_seq
-		
+		<trim prefix="where" prefixOverrides="and">
 			<if test="age gt 0">
 			 	and s.AGE= #{age}
 			</if>
 			<if test="gender !=null and gender !='g'.toString()">
 				and s.GENDER=#{gender}
 			</if> 
+			</trim>
 		ORDER by good_count desc
 	</select>
 	
 	<select id="showSocialFollowBoardList" resultType="sdto">
-	select s.*, nvl(sc.count, '0') comment_count, u.name writerName,u.photo user_photo, u.state userState from(select following_seq from follow where USER_SEQ = #{social_seq})f,SOCIAL s, users u where f.following_seq = s.SOCIAL_WRITER and s.social_writer = u.seq
+	select su.*,nvl(sg.count, '0') good_count, nvl(sc.comcount, '0') comment_count, writerName, user_photo, userState
+from (select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u where s.social_writer = u.seq) su 
+left outer join (select social_seq,count(*) count from social_good group by social_seq) sg on su.social_seq = sg.social_seq
+left outer join (select social_seq,count(*) comcount from social_comment group by social_seq) sc on su.social_seq = sc.social_seq 
+where su.social_writer in (select following_seq from follow where USER_SEQ = #{user_seq})
 		<if test="age gt 0">
 			and s.AGE=#{age}
 		</if>
@@ -51,7 +58,7 @@
 			<!-- 연령순 -->
 			and s.age=#{pAge}
 		</if>
-		<if test="pGender !=null and gender !='g'.toString() ">
+		<if test="pGender !=null and pGender !='g'.toString() ">
 			<!--성별  -->
 			and s.gender = #{pGender}
 		</if>		
@@ -63,7 +70,7 @@
 			<if test="pAge gt 0">
 			 	and s.AGE= #{pAge}
 			</if>
-			<if test="pGender !=null and gender !='g'.toString()">
+			<if test="pGender !=null and pGender !='g'.toString()">
 				and s.GENDER=#{pGender}
 			</if> 
 		ORDER by count desc
@@ -74,7 +81,7 @@
 		<if test="pAge gt 0">
 			and s.AGE=#{pAge}
 		</if>
-		<if test="pGender !=null and gender !='g'.toString()">
+		<if test="pGender !=null and pGender !='g'.toString()">
 			and s.GENDER=#{pGender}
 		</if>
 		order by s.social_date desc
@@ -129,6 +136,14 @@
 		select social_seq from social_good where user_seq = #{seq}
 	</select>
 	<select id="getMyGoodSocialArticleList" resultType="sdto">
-		select s.*, u.photo user_photo, u.state userState, u.name writerName, nvl(sc.comcount,'0') comment_count, nvl(sg.goodcount,'0') good_count from social s, users u, (select social_seq, count(*) comcount from social_comment group by social_seq)sc, (select social_seq, count(*) goodcount from social_good group by social_seq)sg where s.social_writer = u.seq and s.social_seq = sc.social_seq(+) and s.social_seq = sg.social_seq(+) and s.social_seq in (select social_seq from social_good where user_seq=#{seq}) order by 5 desc
+		select s.*, u.photo user_photo, u.state userState, u.name writerName, nvl(sc.comcount,'0') comment_count, nvl(sg.goodcount,'0') good_count from social s, users u, (select social_seq, count(*) comcount from social_comment group by social_seq)sc, (select social_seq, count(*) goodcount from social_good group by social_seq)sg where s.social_writer = u.seq and s.social_seq = sc.social_seq(+) and s.social_seq = sg.social_seq(+) and s.social_seq in (select social_seq from social_good where user_seq=#{seq}) order by 5 asc
+	</select>
+	
+	<select id="searchedTagSocialList" resultType="sdto" parameterType="String">
+		select s.*, u.name writerName,u.photo user_photo, u.state userState from social s, users u, social_hash_tag sht where s.social_writer = u.seq and s.social_seq = sht.social_seq	and sht.social_hash_tag_contents like '%'||#{0}||'%'
+	</select>
+	
+	<select id="searchedBrandList" resultType="sdto" parameterType="String">
+		select  s.*, u.name writerName, u.photo user_photo, u.state userState from social s,users u where s.social_seq IN (select social_seq from social_tag where tag_brand like '%'||#{0}||'%' or tag_store like '%'||#{0}||'%') and s.social_writer = u.seq
 	</select>
 </mapper>

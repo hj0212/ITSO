@@ -82,6 +82,7 @@
 			</div>
 		</div>
 		<div class="col-md-12 my-3"></div>
+
 		<div class="col-md-6">
 			<form method="post" action="uploadSocialImg.sns" id="uploadform" enctype="multipart/form-data">
 				<div class="file-upload">
@@ -89,12 +90,7 @@
 					<div class="row">
 						<div class="image-upload-wrap form-group my-3 col-md-12">
 							<label>-님의 스타일을 보여주세요.</label> 
-							<input type="file" name="file" id="imgfile"
-								class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);"
-								accept="image/*" />
-							<!--     <div class="drag-text">
-      <h3>Drag and drop a file or select add Image</h3>
-    </div> -->
+							<input type="file" name="file" id="imgfile" class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);" accept="image/*" />
 						</div>
 					</div>
 					<div class="row">
@@ -124,8 +120,9 @@
 			if (input.files && input.files[0]) {
 
 				var reader = new FileReader();
+
 				reader.onload = function(e) {
-					/* $('.image-upload-wrap').hide(); */
+					$('.image-upload-wrap').hide();
 
 					$('.file-upload-image').attr('src', e.target.result);
 					$('#imgselected').css("visibility", "visible");
@@ -156,6 +153,10 @@
 		$("#nextbtn").click(function() {
 			 $("#uploadform").submit(); 
 			/* $(location).attr('href', 'writeArticle2.jsp'); */
+		})
+		
+		$("#backbtn").click(function(){
+			$(location).attr('href',"main.go");
 		})
 	</script>
     <!-- Bootstrap tooltips -->

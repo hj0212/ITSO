@@ -241,6 +241,8 @@ button.dropdown-toggle {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px; 
+	overflow: hidden; 
 }
 
 #saveModal .active {
@@ -443,7 +445,7 @@ button.dropdown-toggle {
 								<ul class="list-unstyled">
 									<li class="media align-middle"><img
 										class="d-flex mr-3 rounded-circle "
-										src="/upload/social/${list.user_photo}"
+										src="/upload/profile/${list.user_photo}"
 										style="width: 50px; height: 50px; margin-top: 10px">
 										<div class="media-body" style="margin: 0px auto">
 											<a class="writer-a"><b class="writerName"
@@ -688,6 +690,7 @@ button.dropdown-toggle {
 							</c:when>
 							<c:otherwise>
 								<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+								<div id="collectionarea" class="mt-2 first"></div>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -738,45 +741,6 @@ button.dropdown-toggle {
 			</div>
 		</div>
 
-
-		<!-- 오른쪽 추천 follow  -->
-		<div id="rightfix" class="right-fixed">
-			<ul class="list-unstyled">
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder7.jpg"
-					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-				<li class="media my-4"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder6.jpg"
-					alt="An image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based media
-							object</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-				<li class="media"><img class="d-flex mr-3 rounded-circle"
-					src="https://mdbootstrap.com/img/Photos/Others/placeholder5.jpg"
-					alt="Generic placeholder image">
-					<div class="media-body">
-						<h5 class="mt-0 mb-1 font-weight-bold">List-based</h5>
-						<button type="button" class="btn btn-indigo btn-sm">
-							<i class="fa fa-plus">follow</i>
-						</button>
-
-					</div></li>
-			</ul>
-
-		</div>
 
 		<!--side footer -->
 		<div id="sidefooter">
@@ -840,12 +804,18 @@ button.dropdown-toggle {
 		                data.social_seq)
 		            if (data.photo != null) {
 		                console.log("여기");
+		                if (num > 3) {
+		                	console.log("숨겨");
 		                cursor.find(".collectionPhoto").append(
-		                    '<div class="collectionPhotoItem">' +
+		                    '<div class="collectionPhotoItem" style="display:none;">' +
 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
 		                    '</div>');
-		                if (num > 4) {
-		                    cursor.find(".collectionPhoto:last").attr("display", "none");
+		                } else {
+		                	console.log("보여");
+		                	 cursor.find(".collectionPhoto").append(
+		 		                    '<div class="collectionPhotoItem">' +
+		 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+		 		                    '</div>');
 		                }
 		            } else {
 		                cursor.find(".collectionseq[value='" + collection_seq + "']").siblings(".collectionPhoto")
@@ -864,7 +834,13 @@ button.dropdown-toggle {
 		    .on('click', function () {
 		        var collection_title = $("input[name='collection_title']").val();
 		        var collection_contents = $("textarea[name='collection_contents']").val();
-
+		        
+		        if(collection_title == "") {
+		        	alert("컬렉션 이름을 입력하세요.");
+		        } else if(collection_contents == "") {
+		        	alert("컬렉션 상세 설명을 입력하세요.");
+		        } else {
+		        	
 		        $.ajax({
 		            url: "createCollection.ajax",
 		            type: "post",
@@ -875,9 +851,16 @@ button.dropdown-toggle {
 		            success: function (data) {
 		                console.log("생성" + data);
 		                var dto = JSON.parse(data);
+		                
+		                console.log("체크: " + $("#collectionarea").hasClass("first"));
+					    if($("#collectionarea").hasClass("first")) {
+					    	console.log("처음");
+					    	$("#firstmsg").remove();
+					    }
+					    
 		                $("input[name='collection_title']").val("");
 		                $("textarea[name='collection_contents']").val("");
-		                $("#createModal").hide();
+		                $("#createModal").modal('hide');
 
 		                $("#collectionarea").append(
 		                    '<div class="collectionItem z-depth-1 mt-2">' +
@@ -889,17 +872,18 @@ button.dropdown-toggle {
 		                    '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>' +
 		                    '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
 
-		                $("#saveModal").show();
+		                $("#saveModal").modal('show');
 
 		            }
 		        });
+		        }
 		    });
 		$("#createModal").on('show.bs.modal', function () {
-		    $("#saveModal").hide();
+		    $("#saveModal").modal('hide');
 		});
 
 		$("#createModal").on('hidden.bs.modal', function () {
-		    $("#saveModal").show();
+		    $("#saveModal").modal('show');
 		});
 
 		$("#saveModal").on('hidden.bs.modal', function () {

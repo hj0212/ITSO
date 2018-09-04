@@ -56,27 +56,53 @@ public class TipController {
 	}
 
 	@RequestMapping("tipBoardMainPage.tip")
-	public ModelAndView tipBoardMainPageWithAllData() {
-
+	public ModelAndView tipBoardMainPageWithAllData(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		List<TipDTO> beautyTipData = service.getBeautyTipData();
-		List<TipDTO> dietTipData = service.getDietTipData();
-		List<TipDTO> fashionTipData = service.getFashionTipData();
-		List<TipDTO> businessTipData = service.getBusinessTipData();
-		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
-
-		if (beautyTipData != null) {
-			System.out.println(beautyTipData.toString());
-
-		} else {
-			return null;
+		String category = request.getParameter("category");
+		
+		if(category != null) {
+			category = category.trim().equals("") ? null : category;
 		}
+		
+		int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		StringBuffer pagination = new StringBuffer();
+		
+		int totalCount = service.getTipBoardCount(category);
+		// 한 페이지당 들어갈 글 수
+		int countList = 10;
+		
+		int totalPage = totalCount / countList;
+		
+		if(totalCount > countList * totalPage) {
+			totalPage++;
+		}
+		
+		if(totalPage < page) {
+			page = totalPage;
+		}
+		
+		int countPage = 5;
+		
+		int startPage = ((page - 1) / countPage) * countPage + 1;
+		int endPage = startPage + countPage - 1;
+		
+		if(endPage > totalPage) {
+			endPage = totalPage;
+		}
+		
+		int startCount = (page - 1) * countList + 1;
+		int endCount = page * countList;
+		
+		List<TipDTO> tipBoardList = service.getTipBoardListRange(category, startCount, endCount);
 
-		mav.addObject("beautyTipData", beautyTipData);
-		mav.addObject("dietTipData", dietTipData);
-		mav.addObject("fashionTipData", fashionTipData);
-		mav.addObject("businessTipData", businessTipData);
+		mav.addObject("category", category);
+		mav.addObject("page", page);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("totalPage",totalPage);
+		
+		mav.addObject("tipBoardList", tipBoardList);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;
@@ -100,7 +126,7 @@ public class TipController {
 		System.out.println(tipComments.toString());
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("tipContent", tipContent);
+		mav.addObject("tipContent", tipContent.get(0));
 		mav.addObject("tipLikeCounts", tipLikeCounts);
 		mav.addObject("tipComments", tipComments);
 		mav.setViewName("tipSpecificArticleView.jsp");
@@ -199,7 +225,7 @@ public class TipController {
 	}
 	
 	
-	@RequestMapping("deleteTipComment.tip")
+	@RequestMapping("deleteTipComment.tip") //창영 댓글 지우기 기능
 	public void deleteTipComment(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ObjectMapper om = new ObjectMapper();

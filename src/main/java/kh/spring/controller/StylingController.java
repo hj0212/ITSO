@@ -283,8 +283,6 @@ public class StylingController {
 	public ModelAndView goreadStylingVote(HttpSession session, int styling_vote_seq) {
 		ModelAndView mav = new ModelAndView();
 		System.out.println(((MemberDTO)session.getAttribute("user")).getSeq());
-
-
 		mav.addObject("styling_vote_seq",styling_vote_seq);
 		mav.setViewName("readStylingVote.style");
 		return mav;

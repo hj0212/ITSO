@@ -25,10 +25,16 @@
 	rel="stylesheet">
 
 <!--   ---------CDN 모음 끝------------------------------------------  -->
-<title>MyPage</title>
+<title></title>
 <style>
 body {
 	background-color: #eeeeee;
+}
+
+#wrapper {
+	min-height: 100%;
+	position: relative;
+	margin-bottom: 100px; /* footer height */
 }
 
 #wrapper div {
@@ -81,20 +87,20 @@ body {
 }
 
 #profilestat a.active, #tablist a.active {
-	font-weight:normal;
+	font-weight: normal;
 }
 
 #profilestat div p:first-of-type {
 	font-weight: bold;
 }
 
-@media ( min-width : 1010px) {
+@media ( min-width : 868px) {
 	#profilestat {
 		margin-top: 35px;
 	}
 }
 
-@media ( max-width : 1010px) {
+@media ( max-width : 868px) {
 	#profilestat {
 		margin-top: 15px;
 		width: 100%;
@@ -231,6 +237,8 @@ table .profilearea {
 
 .collectionPhotoItem img {
 	width: 105px;
+	height: 80px; 
+	overflow: hidden; 
 }
 
 #saveModal .active {
@@ -263,7 +271,12 @@ table .profilearea {
 }
 
 .followbtn {
-	margin-top: 12px;
+	margin-top: 6px;
+}
+
+.tip-date {
+	text-align: right;
+	width: 130px;
 }
 </style>
 
@@ -379,7 +392,7 @@ table .profilearea {
 														success : function(
 																response) {
 															if (response != null) {
-																location.href = "mypage.go?view=collection";
+																location.href = "userpage.go?view=collection";
 															}
 														},
 														error : function(
@@ -408,7 +421,7 @@ table .profilearea {
 														success : function(
 																response) {
 															if (response != null) {
-																location.href = "mypage.go?view=collection";
+																location.href = "userpage.go?view=collection";
 															}
 														},
 														error : function(
@@ -451,7 +464,7 @@ table .profilearea {
 										},
 										success : function(data) {
 											console.log("들어옴" + data), font
-													.html( data)
+													.html(data)
 										}
 									});
 								});
@@ -471,9 +484,26 @@ table .profilearea {
 			</div>
 			<div id="infoarea" class="col">
 				<p class="h4-responsive mb-0 nanumB">${member.name}</p>
-				<p class="h6-responsive">${member.email}</p>
+				<c:choose>
+					<c:when test="${seq eq sessionScope.user.seq }">
+						<p class="h6-responsive">${member.email}</p>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+
 				<br>
-				<p class="h4-responsive mb-0 nanumB">"${member.state}"</p>
+				<p class="h4-responsive mb-0 nanumB">
+
+					<c:choose>
+						<c:when test="${empty member.state}">
+					" "
+					</c:when>
+						<c:otherwise>
+					"${member.state}"
+					</c:otherwise>
+					</c:choose>
+				</p>
 				<br>
 
 				<c:choose>
@@ -485,7 +515,8 @@ table .profilearea {
 						<!-- 다른사람 -->
 						<c:if test="${followcheck == 0 }">
 							<!-- 팔로우x -->
-							<button type="button" class="btn btn-indigo btn-sm followbtn">
+							<button type="button"
+								class="btn btn-indigo btn-sm followbtn ml-0">
 								<span class="follow show" style="font-family: 'NanumbarunpenR';"><i
 									class="fa fa-plus" /></i> 팔로우</span> <span class="unfollow hidden"
 									style="font-family: 'NanumbarunpenR';"><i
@@ -502,8 +533,9 @@ table .profilearea {
 									class="fa fa-plus" /></i> 팔로우</span>
 							</button>
 						</c:if>
-						<input type="hidden" value="${ferlist.seq }" id="seq" />
-						<button id="messagebtn" class="btn btn-itso btn-sm">
+						<input type="hidden" value="${ferlist.seq}" id="message-seq" />
+						<button id="messagebtn" class="btn btn-itso btn-sm"
+							data-toggle="modal" data-target="#centralModalSuccess">
 							<i class="fa fa-envelope-o" aria-hidden="true"></i> 메시지 보내기
 						</button>
 					</c:otherwise>
@@ -568,8 +600,8 @@ table .profilearea {
 						href="#followerPanel" role="tab">팔로워</a></li>
 					<li class="nav-item"><a class="nav-link" data-toggle="tab"
 						href="#followingPanel" role="tab">팔로잉</a></li>
-					<li class="nav-item"><a class="nav-link" data-toggle="tab"
-						href="#boardPanel" role="tab">게시판</a></li>
+					<!-- <li class="nav-item"><a class="nav-link" data-toggle="tab"
+						href="#boardPanel" role="tab">팁 게시글</a></li> -->
 				</ul>
 
 				<!-- Tab panels -->
@@ -582,7 +614,13 @@ table .profilearea {
 							<!-- Grid column -->
 							<c:choose>
 								<c:when test="${empty socialList }">
-									작성한 글이 없습니다.
+									<table class="table" style="width: 100%;">
+										<tr>
+											<td>작성한 글이 없습니다.
+										</tr>
+									</table>
+
+
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="list" items="${socialList }">
@@ -645,8 +683,8 @@ table .profilearea {
 																					<i class="fa fa-heart red-text heart"
 																						aria-hidden="true"
 																						style="float: left; font-size: 25px;"
-																						value="${list.social_seq}"> <font color="black">
-																							${good.good_count } </font></i>
+																						value="${list.social_seq}"> <font
+																						color="black"> ${good.good_count } </font></i>
 
 																					<c:set var="loop_flag" value="true" />
 																				</c:when>
@@ -656,8 +694,7 @@ table .profilearea {
 																							aria-hidden="true"
 																							style="float: left; font-size: 25px;"
 																							value="${list.social_seq}"> <font
-																							color="black">
-																								${good.good_count } </font></i>
+																							color="black"> ${good.good_count } </font></i>
 
 
 																					</c:if>
@@ -727,47 +764,14 @@ table .profilearea {
 																		href="userpage.go?seq=${list.social_writer }"><b
 																		class="writerName" style="font-size: 20px;">${list.writerName}</b></a>&nbsp;&nbsp;
 																	<span class="state"><font color="gray">"${list.userState}"</font></span>
-																</div> <c:choose>
+																</div> <c:set var="loop_flag" value="false" /> <c:choose>
 																	<c:when
 																		test="${list.social_writer eq sessionScope.user.seq}">
 
 																	</c:when>
 																	<c:otherwise>
 																		<c:choose>
-
-																			<c:when test="${!empty followingList }">
-																				<c:forEach var="flist" items="${followingList }">
-
-																					<c:choose>
-																						<c:when test="${flist.seq eq list.social_writer}">
-
-																							<button type="button"
-																								class="btn btn-itso followbtn">
-																								<span class="unfollow show"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-check" /></i> 언팔로우</span> <span
-																									class="follow hidden"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-plus" /></i> 팔로우</span>
-																							</button>
-																						</c:when>
-																						<c:otherwise>
-
-																							<button type="button"
-																								class="btn btn-indigo followbtn">
-																								<span class="follow show"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-plus" /></i> 팔로우</span> <span
-																									class="unfollow hidden"
-																									style="font-family: 'NanumbarunpenR';"><i
-																									class="fa fa-check" /></i> 언팔로우</span>
-																							</button>
-																						</c:otherwise>
-																					</c:choose>
-																				</c:forEach>
-																			</c:when>
-
-																			<c:otherwise>
+																			<c:when test="${empty followingList }">
 																				<button type="button"
 																					class="btn btn-indigo followbtn">
 																					<span class="unfollow hidden"
@@ -777,9 +781,48 @@ table .profilearea {
 																						style="font-family: 'NanumbarunpenR';"><i
 																						class="fa fa-plus" /></i> 팔로우</span>
 																				</button>
-																			</c:otherwise>
-																		</c:choose>
+																			</c:when>
+																			<c:otherwise>
+																				<c:forEach var="flist" items="${followingList }"
+																					varStatus="fstatus">
 
+																					<c:if test="${loop_flag == false }">
+																						<c:choose>
+																							<c:when
+																								test="${good.social_seq == list.social_seq }">
+																								<button type="button"
+																									class="btn btn-itso followbtn">
+																									<span class="unfollow show"
+																										style="font-family: 'NanumbarunpenR';"><i
+																										class="fa fa-check" /></i> 언팔로우</span> <span
+																										class="follow hidden"
+																										style="font-family: 'NanumbarunpenR';"><i
+																										class="fa fa-plus" /></i> 팔로우</span>
+																								</button>
+
+																								<c:set var="loop_flag" value="true" />
+																							</c:when>
+																							<c:otherwise>
+																								<c:if test="${fstatus.last }">
+																									<button type="button"
+																										class="btn btn-indigo followbtn">
+																										<span class="follow show"
+																											style="font-family: 'NanumbarunpenR';"><i
+																											class="fa fa-plus" /></i> 팔로우</span> <span
+																											class="unfollow hidden"
+																											style="font-family: 'NanumbarunpenR';"><i
+																											class="fa fa-check" /></i> 언팔로우</span>
+																									</button>
+
+																								</c:if>
+																							</c:otherwise>
+																						</c:choose>
+																					</c:if>
+
+																				</c:forEach>
+																			</c:otherwise>
+
+																		</c:choose>
 																	</c:otherwise>
 																</c:choose> <input type="hidden" value="${list.social_writer }"
 																id="seq" /></li>
@@ -866,7 +909,7 @@ table .profilearea {
 																style="color: white;">보기</a>
 														</button>
 														<button class="textbtn editbtn" data-toggle="modal"
-															data-target="#editCollectionModal">수정</button>
+															data-target="#editModal" value="${clist.collection_seq }">수정</button>
 														<button class="textbtn removebtn">삭제</button>
 														<input type="hidden" value="${clist.collection_seq }"
 															name="collectionseq" />
@@ -908,7 +951,8 @@ table .profilearea {
 										<td>나를 팔로우 하는 사람이 없습니다.
 								</c:when>
 								<c:otherwise>
-									<c:forEach var="ferlist" items="${followerList }">
+									<c:forEach var="ferlist" items="${followerList }"
+										varStatus="fstatus">
 										<tr>
 											<td width=100>
 												<div class="profilearea">
@@ -972,23 +1016,8 @@ table .profilearea {
 											</td>
 
 											<td style="height: 100px; vertical-align: middle">
-												<h6 class="mt-1">${finglist.name }</h6> <c:choose>
-													<c:when test="${ferlist.seq eq sessionScope.user.seq }">
-
-													</c:when>
-													<c:otherwise>
-														<c:if test="${finglist.followcheck eq 'n' }">
-															<button type="button" class="btn btn-indigo followbtn">
-																<span class="follow show"
-																	style="font-family: 'NanumbarunpenR';"><i
-																	class="fa fa-plus" /></i> 팔로우</span> <span
-																	class="unfollow hidden"
-																	style="font-family: 'NanumbarunpenR';"><i
-																	class="fa fa-check" /></i> 언팔로우</span>
-															</button>
-														</c:if>
-														<c:if test="${finglist.followcheck eq 'y' }">
-															<button type="button" class="btn btn-itso followbtn">
+												<h6 class="mt-1">${finglist.name }</h6>
+												<button type="button" class="btn btn-itso followbtn">
 																<span class="unfollow show"
 																	style="font-family: 'NanumbarunpenR';"><i
 																	class="fa fa-check" /></i> 언팔로우</span> <span
@@ -996,10 +1025,7 @@ table .profilearea {
 																	style="font-family: 'NanumbarunpenR';"><i
 																	class="fa fa-plus" /></i> 팔로우</span>
 															</button>
-														</c:if>
-														<input type="hidden" value="${ferlist.seq }" id="seq" />
-													</c:otherwise>
-												</c:choose>
+														<input type="hidden" value="${finglist.seq }" id="seq" />
 											</td>
 
 										</tr>
@@ -1012,55 +1038,76 @@ table .profilearea {
 					<!--/.Panel 4-->
 
 					<!--Panel 5-->
-					<div class="tab-pane fade" id="boardPanel" role="tabpanel"></div>
-					<!--/.Panel 5-->
+					<div class="tab-pane fade" id="boardPanel" role="tabpanel">
+						<c:choose>
+							<c:when test="${!empty tipList}">
+								<table style="width: 100%;" class="mt-2">
 
-					<!-- Modal -->
-					<div class="modal fade" id="editCollectionModal" tabindex="-1"
-						role="dialog" aria-labelledby="exampleModalLabel"
-						aria-hidden="true">
-						<div class="modal-dialog modal-sm" role="document">
-							<!--Content-->
-							<div class="modal-content">
-								<!--Header-->
-								<div class="modal-header">
-									<p class="heading lead mb-0">컬렉션 수정</p>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-
-								<!--Body-->
-								<div class="modal-body">
-									<input type="hidden" id="seqform" />
-									<div class="md-form">
-										<input type="text" id="titleform" class="form-control"
-											name="collection_title" maxlength="30" autofocus> <label
-											for="titleform">컬렉션 이름</label>
-									</div>
-									<div class="md-form mt-1">
-										<textarea type="text" id="contentsform"
-											class="md-textarea form-control" rows="3"
-											name="collection_contents"></textarea>
-										<label for="form7" class="mb-0">컬렉션 상세 설명</label>
-									</div>
-								</div>
-
-								<!--Footer-->
-								<div class="modal-footer justify-content-center">
-									<button class="btn btn-itso" data-toggle="modal"
-										data-target="#modal" id="savebtn">수정</button>
-									<button class="btn btn-outline-itso waves-effect"
-										data-dismiss="modal">취소</button>
-								</div>
-							</div>
-							<!--/.Content-->
-						</div>
+									<c:forEach items="${tipList}" var="list">
+										<tr>
+											<td>[${list.category}]</td>
+											<td><a href="userpage.go?seq=${list.tip_writer}">${list.name}</a></td>
+											<td class="tip-title"><a
+												href="getSpecificTipView.tip?seq=${list.tip_seq}">${list.tip_title}</a></td>
+											<td><i class=" fa fa-heart red-text" aria-hidden="true">${list.tip_like_count}</i>
+												<i class="fa fa-comment amber-text" aria-hidden="true">${list.tip_comment_count}</i>
+												<i class="fa  fa-eye" aria-hidden="true">${list.tip_viewcount}</i>
+											</td>
+											<td class=tip-date>${list.tip_date}</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</c:when>
+							<c:otherwise>
+									작성한 글이 없습니다.
+								</c:otherwise>
+						</c:choose>
 					</div>
-
+					<!--/.Panel 5-->
 				</div>
 			</div>
+		</div>
+	</div>
+
+	<!-- editModal -->
+	<div class="modal fade" id="editModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm" role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<p class="heading lead mb-0">컬렉션 수정</p>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<input type="hidden" id="seqform" />
+					<div class="md-form">
+						<input type="text" id="titleform" class="form-control"
+							name="ecollection_title" maxlength="30" autofocus> <label
+							for="titleform">컬렉션 이름</label>
+					</div>
+					<div class="md-form mt-1">
+						<textarea id="contentsform" class="md-textarea form-control"
+							rows="3" name="ecollection_contents"></textarea>
+						<label for="form7" class="mb-0">컬렉션 상세 설명</label>
+					</div>
+				</div>
+
+				<!--Footer-->
+				<div class="modal-footer justify-content-center">
+					<button class="btn btn-itso" data-toggle="modal"
+						data-target="#modal" id="editbtn">수정</button>
+					<button class="btn btn-outline-itso waves-effect"
+						data-dismiss="modal">취소</button>
+				</div>
+			</div>
+			<!--/.Content-->
 		</div>
 	</div>
 
@@ -1140,7 +1187,8 @@ table .profilearea {
 							</div>
 						</c:when>
 						<c:otherwise>
-							<p class="mt-1 mb-0">생성된 컬렉션이 없습니다.</p>
+							<p class="mt-1 mb-0" id="firstmsg">생성된 컬렉션이 없습니다.</p>
+							<div id="collectionarea" class="mt-2 first"></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -1190,6 +1238,9 @@ table .profilearea {
 			<!--/.Content-->
 		</div>
 	</div>
+
+	<%@include file="footer.jsp"%>
+
 	<script>
 		$("#managebtn").on("click", function() {
 			window.open('userpage.go?view=collection', '_blank');
@@ -1253,20 +1304,19 @@ table .profilearea {
 													+ "," + data.social_seq)
 											if (data.photo != null) {
 												console.log("여기");
-												cursor
-														.find(
-																".collectionPhoto")
-														.append(
-																'<div class="collectionPhotoItem">'
-																		+ '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">'
-																		+ '</div>');
-												if (num > 4) {
-													cursor
-															.find(
-																	".collectionPhoto:last")
-															.attr("display",
-																	"none");
-												}
+												if (num > 3) {
+								                	console.log("숨겨");
+								                cursor.find(".collectionPhoto").append(
+								                    '<div class="collectionPhotoItem" style="display:none;">' +
+								                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+								                    '</div>');
+								                } else {
+								                	console.log("보여");
+								                	 cursor.find(".collectionPhoto").append(
+								 		                    '<div class="collectionPhotoItem">' +
+								 		                    '<img src="/upload/social/' + data.photo + '"> <input type="hidden" class="socialseq" value="' + data.social_seq + '">' +
+								 		                    '</div>');
+								                }
 											} else {
 												cursor
 														.find(
@@ -1295,57 +1345,127 @@ table .profilearea {
 						'click',
 						function() {
 							var collection_title = $(
-									"input[name='collection_title']").val();
+									"#createModal input[name='collection_title']").val();
 							var collection_contents = $(
-									"textarea[name='collection_contents']")
+									"#createModal textarea[name='collection_contents']")
 									.val();
 
-							$
-									.ajax({
-										url : "createCollection.ajax",
-										type : "post",
-										data : {
-											collection_title : collection_title,
-											collection_contents : collection_contents
-										},
-										success : function(data) {
-											console.log("생성" + data);
-											var dto = JSON.parse(data);
-											$("input[name='collection_title']")
-													.val("");
-											$(
-													"textarea[name='collection_contents']")
-													.val("");
-											$("#createModal").hide();
+							console.log("왜이래: " + collection_title + ":"
+									+ collection_contents);
+							if (collection_title == "") {
+								alert("컬렉션 이름을 입력하세요.");
+							} else if (collection_contents == "") {
+								alert("컬렉션 상세 설명을 입력하세요.");
+							} else {
 
-											$("#collectionarea")
-													.append(
-															'<div class="collectionItem z-depth-1 mt-2">'
-																	+ '<h4 class="mt-1 mb-1 text-truncate">'
-																	+ dto.collection_title
-																	+ '</h4><h6 class="text-truncate">'
-																	+ dto.collection_contents
-																	+ '</h6>'
-																	+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
-																	+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+								$
+										.ajax({
+											url : "createCollection.ajax",
+											type : "post",
+											data : {
+												collection_title : collection_title,
+												collection_contents : collection_contents
+											},
+											success : function(data) {
+												console.log("생성" + data);
+												var dto = JSON.parse(data);
 
-											$("#saveModal").show();
+												console.log("체크: "+ $("#collectionarea").hasClass("first"));
+												if ($("#collectionarea").hasClass("first")) {
+													console.log("처음");
+													$("#firstmsg").remove();
+												}
 
-										}
-									});
+												$("input[name='collection_title']")
+														.val("");
+												$(
+														"#createModal  textarea[name='collection_contents']")
+														.val("");
+												$("#createModal").modal('hide');
+
+												$("#collectionarea")
+														.append(
+																'<div class="collectionItem z-depth-1 mt-2">'
+																		+ '<h4 class="mt-1 mb-1 text-truncate">'
+																		+ dto.collection_title
+																		+ '</h4><h6 class="text-truncate">'
+																		+ dto.collection_contents
+																		+ '</h6>'
+																		+ '<input type="hidden" class="collectionseq" value="' + dto.collection_seq + '"/>'
+																		+ '<div class="collectionPhoto"></div></div><h6 class="mb-0" style="height: 19px;"></h6>');
+
+												$("#saveModal").modal('show');
+
+											}
+										});
+							}
 						});
+		$("#editbtn").on('click',
+				function() {
+					var cursor = $(this);
+					var collection_seq = $("#seqform").val(); 
+					var collection_title = $("#titleform").val();
+					var collection_contents = $("#contentsform").val();
+
+					console.log("수정: " + collection_seq + ":" + collection_title + ":" + collection_contents);
+					if (collection_title == "") {
+						alert("컬렉션 이름을 입력하세요.");
+					} else if (collection_contents == "") {
+						alert("컬렉션 상세 설명을 입력하세요.");
+					} else {
+						$.ajax({
+									url : "editCollection.ajax",
+									type : "post",
+									data : {
+										collection_seq : collection_seq,
+										collection_title : collection_title,
+										collection_contents : collection_contents
+									},
+									success : function(data) {
+										console.log("수정성공");
+										cursor.parent().siblings('h4').find('.collectiontitle').val(collection_title);
+										cursor.parent().siblings('.collectioncontents').val(collection_contents);
+										location.href="userpage.go?view=collection";
+									}
+						});
+					}
+				});
 		$("#createModal").on('show.bs.modal', function() {
-			$("#saveModal").hide();
+			$("#saveModal").modal('hide');
 		});
 
 		$("#createModal").on('hidden.bs.modal', function() {
-			$("#saveModal").show();
+			$("#saveModal").modal('show');
 		});
 
 		$("#saveModal").on('hidden.bs.modal', function() {
 			console.log("닫힘");
 			$(".collectionItem").removeClass("active");
 		});
+
+		$("#messagebtn").click(function() {
+			var seq = "${seq}";
+			var message = ""
+
+			$.ajax({
+				url : "messageUser.ajax",
+				type : "post",
+				data : {
+					seq : seq
+				},
+				success : function(data) {
+					showMessageUser(data);
+					showMessageList(data)
+					console.log(data.message[0].contents);
+					console.log(data.message[1].contents);
+
+				}
+
+			});
+
+		});
+
+		document.title = "${member.name}";
 	</script>
 </body>
 <!-- Bootstrap tooltips -->
