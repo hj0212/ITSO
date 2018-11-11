@@ -2,22 +2,28 @@ package kh.spring.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class NotificationDTO {
 	private int noti_seq;	
 	private int user_seq;
 	private int noti_user_seq;
 	private String noti_type;	// comment, tag, good, reply
-	private String noti_contents;	
+	private String noti_contents;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date noti_date;		// 알림발생시간
 	private String noti_read;	// y, n
 	private String noti_url;
 	private int article_seq;
-	
+	private String noti_user_photo;
+	private String noti_user_name;
+	private String nono;
 	public NotificationDTO() {
 		super();
 	}
+	
 	public NotificationDTO(int noti_seq, int user_seq, int noti_user_seq, String noti_type, String noti_contents,
-			Date noti_date, String noti_read, String noti_url, int article_seq) {
+			Date noti_date, String noti_read, String noti_url, int article_seq,String noti_user_photo,String noti_user_name) {
 		super();
 		this.noti_seq = noti_seq;
 		this.user_seq = user_seq;
@@ -28,7 +34,30 @@ public class NotificationDTO {
 		this.noti_read = noti_read;
 		this.noti_url = noti_url;
 		this.article_seq = article_seq;
+		this.noti_user_photo = noti_user_photo;
+		this.noti_user_name = noti_user_name;
 	}
+	public NotificationDTO(int user_seq,int noti_useq_seq,String noti_type, String noti_contents, String noti_read,String noti_url, int article_seq) {
+		this.user_seq = user_seq;
+		this.noti_user_seq = noti_useq_seq;
+		this.noti_type = noti_type;
+		this.noti_contents = noti_contents;
+		this.noti_read = noti_read;
+		this.noti_url = noti_url;
+		this.article_seq = article_seq;
+	}
+	
+	public NotificationDTO(int noti_seq,String nono) {
+		this.noti_seq = noti_seq;
+		this.nono= null;
+	}
+	
+	public NotificationDTO(int user_seq) {
+		this.user_seq= user_seq;
+	}
+
+	
+	
 	public int getNoti_seq() {
 		return noti_seq;
 	}
@@ -82,6 +111,22 @@ public class NotificationDTO {
 	}
 	public void setArticle_seq(int article_seq) {
 		this.article_seq = article_seq;
+	}
+
+	public String getNoti_user_photo() {
+		return noti_user_photo;
+	}
+
+	public void setNoti_user_photo(String noti_user_photo) {
+		this.noti_user_photo = noti_user_photo;
+	}
+
+	public String getNoti_user_name() {
+		return noti_user_name;
+	}
+
+	public void setNoti_user_name(String noti_user_name) {
+		this.noti_user_name = noti_user_name;
 	}
 	
 	

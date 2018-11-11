@@ -80,7 +80,7 @@
                     <div class="md-form form-lg">
                         <input type="text" id="ipdisabled" class="form-control form-control-lg" disabled>
                         <label for="ipdisabled" class="disabled">공유하고 싶은 아이템에 태그를 달아주세요</label>
-                        <img class="mpin" src="upload/social/${sbdto.photo}?${dummy}" alt="photo" id="imgstyle" easypin-id="image_db"/>
+                        <img class="mpin" src="/upload/social/${sbdto.photo}?${dummy}" alt="photo" id="imgstyle" easypin-id="image_db"/>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -148,9 +148,9 @@
 					<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
 				</div>
 				<div class="required">
-					<input type="text" class="form-control" name="brand" placeholder="브랜드" />
+					<input type="text" class="form-control" name="brand" placeholder="상품명" />
 				</div>
-				<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
+				<input type="text" class="form-control" name="store" placeholder="브랜드" /> 
 				<input type="text" class="form-control" name="url" placeholder="URL" />
 				<select name="category" id="category" class="form-control">
 					<option value="not" disabled selected>카테고리 선택</option>

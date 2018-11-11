@@ -61,7 +61,7 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	
 	//醫뗭븘�슂
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return this.dao.selectGoodCount(gdto);
 	}
 
@@ -84,7 +84,6 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		return this.dao.getMyGoodSocialList(dto);
 	}
-
 	
 	//게시물 인기
 	@Override
@@ -104,8 +103,8 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
-	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto) {
-		return this.dao.getCollectionSocialList(dto);
+	public List<SocialBoardDTO> getCollectionSocialList(int seq, int startCount, int endCount) {
+		return this.dao.getCollectionSocialList(seq, startCount, endCount);
 	}
 
 	@Override
@@ -148,6 +147,17 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	}
 
 	@Override
+	public CollectionDTO getCollectionSeq(CollectionDTO dto) {
+		return this.dao.getCollectionSeq(dto);
+	}
+	
+	@Override
+	public CollectionDTO getCollectionInfo(CollectionDTO dto) {
+		return this.dao.getCollectionInfo(dto);
+	}
+
+	
+	@Override
 	public List<SocialBoardDTO> showHashTagBoardList(int pAge, String pGender, int user_seq, String search) {
 		return this.dao.showHashTagBoardList(pAge, pGender, user_seq, search);
 	}
@@ -160,5 +170,35 @@ public class SocialBoardServiceImpl implements ISocialBoardService{
 	@Override
 	public List<SocialBoardDTO> showHashTagFollowBoardList(int pAge, String pGender, int user_seq, String search) {
 		return this.dao.showHashTagFollowBoardList(pAge, pGender, user_seq, search);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto) {
+		return this.dao.getMyGoodSocialArticleList(dto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
+		return this.dao.getsearchedTagSocialList(word);
+	}
+
+	@Override
+	public List<CollectionDTO> getSearchedCollectionList(String word) {
+		return this.dao.getSearchedCollectionList(word);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
+		return this.dao.getSearchedCollectionPhotoList(word);
+	}
+
+	@Override
+	public Integer getCollectionCount(CollectionDTO dto) {
+		return this.dao.getCollectionCount(dto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedBrandList(String word) {
+		return this.dao.getSearchedBrandList(word);
 	}
 }

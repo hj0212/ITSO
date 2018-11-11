@@ -7,6 +7,12 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
 <style>
 	@font-face {
 		font-family: 'NanumbarunpenR';
@@ -84,12 +90,7 @@
 					<div class="row">
 						<div class="image-upload-wrap form-group my-3 col-md-12">
 							<label>-님의 스타일을 보여주세요.</label> 
-							<input type="file" name="file" id="imgfile"
-								class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);"
-								accept="image/*" />
-							<!--     <div class="drag-text">
-      <h3>Drag and drop a file or select add Image</h3>
-    </div> -->
+							<input type="file" name="file" id="imgfile" class="file-upload-input form-control z-depth-3 hoverable" onchange="readURL(this);" accept="image/*" />
 						</div>
 					</div>
 					<div class="row">
@@ -153,13 +154,11 @@
 			 $("#uploadform").submit(); 
 			/* $(location).attr('href', 'writeArticle2.jsp'); */
 		})
+		
+		$("#backbtn").click(function(){
+			$(location).attr('href',"main.go");
+		})
 	</script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css" rel="stylesheet">
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
     <!-- JQuery -->

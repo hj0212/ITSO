@@ -4,6 +4,7 @@ import java.util.List;
 
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SearchedUserInfoDTO;
 
 public interface IMemberDAO {
 	  public List<MemberDTO> loginExist(MemberDTO dto);
@@ -16,5 +17,8 @@ public interface IMemberDAO {
 	  public int deleteFollowData(FollowDTO dto);
 	  public List<MemberDTO> getFollowerList(MemberDTO dto);
 	  public List<MemberDTO> getFollowingList(MemberDTO dto);
+	  public Integer checkFollow(FollowDTO dto);
 	  public MemberDTO selectSocialWriter(int social_seq);
+	  public List<SearchedUserInfoDTO> getSearchedUserList(String word);
+	  public List<MemberDTO> recoFollow(MemberDTO dto);
 }

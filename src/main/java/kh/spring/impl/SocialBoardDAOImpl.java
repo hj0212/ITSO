@@ -1,5 +1,6 @@
 package kh.spring.impl;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +67,12 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 	}
 
 	@Override
-	public List<SocialBoardDTO> getCollectionSocialList(CollectionDTO dto) {
-		return template.selectList("Collection.getCollectionSocialList",dto);
+	public List<SocialBoardDTO> getCollectionSocialList(int seq, int startCount, int endCount) {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("seq", seq);
+		map.put("start", startCount);
+		map.put("end", endCount);
+		return template.selectList("Collection.getCollectionSocialList", map);
 	}
 
 	@Override
@@ -105,10 +110,20 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 		return template.update("Collection.updateCollection", dto);
 	}
 	
+	@Override
+	public CollectionDTO getCollectionSeq(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionSeq", dto);
+	}
+	
+	@Override
+	public CollectionDTO getCollectionInfo(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionInfo", dto);
+	}
+	
 	
 	//���ƿ� 
 	@Override
-	public int selectGoodCount(GoodDTO gdto) {
+	public Integer selectGoodCount(GoodDTO gdto) {
 		return template.selectOne("SocialBoard.selectGoodCount", gdto);
 	}
 
@@ -119,19 +134,22 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public int deleteGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return template.delete("SocialBoard.deleteGoodCount",gdto);
 	}
 
 	@Override
 	public int allGoodCount(GoodDTO gdto) {
-		// TODO Auto-generated method stub
 		return template.selectOne("SocialBoard.allGoodCount",gdto);
 	}
 
 	@Override
 	public List<SocialBoardDTO> getMyGoodSocialList(MemberDTO dto) {
 		return template.selectList("SocialBoard.getMyGoodSocialList", dto);
+	}
+	
+	@Override
+	public List<SocialBoardDTO> getMyGoodSocialArticleList(MemberDTO dto) {
+		return template.selectList("SocialBoard.getMyGoodSocialArticleList", dto);
 	}
 	
 	//인기
@@ -153,7 +171,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
@@ -164,7 +182,7 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagHotBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
@@ -175,12 +193,37 @@ public class SocialBoardDAOImpl implements ISocialBoardDAO{
 
 	@Override
 	public List<SocialBoardDTO> showHashTagFollowBoardList(int pAge, String pGender, int user_seq, String search) {
-		Map<String, String> map = new HashMap<>();
+		Map<String, String> map = new HashMap();
 		map.put("pAge", pAge+"");
 		map.put("pGender", pGender);
 		map.put("user_seq", user_seq+"");
 		map.put("search", search);
 		
 		return template.selectList("SocialBoard.showHashTagFollowBoardList", map);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getsearchedTagSocialList(String word) {
+		return template.selectList("SocialBoard.searchedTagSocialList", word);
+	}
+
+	@Override
+	public List<CollectionDTO> getSearchedCollectionList(String word) {
+		return template.selectList("Collection.getSearchedCollectionList", word);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedCollectionPhotoList(String word) {
+		return template.selectList("Collection.getSearchedCollectionPhotoList", word);
+	}
+
+	@Override
+	public Integer getCollectionCount(CollectionDTO dto) {
+		return template.selectOne("Collection.getCollectionCount", dto);
+	}
+
+	@Override
+	public List<SocialBoardDTO> getSearchedBrandList(String word) {
+		return template.selectList("SocialBoard.searchedBrandList", word);
 	}
 }

@@ -149,9 +149,9 @@
 					<input type="text" class="form-control required" name="name" placeholder="이름 (e.g. 검은색 티셔츠)">
 				</div>
 				<div class="required">
-					<input type="text" class="form-control" name="brand" placeholder="브랜드" />
+					<input type="text" class="form-control" name="brand" placeholder="상품명" />
 				</div>
-				<input type="text" class="form-control" name="store" placeholder="회사 이름" /> 
+				<input type="text" class="form-control" name="store" placeholder="브랜드" /> 
 				<input type="text" class="form-control" name="url" placeholder="URL" />
 				<select name="category" id="category" class="form-control">
 					<option value="not" disabled selected>카테고리 선택</option>
@@ -195,9 +195,10 @@
 	    });
 	    	
 	    function notsubmit() {
-	           let num = 0;
-	           let obj = [];
-	           let clothesInformation = {};
+           let num = 0;
+           let obj = [];
+           let clothesInformation = {};
+           let blank_pattern = /^\s+|\s+$/g;
 	           
 	        $instance.easypin.fire("get.coordinates", { param1: 1, param2: 2, param3: 3 }, function (data) {
 	            $instance.easypin.fire("get.coordinates", function (data) {
@@ -229,12 +230,12 @@
 	        let stylename = document.getElementById("stylename").value;
 	        let stylecontent = document.getElementById("textareaPrefix").value;
 	        
-	        if(stylename === "") {
+	        if(stylename.replace(blank_pattern,"") == ""){
 	        	alert("스타일 이름을 정해주세요");
-	        	return false;	
+	        	return false;
 	        }
 	        
-	        if(stylecontent === ""){
+	        if(stylecontent.replace(blank_pattern,"") == ""){
 	        	alert("스타일을 소개해 주세요.");
 	        	return false;
 	        }
@@ -250,7 +251,7 @@
 		            setTimeout(function(){
 		            	window.location = window.location + '#loaded';
 			            window.location.reload();
-		            },1000);
+		            },1500);
 		        }
 	        }
 	    }

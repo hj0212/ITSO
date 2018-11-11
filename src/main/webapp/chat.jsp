@@ -12,86 +12,54 @@
 
 <meta charset="UTF-8">
 
-<title>JSP</title>
+<title>It So Chat</title>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/sockjs.js"/>"></script>
+<style>
+.chat-room{
+	width: 50%;
+}
+.basic-textarea textarea {
+    height: auto;
+}
 
-<script type="text/javascript">
+.card.chat-room .friend-list li {
+  border-bottom: 1px solid #e0e0e0; }
+  .card.chat-room .friend-list li:last-of-type {
+    border-bottom: none; }
 
-    $(document).ready(function() {
+.card.chat-room img.rounded-circle {
+  border-radius: 50%; }
 
-        $("#sendBtn").click(function() {
+.card.chat-room img.avatar {
+  height: 3rem;
+  width: 3rem; }
 
-            sendMessage();
+.card.chat-room .text-small {
+  font-size: 0.95rem; }
 
-        });
+.card.chat-room .text-smaller {
+  font-size: 0.75rem; }
+</style>
 
-    });
-
-    var sock;
-
-    //웸소켓을 지정한 url로 연결한다.
-
-    sock = new SockJS("<c:url value="/echo"/>");
-
-
-    //자바스크립트 안에 function을 집어넣을 수 있음.
-
-    //데이터가 나한테 전달되읐을 때 자동으로 실행되는 function
-
-    sock.onmessage = onMessage;
-
-
-    //데이터를 끊고싶을때 실행하는 메소드
-
-    sock.onclose = onClose;
-
-
-    /* sock.onopen = function(){
-
-        sock.send($("#message").val());
-
-    }; */
-
-    function sendMessage() {
-
-        /*소켓으로 보내겠다.  */
-
-        sock.send($("#message").val());
-
-    }
-
-    //evt 파라미터는 웹소켓을 보내준 데이터다.(자동으로 들어옴)
-
-    function onMessage(evt) {
-
-        var data = evt.data;
-
-        $("#data").append(data + "<br/>");
-
-        //sock.close();
-
-    }
-
-
-    function onClose(evt) {
-
-        $("#data").append("연결 끊김");
-
-    }
-
-</script>
 
 </head>
 
 <body>
-
-    <input type="text" id="message" />
-
-    <input type="button" id="sendBtn" value="전송" />
-
-    <div id="data"></div>
+<!-- jquery  -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap core CSS -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.4/css/mdb.min.css"
+	rel="stylesheet">
 
 </body>
 

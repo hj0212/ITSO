@@ -56,28 +56,54 @@ public class TipController {
 	}
 
 	@RequestMapping("tipBoardMainPage.tip")
-	public ModelAndView tipBoardMainPageWithAllData() {
-
+	public ModelAndView tipBoardMainPageWithAllData(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		List<TipDTO> beautyTipData = service.getBeautyTipData();
-		List<TipDTO> dietTipData = service.getDietTipData();
-		List<TipDTO> fashionTipData = service.getFashionTipData();
-		List<TipDTO> businessTipData = service.getBusinessTipData();
-		// List<TipDTO> tipThumpsUpCountData = service.getThumpsUpData(int seq);
 		List<TipDTO> upvotingArticles = service.getUpvotingArticles();
+		System.out.println("up: " + upvotingArticles.size());
+		String category = request.getParameter("category");
 		
-		
-		if (beautyTipData != null) {
-			System.out.println(beautyTipData.toString());
-
-		} else {
-			return null;
+		if(category != null) {
+			category = category.trim().equals("") ? null : category;
 		}
+		
+		int page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+		StringBuffer pagination = new StringBuffer();
+		
+		int totalCount = service.getTipBoardCount(category);
+		// 한 페이지당 들어갈 글 수
+		int countList = 10;
+		
+		int totalPage = totalCount / countList;
+		
+		if(totalCount > countList * totalPage) {
+			totalPage++;
+		}
+		
+		if(totalPage < page) {
+			page = totalPage;
+		}
+		
+		int countPage = 5;
+		
+		int startPage = ((page - 1) / countPage) * countPage + 1;
+		int endPage = startPage + countPage - 1;
+		
+		if(endPage > totalPage) {
+			endPage = totalPage;
+		}
+		
+		int startCount = (page - 1) * countList + 1;
+		int endCount = page * countList;
+		
+		List<TipDTO> tipBoardList = service.getTipBoardListRange(category, startCount, endCount);
 
-		mav.addObject("beautyTipData", beautyTipData);
-		mav.addObject("dietTipData", dietTipData);
-		mav.addObject("fashionTipData", fashionTipData);
-		mav.addObject("businessTipData", businessTipData);
+		mav.addObject("category", category);
+		mav.addObject("page", page);
+		mav.addObject("startPage", startPage);
+		mav.addObject("endPage", endPage);
+		mav.addObject("totalPage",totalPage);
+		
+		mav.addObject("tipBoardList", tipBoardList);
 		mav.addObject("upvotingArticles", upvotingArticles);
 		mav.setViewName("tipBoardMainPage.jsp");
 		return mav;
@@ -101,7 +127,7 @@ public class TipController {
 		System.out.println(tipComments.toString());
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("tipContent", tipContent);
+		mav.addObject("tipContent", tipContent.get(0));
 		mav.addObject("tipLikeCounts", tipLikeCounts);
 		mav.addObject("tipComments", tipComments);
 		mav.setViewName("tipSpecificArticleView.jsp");
@@ -132,19 +158,21 @@ public class TipController {
 	}
 
 	@RequestMapping("insertTipCommentProc.tip")
-	public void insertTipCommentProc(@RequestBody TipCommentDTO dto, HttpServletRequest request, HttpServletResponse response) {
+	public void insertTipCommentProc(@RequestBody TipCommentDTO dto, HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
-			System.out.println(1);
-			System.out.println(dto.toString());
+			System.out.println("댓글 등록~");
 
+			int writer = ((MemberDTO) request.getSession().getAttribute("user")).getSeq();
+			System.out.println(dto.getUser_seq());
+			System.out.println(writer);
 			int result = service.insertTipCommentProc(dto);
-			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
-			
+
 			ObjectMapper om = new ObjectMapper();
 			List<TipCommentDTO> commentList = service.getCommentsFromTip(dto.getTip_seq());
 			ArrayNode array = om.createArrayNode();
-			
-			for(TipCommentDTO tdto : commentList) {
+
+			for (TipCommentDTO tdto : commentList) {
 				ObjectNode on = om.createObjectNode();
 				on.put("tip_comment_seq", tdto.getTip_comment_seq());
 				on.put("tip_seq", tdto.getTip_seq());
@@ -154,12 +182,12 @@ public class TipController {
 				on.put("name", tdto.getName());
 				on.put("photo", tdto.getPhoto());
 				on.put("writer", writer);
-				
+
 				array.add(on);
 			}
-			
+
 			response.getWriter().println(array);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -172,20 +200,45 @@ public class TipController {
 		System.out.println(result);
 		return result;
 	}
+
+	@RequestMapping("tipModification.go")
+	public ModelAndView tipModificationGo(HttpServletRequest req) {
+
+		int tipSeq = Integer.parseInt(req.getParameter("tipSeq"));
+		System.out.println(tipSeq);
+
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("tipSeq",tipSeq);
+		mav.setViewName("tipModifyPage.jsp");
 	
-	@RequestMapping("deleteTipComment.tip")
+		return mav;
+	}
+
+	@RequestMapping("tipModifyProc.tip")
+	public @ResponseBody int tipModifyProc(@RequestBody TipDTO dto) {
+		
+		
+		dto.toString();
+		int result = service.tipModifyProc(dto);
+		System.out.println("tipModify result :" + result);
+		
+		return result;
+	}
+	
+	
+	@RequestMapping("deleteTipComment.tip") //창영 댓글 지우기 기능
 	public void deleteTipComment(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ObjectMapper om = new ObjectMapper();
 			int comment_seq = Integer.parseInt(request.getParameter("comment_seq"));
 			int tip_seq = Integer.parseInt(request.getParameter("tip_seq"));
 			int result = service.deleteTipComment(comment_seq);
-			int writer = ((MemberDTO)request.getSession().getAttribute("user")).getSeq();
-			
+			int writer = ((MemberDTO) request.getSession().getAttribute("user")).getSeq();
+
 			List<TipCommentDTO> commentList = service.getCommentsFromTip(tip_seq);
 			ArrayNode array = om.createArrayNode();
-			
-			for(TipCommentDTO tdto : commentList) {
+
+			for (TipCommentDTO tdto : commentList) {
 				ObjectNode on = om.createObjectNode();
 				on.put("tip_comment_seq", tdto.getTip_comment_seq());
 				on.put("tip_seq", tdto.getTip_seq());
@@ -195,14 +248,14 @@ public class TipController {
 				on.put("name", tdto.getName());
 				on.put("photo", tdto.getPhoto());
 				on.put("writer", writer);
-				
+
 				array.add(on);
 			}
-			
+
 			response.getWriter().println(array);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }
