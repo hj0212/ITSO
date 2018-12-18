@@ -6,7 +6,7 @@
 		select * from users where email=#{email} and pw=#{pw}
 	</select>
 	<insert id="insertData" parameterType="dto" >
-		insert into users values(users_seq.nextval,#{email},#{pw},#{name},#{g_email,jdbcType=VARCHAR},#{g_name,jdbcType=VARCHAR},#{part},SYSDATE,#{withdrawal},#{photo},#{block},#{state},#{age})
+		insert into users values(users_seq.nextval,#{email},#{pw,jdbcType=VARCHAR},#{name},#{part},SYSDATE,#{withdrawal},#{photo},#{block},#{state},#{age,jdbcType=INTEGER}, #{gender,jdbcType=VARCHAR})
 	</insert>
 	<update id="updateData" parameterType="dto">
 		update users set pw=#{pw}, name=#{name}, state=#{state}, age=#{age} where seq=#{seq}
@@ -17,16 +17,35 @@
 	<select id="emailExist" resultType="dto">
 		select * from users where email=#{email}
 	</select>
-	<insert id="followUser" parameterType="hashmap">
+	<insert id="insertFollow" parameterType="FollowDTO">
 		insert into follow values(follow_seq.nextval,#{user_seq},#{following_seq})
 	</insert>
+	<delete id="deleteFollow">
+		delete from follow where user_seq=#{user_seq} and following_seq=#{following_seq}
+	</delete>
 	<select id="selectFollower" resultType="dto">
 		select u.* from (select * from follow where following_seq = #{seq}) f, users u where  f.user_seq = u.seq
 	</select>
 	<select id="selectFollowing" resultType="dto">
 		select u.* from (select * from follow where user_seq = #{seq}) f, users u where  f.following_seq = u.seq
 	</select>
+	<select id="checkFollow" resultType="int">
+		select * from follow where user_seq=#{user_seq} and following_seq=#{following_seq}
+	</select>
+	
 	<select id="selectUserData" resultType="dto">
 		select * from users where seq = #{seq}
+	</select>
+	
+	<select id="selectSocialWriter" parameterType="int" resultType="dto">
+		select u.* from social s, users u where s.social_seq = #{social_seq} and s.social_writer = u.seq
+	</select>
+	
+	<select id="searchedUserInfo" parameterType="String" resultType="suidto">
+		select seq,email,name,photo,state from users where state like '%'||#{0}||'%'
+	</select>
+	
+	<select id="recoFollow" resultType="dto">
+		select u2.* from (select seq, name, photo, substr(age,1,1) age from users where seq=#{seq}) u1, (select seq, name, photo, substr(age,1,1) age from users where seq not in (select following_seq from follow where user_seq = #{seq})) u2 where u1.age = u2.age
 	</select>
 </mapper>

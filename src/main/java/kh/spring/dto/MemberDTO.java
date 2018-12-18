@@ -6,22 +6,25 @@ public class MemberDTO {
 	private String email;
 	private String pw;
 	private String name;
-	private String g_email;
-	private String g_name;
 	private String part;
 	private String create_Date;
 	private String block;
 	private String photo;
 	private String withdrawal;
 	private String state;
+	private String gender;
 	private String followcheck; // 팔로우여부
 	
 	
-	public MemberDTO(String email, String pw, String name,Integer age) {
+	public MemberDTO(String email, String pw, String name,Integer age, String gender) {
 		this.email = email;
 		this.pw = pw;
 		this.name = name;
 		this.age = age;
+		this.gender = gender;
+	}
+	public MemberDTO(int seq) {
+		this.seq = seq;
 	}
 	
 	public int getSeq() {
@@ -53,18 +56,6 @@ public class MemberDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getG_email() {
-		return g_email;
-	}
-	public void setG_email(String g_email) {
-		this.g_email = g_email;
-	}
-	public String getG_name() {
-		return g_name;
-	}
-	public void setG_name(String g_name) {
-		this.g_name = g_name;
 	}
 	public String getPart() {
 		return part;
@@ -109,26 +100,29 @@ public class MemberDTO {
 		this.followcheck = followcheck;
 	}
 
-	public MemberDTO(int seq, Integer age, String email, String pw, String name, String g_email, String g_name,
-			String part, String create_Date, String block, String photo, String withdrawal, String state,
-			String followcheck) {
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	public MemberDTO(int seq, Integer age, String email, String pw, String name, String part, String create_Date,
+			String block, String photo, String withdrawal, String state, String gender, String followcheck) {
 		super();
 		this.seq = seq;
 		this.age = age;
 		this.email = email;
 		this.pw = pw;
 		this.name = name;
-		this.g_email = g_email;
-		this.g_name = g_name;
 		this.part = part;
 		this.create_Date = create_Date;
 		this.block = block;
 		this.photo = photo;
 		this.withdrawal = withdrawal;
 		this.state = state;
+		this.gender = gender;
 		this.followcheck = followcheck;
 	}
-
 	public MemberDTO() {
 		super();
 	}

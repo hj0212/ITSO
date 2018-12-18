@@ -89,7 +89,7 @@
 						<a class="dropdown-item" href="#"
 							onclick="javascript:document.getElementById('category').value=this.innerHTML">패션</a>
 						<a class="dropdown-item" href="#"
-							onclick="javascript:document.getElementById('category').value=this.innerHTML">직장생활</a>
+							onclick="javascript:document.getElementById('category').value=this.innerHTML">기타</a>
 					</div>
 				</div>
 			</div>
@@ -117,10 +117,6 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="modalTitle">성공!</h5>
-						<!-- 						<button type="button" class="close" data-dismiss="modal" -->
-						<!-- 							aria-label="Close"> -->
-						<!-- 							<span aria-hidden="true">&times;</span> -->
-						<!-- 						</button> -->
 					</div>
 					<div class="modal-body" id="modalBody">글 등록 성공!</div>
 					<div class="modal-footer">
@@ -150,8 +146,8 @@
 							'editorTA',
 							{
 								extraPlugins : 'easyimage',
-								cloudServices_tokenUrl : 'https://34277.cke-cs.com/token/dev/A2fh69MdD6ZbneTSLEawfBh2LsSlsoSyzyN4vF3UziV89xsfCWH7ntLhAIBD',
-								cloudServices_uploadUrl : 'https://34277.cke-cs.com/easyimage/upload/'
+								cloudServices_tokenUrl : 'https://34598.cke-cs.com/token/dev/lskNq77H09eHZErE87Ttg5RBs0II9cxqG63kaPhAefdy7SGmI2BFAEdAukMa',
+								cloudServices_uploadUrl : 'https://34598.cke-cs.com/easyimage/upload/'
 
 							});
 

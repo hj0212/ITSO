@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SocialComment">
+	<select id="showCommentList" resultType="scdto" parameterType="int">
+		select sc.social_comment_seq, sc.social_seq, sc.user_seq, sc.social_comment_time, sc.social_comment_contents,u.name,u.photo from social_comment sc, users u, social s where u.seq = sc.user_seq and sc.social_seq = s.social_seq and sc.social_seq = #{0} order by sc.social_comment_seq asc
+	</select>
+	
+	<insert id="insertSocialComment" parameterType="scdto">
+		insert into social_comment values(social_comment_seq.nextval,#{social_seq},#{user_seq},sysdate,#{social_comment_contents})
+	</insert>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete social_comment where social_comment_seq = #{0}
+	</delete>
+</mapper>

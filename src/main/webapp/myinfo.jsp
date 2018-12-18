@@ -50,7 +50,7 @@ body {
 }
 </style>
 
-<script>
+<script> 
 	$(document).ready(function() {
 		$("#imgbtn").click(function() {
 			$("#img_file").trigger("click");
@@ -61,7 +61,26 @@ body {
 		});
 		
 		$("#backbtn").click(function() {
-			location.href = "mypage.go";
+			location.href = "userpage.go";
+		})
+		
+		$("#modibtn").click(function() {
+			var pw = $("#pw").val();
+			var name = $("#name").val();
+			var state = $("#state").val();
+			var age = $("#age").val();
+			
+			if(pw == "") {
+				alert("비밀번호를 입력하세요.")
+			} else if(name == "") {
+				alert("이름을 입력하세요.")
+			} else if(state == "") {
+				alert("상태메시지를 입력하세요.")
+			} else if(age == "") {
+				alert("나이를 입력하세요.")
+			} else {
+				$("#editform").submit();
+			}
 		})
 	});
 </script>
@@ -91,35 +110,34 @@ body {
 					</form>
 				</div>
 				<div class="md-form">
-					<input type="text" id="inputMDEx" class="form-control"
-						value="${sessionScope.user.email }" readonly> <label for="inputMDEx">email</label>
+					<input type="text" id="email" class="form-control"
+						value="${sessionScope.user.email }" readonly> <label for="email">email</label>
 				</div>
-				<form action="editProfile.do" method="post">
+				<form action="editProfile.do" method="post" id="editform">
 					<div class="md-form">
-						<input type="text" id="inputMDEx" class="form-control" name="pw"> <label
-							for="inputMDEx" placeholder="비밀번호를 입력하세요">비밀번호</label>
+						<input type="text" id="pw" class="form-control" name="pw"> <label
+							for="pw" placeholder="비밀번호를 입력하세요">비밀번호</label>
 					</div>
 					<div class="md-form">
-						<input type="text" id="inputMDEx" class="form-control" value="${sessionScope.user.name }" name="name"> <label
-							for="inputMDEx">이름</label>
+						<input type="text" id="name" class="form-control" value="${sessionScope.user.name }" name="name"> <label
+							for="name">이름</label>
 					</div>
 					<div class="md-form">
-						<input type="text" id="inputMDEx" class="form-control" value="${sessionScope.user.state }" name="state"> <label
-							for="inputMDEx">상태메시지</label>
+						<input type="text" id="state" class="form-control" value="${sessionScope.user.state }" name="state"> <label
+							for="state">상태메시지</label>
 					</div>
 					<div class="md-form">
-						<input type="text" id="inputMDEx" class="form-control"  value="${sessionScope.user.age }" name="age"> <label
-							for="inputMDEx">나이</label>
+						<input type="text" id="age" class="form-control"  value="${sessionScope.user.age }" name="age"> <label
+							for="age">나이</label>
 					</div>
 					<div id="btnarea text-center">
-						<button class="btn btn-itso">수정</button>
+						<button type="button" id="modibtn" class="btn btn-itso">수정</button>
 						<button type="button" id="backbtn" class="btn btn-mdb-color">취소</button>
 					</div>
 				</form>
 				<!-- Button -->
 
 			</div>
-
 		</div>
 	</div>
 </body>

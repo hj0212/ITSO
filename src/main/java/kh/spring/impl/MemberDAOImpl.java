@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Repository;
 
 import kh.spring.dto.FollowDTO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.dto.SearchedUserInfoDTO;
 import kh.spring.interfaces.IMemberDAO;
 
 @Repository
@@ -52,7 +52,12 @@ public class MemberDAOImpl implements IMemberDAO{
 
 	@Override
 	public int insertFollowData(FollowDTO dto) {
-		return template.insert("Member.followUser",dto);
+		return template.insert("Member.insertFollow", dto);
+	}
+	
+	@Override
+	public int deleteFollowData(FollowDTO dto) {
+		return template.delete("Member.deleteFollow", dto);
 	}
 
 	@Override
@@ -64,7 +69,24 @@ public class MemberDAOImpl implements IMemberDAO{
 	public List<MemberDTO> getFollowingList(MemberDTO dto) {
 		return template.selectList("Member.selectFollowing", dto);
 	}
-
 	
+	@Override
+	public MemberDTO selectSocialWriter(int social_seq) {
+		return template.selectOne("Member.selectSocialWriter", social_seq);
+	}
 
+	@Override
+	public List<SearchedUserInfoDTO> getSearchedUserList(String word) {
+		return template.selectList("Member.searchedUserInfo",word);
+	}
+
+	@Override
+	public Integer checkFollow(FollowDTO dto) {
+		return template.selectOne("Member.checkFollow", dto);
+	}
+
+	@Override
+	public List<MemberDTO> recoFollow(MemberDTO dto) {
+		return template.selectList("Member.recoFollow", dto);
+	}
 }

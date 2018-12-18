@@ -5,13 +5,18 @@ public class FollowDTO {
 	private int user_seq;
 	private int following_seq;
 	
-	
 	public FollowDTO() {
 		super();
 	}
 	public FollowDTO(int follow_seq, int user_seq, int following_seq) {
 		super();
 		this.follow_seq = follow_seq;
+		this.user_seq = user_seq;
+		this.following_seq = following_seq;
+	}
+	
+	public FollowDTO(int user_seq, int following_seq) {
+		super();
 		this.user_seq = user_seq;
 		this.following_seq = following_seq;
 	}
