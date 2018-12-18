@@ -79,12 +79,6 @@
 		<property name="maxInMemorySize" value="10485760" />
 	</bean>
 	
-	<!-- Websocket -->
-<!-- 	<bean id="echoHandler" class="kh.spring.websocket.EchoHandler"/>
-	<websocket:handlers>
-		<websocket:mapping handler="echoHandler" path="/echo"/>
-		<websocket:sockjs/>
-	</websocket:handlers>
-	 -->
+
 
 </beans>
